@@ -24,7 +24,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, StoreOwnerProfileEntity::class);
     }
 
-    public function getUserProfileByUserID($userID)
+    public function getStoreOwnerProfileByUserID($userID)
     {
         return $this->createQueryBuilder('profile')
 
@@ -37,7 +37,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getUserProfileByID($id)
+    public function getStoreOwnerProfileByID($id)
     {
         return $this->createQueryBuilder('profile')
             ->select('profile.id', 'profile.userName','profile.userID', 'profile.image', 'profile.story', 'profile.branch', 'profile.free', 'profile.status', 'profile.phone')

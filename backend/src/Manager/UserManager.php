@@ -4,18 +4,22 @@ namespace App\Manager;
 
 use App\AutoMapping;
 use App\Entity\UserEntity;
+use App\Entity\UserProfileEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\CaptainProfileEntity;
 use App\Repository\UserEntityRepository;
 use App\Repository\StoreOwnerProfileEntityRepository;
 use App\Repository\CaptainProfileEntityRepository;
-use App\Request\UserProfileCreateRequest;
-use App\Request\userProfileUpdateByAdminRequest;
+use App\Repository\UserProfileEntityRepository;
+use App\Request\StoreOwnerProfileCreateRequest;
+use App\Request\StoreOwnerUpdateByAdminRequest;
 use App\Request\CaptainProfileCreateRequest;
 use App\Request\CaptainVacationCreateRequest;
-use App\Request\UserProfileUpdateRequest;
+use App\Request\StoreOwnerProfileUpdateRequest;
 use App\Request\CaptainProfileUpdateByAdminRequest;
 use App\Request\CaptainProfileUpdateRequest;
+use App\Request\UserProfileCreateRequest;
+use App\Request\UserProfileUpdateRequest;
 use App\Request\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -28,8 +32,9 @@ class UserManager
     private $userRepository;
     private $captainProfileEntityRepository;
     private $storeOwnerProfileEntityRepository;
+    private $userProfileEntityRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder, UserEntityRepository $userRepository, CaptainProfileEntityRepository $captainProfileEntityRepository, StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder, UserEntityRepository $userRepository, CaptainProfileEntityRepository $captainProfileEntityRepository, StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository, UserProfileEntityRepository $userProfileEntityRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
@@ -37,6 +42,7 @@ class UserManager
         $this->userRepository = $userRepository;
         $this->captainProfileEntityRepository = $captainProfileEntityRepository;
         $this->storeOwnerProfileEntityRepository = $storeOwnerProfileEntityRepository;
+        $this->userProfileEntityRepository = $userProfileEntityRepository;
     }
 
     public function userRegister(UserRegisterRequest $request)
@@ -44,9 +50,9 @@ class UserManager
         $userProfile = $this->getUserByUserID($request->getUserID());
         if ($userProfile == null) {
 
-        $userRegister = $this->autoMapping->map(UserRegisterRequest::class, StoreOwnerProfileEntity::class, $request);
+        $userRegister = $this->autoMapping->map(UserRegisterRequest::class, UserEntity::class, $request);
 
-        $user = new StoreOwnerProfileEntity($request->getUserID());
+        $user = new UserEntity($request->getUserID());
 
         if ($request->getPassword()) {
             $userRegister->setPassword($this->encoder->encodePassword($user, $request->getPassword()));
@@ -70,12 +76,12 @@ class UserManager
         return $this->userRepository->getUserByUserID($userID);
     }
 
-    public function userProfileCreate(UserProfileCreateRequest $request, $uuid)
+    public function createStoreOwnerProfile(StoreOwnerProfileCreateRequest $request, $uuid)
     {
         $request->setUuid($uuid);
-        $userProfile = $this->getUserProfileByUserID($request->getUserID());
+        $userProfile = $this->getStoreOwnerProfileByID($request->getUserID());
         if ($userProfile == null) {
-            $userProfile = $this->autoMapping->map(UserProfileCreateRequest::class, StoreOwnerProfileEntity::class, $request);
+            $userProfile = $this->autoMapping->map(StoreOwnerProfileCreateRequest::class, StoreOwnerProfileEntity::class, $request);
 
             $userProfile->setStatus('inactive');
             $userProfile->setFree(false);
@@ -91,12 +97,12 @@ class UserManager
         }
     }
 
-    public function userProfileUpdate(UserProfileUpdateRequest $request)
+    public function updateStoreOwnerProfile(StoreOwnerProfileUpdateRequest $request)
     {
         $item = $this->storeOwnerProfileEntityRepository->getUserProfile($request->getUserID());
 
         if ($item) {
-            $item = $this->autoMapping->mapToObject(UserProfileUpdateRequest::class, StoreOwnerProfileEntity::class, $request, $item);
+            $item = $this->autoMapping->mapToObject(StoreOwnerProfileUpdateRequest::class, StoreOwnerProfileEntity::class, $request, $item);
 
             $this->entityManager->flush();
             $this->entityManager->clear();
@@ -105,12 +111,12 @@ class UserManager
         }
     }
 
-    public function userProfileUpdateByAdmin(userProfileUpdateByAdminRequest $request)
+    public function updateStoreOwnerByAdmin(StoreOwnerUpdateByAdminRequest $request)
     {
         $item = $this->storeOwnerProfileEntityRepository->find($request->getId());
 
         if ($item) {
-            $item = $this->autoMapping->mapToObject(userProfileUpdateByAdminRequest::class, StoreOwnerProfileEntity::class, $request, $item);
+            $item = $this->autoMapping->mapToObject(StoreOwnerUpdateByAdminRequest::class, StoreOwnerProfileEntity::class, $request, $item);
 
             $this->entityManager->flush();
             $this->entityManager->clear();
@@ -119,14 +125,14 @@ class UserManager
         }
     }
 
-    public function getUserProfileByID($id)
+    public function getStoreOwnerProfileByID($id)
     {
-        return $this->storeOwnerProfileEntityRepository->getUserProfileByID($id);
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByID($id);
     }
 
-    public function getUserProfileByUserID($userID)
+    public function getStoreOwnerProfileByUserID($userID)
     {
-        return $this->storeOwnerProfileEntityRepository->getUserProfileByUserID($userID);
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByUserID($userID);
     }
 
     public function getremainingOrders($userID)
@@ -304,5 +310,53 @@ class UserManager
     public function getTopCaptainsInLastMonthDate($fromDate, $toDate)
     {
         return $this->captainProfileEntityRepository->getTopCaptainsInLastMonthDate($fromDate, $toDate);
+    }
+
+//User section 
+    public function createUserProfile(UserProfileCreateRequest $request, $uuid)
+    {
+        $request->setUuid($uuid);
+        $userProfile = $this->getUserProfileByUserId($request->getUserID());
+        if ($userProfile == null) {
+            $userProfile = $this->autoMapping->map(UserProfileCreateRequest::class, UserProfileEntity::class, $request);
+
+            $this->entityManager->persist($userProfile);
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+
+            return $userProfile;
+        }
+        else {
+            return true;
+        }
+    }
+
+    public function getUserProfileByUserId($userID)
+    {
+        return $this->userProfileEntityRepository->getUserProfileByUserId($userID);
+    }
+
+    public function updateUserProfile(UserProfileUpdateRequest $request)
+    {
+        $item = $this->userProfileEntityRepository->findOneBy(['userID'=>$request->getUserID()]);
+
+        if ($item) {
+            $item = $this->autoMapping->mapToObject(UserProfileUpdateRequest::class, UserProfileEntity::class, $request, $item);
+
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+
+            return $item;
+        }
+    }
+
+    public function getUserProfileByID($id)
+    {
+        return $this->userProfileEntityRepository->getUserProfileByID($id);
+    }
+
+    public function getUsersProfile()
+    {
+        return $this->userProfileEntityRepository->getUsersProfile();
     }
 }

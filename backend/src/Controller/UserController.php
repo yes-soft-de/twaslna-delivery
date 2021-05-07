@@ -3,15 +3,18 @@
 namespace App\Controller;
 
 use App\AutoMapping;
-use App\Request\UserProfileCreateRequest;
-use App\Request\UserProfileUpdateRequest;
+use App\Request\StoreOwnerProfileCreateRequest;
+use App\Request\StoreOwnerProfileUpdateRequest;
 use App\Request\CaptainProfileCreateRequest;
 use App\Request\CaptainProfileUpdateRequest;
+use App\Request\UserProfileCreateRequest ;
+use App\Request\UserProfileUpdateRequest  ;
 use App\Request\CaptainProfileUpdateByAdminRequest;
-use App\Request\userProfileUpdateByAdminRequest;
+use App\Request\StoreOwnerUpdateByAdminRequest;
 use App\Request\UserRegisterRequest;
 use App\Service\StoreOwnerProfileService;
 use App\Service\CaptainProfileService;
+use App\Service\UserProfileService;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,15 +31,17 @@ class UserController extends BaseController
     private $validator;
     private $storeOwnerProfileService;
     private $captainProfileService;
+    private $userProfileService;
    
 
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, StoreOwnerProfileService $storeOwnerProfileService, CaptainProfileService $captainProfileService)
+    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, StoreOwnerProfileService $storeOwnerProfileService, CaptainProfileService $captainProfileService,UserProfileService $userProfileService)
     {
         parent::__construct($serializer);
         $this->autoMapping = $autoMapping;
         $this->validator = $validator;
         $this->storeOwnerProfileService = $storeOwnerProfileService;
         $this->captainProfileService = $captainProfileService;
+        $this->userProfileService = $userProfileService;
         
     }
 
@@ -65,16 +70,16 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/userprofile", name="userProfileCreate", methods={"POST"})
+     * @Route("/storeowner", name="CreateStoreOwnerProfile", methods={"POST"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse
      */
-    public function userProfileCreate(Request $request)
+    public function createStoreOwnerProfile(Request $request)
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, UserProfileCreateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, StoreOwnerProfileCreateRequest::class, (object)$data);
 
         $request->setUserID($this->getUserId());
 
@@ -85,25 +90,25 @@ class UserController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $response = $this->storeOwnerProfileService->userProfileCreate($request);
+        $response = $this->storeOwnerProfileService->createStoreOwnerProfile($request);
 
         return $this->response($response, self::CREATE);
     }
 
     /**
-     * @Route("/userprofile", name="updateUserProfile", methods={"PUT"})
+     * @Route("/storeowner", name="UpdateStoreOwnerProfile", methods={"PUT"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse
      */
-    public function updateUserProfile(Request $request)
+    public function updateStoreOwnerProfile(Request $request)
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, UserProfileUpdateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, StoreOwnerProfileUpdateRequest::class, (object)$data);
         $request->setUserID($this->getUserId());
 
-        $response = $this->storeOwnerProfileService->userProfileUpdate($request);
+        $response = $this->storeOwnerProfileService->updateStoreOwnerProfile($request);
 
         return $this->response($response, self::UPDATE);
     }
@@ -114,49 +119,37 @@ class UserController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function userProfileUpdateByAdmin(Request $request)
+    public function updateStoreOwnerByAdmin(Request $request)
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, userProfileUpdateByAdminRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, StoreOwnerUpdateByAdminRequest::class, (object)$data);
 
-        $response = $this->storeOwnerProfileService->userProfileUpdateByAdmin($request);
+        $response = $this->storeOwnerProfileService->updateStoreOwnerByAdmin($request);
 
         return $this->response($response, self::UPDATE);
     }
 
     /**
-     * @Route("/userprofileByID/{id}", name="getUserProfileByID",methods={"GET"})
+     * @Route("/storeownerprofilebyid/{id}", name="getStoreOwnerProfileByID",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
-    public function getUserProfileByID($id)
+    public function getStoreOwnerProfileByID($id)
     {
-        $response = $this->storeOwnerProfileService->getUserProfileByID($id);
-
-        return $this->response($response, self::FETCH);
-    }
-
-   /**
-     * @Route("/userprofilebyuserid/{userId}", name="getUserProfileByID",methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
-     * @return JsonResponse
-     */
-    public function getUserProfile($userId)
-    {
-        $response = $this->storeOwnerProfileService->getUserProfileByUserID($userId);
+        $response = $this->storeOwnerProfileService->getStoreOwnerProfileByID($id);
 
         return $this->response($response, self::FETCH);
     }
 
     /**
-     * @Route("/userprofile", name="getUserProfileByUserId",methods={"GET"})
+     * @Route("/storeownerprofile", name="getStoreOwnerProfileByUserId",methods={"GET"})
      * @IsGranted("ROLE_OWNER")
      * @return JsonResponse
      */
-    public function getUserProfileByUserID()
+    public function getStoreOwnerProfileByUserID()
     {
-        $response = $this->storeOwnerProfileService->getUserProfileByUserID($this->getUserId());
+        $response = $this->storeOwnerProfileService->getStoreOwnerProfileByUserID($this->getUserId());
 
         return $this->response($response, self::FETCH);
     }
@@ -336,6 +329,8 @@ class UserController extends BaseController
 
         return $this->response($response, self::FETCH);
     }
+
+    //-----------> captain section 
      /**
      * @Route("/captains", name="getCaptains",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
@@ -412,5 +407,79 @@ class UserController extends BaseController
         $result = $this->captainProfileService->getTopCaptainsInLastMonthDate();
 
         return $this->response($result, self::FETCH);
+    }
+
+//-----------> User section 
+    /**
+     * @Route("/userprofile", name="createUserProfile", methods={"POST"})
+     * @IsGranted("ROLE_USER")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createUserProfile(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, UserProfileCreateRequest::class, (object)$data);
+       
+        $request->setUserID($this->getUserId());
+       
+        $response = $this->userProfileService->createUserProfile($request);
+
+        return $this->response($response, self::CREATE);
+    }
+
+    /**
+     * @Route("/userprofile", name="updateUserProfile", methods={"PUT"})
+     * @IsGranted("ROLE_USER")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateUserProfile(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, UserProfileUpdateRequest::class, (object)$data);
+        $request->setUserID($this->getUserId());
+
+        $response = $this->userProfileService->updateUserProfile($request);
+
+        return $this->response($response, self::UPDATE);
+    }
+
+    /**
+     * @Route("/userprofile", name="getUserProfileByUserId",methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     * @return JsonResponse
+     */
+    public function getUserProfileByUserID()
+    {
+        $response = $this->userProfileService->getUserProfileByUserID($this->getUserId());
+
+        return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * @Route("/userprofilebyid/{id}", name="getUserProfileByID",methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
+     */
+    public function getUserProfileByID($id)
+    {
+        $response = $this->userProfileService->getUserProfileByID($id);
+
+        return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * @Route("/usersprfile", name="getUsersProfile",methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
+     */
+    public function getUsersProfile()
+    {
+        $response = $this->userProfileService->getUsersProfile();
+
+        return $this->response($response, self::FETCH);
     }
 }

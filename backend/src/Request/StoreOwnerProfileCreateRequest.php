@@ -2,13 +2,19 @@
 
 namespace App\Request;
 
-class UserProfileCreateRequest
+class StoreOwnerProfileCreateRequest
 {
     private $userID;
 
     private $userName;
 
+    // private $story;
+
     private $image;
+
+    private $branch;
+    
+    private $city;
 
     private $uuid;
     
@@ -46,6 +52,38 @@ class UserProfileCreateRequest
         $this->userName = $userName;
     }
 
+    // /**
+    //  * @return mixed
+    //  */
+    // public function getStory()
+    // {
+    //     return $this->story;
+    // }
+
+    // /**
+    //  * @param mixed $story
+    //  */
+    // public function setStory($story): void
+    // {
+    //     $this->story = $story;
+    // }
+
+    // /**
+    //  * @return mixed
+    //  */
+    // public function getImage()
+    // {
+    //     return $this->image;
+    // }
+
+    // /**
+    //  * @param mixed $image
+    //  */
+    // public function setImage($image): void
+    // {
+    //     $this->image = $image;
+    // }
+
     public function getUuid(): ?string
     {
         return $this->uuid;
@@ -74,24 +112,4 @@ class UserProfileCreateRequest
         $this->image = $image;
     }
 
-
-    /**
-     * Get the value of phone
-     */ 
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    /**
-     * Set the value of phone
-     *
-     * @return  self
-     */ 
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
 }

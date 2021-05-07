@@ -6,12 +6,12 @@ use App\AutoMapping;
 use App\Entity\UserEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\UserManager;
-use App\Request\UserProfileCreateRequest;
-use App\Request\UserProfileUpdateRequest;
-use App\Request\userProfileUpdateByAdminRequest;
+use App\Request\StoreOwnerProfileCreateRequest;
+use App\Request\StoreOwnerProfileUpdateRequest;
+use App\Request\StoreOwnerUpdateByAdminRequest;
 use App\Request\UserRegisterRequest;
-use App\Response\UserProfileCreateResponse;
-use App\Response\UserProfileResponse;
+use App\Response\StoreOwnerProfileCreateResponse;
+use App\Response\StoreOwnerProfileResponse;
 use App\Response\UserRegisterResponse;
 use App\Service\RoomIdHelperService;
 use App\Service\StoreOwnerBranchService;
@@ -53,46 +53,46 @@ class StoreOwnerProfileService
         }
     }
 
-    public function userProfileCreate(UserProfileCreateRequest $request)
+    public function createStoreOwnerProfile(StoreOwnerProfileCreateRequest $request)
     {
         $uuid = $this->roomIdHelperService->roomIdGenerate();
-        $userProfile = $this->userManager->userProfileCreate($request, $uuid);
+        $userProfile = $this->userManager->createStoreOwnerProfile($request, $uuid);
 
         if ($userProfile instanceof StoreOwnerProfileEntity) {
 
-            return $this->autoMapping->map(StoreOwnerProfileEntity::class,UserProfileCreateResponse::class, $userProfile);
+            return $this->autoMapping->map(StoreOwnerProfileEntity::class,StoreOwnerProfileCreateResponse::class, $userProfile);
        }
         if ($userProfile == true) {
           
-           return $this->getUserProfileByUserID($request->getUserID());
+           return $this->getStoreOwnerProfileByID($request->getUserID());
        }
     }
 
-    public function userProfileUpdate(UserProfileUpdateRequest $request)
+    public function updateStoreOwnerProfile(StoreOwnerProfileUpdateRequest $request)
     {
-        $item = $this->userManager->userProfileUpdate($request);
+        $item = $this->userManager->updateStoreOwnerProfile($request);
         
-        return $this->autoMapping->map(StoreOwnerProfileEntity::class, UserProfileResponse::class, $item);
+        return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerProfileResponse::class, $item);
     }
 
-    public function userProfileUpdateByAdmin(userProfileUpdateByAdminRequest $request)
+    public function updateStoreOwnerByAdmin(StoreOwnerUpdateByAdminRequest $request)
     {
-        $item = $this->userManager->userProfileUpdateByAdmin($request);
+        $item = $this->userManager->updateStoreOwnerByAdmin($request);
 
-        return $this->autoMapping->map(StoreOwnerProfileEntity::class, UserProfileResponse::class, $item);
+        return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerProfileResponse::class, $item);
     }
 
-    public function getUserProfileByID($id)
+    public function getStoreOwnerProfileById($id)
     {
-        $item = $this->userManager->getUserProfileByID($id);
+        $item = $this->userManager->getStoreOwnerProfileByID($id);
       
         $item['branches'] = $this->storeOwnerBranchService->branchesByUserId($item['userID']);
-        return $this->autoMapping->map('array', UserProfileCreateResponse::class, $item);
+        return $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $item);
     }
 
-    public function getUserProfileByUserID($userID)
+    public function getStoreOwnerProfileByUserID($userID)
     {
-        $item = $this->userManager->getUserProfileByUserID($userID);
+        $item = $this->userManager->getStoreOwnerProfileByUserID($userID);
         $item['branches'] = $this->storeOwnerBranchService->branchesByUserId($userID);
 
         try {
@@ -107,7 +107,7 @@ class StoreOwnerProfileService
 
         }
         
-        return $this->autoMapping->map('array', UserProfileCreateResponse::class, $item);
+        return $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $item);
     }
 
 //هذا غير مستخدم ولكن يجب أن تتأكد
@@ -139,7 +139,7 @@ class StoreOwnerProfileService
         $response = [];
         $owners = $this->userManager->getAllStoreOwners();
         foreach ($owners as $owner) {
-            $response[] = $this->autoMapping->map('array', UserProfileCreateResponse::class, $owner);
+            $response[] = $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $owner);
             }        
         return $response;
     }
