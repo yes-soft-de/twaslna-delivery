@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ClientPaymentEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=ClientPaymentEntityRepository::class)
@@ -34,6 +35,7 @@ class ClientPaymentEntity
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Gedmo\Timestampable(on="create")
      */
     private $date;
 
