@@ -110,30 +110,6 @@ class StoreOwnerProfileService
         return $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $item);
     }
 
-//هذا غير مستخدم ولكن يجب أن تتأكد
-    // public function getCaptainsState($state)
-    // {
-    //     $response = [];
-    //     $items = $this->userManager->getCaptainsState($state);
-
-    //     foreach( $items as  $item ) {
-           
-    //         $item['totalBounce'] = $this->totalBounceCaptain($item['id'], 'admin');
-    //         $item['imageURL'] = $item['image'];
-    //         $item['image'] = $this->params.$item['image'];
-    //         $item['drivingLicenceURL'] = $item['drivingLicence'];
-    //         $item['drivingLicence'] = $this->params.$item['drivingLicence'];
-    //         $item['baseURL'] = $this->params;
-
-    //         $item['countOrdersDeliverd'] = $this->acceptedOrderService->countAcceptedOrder($item['captainID']);
-           
-    //         $item['rating'] = $this->ratingService->getRatingByCaptainID($item['captainID']);
-            
-    //         $response[]  = $this->autoMapping->map('array', CaptainProfileCreateResponse::class, $item);
-    //         }
-    //     return $response;
-    // }
-
     public function getAllStoreOwners()
     {
         $response = [];
