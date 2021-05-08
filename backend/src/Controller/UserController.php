@@ -7,8 +7,8 @@ use App\Request\StoreOwnerProfileCreateRequest;
 use App\Request\StoreOwnerProfileUpdateRequest;
 use App\Request\CaptainProfileCreateRequest;
 use App\Request\CaptainProfileUpdateRequest;
-use App\Request\ClientProfileCreateRequest ;
-use App\Request\UserProfileUpdateRequest  ;
+use App\Request\ClientProfileCreateRequest;
+use App\Request\ClientProfileUpdateRequest;
 use App\Request\CaptainProfileUpdateByAdminRequest;
 use App\Request\StoreOwnerUpdateByAdminRequest;
 use App\Request\UserRegisterRequest;
@@ -439,7 +439,7 @@ class UserController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, UserProfileUpdateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, ClientProfileUpdateRequest::class, (object)$data);
         $request->setUserID($this->getUserId());
 
         $response = $this->clientProfileService->updateUserProfile($request);

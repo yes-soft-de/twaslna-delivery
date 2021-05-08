@@ -18,8 +18,8 @@ use App\Request\CaptainVacationCreateRequest;
 use App\Request\StoreOwnerProfileUpdateRequest;
 use App\Request\CaptainProfileUpdateByAdminRequest;
 use App\Request\CaptainProfileUpdateRequest;
-use App\Request\UserProfileCreateRequest;
-use App\Request\UserProfileUpdateRequest;
+use App\Request\ClientProfileCreateRequest;
+use App\Request\ClientProfileUpdateRequest;
 use App\Request\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -313,12 +313,12 @@ class UserManager
     }
 
 //User section 
-    public function createUserProfile(UserProfileCreateRequest $request, $uuid)
+    public function createUserProfile(ClientProfileCreateRequest $request, $uuid)
     {
         $request->setUuid($uuid);
         $userProfile = $this->getUserProfileByUserId($request->getUserID());
         if ($userProfile == null) {
-            $userProfile = $this->autoMapping->map(UserProfileCreateRequest::class, ClientProfileEntity::class, $request);
+            $userProfile = $this->autoMapping->map(ClientProfileCreateRequest::class, ClientProfileEntity::class, $request);
 
             $this->entityManager->persist($userProfile);
             $this->entityManager->flush();
@@ -336,12 +336,12 @@ class UserManager
         return $this->clientProfileEntityRepository->getUserProfileByUserId($userID);
     }
 
-    public function updateUserProfile(UserProfileUpdateRequest $request)
+    public function updateUserProfile(ClientProfileUpdateRequest $request)
     {
         $item = $this->clientProfileEntityRepository->findOneBy(['userID'=>$request->getUserID()]);
 
         if ($item) {
-            $item = $this->autoMapping->mapToObject(UserProfileUpdateRequest::class, ClientProfileEntity::class, $request, $item);
+            $item = $this->autoMapping->mapToObject(ClientProfileUpdateRequest::class, ClientProfileEntity::class, $request, $item);
 
             $this->entityManager->flush();
             $this->entityManager->clear();

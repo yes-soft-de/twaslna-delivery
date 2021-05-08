@@ -2,7 +2,7 @@
 
 namespace App\Response;
 
-class UserProfileResponse
+class ClientProfileResponse
 {
     public $id;
     

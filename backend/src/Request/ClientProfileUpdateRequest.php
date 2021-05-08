@@ -2,7 +2,7 @@
 
 namespace App\Request;
 
-class UserProfileUpdateRequest
+class ClientProfileUpdateRequest
 {
     private $id;
 

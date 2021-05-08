@@ -9,7 +9,7 @@ use App\Entity\CaptainProfileEntity;
 use App\Manager\UserManager;
 use App\Request\ClientProfileCreateRequest;
 use App\Request\CaptainProfileCreateRequest;
-use App\Request\UserProfileUpdateRequest;
+use App\Request\ClientProfileUpdateRequest;
 use App\Request\CaptainProfileUpdateRequest;
 use App\Request\UserRegisterRequest;
 use App\Response\UserProfileCreateResponse;

@@ -3,12 +3,11 @@
 namespace App\Service;
 
 use App\AutoMapping;
-use App\Entity\UserEntity;
 use App\Entity\ClientProfileEntity;
 use App\Manager\UserManager;
 use App\Request\ClientProfileCreateRequest;
-use App\Request\UserProfileUpdateRequest;
-use App\Response\UserProfileResponse;
+use App\Request\ClientProfileUpdateRequest;
+use App\Response\ClientProfileResponse;
 use App\Service\RoomIdHelperService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -38,31 +37,31 @@ class ClientProfileService
       
         if ($userProfile instanceof ClientProfileEntity) {
 
-            return $this->autoMapping->map(ClientProfileEntity::class,UserProfileResponse::class, $userProfile);
+            return $this->autoMapping->map(ClientProfileEntity::class,ClientProfileResponse::class, $userProfile);
        }
         if ($userProfile == true) {
             return $this->getUserProfileByUserID($request->getUserID());
        }
     }
 
-    public function updateUserProfile(UserProfileUpdateRequest $request)
+    public function updateUserProfile(ClientProfileUpdateRequest $request)
     {
         $item = $this->userManager->updateUserProfile($request);
         
-        return $this->autoMapping->map(ClientProfileEntity ::class, UserProfileResponse::class, $item);
+        return $this->autoMapping->map(ClientProfileEntity ::class, ClientProfileResponse::class, $item);
     }
 
     public function getUserProfileByUserID($userID)
     {
         $item = $this->userManager->getUserProfileByUserID($userID);  
             
-        return $this->autoMapping->map('array', UserProfileResponse::class, $item);
+        return $this->autoMapping->map('array', ClientProfileResponse::class, $item);
     }
 
     public function getUserProfileByID($id)
     {
         $item = $this->userManager->getUserProfileByID($id);
-        return $this->autoMapping->map('array', UserProfileResponse::class, $item);
+        return $this->autoMapping->map('array', ClientProfileResponse::class, $item);
     }
 
     public function getUsersProfile()
@@ -70,7 +69,7 @@ class ClientProfileService
         $response = [];
         $items = $this->userManager->getUsersProfile();
         foreach ($items as $item) {
-            $response[] = $this->autoMapping->map('array', UserProfileResponse::class, $item);
+            $response[] = $this->autoMapping->map('array', ClientProfileResponse::class, $item);
             }        
         return $response;
     }
