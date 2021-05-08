@@ -18,7 +18,7 @@ use App\Service\StoreOwnerProfileService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use App\Service\RoomIdHelperService;
 use App\Service\DateFactoryService;
-use App\Service\AcceptedOrderService;
+use App\Service\CaptainService;
 use App\Service\CaptainProfileService;
 use App\Service\StoreOwnerBranchService;
 use App\Constant\StatusConstant;
@@ -36,17 +36,17 @@ class OrderService extends StatusConstant
     // private $notificationService;
     private $roomIdHelperService;
     private $dateFactoryService;
-    private $acceptedOrderService;
+    private $captainService;
     private $captainProfileService;
 
     public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, LogService $logService, StoreOwnerBranchService $storeOwnerBranchService, StoreOwnerSubscriptionService $storeOwnerSubscriptionService, StoreOwnerProfileService $storeOwnerProfileService, ParameterBagInterface $params,  RatingService $ratingService
                                 // , NotificationService $notificationService
-                               , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, AcceptedOrderService $acceptedOrderService, CaptainProfileService $captainProfileService
+                               , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, CaptainService $captainService, CaptainProfileService $captainProfileService
                                 )
     {
         $this->autoMapping = $autoMapping;
         $this->orderManager = $orderManager;
-        $this->acceptedOrderService = $acceptedOrderService;
+        $this->captainService = $captainService;
         $this->logService = $logService;
         $this->storeOwnerBranchService = $storeOwnerBranchService;
         $this->storeOwnerSubscriptionService = $storeOwnerSubscriptionService;
@@ -56,7 +56,6 @@ class OrderService extends StatusConstant
         $this->dateFactoryService = $dateFactoryService;
         $this->params = $params->get('upload_base_url') . '/';
         // $this->notificationService = $notificationService;
-        $this->acceptedOrderService = $acceptedOrderService;
         $this->captainProfileService = $captainProfileService;
     }
 
@@ -162,7 +161,7 @@ class OrderService extends StatusConstant
                     $order['fromBranch'] = $this->storeOwnerBranchService->getBrancheById($order['fromBranch']);
                }
             
-            $order['owner'] = $this->storeOwnerProfileService->getUserProfileByUserID($order['ownerID']);
+            $order['owner'] = $this->storeOwnerProfileService->getStoreOwnerProfileByUserID($order['ownerID']);
             if ($order['captainID'] == true) {
             $order['acceptedOrder'] = $this->captainProfileService->getCaptainProfileByCaptainID($order['captainID']);
             }
@@ -187,7 +186,7 @@ class OrderService extends StatusConstant
                 }
                 $order['record'] = $this->logService->getLogByOrderId($order['id']);
                
-                $order['owner'] = $this->storeOwnerProfileService->getUserProfileByUserID($order['ownerID']);
+                $order['owner'] = $this->storeOwnerProfileService->getStoreOwnerProfileByUserID($order['ownerID']);
                 $response[] = $this->autoMapping->map('array', OrderResponse::class, $order);
             }
         // }
@@ -344,9 +343,9 @@ class OrderService extends StatusConstant
 
         if ($userType == "captain") {
         
-            $response['countOrdersInMonth'] = $this->acceptedOrderService->countOrdersInMonthForCaptain($date[0], $date[1], $userId);
-            $response['countOrdersInDay'] = $this->acceptedOrderService->countCaptainOrdersInDay($userId, $date[0],$date[1]);
-            $acceptedInMonth = $this->acceptedOrderService->getAcceptedOrderByCaptainIdInMonth($date[0], $date[1], $userId);
+            $response['countOrdersInMonth'] = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $userId);
+            $response['countOrdersInDay'] = $this->captainService->countCaptainOrdersInDay($userId, $date[0],$date[1]);
+            $acceptedInMonth = $this->captainService->getAcceptedOrderByCaptainIdInMonth($date[0], $date[1], $userId);
             
             foreach ($acceptedInMonth as $item){
                 $ordersInMonth =  $this->orderManager->orderById($item['id']);  
