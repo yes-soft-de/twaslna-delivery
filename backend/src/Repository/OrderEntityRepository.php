@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\OrderEntity;
-use App\Entity\AcceptedOrderEntity;
 use App\Entity\CaptainProfileEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\BranchesEntity;
@@ -69,25 +68,6 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-    
-    //for delete
-    // public function orderStatusForCaptain($userID, $orderId)
-    // {
-    //     return $this->createQueryBuilder('OrderEntity')
-    //         ->addselect('OrderEntity.id', 'OrderEntity.ownerID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.date', 'OrderEntity.updateDate', 'OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'OrderEntity.fromBranch')
-
-    //         ->leftJoin(AcceptedOrderEntity::class, 'acceptedOrderEntity', Join::WITH, 'acceptedOrderEntity.orderID = OrderEntity.id')
-
-    //         // ->join(CaptainProfileEntity::class, 'captainProfileEntity', Join::WITH, 'captainProfileEntity.captainID = acceptedOrderEntity.captainID')
-
-    //         // ->andWhere('acceptedOrderEntity.captainID = :userID')
-    //         // ->andWhere('acceptedOrderEntity.orderID = :ID')
-    //         ->andWhere('OrderEntity.id = :ID')
-    //         // ->setParameter('userID', $userID)
-    //         ->setParameter('ID', $orderId)
-    //         ->getQuery()
-    //         ->getOneOrNullResult();
-    // }
 
     public function closestOrders()
     {
@@ -156,13 +136,11 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function ongoingOrders()
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->addSelect('OrderEntity.id as orderID', 'OrderEntity.ownerID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.date as orderDate', 'OrderEntity.updateDate as updateOrderDate', 'OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'captainProfileEntity.name', 'acceptedOrderEntity.date as acceptedOrderDate', 'acceptedOrderEntity.captainID', 'acceptedOrderEntity.duration', 'captainProfileEntity.car', 'captainProfileEntity.drivingLicence', 'captainProfileEntity.image', 'userProfileEntity.userName as ownerName', 'OrderEntity.fromBranch','captainProfileEntity.specialLink') 
-            
-            ->leftJoin(AcceptedOrderEntity::class, 'acceptedOrderEntity', Join::WITH, 'acceptedOrderEntity.orderID = OrderEntity.id')
+            ->addSelect('OrderEntity.id as orderID', 'OrderEntity.ownerID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.date as orderDate', 'OrderEntity.updateDate as updateOrderDate', 'OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'captainProfileEntity.name', 'captainProfileEntity.car', 'captainProfileEntity.drivingLicence', 'captainProfileEntity.image', 'StoreOwnerProfileEntity.userName as ownerName', 'OrderEntity.fromBranch','captainProfileEntity.specialLink') 
+           
+            ->leftJoin(CaptainProfileEntity::class, 'captainProfileEntity', Join::WITH, 'OrderEntity.captainID = captainProfileEntity.captainID')
 
-            ->leftJoin(CaptainProfileEntity::class, 'captainProfileEntity', Join::WITH, 'acceptedOrderEntity.captainID = captainProfileEntity.captainID')
-
-            ->leftJoin(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.userID = OrderEntity.ownerID')
+            ->leftJoin(StoreOwnerProfileEntity::class, 'StoreOwnerProfileEntity', Join::WITH, 'StoreOwnerProfileEntity.userID = OrderEntity.ownerID')
 
             ->andWhere("OrderEntity.state = 'ongoing' ") 
             ->getQuery()
