@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\UserProfileEntityRepository;
+use App\Repository\ClientProfileEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ClientProfileEntityRepository::class)
  */
-class UserProfileEntity
+class ClientProfileEntity
 {
     /**
      * @ORM\Id

@@ -4,13 +4,13 @@ namespace App\Manager;
 
 use App\AutoMapping;
 use App\Entity\UserEntity;
-use App\Entity\UserProfileEntity;
+use App\Entity\ClientProfileEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\CaptainProfileEntity;
 use App\Repository\UserEntityRepository;
 use App\Repository\StoreOwnerProfileEntityRepository;
 use App\Repository\CaptainProfileEntityRepository;
-use App\Repository\UserProfileEntityRepository;
+use App\Repository\ClientProfileEntityRepository;
 use App\Request\StoreOwnerProfileCreateRequest;
 use App\Request\StoreOwnerUpdateByAdminRequest;
 use App\Request\CaptainProfileCreateRequest;
@@ -32,9 +32,9 @@ class UserManager
     private $userRepository;
     private $captainProfileEntityRepository;
     private $storeOwnerProfileEntityRepository;
-    private $userProfileEntityRepository;
+    private $clientProfileEntityRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder, UserEntityRepository $userRepository, CaptainProfileEntityRepository $captainProfileEntityRepository, StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository, UserProfileEntityRepository $userProfileEntityRepository)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder, UserEntityRepository $userRepository, CaptainProfileEntityRepository $captainProfileEntityRepository, StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository, ClientProfileEntityRepository $clientProfileEntityRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
@@ -42,7 +42,7 @@ class UserManager
         $this->userRepository = $userRepository;
         $this->captainProfileEntityRepository = $captainProfileEntityRepository;
         $this->storeOwnerProfileEntityRepository = $storeOwnerProfileEntityRepository;
-        $this->userProfileEntityRepository = $userProfileEntityRepository;
+        $this->clientProfileEntityRepository = $clientProfileEntityRepository;
     }
 
     public function userRegister(UserRegisterRequest $request)
@@ -318,7 +318,7 @@ class UserManager
         $request->setUuid($uuid);
         $userProfile = $this->getUserProfileByUserId($request->getUserID());
         if ($userProfile == null) {
-            $userProfile = $this->autoMapping->map(UserProfileCreateRequest::class, UserProfileEntity::class, $request);
+            $userProfile = $this->autoMapping->map(UserProfileCreateRequest::class, ClientProfileEntity::class, $request);
 
             $this->entityManager->persist($userProfile);
             $this->entityManager->flush();
@@ -333,15 +333,15 @@ class UserManager
 
     public function getUserProfileByUserId($userID)
     {
-        return $this->userProfileEntityRepository->getUserProfileByUserId($userID);
+        return $this->clientProfileEntityRepository->getUserProfileByUserId($userID);
     }
 
     public function updateUserProfile(UserProfileUpdateRequest $request)
     {
-        $item = $this->userProfileEntityRepository->findOneBy(['userID'=>$request->getUserID()]);
+        $item = $this->clientProfileEntityRepository->findOneBy(['userID'=>$request->getUserID()]);
 
         if ($item) {
-            $item = $this->autoMapping->mapToObject(UserProfileUpdateRequest::class, UserProfileEntity::class, $request, $item);
+            $item = $this->autoMapping->mapToObject(UserProfileUpdateRequest::class, ClientProfileEntity::class, $request, $item);
 
             $this->entityManager->flush();
             $this->entityManager->clear();
@@ -352,11 +352,11 @@ class UserManager
 
     public function getUserProfileByID($id)
     {
-        return $this->userProfileEntityRepository->getUserProfileByID($id);
+        return $this->clientProfileEntityRepository->getUserProfileByID($id);
     }
 
     public function getUsersProfile()
     {
-        return $this->userProfileEntityRepository->getUsersProfile();
+        return $this->clientProfileEntityRepository->getUsersProfile();
     }
 }

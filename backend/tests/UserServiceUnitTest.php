@@ -7,7 +7,7 @@ use App\Entity\UserEntity;
 use App\Entity\UserProfileEntity;
 use App\Entity\CaptainProfileEntity;
 use App\Manager\UserManager;
-use App\Request\UserProfileCreateRequest;
+use App\Request\ClientProfileCreateRequest;
 use App\Request\CaptainProfileCreateRequest;
 use App\Request\UserProfileUpdateRequest;
 use App\Request\CaptainProfileUpdateRequest;

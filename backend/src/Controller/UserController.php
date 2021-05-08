@@ -7,14 +7,14 @@ use App\Request\StoreOwnerProfileCreateRequest;
 use App\Request\StoreOwnerProfileUpdateRequest;
 use App\Request\CaptainProfileCreateRequest;
 use App\Request\CaptainProfileUpdateRequest;
-use App\Request\UserProfileCreateRequest ;
+use App\Request\ClientProfileCreateRequest ;
 use App\Request\UserProfileUpdateRequest  ;
 use App\Request\CaptainProfileUpdateByAdminRequest;
 use App\Request\StoreOwnerUpdateByAdminRequest;
 use App\Request\UserRegisterRequest;
 use App\Service\StoreOwnerProfileService;
 use App\Service\CaptainProfileService;
-use App\Service\UserProfileService;
+use App\Service\ClientProfileService;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,17 +31,17 @@ class UserController extends BaseController
     private $validator;
     private $storeOwnerProfileService;
     private $captainProfileService;
-    private $userProfileService;
+    private $clientProfileService;
    
 
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, StoreOwnerProfileService $storeOwnerProfileService, CaptainProfileService $captainProfileService,UserProfileService $userProfileService)
+    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, StoreOwnerProfileService $storeOwnerProfileService, CaptainProfileService $captainProfileService,ClientProfileService $clientProfileService)
     {
         parent::__construct($serializer);
         $this->autoMapping = $autoMapping;
         $this->validator = $validator;
         $this->storeOwnerProfileService = $storeOwnerProfileService;
         $this->captainProfileService = $captainProfileService;
-        $this->userProfileService = $userProfileService;
+        $this->clientProfileService = $clientProfileService;
         
     }
 
@@ -420,11 +420,11 @@ class UserController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, UserProfileCreateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, ClientProfileCreateRequest::class, (object)$data);
        
         $request->setUserID($this->getUserId());
        
-        $response = $this->userProfileService->createUserProfile($request);
+        $response = $this->clientProfileService->createUserProfile($request);
 
         return $this->response($response, self::CREATE);
     }
@@ -442,7 +442,7 @@ class UserController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, UserProfileUpdateRequest::class, (object)$data);
         $request->setUserID($this->getUserId());
 
-        $response = $this->userProfileService->updateUserProfile($request);
+        $response = $this->clientProfileService->updateUserProfile($request);
 
         return $this->response($response, self::UPDATE);
     }
@@ -454,7 +454,7 @@ class UserController extends BaseController
      */
     public function getUserProfileByUserID()
     {
-        $response = $this->userProfileService->getUserProfileByUserID($this->getUserId());
+        $response = $this->clientProfileService->getUserProfileByUserID($this->getUserId());
 
         return $this->response($response, self::FETCH);
     }
@@ -466,7 +466,7 @@ class UserController extends BaseController
      */
     public function getUserProfileByID($id)
     {
-        $response = $this->userProfileService->getUserProfileByID($id);
+        $response = $this->clientProfileService->getUserProfileByID($id);
 
         return $this->response($response, self::FETCH);
     }
@@ -478,7 +478,7 @@ class UserController extends BaseController
      */
     public function getUsersProfile()
     {
-        $response = $this->userProfileService->getUsersProfile();
+        $response = $this->clientProfileService->getUsersProfile();
 
         return $this->response($response, self::FETCH);
     }

@@ -2,21 +2,21 @@
 
 namespace App\Repository;
 
-use App\Entity\UserProfileEntity;
+use App\Entity\ClientProfileEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method UserProfileEntity|null find($id, $lockMode = null, $lockVersion = null)
- * @method UserProfileEntity|null findOneBy(array $criteria, array $orderBy = null)
- * @method UserProfileEntity[]    findAll()
- * @method UserProfileEntity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ClientProfileEntity|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ClientProfileEntity|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ClientProfileEntity[]    findAll()
+ * @method ClientProfileEntity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserProfileEntityRepository extends ServiceEntityRepository
+class ClientProfileEntityRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, UserProfileEntity::class);
+        parent::__construct($registry, ClientProfileEntity::class);
     }
 
     public function getUserProfileByUserId($userID)

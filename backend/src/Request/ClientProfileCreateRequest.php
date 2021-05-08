@@ -2,7 +2,7 @@
 
 namespace App\Request;
 
-class UserProfileCreateRequest
+class ClientProfileCreateRequest
 {
     private $userID;
 

@@ -4,16 +4,16 @@ namespace App\Service;
 
 use App\AutoMapping;
 use App\Entity\UserEntity;
-use App\Entity\UserProfileEntity;
+use App\Entity\ClientProfileEntity;
 use App\Manager\UserManager;
-use App\Request\UserProfileCreateRequest;
+use App\Request\ClientProfileCreateRequest;
 use App\Request\UserProfileUpdateRequest;
 use App\Response\UserProfileResponse;
 use App\Service\RoomIdHelperService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 
-class UserProfileService
+class ClientProfileService
 {
     private $autoMapping;
     private $userManager;
@@ -30,15 +30,15 @@ class UserProfileService
         $this->params = $params->get('upload_base_url') . '/';
     }
 
-    public function createUserProfile(UserProfileCreateRequest $request)
+    public function createUserProfile(ClientProfileCreateRequest $request)
     {  
        $uuid = $this->roomIdHelperService->roomIdGenerate();
     
        $userProfile = $this->userManager->createUserProfile($request, $uuid);
       
-        if ($userProfile instanceof UserProfileEntity) {
+        if ($userProfile instanceof ClientProfileEntity) {
 
-            return $this->autoMapping->map(UserProfileEntity::class,UserProfileResponse::class, $userProfile);
+            return $this->autoMapping->map(ClientProfileEntity::class,UserProfileResponse::class, $userProfile);
        }
         if ($userProfile == true) {
             return $this->getUserProfileByUserID($request->getUserID());
@@ -49,7 +49,7 @@ class UserProfileService
     {
         $item = $this->userManager->updateUserProfile($request);
         
-        return $this->autoMapping->map(UserProfileEntity ::class, UserProfileResponse::class, $item);
+        return $this->autoMapping->map(ClientProfileEntity ::class, UserProfileResponse::class, $item);
     }
 
     public function getUserProfileByUserID($userID)
