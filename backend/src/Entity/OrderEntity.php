@@ -92,6 +92,11 @@ class OrderEntity
      */
     private $captainID;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $clientID;
+
 
     public function getId(): ?int
     {
@@ -281,6 +286,18 @@ class OrderEntity
     public function setCaptainID(string $captainID): self
     {
         $this->captainID = $captainID;
+
+        return $this;
+    }
+
+    public function getClientID(): ?string
+    {
+        return $this->clientID;
+    }
+
+    public function setClientID(string $clientID): self
+    {
+        $this->clientID = $clientID;
 
         return $this;
     }
