@@ -2,7 +2,7 @@
 
 namespace App\Constant;
 
-class MessageConstant
+abstract class MessageConstant
 {
     static $MESSAGE_CAPTAIN_NEW_ORDER = "هناك طلب جديد، الرجاء تفقد قائمة الطلبات لديك";
 

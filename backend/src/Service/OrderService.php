@@ -21,9 +21,10 @@ use App\Service\DateFactoryService;
 use App\Service\CaptainService;
 use App\Service\CaptainProfileService;
 use App\Service\StoreOwnerBranchService;
+use App\Constant\ResponseConstant;
 use App\Constant\StatusConstant;
 
-class OrderService extends StatusConstant
+class OrderService
 {
     private $autoMapping;
     private $orderManager;
@@ -61,7 +62,7 @@ class OrderService extends StatusConstant
 
     public function createOrder(OrderCreateRequest $request)
     {  
-        $response = self::$PLEASE_SUBSCRIBE;
+        $response = ResponseConstant::$PLEASE_SUBSCRIBE;
         //get Subscribe id Current
         $subscriptionCurrent =  $this->storeOwnerSubscriptionService->getSubscriptionCurrent($request->getOwnerID());
       
@@ -89,19 +90,19 @@ class OrderService extends StatusConstant
                 $response =$this->autoMapping->map(OrderEntity::class, OrderResponse::class, $item);
             }
             
-            if ($status == self::$INACTIVE) {
-                $response = self::$SUBSCRIBE_IS_AWAITING_ACTIVATION;
+            if ($status == StatusConstant::$INACTIVE) {
+                $response = ResponseConstant::$SUBSCRIBE_IS_AWAITING_ACTIVATION;
             }
-            if ($status == self::$ORDERS_FINISHED) {
-                $response = self::$SUBSCRIBE_AND_COUNT_ORDER_FINISHED;
-            }
-
-            if ($status == self::$DATE_FINISHED) {
-                $response = self::$SUBSCRIBE_AND_DATE_FINISHED;
+            if ($status == StatusConstant::$ORDERS_FINISHED) {
+                $response = ResponseConstant::$SUBSCRIBE_AND_COUNT_ORDER_FINISHED;
             }
 
-            if ($status == self::$UNACCEPT) {
-                $response = self::$SUBSCRIBE_UNACCEPTED;
+            if ($status == StatusConstant::$DATE_FINISHED) {
+                $response = ResponseConstant::$SUBSCRIBE_AND_DATE_FINISHED;
+            }
+
+            if ($status == StatusConstant::$UNACCEPT) {
+                $response = ResponseConstant::$SUBSCRIBE_UNACCEPTED;
             }
     }
         return $response;
