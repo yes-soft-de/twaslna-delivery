@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\AutoMapping;
 use App\Request\ClientProfileCreateRequest;
 use App\Request\ClientProfileUpdateRequest;
+use App\Request\UserRegisterRequest;
 use App\Service\ClientProfileService;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,9 +32,33 @@ class ClientProfileController extends BaseController
         $this->clientProfileService = $clientProfileService;     
     }
 
+     /**
+     * @Route("/clientregister", name="clientRegister", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function clientRegister(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        
+
+        $request = $this->autoMapping->map(stdClass::class, UserRegisterRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->clientProfileService->clientRegister($request);
+       
+        return $this->response($response, self::CREATE);
+    }
+
     /**
      * @Route("/userprofile", name="createUserProfile", methods={"POST"})
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("ROLE_CLIENT")
      * @param Request $request
      * @return JsonResponse
      */
@@ -52,7 +77,7 @@ class ClientProfileController extends BaseController
 
     /**
      * @Route("/userprofile", name="updateUserProfile", methods={"PUT"})
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("ROLE_CLIENT")
      * @param Request $request
      * @return JsonResponse
      */
@@ -70,7 +95,7 @@ class ClientProfileController extends BaseController
 
     /**
      * @Route("/userprofile", name="getUserProfileByUserId",methods={"GET"})
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("ROLE_CLIENT")
      * @return JsonResponse
      */
     public function getUserProfileByUserID()

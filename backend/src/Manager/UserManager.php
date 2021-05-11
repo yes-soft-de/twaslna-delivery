@@ -45,10 +45,10 @@ class UserManager
         $this->clientProfileEntityRepository = $clientProfileEntityRepository;
     }
 
-    public function userRegister(UserRegisterRequest $request)
+    public function storeOwnerRegister(UserRegisterRequest $request)
     {
-        $userProfile = $this->getUserByUserID($request->getUserID());
-        if ($userProfile == null) {
+        $user = $this->getUserByUserID($request->getUserID());
+        if ($user == null) {
 
         $userRegister = $this->autoMapping->map(UserRegisterRequest::class, UserEntity::class, $request);
 
@@ -58,7 +58,59 @@ class UserManager
             $userRegister->setPassword($this->encoder->encodePassword($user, $request->getPassword()));
         }
 
-        $userRegister->setRoles($request->getRoles());
+        $userRegister->setRoles(["ROLE_OWNER"]);
+
+        $this->entityManager->persist($userRegister);
+        $this->entityManager->flush();
+        $this->entityManager->clear();
+
+        return $userRegister;
+    }
+    else {
+        return true;
+    }
+    }
+
+    public function clientRegister(UserRegisterRequest $request)
+    {
+        $user = $this->getUserByUserID($request->getUserID());
+        if ($user == null) {
+
+        $userRegister = $this->autoMapping->map(UserRegisterRequest::class, UserEntity::class, $request);
+
+        $user = new UserEntity($request->getUserID());
+
+        if ($request->getPassword()) {
+            $userRegister->setPassword($this->encoder->encodePassword($user, $request->getPassword()));
+        }
+
+        $userRegister->setRoles(["ROLE_CLIENT"]);
+
+        $this->entityManager->persist($userRegister);
+        $this->entityManager->flush();
+        $this->entityManager->clear();
+
+        return $userRegister;
+    }
+    else {
+        return true;
+    }
+    }
+
+    public function captainRegister(UserRegisterRequest $request)
+    {
+        $user = $this->getUserByUserID($request->getUserID());
+        if ($user == null) {
+
+        $userRegister = $this->autoMapping->map(UserRegisterRequest::class, UserEntity::class, $request);
+
+        $user = new UserEntity($request->getUserID());
+
+        if ($request->getPassword()) {
+            $userRegister->setPassword($this->encoder->encodePassword($user, $request->getPassword()));
+        }
+
+        $userRegister->setRoles(["ROLE_CAPTAIN"]);
 
         $this->entityManager->persist($userRegister);
         $this->entityManager->flush();

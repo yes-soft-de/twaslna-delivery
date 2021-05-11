@@ -4,10 +4,13 @@ namespace App\Service;
 
 use App\AutoMapping;
 use App\Entity\ClientProfileEntity;
+use App\Entity\UserEntity;
 use App\Manager\UserManager;
 use App\Request\ClientProfileCreateRequest;
+use App\Request\UserRegisterRequest;
 use App\Request\ClientProfileUpdateRequest;
 use App\Response\ClientProfileResponse;
+use App\Response\UserRegisterResponse;
 use App\Service\RoomIdHelperService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -27,6 +30,22 @@ class ClientProfileService
         $this->roomIdHelperService = $roomIdHelperService;
 
         $this->params = $params->get('upload_base_url') . '/';
+    }
+
+    public function clientRegister(UserRegisterRequest $request)
+    {
+        $userRegister = $this->userManager->clientRegister($request);
+        if ($userRegister instanceof UserEntity) {
+            
+        return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $userRegister);
+
+        }
+        if ($userRegister == true) {
+          
+            $user = $this->userManager->getUserByUserID($request->getUserID());
+            $user['found']="yes";
+            return $user;
+        }
     }
 
     public function createUserProfile(ClientProfileCreateRequest $request)

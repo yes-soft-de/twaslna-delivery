@@ -35,6 +35,30 @@ class CaptainProfileController extends BaseController
         
     }
 
+     /**
+     * @Route("/captainregister", name="captainRegister", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function captainRegister(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        
+
+        $request = $this->autoMapping->map(stdClass::class, UserRegisterRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->captainProfileService->captainRegister($request);
+       
+        return $this->response($response, self::CREATE);
+    }
+
     /**
      * @Route("/captainprofile", name="captainprofileCreate", methods={"POST"})
      * @IsGranted("ROLE_CAPTAIN")

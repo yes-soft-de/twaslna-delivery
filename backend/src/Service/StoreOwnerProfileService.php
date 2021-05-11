@@ -37,9 +37,9 @@ class StoreOwnerProfileService
         $this->params = $params->get('upload_base_url') . '/';
     }
 
-    public function userRegister(UserRegisterRequest $request)
+    public function storeOwnerRegister(UserRegisterRequest $request)
     {
-        $userRegister = $this->userManager->userRegister($request);
+        $userRegister = $this->userManager->storeOwnerRegister($request);
         if ($userRegister instanceof UserEntity) {
             
         return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $userRegister);

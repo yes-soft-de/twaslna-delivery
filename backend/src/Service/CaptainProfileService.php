@@ -4,12 +4,15 @@ namespace App\Service;
 
 use App\AutoMapping;
 use App\Entity\CaptainProfileEntity;
+use App\Entity\UserEntity;
 use App\Request\CaptainProfileCreateRequest;
 use App\Request\CaptainVacationCreateRequest;
 use App\Request\CaptainProfileUpdateRequest;
+use App\Request\UserRegisterRequest;
 use App\Request\CaptainProfileUpdateByAdminRequest;
 use App\Response\CaptainProfileCreateResponse;
 use App\Response\CaptainFinancialAccountDetailsResponse;
+use App\Response\UserRegisterResponse ;
 use App\Service\CaptainPaymentService;
 use App\Service\RoomIdHelperService;
 use App\Service\CaptainService;
@@ -42,6 +45,22 @@ class CaptainProfileService
         $this->captainService = $captainService;
 
         $this->params = $params->get('upload_base_url') . '/';
+    }
+    
+    public function captainRegister(UserRegisterRequest $request)
+    {
+        $userRegister = $this->userManager->captainRegister($request);
+        if ($userRegister instanceof UserEntity) {
+            
+        return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $userRegister);
+
+        }
+        if ($userRegister == true) {
+          
+            $user = $this->userManager->getUserByUserID($request->getUserID());
+            $user['found']="yes";
+            return $user;
+        }
     }
 
     public function createCaptainProfile(CaptainProfileCreateRequest $request)

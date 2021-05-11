@@ -35,11 +35,11 @@ class StoreOwnerProfileController extends BaseController
     }
 
     /**
-     * @Route("/user", name="userRegister", methods={"POST"})
+     * @Route("/storeownerregister", name="storeOwnerRegister", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      */
-    public function userRegister(Request $request)
+    public function storeOwnerRegister(Request $request)
     {
         $data = json_decode($request->getContent(), true);
         
@@ -53,7 +53,7 @@ class StoreOwnerProfileController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $response = $this->storeOwnerProfileService->userRegister($request);
+        $response = $this->storeOwnerProfileService->storeOwnerRegister($request);
        
         return $this->response($response, self::CREATE);
     }
