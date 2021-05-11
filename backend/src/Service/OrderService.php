@@ -405,4 +405,16 @@ class OrderService
             return $this->params;
         }
     }
+
+    public function createClientOrder(OrderCreateRequest $request)
+    {  
+        $uuid = $this->roomIdHelperService->roomIdGenerate();
+                
+        $item = $this->orderManager->createClientOrder($request, $uuid);
+        if ($item) {
+            $this->logService->createLog($item->getId(), $item->getState(), $request->getClientID());
+            }
+        $response =$this->autoMapping->map(OrderEntity::class, OrderResponse::class, $item);
+        return $response;
+    }
 }

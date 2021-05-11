@@ -102,21 +102,6 @@ class OrderManager
             return $item;
         }
     }
-//مراجعة للحذف
-    public function orderUpdateStateByCaptain2($orderID)
-    {
-        $item = $this->orderEntityRepository->find($orderID);
-       
-
-        if ($item) {
-            $item->setState('on way to pick order');
-            
-            $this->entityManager->flush();
-            $this->entityManager->clear();
-
-            return $item;
-        }
-    }
 
     public function delete(DeleteRequest $request)
     {
@@ -207,5 +192,20 @@ class OrderManager
     public function countCaptainOrdersInDay($captainID, $fromDate, $toDate)
     {
         return $this->orderEntityRepository->countCaptainOrdersInDay($captainID, $fromDate, $toDate);
+    }
+
+    public function createClientOrder(OrderCreateRequest $request, $uuid)
+    {
+        $request->setUuid($uuid);
+        $item = $this->autoMapping->map(OrderCreateRequest::class, OrderEntity::class, $request);
+
+        $item->setDeliveryDate($item->getDeliveryDate());
+        $item->setState('pending');
+        
+        $this->entityManager->persist($item);
+        $this->entityManager->flush();
+        $this->entityManager->clear();
+
+        return $item;
     }
 }

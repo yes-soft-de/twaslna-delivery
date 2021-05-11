@@ -16,6 +16,7 @@ class OrderCreateRequest
     private $fromBranch;
     private $uuid;
     private $subscribeId;
+    private $clientID;
 
      /**
      * @param mixed $ownerID
@@ -32,6 +33,7 @@ class OrderCreateRequest
     {
         return $this->ownerID;
     }
+
     public function getState(): ?string
     {
         return $this->state;
@@ -66,5 +68,21 @@ class OrderCreateRequest
         $this->subscribeId = $subscribeId;
 
         return $this;
+    }
+
+     /**
+     * @param mixed $clientID
+     */
+    public function setClientID($clientID): void
+    {
+        $this->clientID = $clientID;
+    }
+
+     /**
+     * @return mixed
+     */
+    public function getClientID()
+    {
+        return $this->clientID;
     }
 }

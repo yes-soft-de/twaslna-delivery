@@ -35,6 +35,7 @@ class OrderController extends BaseController
         $this->orderService = $orderService;
         $this->captainService = $captainService;
     }
+
     /**
      * @Route("order", name="createOrder", methods={"POST"})
      * @IsGranted("ROLE_OWNER")
@@ -247,4 +248,20 @@ class OrderController extends BaseController
   
           return $this->response($result, self::FETCH);
       }
+
+     /**
+     * @Route("clientorder", name="createClientOrder", methods={"POST"})
+     * @IsGranted("ROLE_CLIENT")
+     */
+    public function createClientOrder(Request $request)
+    {  
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderCreateRequest::class, (object)$data);
+        $request->setClientID($this->getUserId());
+
+        $response = $this->orderService->createClientOrder($request);
+
+        return $this->response($response, self::CREATE);
+    }
 }
