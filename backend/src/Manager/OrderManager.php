@@ -30,7 +30,7 @@ class OrderManager
         $request->setSubscribeId($subscribeId);
         $item = $this->autoMapping->map(OrderCreateRequest::class, OrderEntity::class, $request);
 
-        $item->setDate($item->getDate());
+        $item->setDeliveryDate($item->getDeliveryDate());
         $item->setState('pending');
         
         $this->entityManager->persist($item);

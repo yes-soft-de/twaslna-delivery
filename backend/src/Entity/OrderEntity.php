@@ -36,7 +36,7 @@ class OrderEntity
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $date;
+    private $deliveryDate;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -152,14 +152,14 @@ class OrderEntity
         return $this;
     }
 
-    public function getDate()
+    public function getDeliveryDate()
     {
-        return $this->date;
+        return $this->deliveryDate;
     }
 
-    public function setDate($date): self
+    public function setDeliveryDate($deliveryDate): self
     {
-        $this->date = new \DateTime($date);
+        $this->deliveryDate = new \DateTime($deliveryDate);
 
         return $this;
     }

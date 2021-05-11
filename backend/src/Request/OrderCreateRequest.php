@@ -7,7 +7,7 @@ class OrderCreateRequest
     private $ownerID;
     private $source = [];
     private $destination = [];
-    private $date;
+    private $deliveryDate;
     private $note;
     private $payment;
     private $recipientName;

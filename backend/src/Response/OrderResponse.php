@@ -9,7 +9,7 @@ class OrderResponse
     public $userName;
     public $source = [];
     public $destination = [];
-    public $date;
+    public $deliveryDate;
     public $updateDate;
     public $note;
     public $payment;
@@ -33,4 +33,5 @@ class OrderResponse
     public $kilometer;
     public $rating;
     public $currentStage;
+    public $createdAt;
 }
