@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OrderEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=OrderEntityRepository::class)
@@ -97,6 +98,11 @@ class OrderEntity
      */
     private $clientID;
 
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
 
     public function getId(): ?int
     {
@@ -298,6 +304,18 @@ class OrderEntity
     public function setClientID(string $clientID): self
     {
         $this->clientID = $clientID;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
