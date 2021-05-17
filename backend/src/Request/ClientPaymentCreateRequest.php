@@ -8,7 +8,8 @@ class ClientPaymentCreateRequest
     private $clientID;
     private $orderID;
     private $amount;
-    private $date;
+
+   
 
     /**
      * Get the value of captainID
