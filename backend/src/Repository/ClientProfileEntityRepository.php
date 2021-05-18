@@ -19,12 +19,12 @@ class ClientProfileEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, ClientProfileEntity::class);
     }
 
-    public function getUserProfileByUserId($userID)
+    public function getClientProfileByUserID($userID)
     {
-        return $this->createQueryBuilder('userProfile')
-            ->select('userProfile.id', 'userProfile.userName','userProfile.userID', 'userProfile.image', 'userProfile.phone', 'userProfile.uuid')
+        return $this->createQueryBuilder('clientProfile')
+            ->select('clientProfile.id', 'clientProfile.userName','clientProfile.userID', 'clientProfile.image', 'clientProfile.phone', 'clientProfile.uuid')
 
-            ->andWhere('userProfile.userID = :userID')
+            ->andWhere('clientProfile.userID = :userID')
 
             ->setParameter('userID', $userID)
 
@@ -32,13 +32,12 @@ class ClientProfileEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getUserProfileByID($id)
+    public function getClientProfileByID($id)
     {
-        return $this->createQueryBuilder('userProfile')
-            ->select('userProfile.id', 'userProfile.userName','userProfile.userID', 'userProfile.image', 'userProfile.phone', 'userProfile.uuid')
+        return $this->createQueryBuilder('clientProfile')
+            ->select('clientProfile.id', 'clientProfile.userName','clientProfile.userID', 'clientProfile.image', 'clientProfile.phone', 'clientProfile.uuid')
 
-
-            ->andWhere('userProfile.id = :id')
+            ->andWhere('clientProfile.id = :id')
 
             ->setParameter('id', $id)
 
@@ -46,10 +45,10 @@ class ClientProfileEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getUsersProfile()
+    public function getClientsProfile()
     {
-        return $this->createQueryBuilder('userProfile')
-            ->select('userProfile.id', 'userProfile.userName','userProfile.userID', 'userProfile.image', 'userProfile.phone', 'userProfile.uuid')
+        return $this->createQueryBuilder('clientProfile')
+            ->select('clientProfile.id', 'clientProfile.userName','clientProfile.userID', 'clientProfile.image', 'clientProfile.phone', 'clientProfile.uuid')
 
             ->getQuery()
             ->getResult();

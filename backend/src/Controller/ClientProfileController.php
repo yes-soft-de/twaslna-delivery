@@ -57,12 +57,12 @@ class ClientProfileController extends BaseController
     }
 
     /**
-     * @Route("/userprofile", name="createUserProfile", methods={"POST"})
+     * @Route("/clientprofile", name="createclientProfile", methods={"POST"})
      * @IsGranted("ROLE_CLIENT")
      * @param Request $request
      * @return JsonResponse
      */
-    public function createUserProfile(Request $request)
+    public function createclientProfile(Request $request)
     {
         $data = json_decode($request->getContent(), true);
 
@@ -70,61 +70,61 @@ class ClientProfileController extends BaseController
        
         $request->setUserID($this->getUserId());
        
-        $response = $this->clientProfileService->createUserProfile($request);
+        $response = $this->clientProfileService->createclientProfile($request);
 
         return $this->response($response, self::CREATE);
     }
 
     /**
-     * @Route("/userprofile", name="updateUserProfile", methods={"PUT"})
+     * @Route("/clientprofile", name="updateClientProfile", methods={"PUT"})
      * @IsGranted("ROLE_CLIENT")
      * @param Request $request
      * @return JsonResponse
      */
-    public function updateUserProfile(Request $request)
+    public function updateClientProfile(Request $request)
     {
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, ClientProfileUpdateRequest::class, (object)$data);
         $request->setUserID($this->getUserId());
 
-        $response = $this->clientProfileService->updateUserProfile($request);
+        $response = $this->clientProfileService->updateClientProfile($request);
 
         return $this->response($response, self::UPDATE);
     }
 
     /**
-     * @Route("/userprofile", name="getUserProfileByUserId",methods={"GET"})
+     * @Route("/clientProfile", name="getClientProfileByUserID",methods={"GET"})
      * @IsGranted("ROLE_CLIENT")
      * @return JsonResponse
      */
-    public function getUserProfileByUserID()
+    public function getClientProfileByUserID()
     {
-        $response = $this->clientProfileService->getUserProfileByUserID($this->getUserId());
+        $response = $this->clientProfileService->getClientProfileByUserID($this->getUserId());
 
         return $this->response($response, self::FETCH);
     }
 
     /**
-     * @Route("/userprofilebyid/{id}", name="getUserProfileByID",methods={"GET"})
+     * @Route("/clientprofilebyid/{id}", name="getClientProfileByID",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
-    public function getUserProfileByID($id)
+    public function getClientProfileByID($id)
     {
-        $response = $this->clientProfileService->getUserProfileByID($id);
+        $response = $this->clientProfileService->getClientProfileByID($id);
 
         return $this->response($response, self::FETCH);
     }
 
     /**
-     * @Route("/usersprfile", name="getUsersProfile",methods={"GET"})
+     * @Route("/clientsProfile", name="getClientsProfile",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
-    public function getUsersProfile()
+    public function getClientsProfile()
     {
-        $response = $this->clientProfileService->getUsersProfile();
+        $response = $this->clientProfileService->getClientsProfile();
 
         return $this->response($response, self::FETCH);
     }

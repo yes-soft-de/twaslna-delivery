@@ -50,7 +50,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addselect('OrderEntity.id', 'OrderEntity.ownerID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.deliveryDate', 'OrderEntity.updateDate', 'OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'OrderEntity.fromBranch', 'OrderEntity.captainID', 'OrderEntity.createdAt')
 
             ->andWhere('OrderEntity.ownerID = :userID')
-
+            ->andWhere("OrderEntity.state != 'cancelled'")
             ->setParameter('userID', $userID)
 
             ->getQuery()
@@ -93,9 +93,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('OrderEntity')
             ->select('count(OrderEntity.id) as ordersCount') 
-           
-            ->andWhere("OrderEntity.state = 'pending' or OrderEntity.state = 'ongoing' or OrderEntity.state = 'picked'")
-           
+            ->andWhere("OrderEntity.state != 'cancelled'")
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -155,6 +153,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->leftJoin(StoreOwnerBranchEntity::class, 'branchesEntity', Join::WITH, 'branchesEntity.id = OrderEntity.fromBranch')
 
             ->andWhere('OrderEntity.captainID = :captainID')
+            ->andWhere("orderEntity.state != 'delivered'")
             ->setParameter('captainID', $captainID) 
             ->getQuery()
             ->getResult();
@@ -199,6 +198,7 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->setParameter('fromDate', $fromDate)
             ->setParameter('toDate', $toDate)
+            ->andWhere("OrderEntity.state != 'cancelled'")
             ->setParameter('ownerId', $ownerId)
 
             ->getQuery()
@@ -211,6 +211,7 @@ class OrderEntityRepository extends ServiceEntityRepository
 
           ->select('OrderEntity.id', 'OrderEntity.ownerID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.deliveryDate', 'OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'OrderEntity.fromBranch', 'OrderEntity.uuid', 'userProfileEntity.userName as userName', 'OrderEntity.captainID', 'OrderEntity.createdAt')
 
+          ->andWhere("OrderEntity.state != 'cancelled'")
           ->where('OrderEntity.createdAt >= :fromDate')
           ->andWhere('OrderEntity.createdAt < :toDate')
           ->andWhere('OrderEntity.ownerID = :ownerId')
@@ -235,6 +236,7 @@ class OrderEntityRepository extends ServiceEntityRepository
         
           ->where('OrderEntity.createdAt >= :fromDate')
           ->andWhere('OrderEntity.createdAt < :toDate')
+          ->andWhere("OrderEntity.state != 'cancelled'")
 
           ->addGroupBy('OrderEntity.ownerID')
           
@@ -258,6 +260,7 @@ class OrderEntityRepository extends ServiceEntityRepository
           ->select('SUBSTRING(OrderEntity.createdAt, 1, 10) as myDate', 'OrderEntity.createdAt', 'count(OrderEntity.id) as countOrdersInDay')
         
           ->andWhere('OrderEntity.ownerID = :ownerID') 
+          ->andWhere("OrderEntity.state != 'cancelled'")
           ->andWhere('OrderEntity.createdAt >= :fromDate')
           ->andWhere('OrderEntity.createdAt < :toDate')
 
@@ -282,7 +285,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->select('count(OrderEntity.id) as countOrdersDeliverd')
 
             ->andWhere('OrderEntity.captainID = :captainId')
-            ->andWhere("OrderEntity.state = 'deliverd'")
+            ->andWhere("OrderEntity.state = 'delivered'")
 
             ->setParameter('captainId', $captainId)
             ->getQuery()

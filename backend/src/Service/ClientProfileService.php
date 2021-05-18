@@ -48,45 +48,45 @@ class ClientProfileService
         }
     }
 
-    public function createUserProfile(ClientProfileCreateRequest $request)
+    public function createclientProfile(ClientProfileCreateRequest $request)
     {  
        $uuid = $this->roomIdHelperService->roomIdGenerate();
     
-       $userProfile = $this->userManager->createUserProfile($request, $uuid);
+       $userProfile = $this->userManager->createclientProfile($request, $uuid);
       
         if ($userProfile instanceof ClientProfileEntity) {
 
             return $this->autoMapping->map(ClientProfileEntity::class,ClientProfileResponse::class, $userProfile);
        }
         if ($userProfile == true) {
-            return $this->getUserProfileByUserID($request->getUserID());
+            return $this->getClientProfileByUserID($request->getUserID());
        }
     }
 
-    public function updateUserProfile(ClientProfileUpdateRequest $request)
+    public function updateClientProfile(ClientProfileUpdateRequest $request)
     {
-        $item = $this->userManager->updateUserProfile($request);
+        $item = $this->userManager->updateClientProfile($request);
         
         return $this->autoMapping->map(ClientProfileEntity ::class, ClientProfileResponse::class, $item);
     }
 
-    public function getUserProfileByUserID($userID)
+    public function getClientProfileByUserID($userID)
     {
-        $item = $this->userManager->getUserProfileByUserID($userID);  
+        $item = $this->userManager->getClientProfileByUserID($userID);  
             
         return $this->autoMapping->map('array', ClientProfileResponse::class, $item);
     }
 
-    public function getUserProfileByID($id)
+    public function getClientProfileByID($id)
     {
-        $item = $this->userManager->getUserProfileByID($id);
+        $item = $this->userManager->getClientProfileByID($id);
         return $this->autoMapping->map('array', ClientProfileResponse::class, $item);
     }
 
-    public function getUsersProfile()
+    public function getClientsProfile()
     {
         $response = [];
-        $items = $this->userManager->getUsersProfile();
+        $items = $this->userManager->getClientsProfile();
         foreach ($items as $item) {
             $response[] = $this->autoMapping->map('array', ClientProfileResponse::class, $item);
             }        

@@ -60,7 +60,7 @@ class CaptainProfileController extends BaseController
     }
 
     /**
-     * @Route("/captainprofile", name="captainprofileCreate", methods={"POST"})
+     * @Route("/captainprofile", name="captainProfileCreate", methods={"POST"})
      * @IsGranted("ROLE_CAPTAIN")
      * @param Request $request
      * @return JsonResponse
@@ -86,7 +86,7 @@ class CaptainProfileController extends BaseController
     }
 
     /**
-     * @Route("/captainprofile", name="captainprofileUpdate", methods={"PUT"})
+     * @Route("/captainprofile", name="captainProfileUpdate", methods={"PUT"})
      * @IsGranted("ROLE_CAPTAIN")
      * @param Request $request
      * @return JsonResponse
@@ -111,7 +111,7 @@ class CaptainProfileController extends BaseController
     }
   
     /**
-     * @Route("/captainprofileUpdateByAdmin", name="captainprofileUpdateByAdmin", methods={"PUT"})
+     * @Route("/captainprofileupdatebyadmin", name="captainProfileUpdateByAdmin", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -185,7 +185,7 @@ class CaptainProfileController extends BaseController
     // }
 
     /**
-     * @Route("/dashboardCaptains", name="dashboardCaptains",methods={"GET"})
+     * @Route("/dashboardcaptains", name="dashboardCaptains",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -198,7 +198,7 @@ class CaptainProfileController extends BaseController
     }
 
     /**
-     * @Route("/getDayOfCaptains", name="getDayOfCaptains",methods={"GET"})
+     * @Route("/getdayofcaptains", name="getDayOfCaptains",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -211,7 +211,7 @@ class CaptainProfileController extends BaseController
     }
 
     /**
-     * @Route("/totalBounceCaptain/{captainProfileId}", name="TotalBounceCaptain",methods={"GET"})
+     * @Route("/totalbouncecaptain/{captainProfileId}", name="TotalBounceCaptain",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -277,7 +277,7 @@ class CaptainProfileController extends BaseController
     }
 
     /**
-     * @Route("/getTop5Captains", name="GetTop5Captains",methods={"GET"})
+     * @Route("/gettop5captains", name="GetTop5Captains",methods={"GET"})
      * @param Request $request
      * @return JsonResponse
      */

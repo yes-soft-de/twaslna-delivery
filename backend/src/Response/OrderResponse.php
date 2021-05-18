@@ -8,7 +8,7 @@ class OrderResponse
     public $ownerID;
     public $userName;
     public $source = [];
-    public $destination = [];
+    public $destination;
     public $deliveryDate;
     public $updateDate;
     public $note;

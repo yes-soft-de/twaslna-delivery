@@ -365,10 +365,10 @@ class UserManager
     }
 
 //User section 
-    public function createUserProfile(ClientProfileCreateRequest $request, $uuid)
+    public function createclientProfile(ClientProfileCreateRequest $request, $uuid)
     {
         $request->setUuid($uuid);
-        $userProfile = $this->getUserProfileByUserId($request->getUserID());
+        $userProfile = $this->getClientProfileByUserID($request->getUserID());
         if ($userProfile == null) {
             $userProfile = $this->autoMapping->map(ClientProfileCreateRequest::class, ClientProfileEntity::class, $request);
 
@@ -383,12 +383,12 @@ class UserManager
         }
     }
 
-    public function getUserProfileByUserId($userID)
+    public function getClientProfileByUserID($userID)
     {
-        return $this->clientProfileEntityRepository->getUserProfileByUserId($userID);
+        return $this->clientProfileEntityRepository->getClientProfileByUserID($userID);
     }
 
-    public function updateUserProfile(ClientProfileUpdateRequest $request)
+    public function updateClientProfile(ClientProfileUpdateRequest $request)
     {
         $item = $this->clientProfileEntityRepository->findOneBy(['userID'=>$request->getUserID()]);
 
@@ -402,13 +402,13 @@ class UserManager
         }
     }
 
-    public function getUserProfileByID($id)
+    public function getClientProfileByID($id)
     {
-        return $this->clientProfileEntityRepository->getUserProfileByID($id);
+        return $this->clientProfileEntityRepository->getClientProfileByID($id);
     }
 
-    public function getUsersProfile()
+    public function getClientsProfile()
     {
-        return $this->clientProfileEntityRepository->getUsersProfile();
+        return $this->clientProfileEntityRepository->getClientsProfile();
     }
 }
