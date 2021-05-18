@@ -61,4 +61,23 @@ class ProductEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getProductById($id)
+    {
+        return $this->createQueryBuilder('product')
+            ->select('product.id', 'product.productName', 'product.productImage', 'product.productImage','product.productPrice','product.storeOwnerProfileID', 'product.ProductCategoryID')
+
+            ->addSelect('storeOwnerProfile.id', 'storeOwnerProfile.userName as storeOwnerName','storeOwnerProfile.userID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.branch', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone')
+
+            ->addSelect('storeOwnerBranch.location','storeOwnerBranch.brancheName','storeOwnerBranch.city')
+
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = product.id')
+
+            ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerProfile.branch = storeOwnerBranch.id')
+
+            ->andWhere('product.id= :id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

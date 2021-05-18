@@ -57,4 +57,9 @@ class ProductManager
     {
         return $this->productEntityRepository->getProducts();
     }
+
+    public function getProductById($id)
+    {
+        return $this->productEntityRepository->getProductById($id);
+    }
 }

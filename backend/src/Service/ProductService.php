@@ -57,6 +57,12 @@ class ProductService
         return $response;
     }
 
+    public function getProductById($id)
+    {
+       $item = $this->productManager->getProductById($id);
+       return $this->autoMapping->map('array', ProductsResponse::class, $item);
+    }
+
     public function getStoreOwnerProfileByUserID($userID)
     {
         return $this->productManager->getStoreOwnerProfileByUserID($userID);
