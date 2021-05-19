@@ -6,9 +6,9 @@ class ClientProfileUpdateRequest
 {
     private $id;
 
-    private $userID;
+    private $clientID;
 
-    private $userName;
+    private $clientName;
 
     private $image;
 
@@ -27,33 +27,33 @@ class ClientProfileUpdateRequest
     /**
      * @return mixed
      */
-    public function getUserID()
+    public function getClientID()
     {
-        return $this->userID;
+        return $this->clientID;
     }
 
     /**
-     * @param mixed $userID
+     * @param mixed $clientID
      */
-    public function setUserID($userID): void
+    public function setClientID($clientID): void
     {
-        $this->userID = $userID;
+        $this->clientID = $clientID;
     }
 
-    /**
+     /**
      * @return mixed
      */
-    public function getUserName()
+    public function getClientName()
     {
-        return $this->userName;
+        return $this->clientName;
     }
 
     /**
-     * @param mixed $userName
+     * @param mixed $clientName
      */
-    public function setUserName($userName): void
+    public function setClientName($clientName): void
     {
-        $this->userName = $userName;
+        $this->clientName = $clientName;
     }
 
     // /**

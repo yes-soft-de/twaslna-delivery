@@ -50,7 +50,7 @@ class ProductEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('product')
             ->select('product.id', 'product.productName', 'product.productImage', 'product.productImage','product.productPrice','product.storeOwnerProfileID', 'product.ProductCategoryID')
 
-            ->addSelect('storeOwnerProfile.id', 'storeOwnerProfile.userName as storeOwnerName','storeOwnerProfile.userID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.branch', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone')
+            ->addSelect('storeOwnerProfile.id', 'storeOwnerProfile.storeOwnerName as storeOwnerName','storeOwnerProfile.userID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.branch', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone')
 
             ->addSelect('storeOwnerBranch.location','storeOwnerBranch.brancheName','storeOwnerBranch.city')
 
@@ -67,7 +67,7 @@ class ProductEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('product')
             ->select('product.id', 'product.productName', 'product.productImage', 'product.productImage','product.productPrice','product.storeOwnerProfileID', 'product.ProductCategoryID')
 
-            ->addSelect('storeOwnerProfile.id', 'storeOwnerProfile.userName as storeOwnerName','storeOwnerProfile.userID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.branch', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone', 'storeOwnerProfile.userID as ownerID')
+            ->addSelect('storeOwnerProfile.id', 'storeOwnerProfile.storeOwnerName as storeOwnerName','storeOwnerProfile.userID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.branch', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone', 'storeOwnerProfile.userID as ownerID')
 
             ->addSelect('storeOwnerBranch.location','storeOwnerBranch.brancheName','storeOwnerBranch.city')
 

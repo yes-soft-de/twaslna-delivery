@@ -70,7 +70,7 @@ class StoreOwnerProfileController extends BaseController
 
         $request = $this->autoMapping->map(stdClass::class, StoreOwnerProfileCreateRequest::class, (object)$data);
 
-        $request->setUserID($this->getUserId());
+        $request->setStoreOwnerID($this->getUserId());
 
         $violations = $this->validator->validate($request);
         if (\count($violations) > 0) {
@@ -136,9 +136,9 @@ class StoreOwnerProfileController extends BaseController
      * @IsGranted("ROLE_OWNER")
      * @return JsonResponse
      */
-    public function getStoreOwnerProfileByUserID()
+    public function getStoreOwnerProfileByStoreOwnerID()
     {
-        $response = $this->storeOwnerProfileService->getStoreOwnerProfileByUserID($this->getUserId());
+        $response = $this->storeOwnerProfileService->getStoreOwnerProfileByStoreOwnerID($this->getUserId());
 
         return $this->response($response, self::FETCH);
     }

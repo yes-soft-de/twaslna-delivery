@@ -20,12 +20,12 @@ class StoreOwnerProfileEntity
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $userID;
+    private $storeOwnerID;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $userName;
+    private $storeOwnerName;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -67,26 +67,26 @@ class StoreOwnerProfileEntity
      */
     private $phone;
 
-    public function getUserID(): ?string
+    public function getStoreOwnerID(): ?string
     {
-        return $this->userID;
+        return $this->storeOwnerID;
     }
 
-    public function setUserID(string $userID): self
+    public function setStoreOwnerID(string $storeOwnerID): self
     {
-        $this->userID = $userID;
+        $this->storeOwnerID = $storeOwnerID;
 
         return $this;
     }
 
-    public function getUserName(): ?string
+    public function getStoreOwnerName(): ?string
     {
-        return $this->userName;
+        return $this->storeOwnerName;
     }
 
-    public function setUserName(string $userName): self
+    public function setStoreOwnerName(string $storeOwnerName): self
     {
-        $this->userName = $userName;
+        $this->storeOwnerName = $storeOwnerName;
 
         return $this;
     }

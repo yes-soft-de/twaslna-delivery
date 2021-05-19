@@ -19,14 +19,14 @@ class ClientProfileEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, ClientProfileEntity::class);
     }
 
-    public function getClientProfileByUserID($userID)
+    public function getClientProfileByClientID($clientID)
     {
         return $this->createQueryBuilder('clientProfile')
-            ->select('clientProfile.id', 'clientProfile.userName','clientProfile.userID', 'clientProfile.image', 'clientProfile.phone', 'clientProfile.uuid')
+            ->select('clientProfile.id', 'clientProfile.clientName','clientProfile.clientID', 'clientProfile.image', 'clientProfile.phone', 'clientProfile.uuid')
 
-            ->andWhere('clientProfile.userID = :userID')
+            ->andWhere('clientProfile.clientID = :clientID')
 
-            ->setParameter('userID', $userID)
+            ->setParameter('clientID', $clientID)
 
             ->getQuery()
             ->getOneOrNullResult();
@@ -35,7 +35,7 @@ class ClientProfileEntityRepository extends ServiceEntityRepository
     public function getClientProfileByID($id)
     {
         return $this->createQueryBuilder('clientProfile')
-            ->select('clientProfile.id', 'clientProfile.userName','clientProfile.userID', 'clientProfile.image', 'clientProfile.phone', 'clientProfile.uuid')
+            ->select('clientProfile.id', 'clientProfile.clientName','clientProfile.clientID', 'clientProfile.image', 'clientProfile.phone', 'clientProfile.uuid')
 
             ->andWhere('clientProfile.id = :id')
 
@@ -48,7 +48,7 @@ class ClientProfileEntityRepository extends ServiceEntityRepository
     public function getClientsProfile()
     {
         return $this->createQueryBuilder('clientProfile')
-            ->select('clientProfile.id', 'clientProfile.userName','clientProfile.userID', 'clientProfile.image', 'clientProfile.phone', 'clientProfile.uuid')
+            ->select('clientProfile.id', 'clientProfile.clientName','clientProfile.clientID', 'clientProfile.image', 'clientProfile.phone', 'clientProfile.uuid')
 
             ->getQuery()
             ->getResult();

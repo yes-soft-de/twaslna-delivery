@@ -59,7 +59,7 @@ class ClientProfileService
             return $this->autoMapping->map(ClientProfileEntity::class,ClientProfileResponse::class, $userProfile);
        }
         if ($userProfile == true) {
-            return $this->getClientProfileByUserID($request->getUserID());
+            return $this->getClientProfileByClientID($request->getClientID());
        }
     }
 
@@ -70,9 +70,9 @@ class ClientProfileService
         return $this->autoMapping->map(ClientProfileEntity ::class, ClientProfileResponse::class, $item);
     }
 
-    public function getClientProfileByUserID($userID)
+    public function getClientProfileByClientID($clientID)
     {
-        $item = $this->userManager->getClientProfileByUserID($userID);  
+        $item = $this->userManager->getClientProfileByClientID($clientID);  
             
         return $this->autoMapping->map('array', ClientProfileResponse::class, $item);
     }

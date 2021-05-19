@@ -64,7 +64,7 @@ class StoreOwnerProfileService
        }
         if ($userProfile == true) {
           
-           return $this->getStoreOwnerProfileByID($request->getUserID());
+           return $this->getStoreOwnerProfileByID($request->getStoreOwnerID());
        }
     }
 
@@ -90,10 +90,10 @@ class StoreOwnerProfileService
         return $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $item);
     }
 
-    public function getStoreOwnerProfileByUserID($userID)
+    public function getStoreOwnerProfileByStoreOwnerID($storeOwnerID)
     {
-        $item = $this->userManager->getStoreOwnerProfileByUserID($userID);
-        $item['branches'] = $this->storeOwnerBranchService->branchesByUserId($userID);
+        $item = $this->userManager->getStoreOwnerProfileByStoreOwnerID($storeOwnerID);
+        $item['branches'] = $this->storeOwnerBranchService->branchesByUserId($storeOwnerID);
 
         try {
             if ($item['image'])

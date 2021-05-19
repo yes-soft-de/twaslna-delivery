@@ -6,9 +6,9 @@ class ClientProfileResponse
 {
     public $id;
     
-    public $userID;
+    public $clientID;
 
-    public $userName;
+    public $clientName;
 
     public $uuid;
 

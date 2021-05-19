@@ -23,12 +23,12 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, CaptainProfileEntity::class);
     }
 
-    public function getCaptainprofile($userID)
+    public function getCaptainprofile($captainID)
     {
         return $this->createQueryBuilder('captainProfile')
 
-            ->andWhere('captainProfile.captainID=:userID')
-            ->setParameter('userID', $userID)
+            ->andWhere('captainProfile.captainID=:captainID')
+            ->setParameter('captainID', $captainID)
 
             ->getQuery()
             ->getOneOrNullResult();
@@ -203,13 +203,13 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
 
             ->addSelect('orderEntity.id as orderID', 'orderEntity.date', 'orderEntity.source', 'orderEntity.fromBranch', 'orderEntity.payment', 'orderEntity.destination','branchesEntity.location','branchesEntity.brancheName','branchesEntity.city as branchCity','orderEntity.ownerID','orderEntity.captainID')
 
-            ->addSelect('StoreOwnerProfileEntity.id', 'StoreOwnerProfileEntity.userID', 'StoreOwnerProfileEntity.userName', 'StoreOwnerProfileEntity.image', 'StoreOwnerProfileEntity.story', 'StoreOwnerProfileEntity.free', 'StoreOwnerProfileEntity.branch as branchcount')
+            ->addSelect('StoreOwnerProfileEntity.id', 'StoreOwnerProfileEntity.storeOwnerName', 'StoreOwnerProfileEntity.storeOwnerName', 'StoreOwnerProfileEntity.image', 'StoreOwnerProfileEntity.story', 'StoreOwnerProfileEntity.free', 'StoreOwnerProfileEntity.branch as branchcount')
 
             ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'captainProfile.id = orderEntity.captainID')
 
             ->leftJoin(StoreOwnerBranchEntity::class, 'branchesEntity', Join::WITH, 'orderEntity.fromBranch = branchesEntity.id')
 
-            ->leftJoin(StoreOwnerProfileEntity::class, 'StoreOwnerProfileEntity', Join::WITH, 'orderEntity.ownerID = StoreOwnerProfileEntity.userID')
+            ->leftJoin(StoreOwnerProfileEntity::class, 'StoreOwnerProfileEntity', Join::WITH, 'orderEntity.ownerID = StoreOwnerProfileEntity.storeOwnerName')
 
             ->getQuery()
             ->getResult();

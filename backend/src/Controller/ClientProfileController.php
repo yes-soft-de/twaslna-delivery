@@ -68,7 +68,7 @@ class ClientProfileController extends BaseController
 
         $request = $this->autoMapping->map(stdClass::class, ClientProfileCreateRequest::class, (object)$data);
        
-        $request->setUserID($this->getUserId());
+        $request->setClientID($this->getUserId());
        
         $response = $this->clientProfileService->createclientProfile($request);
 
@@ -98,9 +98,9 @@ class ClientProfileController extends BaseController
      * @IsGranted("ROLE_CLIENT")
      * @return JsonResponse
      */
-    public function getClientProfileByUserID()
+    public function getClientProfileByClientID()
     {
-        $response = $this->clientProfileService->getClientProfileByUserID($this->getUserId());
+        $response = $this->clientProfileService->getClientProfileByClientID($this->getUserId());
 
         return $this->response($response, self::FETCH);
     }

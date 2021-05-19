@@ -10,6 +10,6 @@ class BranchesResponse
     public $city;
     public $brancheName;
     public $free;
-    public $userName;
+    public $storeOwnerName;
     public $isActive;
 }

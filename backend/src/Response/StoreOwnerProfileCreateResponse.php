@@ -6,9 +6,9 @@ class StoreOwnerProfileCreateResponse
 {
     public $id;
     
-    public $userName;
+    public $storeOwnerName;
 
-    public $userID;
+    public $storeOwnerID;
 
     // public $story;
 

@@ -20,12 +20,12 @@ class ClientProfileEntity
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $userID;
+    private $clientID;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $userName;
+    private $clientName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -47,26 +47,26 @@ class ClientProfileEntity
         return $this->id;
     }
 
-    public function getUserID(): ?string
+    public function getClientID(): ?string
     {
-        return $this->userID;
+        return $this->clientID;
     }
 
-    public function setUserID(string $userID): self
+    public function setClientID(string $clientID): self
     {
-        $this->userID = $userID;
+        $this->clientID = $clientID;
 
         return $this;
     }
 
-    public function getUserName(): ?string
+    public function getClientName(): ?string
     {
-        return $this->userName;
+        return $this->clientName;
     }
 
-    public function setUserName(string $userName): self
+    public function setClientName(string $clientName): self
     {
-        $this->userName = $userName;
+        $this->clientName = $clientName;
 
         return $this;
     }

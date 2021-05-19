@@ -162,7 +162,7 @@ class OrderService
                     $order['fromBranch'] = $this->storeOwnerBranchService->getBrancheById($order['fromBranch']);
                }
             
-            $order['owner'] = $this->storeOwnerProfileService->getStoreOwnerProfileByUserID($order['ownerID']);
+            $order['owner'] = $this->storeOwnerProfileService->getStoreOwnerProfileByStoreOwnerID($order['ownerID']);
             if ($order['captainID'] == true) {
             $order['acceptedOrder'] = $this->captainProfileService->getCaptainProfileByCaptainID($order['captainID']);
             }
@@ -187,7 +187,7 @@ class OrderService
                 }
                 $order['record'] = $this->logService->getLogByOrderId($order['id']);
                
-                $order['owner'] = $this->storeOwnerProfileService->getStoreOwnerProfileByUserID($order['ownerID']);
+                $order['owner'] = $this->storeOwnerProfileService->getStoreOwnerProfileByStoreOwnerID($order['ownerID']);
                 $response[] = $this->autoMapping->map('array', OrderResponse::class, $order);
             }
         // }

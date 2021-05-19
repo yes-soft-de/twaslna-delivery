@@ -9,6 +9,6 @@ class SupportResponse
     public $orderId;
     public $reason;
     public $uuid;
-    public $userName;
+    public $storeOwnerName;
     public $newMessageStatus;
 }

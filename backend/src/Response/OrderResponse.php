@@ -6,7 +6,7 @@ class OrderResponse
 {
     public $id;
     public $ownerID;
-    public $userName;
+    public $storeOwnerName;
     public $source = [];
     public $destination;
     public $deliveryDate;

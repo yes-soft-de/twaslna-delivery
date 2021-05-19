@@ -23,16 +23,16 @@ class StoreOwnerSubscriptionEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, StoreOwnerSubscriptionEntity::class);
     }
 
-    public function getSubscriptionForOwner($userId)
+    public function getSubscriptionForOwner($storeOwnerID)
     {
         return $this->createQueryBuilder('subscription')
             ->select('subscription.id', 'subscription.packageID', 'packageEntity.name', 'subscription.startDate', 'subscription.endDate', 'subscription.status', 'subscription.note')
 
             ->leftJoin(DeliveryCompanyPackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.packageID')
 
-            ->andWhere("subscription.ownerID = :userId")
+            ->andWhere("subscription.ownerID = :storeOwnerID")
 
-            ->setParameter('userId', $userId)
+            ->setParameter('storeOwnerID', $storeOwnerID)
 
             ->getQuery()
             ->getResult()
@@ -43,11 +43,11 @@ class StoreOwnerSubscriptionEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('subscription')
         
-            ->select('subscription.id','subscription.status',  'packageEntity.name as packageName', 'subscription.startDate','subscription.endDate', 'subscription.note as subscriptionNote', 'userProfileEntity.userName', 'packageEntity.note as packageNote')
+            ->select('subscription.id','subscription.status',  'packageEntity.name as packageName', 'subscription.startDate','subscription.endDate', 'subscription.note as subscriptionNote', 'userProfileEntity.storeOwnerName', 'packageEntity.note as packageNote')
 
             ->Join(DeliveryCompanyPackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.packageID')
 
-            ->join(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.userID = subscription.ownerID')
+            ->join(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.storeOwnerID = subscription.ownerID')
 
             ->andWhere("subscription.status = 'inactive'")
 
@@ -60,11 +60,11 @@ class StoreOwnerSubscriptionEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('subscription')
 
-            ->select('subscription.id','subscription.status',  'packageEntity.name as packageName', 'subscription.startDate','subscription.endDate', 'subscription.note as subscriptionNote', 'userProfileEntity.userName', 'packageEntity.note as packageNote')
+            ->select('subscription.id','subscription.status',  'packageEntity.name as packageName', 'subscription.startDate','subscription.endDate', 'subscription.note as subscriptionNote', 'userProfileEntity.storeOwnerName', 'packageEntity.note as packageNote')
 
             ->leftJoin(DeliveryCompanyPackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.packageID')
 
-            ->join(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.userID = subscription.ownerID')
+            ->join(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.storeOwnerID = subscription.ownerID')
 
             ->andWhere("subscription.id = :id")
 
@@ -131,11 +131,11 @@ class StoreOwnerSubscriptionEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('subscription')
 
-            ->select('subscription.id as subscriptionID', 'packageEntity.orderCount - count(orderEntity.id) as remainingOrders', 'packageEntity.orderCount', 'packageEntity.name as packagename', 'packageEntity.id as packageID', 'count(orderEntity.id) as countOrdersDelivered ', 'subscription.startDate as subscriptionStartDate', 'subscription.endDate as subscriptionEndDate', 'userProfileEntity.userID', 'userProfileEntity.userName', 'packageEntity.carCount as packageCarCount', 'packageEntity.orderCount as packageOrderCount')
+            ->select('subscription.id as subscriptionID', 'packageEntity.orderCount - count(orderEntity.id) as remainingOrders', 'packageEntity.orderCount', 'packageEntity.name as packagename', 'packageEntity.id as packageID', 'count(orderEntity.id) as countOrdersDelivered ', 'subscription.startDate as subscriptionStartDate', 'subscription.endDate as subscriptionEndDate', 'userProfileEntity.storeOwnerID', 'userProfileEntity.storeOwnerName', 'packageEntity.carCount as packageCarCount', 'packageEntity.orderCount as packageOrderCount')
 
             ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.subscribeId = subscription.id')
 
-            ->leftJoin(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.userID = subscription.ownerID')
+            ->leftJoin(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.storeOwnerID = subscription.ownerID')
 
             ->leftJoin(DeliveryCompanyPackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.packageID')
             

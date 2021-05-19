@@ -131,7 +131,7 @@ class UserManager
     public function createStoreOwnerProfile(StoreOwnerProfileCreateRequest $request, $uuid)
     {
         $request->setUuid($uuid);
-        $userProfile = $this->getStoreOwnerProfileByID($request->getUserID());
+        $userProfile = $this->getStoreOwnerProfileByID($request->getStoreOwnerID());
         if ($userProfile == null) {
             $userProfile = $this->autoMapping->map(StoreOwnerProfileCreateRequest::class, StoreOwnerProfileEntity::class, $request);
 
@@ -151,7 +151,7 @@ class UserManager
 
     public function updateStoreOwnerProfile(StoreOwnerProfileUpdateRequest $request)
     {
-        $item = $this->storeOwnerProfileEntityRepository->getUserProfile($request->getUserID());
+        $item = $this->storeOwnerProfileEntityRepository->getUserProfile($request->getStoreOwnerID());
 
         if ($item) {
             $item = $this->autoMapping->mapToObject(StoreOwnerProfileUpdateRequest::class, StoreOwnerProfileEntity::class, $request, $item);
@@ -182,9 +182,9 @@ class UserManager
         return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByID($id);
     }
 
-    public function getStoreOwnerProfileByUserID($userID)
+    public function getStoreOwnerProfileByStoreOwnerID($storeOwnerID)
     {
-        return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByUserID($userID);
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByStoreOwnerID($storeOwnerID);
     }
 
     public function getremainingOrders($userID)
@@ -368,7 +368,7 @@ class UserManager
     public function createclientProfile(ClientProfileCreateRequest $request, $uuid)
     {
         $request->setUuid($uuid);
-        $userProfile = $this->getClientProfileByUserID($request->getUserID());
+        $userProfile = $this->getClientProfileByClientID($request->getClientID());
         if ($userProfile == null) {
             $userProfile = $this->autoMapping->map(ClientProfileCreateRequest::class, ClientProfileEntity::class, $request);
 
@@ -383,14 +383,14 @@ class UserManager
         }
     }
 
-    public function getClientProfileByUserID($userID)
+    public function getClientProfileByClientID($clientID)
     {
-        return $this->clientProfileEntityRepository->getClientProfileByUserID($userID);
+        return $this->clientProfileEntityRepository->getClientProfileByClientID($clientID);
     }
 
     public function updateClientProfile(ClientProfileUpdateRequest $request)
     {
-        $item = $this->clientProfileEntityRepository->findOneBy(['userID'=>$request->getUserID()]);
+        $item = $this->clientProfileEntityRepository->findOneBy(['userID'=>$request->getClientID()]);
 
         if ($item) {
             $item = $this->autoMapping->mapToObject(ClientProfileUpdateRequest::class, ClientProfileEntity::class, $request, $item);

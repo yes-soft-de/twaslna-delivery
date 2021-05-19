@@ -4,9 +4,9 @@ namespace App\Request;
 
 class StoreOwnerProfileCreateRequest
 {
-    private $userID;
+    private $storeOwnerIDstoreOwnerID;
 
-    private $userName;
+    private $storeOwnerName;
 
     // private $story;
 
@@ -23,33 +23,33 @@ class StoreOwnerProfileCreateRequest
     /**
      * @return mixed
      */
-    public function getUserID()
+    public function getStoreOwnerID()
     {
-        return $this->userID;
+        return $this->storeOwnerID;
     }
 
     /**
-     * @param mixed $userID
+     * @param mixed $storeOwnerID
      */
-    public function setUserID($userID): void
+    public function setStoreOwnerID($storeOwnerID): void
     {
-        $this->userID = $userID;
+        $this->storeOwnerID = $storeOwnerID;
     }
 
     /**
      * @return mixed
      */
-    public function getUserName()
+    public function getStoreOwnerName()
     {
-        return $this->userName;
+        return $this->storeOwnerName;
     }
 
     /**
-     * @param mixed $userName
+     * @param mixed $storeOwnerName
      */
-    public function setUserName($userName): void
+    public function setStoreOwnerName($storeOwnerName): void
     {
-        $this->userName = $userName;
+        $this->storeOwnerName = $storeOwnerName;
     }
 
     // /**
