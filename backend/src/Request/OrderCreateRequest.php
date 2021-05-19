@@ -17,6 +17,7 @@ class OrderCreateRequest
     private $uuid;
     private $subscribeId;
     private $clientID;
+    private $productID;
 
      /**
      * @param mixed $ownerID

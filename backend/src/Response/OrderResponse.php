@@ -34,4 +34,5 @@ class OrderResponse
     public $rating;
     public $currentStage;
     public $createdAt;
+    public $productID;
 }
