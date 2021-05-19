@@ -79,13 +79,13 @@ class SupportController extends BaseController
     }
 
     /**
-     * @Route("reportupdatenewmessagestatus/{id}", name="reportUpdateNewMeessageStatus", methods={"PUT"})
+     * @Route("supportupdatenewmessagestatus/{id}", name="reportUpdateNewMeessageStatus", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
-    public function updateReportNewMessageStatus($id)
+    public function supportReportNewMessageStatus($id)
     {
-        $result = $this->supportService->updateReportNewMessageStatus($id);
+        $result = $this->supportService->supportReportNewMessageStatus($id);
 
         return $this->response($result, self::FETCH);
     }
