@@ -6,7 +6,7 @@ class CaptainProfileCreateRequest
 {
     private $captainID;
 
-    private $name;
+    private $captainName;
 
     private $image;
 
@@ -55,21 +55,21 @@ class CaptainProfileCreateRequest
     }
 
     /**
-     * Get the value of name
+     * Get the value of captainName
      */
-    public function getName()
+    public function getCaptainName()
     {
-        return $this->name;
+        return $this->captainName;
     }
 
     /**
-     * Set the value of name
+     * Set the value of captainName
      *
      * @return  self
      */
-    public function setName($name)
+    public function setCaptainName($captainName)
     {
-        $this->name = $name;
+        $this->captainName = $captainName;
 
         return $this;
     }

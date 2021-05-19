@@ -39,24 +39,24 @@ class DeliveryCompanyProfileEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function  getAllCompanyInfoForStoreOwner($userId)
+    public function  getAllCompanyInfoForStoreOwner($storeOwnerID)
     {
         return $this->createQueryBuilder('CompanyInfoEntity') 
             ->select('CompanyInfoEntity.id, CompanyInfoEntity.phone, CompanyInfoEntity.phone2, CompanyInfoEntity.whatsapp, CompanyInfoEntity.fax, CompanyInfoEntity.bank, CompanyInfoEntity.stc, CompanyInfoEntity.email')
             ->addSelect('userProfileEntity.uuid')
-            ->leftJoin(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.userID = :userId')
-            ->setParameter('userId',$userId)
+            ->leftJoin(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.storeOwnerID = :storeOwnerID')
+            ->setParameter('storeOwnerID',$storeOwnerID)
             ->getQuery()
             ->getResult();
     }
 
-    public function getAllCompanyInfoForCaptain($userId)
+    public function getAllCompanyInfoForCaptain($captainID)
     {
         return $this->createQueryBuilder('CompanyInfoEntity') 
             ->select('CompanyInfoEntity.id, CompanyInfoEntity.phone, CompanyInfoEntity.phone2, CompanyInfoEntity.whatsapp, CompanyInfoEntity.fax, CompanyInfoEntity.bank, CompanyInfoEntity.stc, CompanyInfoEntity.email')
             ->addSelect('captainProfileEntity.uuid')
-            ->leftJoin(CaptainProfileEntity::class, 'captainProfileEntity', Join::WITH, 'captainProfileEntity.captainID = :userId')
-            ->setParameter('userId',$userId)
+            ->leftJoin(CaptainProfileEntity::class, 'captainProfileEntity', Join::WITH, 'captainProfileEntity.captainID = :captainID')
+            ->setParameter('captainID',$captainID)
             ->getQuery()
             ->getResult();
     }

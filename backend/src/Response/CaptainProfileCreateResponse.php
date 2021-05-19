@@ -8,7 +8,7 @@ class CaptainProfileCreateResponse
 
     public $captainID;
 
-    public $name;
+    public $captainName;
 
     public $location;
 
