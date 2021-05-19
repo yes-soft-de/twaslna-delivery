@@ -11,6 +11,7 @@ class ProductsResponse
     public $storeOwnerProfileID;
     public $ProductCategoryID;
     public $storeOwnerName;
+    public $ownerID;
     public $image;
     public $phone;
     public $location;
