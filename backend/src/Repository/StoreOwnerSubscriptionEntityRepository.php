@@ -23,7 +23,7 @@ class StoreOwnerSubscriptionEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, StoreOwnerSubscriptionEntity::class);
     }
 
-    public function getSubscriptionForOwner($storeOwnerID)
+    public function getStoreOwnerSubscriptionforowner($storeOwnerID)
     {
         return $this->createQueryBuilder('subscription')
             ->select('subscription.id', 'subscription.packageID', 'packageEntity.name', 'subscription.startDate', 'subscription.endDate', 'subscription.status', 'subscription.note')
@@ -39,7 +39,7 @@ class StoreOwnerSubscriptionEntityRepository extends ServiceEntityRepository
         ;
     }
 
-    public function getSubscriptionsPending()
+    public function getStoreOwnerSubscriptionPending()
     {
         return $this->createQueryBuilder('subscription')
         
@@ -56,7 +56,7 @@ class StoreOwnerSubscriptionEntityRepository extends ServiceEntityRepository
         ;
     }
 
-    public function getSubscriptionById($id)
+    public function getStoreOwnerSubscriptionById($id)
     {
         return $this->createQueryBuilder('subscription')
 

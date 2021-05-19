@@ -19,7 +19,7 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, CaptainPaymentEntity::class);
     }
 
-    public function  getpayments($captainId)
+    public function  getCaptainPayments($captainId)
     {
         return $this->createQueryBuilder('PaymentsCaptain')
                ->select('PaymentsCaptain.id, PaymentsCaptain.captainId, PaymentsCaptain.amount, PaymentsCaptain.date')

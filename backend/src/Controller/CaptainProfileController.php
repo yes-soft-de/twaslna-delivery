@@ -60,7 +60,7 @@ class CaptainProfileController extends BaseController
     }
 
     /**
-     * @Route("/captainprofile", name="captainProfileCreate", methods={"POST"})
+     * @Route("/captainprofile", name="createCaptainProfile", methods={"POST"})
      * @IsGranted("ROLE_CAPTAIN")
      * @param Request $request
      * @return JsonResponse
@@ -91,7 +91,7 @@ class CaptainProfileController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function UpdateCaptainProfile(Request $request)
+    public function updateCaptainProfile(Request $request)
     {
         $data = json_decode($request->getContent(), true);
 
@@ -105,7 +105,7 @@ class CaptainProfileController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $response = $this->captainProfileService->UpdateCaptainProfile($request);
+        $response = $this->captainProfileService->updateCaptainProfile($request);
 
         return $this->response($response, self::UPDATE);
     }
@@ -211,7 +211,7 @@ class CaptainProfileController extends BaseController
     }
 
     /**
-     * @Route("/totalbouncecaptain/{captainProfileId}", name="TotalBounceCaptain",methods={"GET"})
+     * @Route("/captainFinancialaccount/{captainProfileId}", name="TotalBounceCaptain",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -236,7 +236,7 @@ class CaptainProfileController extends BaseController
     }
 
     /**
-     * @Route("/captainmybalance", name="getCaptainMyBalance",methods={"GET"})
+     * @Route("/captainFinancialaccount", name="getCaptainMyBalance",methods={"GET"})
      * @IsGranted("ROLE_CAPTAIN")
      *  @return JsonResponse
      */
@@ -248,7 +248,7 @@ class CaptainProfileController extends BaseController
     }
 
      /**
-     * @Route("/remainingcaptain", name="getCaptainsWithUnfinishedPayments",methods={"GET"})
+     * @Route("/ccaptainsunfinishedpayments", name="getCaptainsWithUnfinishedPayments",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */

@@ -33,14 +33,14 @@ class SupportManager
         return $entity;
     }
 
-    public function getReports()
+    public function getSupports()
     {
-        return $this->supportEntityRepository->getReports();
+        return $this->supportEntityRepository->getSupports();
     }
 
-    public function getReport($id)
+    public function getSupport($id)
     {
-        return $this->supportEntityRepository->getReport($id);
+        return $this->supportEntityRepository->getSupport($id);
     }
 
     public function getReportByUuid($uuid)
@@ -67,7 +67,7 @@ class SupportManager
         return null;
     }
 
-    public function updateReportNewMessageStatus($id)
+    public function supportReportNewMessageStatus($id)
     {
         
             $entity = $this->supportEntityRepository->find($id);

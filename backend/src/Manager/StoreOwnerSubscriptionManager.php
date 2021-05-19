@@ -39,7 +39,7 @@ class StoreOwnerSubscriptionManager
         return $subscriptionEntity;
     }
 
-    public function nxetSubscription(StoreOwnerSubscriptionNextRequest $request, $status)
+    public function storeOwnerSubscriptionRenew(StoreOwnerSubscriptionNextRequest $request, $status)
     { 
         // NOTE: change active to inactive 
         $request->setStatus('active');
@@ -62,12 +62,12 @@ class StoreOwnerSubscriptionManager
         return $subscriptionEntity;
     }
 
-    public function getSubscriptionForOwner($userId)
+    public function getStoreOwnerSubscriptionforowner($userId)
     {
-        return $this->storeOwnersubscribeRepository->getSubscriptionForOwner($userId);
+        return $this->storeOwnersubscribeRepository->getStoreOwnerSubscriptionforowner($userId);
     }
 
-    public function subscriptionUpdateState(StoreOwnerSubscriptionUpdateStateRequest $request)
+    public function storeOwnerSubscriptionUpdateState(StoreOwnerSubscriptionUpdateStateRequest $request)
     {
         $subscribeEntity = $this->storeOwnersubscribeRepository->find($request->getId());
         
@@ -122,14 +122,14 @@ class StoreOwnerSubscriptionManager
         return $subscribeEntity;
     }
 
-    public function getSubscriptionsPending()
+    public function getStoreOwnerSubscriptionPending()
     {
-        return $this->storeOwnersubscribeRepository->getSubscriptionsPending();
+        return $this->storeOwnersubscribeRepository->getStoreOwnerSubscriptionPending();
     }
 
-    public function getSubscriptionById($id)
+    public function getStoreOwnerSubscriptionById($id)
     {
-        return $this->storeOwnersubscribeRepository->getSubscriptionById($id);
+        return $this->storeOwnersubscribeRepository->getStoreOwnerSubscriptionById($id);
     }
 
     public function subscriptionIsActive($ownerID, $subscribeId)

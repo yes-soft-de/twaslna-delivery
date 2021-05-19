@@ -29,7 +29,7 @@ class SupportController extends BaseController
     }
     
     /**
-     * @Route("report", name="createReport", methods={"POST"})
+     * @Route("support", name="createReport", methods={"POST"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse
@@ -56,24 +56,24 @@ class SupportController extends BaseController
     }
 
     /**
-     * @Route("reports", name="getreportsForAdmin", methods={"GET"})
+     * @Route("supports", name="getreportsForAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
-    public function getReports()
+    public function getSupports()
     {
-        $result = $this->supportService->getReports();
+        $result = $this->supportService->getSupports();
 
         return $this->response($result, self::FETCH);
     }
 
     /**
-     * @Route("report/{id}", name="getReportById", methods={"GET"})
+     * @Route("support/{id}", name="getReportById", methods={"GET"})
      * @return JsonResponse
      */
-    public function getReport($id)
+    public function getSupport($id)
     {
-        $result = $this->supportService->getReport($id);
+        $result = $this->supportService->getSupport($id);
 
         return $this->response($result, self::FETCH);
     }

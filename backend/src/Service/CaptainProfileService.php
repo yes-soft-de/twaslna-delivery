@@ -77,9 +77,9 @@ class CaptainProfileService
         }
     }
 
-    public function UpdateCaptainProfile(CaptainProfileUpdateRequest $request)
+    public function updateCaptainProfile(CaptainProfileUpdateRequest $request)
     {
-        $item = $this->userManager->UpdateCaptainProfile($request);
+        $item = $this->userManager->updateCaptainProfile($request);
         
         return $this->autoMapping->map(CaptainProfileEntity::class, CaptainProfileCreateResponse::class, $item);
     }

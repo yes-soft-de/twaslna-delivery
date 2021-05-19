@@ -20,7 +20,7 @@ class SupportEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, SupportEntity::class);
     }
 
-    public function getReports()
+    public function getSupports()
     {
         return $this->createQueryBuilder('ReportEntity')
             ->addSelect('ReportEntity.id', 'ReportEntity.orderId', 'ReportEntity.reason', 'ReportEntity.userId', 'userProfileEntity.storeOwnerName', 'ReportEntity.uuid', 'ReportEntity.newMessageStatus') 
@@ -31,7 +31,7 @@ class SupportEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getReport($id)
+    public function getSupport($id)
     {
         return $this->createQueryBuilder('ReportEntity')
             ->addSelect('ReportEntity.id', 'ReportEntity.orderId', 'ReportEntity.reason', 'ReportEntity.userId', 'userProfileEntity.storeOwnerName', 'ReportEntity.uuid', 'ReportEntity.newMessageStatus') 

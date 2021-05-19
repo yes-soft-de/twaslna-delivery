@@ -19,7 +19,7 @@ class DeliveryCompanyPackageEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, DeliveryCompanyPackageEntity::class);
     }
 
-    public function getPackages()
+    public function getCompanyPackagesActive()
     {
         return $this->createQueryBuilder('package')
             ->select('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, package.status, package.city, package.branch')
@@ -45,7 +45,7 @@ class DeliveryCompanyPackageEntityRepository extends ServiceEntityRepository
     //         ->getResult();
     // }
 
-    public function getAllpackages()
+    public function getCompanyPackages()
     {
         return $this->createQueryBuilder('package')
             ->select('package.id, package.name, package.cost, package.note, package.carCount, package.city, package.orderCount, package.status')
@@ -53,7 +53,7 @@ class DeliveryCompanyPackageEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    public function getpackagesById($id)
+    public function getCompanyPackageById($id)
     {
         return $this->createQueryBuilder('package')
             ->select('package.id, package.name, package.cost, package.note, package.carCount, package.city, package.orderCount, package.status')

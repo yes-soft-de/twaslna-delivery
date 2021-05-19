@@ -31,20 +31,20 @@ class SupportService
         return $this->autoMapping->map(SupportEntity::class, SupportResponse::class, $reprot);
     }
 
-    public function getReports()
+    public function getSupports()
     {
         $response = [];
-        $items = $this->supportManager->getReports();
+        $items = $this->supportManager->getSupports();
         foreach ($items as $item) {
         $response[] =  $this->autoMapping->map('array', SupportResponse::class, $item);
         }
         return $response;
     }
 
-    public function getReport($id)
+    public function getSupport($id)
     {
        
-        $item = $this->supportManager->getReport($id);
+        $item = $this->supportManager->getSupport($id);
     
         return  $this->autoMapping->map('array', SupportResponse::class, $item);
     }
@@ -56,9 +56,9 @@ class SupportService
         return $this->supportManager->update($item, $NewMessageStatus);
      }
 
-    public function updateReportNewMessageStatus($id)
+    public function supportReportNewMessageStatus($id)
     {
-        return $this->supportManager->updateReportNewMessageStatus($id);
+        return $this->supportManager->supportReportNewMessageStatus($id);
    
        
      }

@@ -217,7 +217,7 @@ class UserManager
         }
     }
 
-    public function UpdateCaptainProfile(CaptainProfileUpdateRequest $request)
+    public function updateCaptainProfile(CaptainProfileUpdateRequest $request)
     {
         $item = $this->captainProfileEntityRepository->getByCaptainIDForUpdate($request->getUserID());
         if ($item) {

@@ -19,7 +19,7 @@ class LogController extends BaseController
     } 
     
     /**
-      * @Route("/record/{orderId}", name="GetRecordByOrderId", methods={"GET"})
+      * @Route("/log/{orderId}", name="GetRecordByOrderId", methods={"GET"})
       * @param Request $request
       * @return JsonResponse
       */
@@ -31,7 +31,7 @@ class LogController extends BaseController
       }
       
     /**
-      * @Route("/records/{orderId}", name="GetRecordsByOrderId", methods={"GET"})
+      * @Route("/logs/{orderId}", name="GetRecordsByOrderId", methods={"GET"})
       * @param Request $request
       * @return JsonResponse
       */
@@ -43,7 +43,7 @@ class LogController extends BaseController
       }
 
      /**
-      * @Route("/records", name="GetLogsByUserId", methods={"GET"})
+      * @Route("/logs", name="GetLogsByUserId", methods={"GET"})
       * @param Request $request
       * @return JsonResponse
       */

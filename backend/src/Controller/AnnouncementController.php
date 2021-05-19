@@ -31,7 +31,7 @@ class AnnouncementController extends BaseController
     }
 
     /**
-     * @Route("update", name="createupdate", methods={"POST"})
+     * @Route("announcement", name="createAnnouncement", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -56,11 +56,11 @@ class AnnouncementController extends BaseController
     }
 
      /**
-     * @Route("update", name="updateupdate", methods={"PUT"})
+     * @Route("announcement", name="updateAnnouncement", methods={"PUT"})
      * @param Request $request
      * @return JsonResponse
      */
-    public function update(Request $request)
+    public function updateAnnouncement(Request $request)
     {
         $data = json_decode($request->getContent(), true);
 
@@ -74,13 +74,13 @@ class AnnouncementController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->announcementService->update($request);
+        $result = $this->announcementService->updateAnnouncement($request);
 
         return $this->response($result, self::UPDATE);
     }
 
      /**
-     * @Route("update/{id}", name="getUpdateById", methods={"GET"})
+     * @Route("announcement/{id}", name="getAnnouncementById", methods={"GET"})
      * @return JsonResponse
      */
     public function getAnnouncementById($id)
@@ -91,12 +91,12 @@ class AnnouncementController extends BaseController
     }
 
      /**
-     * @Route("updateall", name="getUpdateAll", methods={"GET"})
+     * @Route("announcements", name="getAnnouncements", methods={"GET"})
      * @return JsonResponse
      */
-    public function getAllAnnouncements()
+    public function getAnnouncements()
     {
-        $result = $this->announcementService->getAllAnnouncements();
+        $result = $this->announcementService->getAnnouncements();
 
         return $this->response($result, self::FETCH);
     }
