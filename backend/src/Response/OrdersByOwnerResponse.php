@@ -2,20 +2,24 @@
 
 namespace App\Response;
 
-class OrdersongoingResponse
+class OrdersByOwnerResponse
 {
     public $id;
     public $source = [];
     public $destination;
-    public $storeOwnerName;
     public $deliveryDate;
+    public $updateDate;
     public $note;
     public $payment;
     public $recipientName;
     public $recipientPhone;
     public $state;
-    public $image;
-    public $imageURL;
-    public $baseURL;
     public $fromBranch;
+    public $acceptedOrder;
+    public $record;
+    public $kilometer;
+    public $rating;
+    public $createdAt;
+    public $productID;
+    public $product;
 }

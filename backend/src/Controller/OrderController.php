@@ -112,7 +112,7 @@ class OrderController extends BaseController
     }
 
     /**
-     * @Route("/getPendingOrders", name="GetPendingOrders", methods={"GET"})
+     * @Route("/getpendingorders", name="GetPendingOrders", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
@@ -122,25 +122,26 @@ class OrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+//remove it
+    // /**
+    //  * @Route("/order", name="orderUpdate", methods={"PUT"})
+    //  * @IsGranted("ROLE_OWNER")
+    //  * @param Request $request
+    //  * @return JsonResponse
+    //  */
+    // public function update(Request $request)
+    // {
+    //     $data = json_decode($request->getContent(), true);
 
-    /**
-     * @Route("/order", name="orderUpdate", methods={"PUT"})
-     * @IsGranted("ROLE_OWNER")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function update(Request $request)
-    {
-        $data = json_decode($request->getContent(), true);
+    //     $request = $this->autoMapping->map(stdClass::class, OrderUpdateRequest::class, (object) $data);
+    //     $request->setOwnerID($this->getUserId());
 
-        $request = $this->autoMapping->map(stdClass::class, OrderUpdateRequest::class, (object) $data);
-        $request->setOwnerID($this->getUserId());
+    //     $response = $this->orderService->update($request);
 
-        $response = $this->orderService->update($request);
-
-        return $this->response($response, self::UPDATE);
-    }
+    //     return $this->response($response, self::UPDATE);
+    // }
     
+    //To accept the order AND change state
     //state:on way to pick order or in store or picked or ongoing or cash or deliverd
     /**
      * @Route("/orderUpdateState", name="orderUpdateStateByCaptain", methods={"PUT"})
@@ -158,33 +159,6 @@ class OrderController extends BaseController
       
         return $this->response($response, self::UPDATE);
     }
-
-    /**
-     * @Route("order/{id}", name="deleteOrder", methods={"DELETE"})
-     * @IsGranted("ROLE_OWNER")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function delete(Request $request)
-    {
-        $request = new DeleteRequest($request->get('id'));
-
-        $result = $this->orderService->delete($request);
-
-        return $this->response($result, self::DELETE);
-    }
-
-     /**
-      * @Route("/countAllOrders", name="CountAllOrders", methods={"GET"})
-      * @IsGranted("ROLE_ADMIN")
-      * @return JsonResponse
-      */
-      public function countAllOrders()
-      {
-          $result = $this->orderService->countAllOrders();
-  
-          return $this->response($result, self::FETCH);
-      }
 
     /**
      * @Route("/dashboardOrders", name="dashboardOrders",methods={"GET"})

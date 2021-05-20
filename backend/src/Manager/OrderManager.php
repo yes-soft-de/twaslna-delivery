@@ -69,23 +69,23 @@ class OrderManager
     {
         return $this->orderEntityRepository->getPendingOrders();
     }
-
-    public function update(OrderUpdateRequest $request)
-    {
-        $item = $this->orderEntityRepository->find($request->getId());
+//reomve it
+    // public function update(OrderUpdateRequest $request)
+    // {
+    //     $item = $this->orderEntityRepository->find($request->getId());
        
 
-        if ($item) {
-            $item = $this->autoMapping->mapToObject(OrderUpdateRequest::class, OrderEntity::class, $request, $item);
+    //     if ($item) {
+    //         $item = $this->autoMapping->mapToObject(OrderUpdateRequest::class, OrderEntity::class, $request, $item);
 
-            $item->setUpdateDate($item->getUpdateDate());
+    //         $item->setUpdateDate($item->getUpdateDate());
             
-            $this->entityManager->flush();
-            $this->entityManager->clear();
+    //         $this->entityManager->flush();
+    //         $this->entityManager->clear();
 
-            return $item;
-        }
-    }
+    //         return $item;
+    //     }
+    // }
 
     public function orderUpdateStateByCaptain(OrderUpdateStateByCaptainRequest $request)
     {
@@ -101,17 +101,6 @@ class OrderManager
 
             return $item;
         }
-    }
-
-    public function delete(DeleteRequest $request)
-    {
-        $entity = $this->orderEntityRepository->find($request->getId());
-        if ($entity) {
-        
-            $this->entityManager->remove($entity);
-            $this->entityManager->flush();
-        }
-        return $entity;
     }
 
     public function countAllOrders()

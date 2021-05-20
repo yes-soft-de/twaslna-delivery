@@ -242,7 +242,7 @@ class CaptainProfileService
         $item = $this->userManager->getCaptainAsArrayByCaptainId($captainId);
        
         $sumPayments = $this->captainPaymentService->getSumPayments($captainId);
-        $payments = $this->captainPaymentService->getpayments($captainId);
+        $payments = $this->captainPaymentService->getCaptainPayments($captainId);
         
         if ($item) {
              $countAcceptedOrder = $this->captainService->countCaptainOrdersDelivered($item[0]['captainID']);
