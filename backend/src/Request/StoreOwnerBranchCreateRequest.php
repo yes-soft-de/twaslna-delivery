@@ -2,7 +2,7 @@
 
 namespace App\Request;
 
-class BranchesCreateRequest
+class StoreOwnerBranchCreateRequest
 {
     private $ownerID;
     private $location = [];

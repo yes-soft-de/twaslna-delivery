@@ -2,7 +2,7 @@
 
 namespace App\Request;
 
-class BranchesUpdateRequest
+class StoreOwnerBranchUpdateRequest
 {
     private $id;
     private $location = [];

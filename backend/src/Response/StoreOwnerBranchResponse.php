@@ -2,7 +2,7 @@
 
 namespace App\Response;
 
-class BranchesResponse
+class StoreOwnerBranchResponse
 {
     public $id;
     public $ownerID;
