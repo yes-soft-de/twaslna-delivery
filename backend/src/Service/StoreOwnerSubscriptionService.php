@@ -10,7 +10,7 @@ use App\Request\StoreOwnerSubscriptionNextRequest;
 use App\Response\StoreOwnerSubscriptionResponse;
 use App\Response\StoreOwnerSubscriptionByIdResponse;
 use App\Response\StoreOwnerMySubscriptionsResponse;
-use App\Response\StoreOwnerRemainingOrdersResponse;
+use App\Response\StoreOwnerSubscriptionBalanceResponse;
 use App\Service\DateFactoryService;
 use dateTime;
 
@@ -50,7 +50,7 @@ class StoreOwnerSubscriptionService
        $currentSubscription = $this->getSubscriptionCurrent($ownerID);
 
        if ($currentSubscription) {
-            $this->saveFinisheAuto($ownerID, $currentSubscription['id']);
+            $this->checkSubscription($ownerID, $currentSubscription['id']);
        }
 
        $subscriptions = $this->storeOwnerSubscriptionManager->getStoreOwnerSubscriptionforowner($ownerID);
@@ -114,7 +114,7 @@ class StoreOwnerSubscriptionService
 
     public function subscriptionIsActive($ownerID, $subscribeId)
     {
-        $this->saveFinisheAuto($ownerID, $subscribeId);
+        $this->checkSubscription($ownerID, $subscribeId);
     
         $item = $this->storeOwnerSubscriptionManager->subscriptionIsActive($ownerID, $subscribeId);
         if ($item) {
@@ -126,7 +126,7 @@ class StoreOwnerSubscriptionService
 
     // check subscription , if time is finishe or order count is finishe, change status value to 'finished'
     //return full information for the current subscription
-    public function saveFinisheAuto($ownerID, $subscribeId):object
+    public function checkSubscription($ownerID, $subscribeId):object
     {
         $response = [];
         //Get full information for the current subscription
@@ -162,7 +162,7 @@ class StoreOwnerSubscriptionService
             }
             
         }
-        $response = $this->autoMapping->map('array', StoreOwnerRemainingOrdersResponse::class, $remainingOrdersOfPackage);
+        $response = $this->autoMapping->map('array', StoreOwnerSubscriptionBalanceResponse::class, $remainingOrdersOfPackage);
         $subscribeStauts = $this->storeOwnerSubscriptionManager->subscriptionIsActive($ownerID, $subscribeId);
         
         if ($subscribeStauts['status']) {
@@ -208,7 +208,7 @@ class StoreOwnerSubscriptionService
     {
         $subscribe = $this->getSubscriptionCurrent($ownerID);
         if ($subscribe) {
-            return $this->saveFinisheAuto($ownerID, $subscribe['id']);
+            return $this->checkSubscription($ownerID, $subscribe['id']);
         }
 
     }

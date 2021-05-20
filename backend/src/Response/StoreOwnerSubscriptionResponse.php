@@ -17,6 +17,4 @@ class StoreOwnerSubscriptionResponse
     public $status;
 
     public $note;
-
-    public $NewUsersThisMonth;
 }

@@ -19,5 +19,4 @@ class StoreOwnerSubscriptionByIdResponse
     public $packageNote;
 
     public $subscriptionNote;
-
 }
