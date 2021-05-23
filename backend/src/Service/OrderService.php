@@ -19,6 +19,11 @@ use App\Response\OrderStatusResponse;
 use App\Response\OrderClosestResponse;
 use App\Response\OrderPendingResponse;
 use App\Response\OrderUpdateStateResponse;
+use App\Response\OrdersResponse;
+use App\Response\OrderCreateClientResponse;
+use App\Response\AcceptedOrderResponse;
+use App\Response\OrdersAndTopOwnerResponse;
+use App\Response\OrdersAndCountResponse;
 use App\Service\StoreOwnerSubscriptionService;
 use App\Service\RatingService;
 use App\Service\StoreOwnerProfileService;
@@ -190,7 +195,7 @@ class OrderService
         return $response;
     }
 
-    public function closestOrders($userId)
+    public function closestOrders($userId):?array
     {
         $response =[];
         // $status = $this->userService->captainIsActive($userId);
@@ -217,7 +222,7 @@ class OrderService
         return $response;
     }
 
-    public function getPendingOrders()
+    public function getPendingOrders():?array
     {
         $response = [];
 
@@ -301,7 +306,7 @@ class OrderService
         return $response;
     }
 
-    public function getOrders()
+    public function getOrders():?array
     {
         $response = [];
         $orders = $this->orderManager->getOrders();
@@ -314,15 +319,18 @@ class OrderService
 
             if ($order['captainID'] == true) {
                 $order['acceptedOrder'] = $this->captainProfileService->getCaptainProfileByCaptainID($order['captainID']);
+                }
+            if ($order['productID'] == true) {
+                    $order['product'] = $this->productService->getProductById($order['productID']);
                     }
 
-            $response[] = $this->autoMapping->map('array', OrderResponse::class, $order);
+            $response[] = $this->autoMapping->map('array', OrdersResponse::class, $order);
         }
 
         return $response;
     }
 
-     public function getAllOrdersAndCount($year, $month, $userId, $userType)
+     public function getAllOrdersAndCount($year, $month, $userId, $userType):?array
      {
         $response = [];
         $date = $this->dateFactoryService->returnRequiredDate($year, $month);
@@ -330,8 +338,8 @@ class OrderService
         if ($userType == "owner") {
             $response['countOrdersInMonth'] = $this->orderManager->countOrdersInMonthForOwner($date[0], $date[1], $userId);
             $response['countOrdersInDay'] = $this->orderManager->countOrdersInDay($userId, $date[0],$date[1]);
-
-            $ordersInMonth = $this->orderManager->getAllOrders($date[0], $date[1], $userId);
+            
+            $ordersInMonth = $this->orderManager->getOrdersInMonthForOwner($date[0], $date[1], $userId);
             
             foreach ($ordersInMonth as $order) {
 
@@ -342,8 +350,10 @@ class OrderService
                 if ($order['captainID'] == true) {
                     $order['acceptedOrder'] = $this->captainProfileService->getCaptainProfileByCaptainID($order['captainID']);
                         }
-                $order['record'] = $this->logService->getLogByOrderId($order['id']); 
-                $response[] = $this->autoMapping->map('array', OrderResponse::class, $order);
+                if ($order['productID'] == true) {
+                    $order['product'] = $this->productService->getProductById($order['productID']);
+                        } 
+                $response[] = $this->autoMapping->map('array', OrdersAndCountResponse::class, $order);
             }
         }
 
@@ -365,7 +375,7 @@ class OrderService
 
                     if ($order['captainID'] == true) {
                         $order['acceptedOrder'] = $this->captainProfileService->getCaptainProfileByCaptainID($order['captainID']);
-                         }
+                        }
                     $order['record'] = $this->logService->getLogByOrderId($order['id']); 
                     $firstDate = $this->logService->getFirstDate($order['id']); 
                     $lastDate = $this->logService->getLastDate($order['id']);
@@ -374,15 +384,18 @@ class OrderService
                         $order['completionTime'] = $this->dateFactoryService->subtractTwoDates($firstDate[0]['date'], $lastDate[0]['date']);
                         
                     }
-                    
-                    $response[] = $this->autoMapping->map('array', OrderResponse::class, $order);   
+
+                    if ($order['productID'] == true) {
+                        $order['product'] = $this->productService->getProductById($order['productID']);
+                       }
+                    $response[] = $this->autoMapping->map('array', OrdersAndCountResponse::class, $order);   
                 }
             }
         }
         return $response;
     }
-    
-    public function getTopOwners()
+
+    public function getCountOrdersInDayAndTopOwnersInThisMonth():?array
     {
        $response=[];
        $date = $this->dateFactoryService->returnLastMonthDate();
@@ -397,7 +410,7 @@ class OrderService
 
             $topOwner['countOrdersInDay'] = $this->orderManager->countOrdersInDay($topOwner['ownerID'], $date[0],$date[1]);
            
-            $response[] = $this->autoMapping->map('array', OrderResponse::class, $topOwner);
+            $response[] = $this->autoMapping->map('array', OrdersAndTopOwnerResponse::class, $topOwner);
         }
     
        return $response;
@@ -411,7 +424,26 @@ class OrderService
         }
     }
 
-    public function createClientOrder(OrderCreateRequest $request)
+    public function getAcceptedOrderByCaptainId($captainID):array
+    {
+        $response = [];
+        $orders = $this->orderManager->getAcceptedOrderByCaptainId($captainID);
+   
+        foreach ($orders as $order){
+
+            if ($order['fromBranch']){
+                $order['fromBranch'] = $this->storeOwnerBranchService->getBrancheById($order['fromBranch']);
+                }
+            if ($order['productID'] == true) {
+                $order['product'] = $this->productService->getProductById($order['productID']);
+               }
+            $response[] = $this->autoMapping->map('array', AcceptedOrderResponse::class, $order);
+        }
+    
+        return $response;
+    }
+
+    public function createClientOrder(OrderCreateRequest $request):?object
     {  
         $uuid = $this->roomIdHelperService->roomIdGenerate();
                 
@@ -419,7 +451,7 @@ class OrderService
         if ($item) {
             $this->logService->createLog($item->getId(), $item->getState(), $request->getClientID());
             }
-        $response =$this->autoMapping->map(OrderEntity::class, OrderResponse::class, $item);
+        $response =$this->autoMapping->map(OrderEntity::class, OrderCreateClientResponse::class, $item);
         return $response;
     }
 }

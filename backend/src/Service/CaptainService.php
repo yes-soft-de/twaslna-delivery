@@ -20,19 +20,6 @@ class CaptainService
         $this->logService = $logService;
     }
 
-    public function getAcceptedOrderByCaptainId($captainID):array
-    {
-        $response = [];
-        $orders = $this->orderManager->getAcceptedOrderByCaptainId($captainID);
-   
-        foreach ($orders as $order){
-            $order['record'] = $this->logService->getLogByOrderId($order['id']);
-            $response[] = $this->autoMapping->map('array', OrderResponse::class, $order);
-        }
-    
-        return $response;
-    }
-
     public function countCaptainOrdersDelivered($captainId)
     {
         return $this->orderManager->countCaptainOrdersDelivered($captainId);

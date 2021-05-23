@@ -122,24 +122,6 @@ class OrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
-//remove it
-    // /**
-    //  * @Route("/order", name="orderUpdate", methods={"PUT"})
-    //  * @IsGranted("ROLE_OWNER")
-    //  * @param Request $request
-    //  * @return JsonResponse
-    //  */
-    // public function update(Request $request)
-    // {
-    //     $data = json_decode($request->getContent(), true);
-
-    //     $request = $this->autoMapping->map(stdClass::class, OrderUpdateRequest::class, (object) $data);
-    //     $request->setOwnerID($this->getUserId());
-
-    //     $response = $this->orderService->update($request);
-
-    //     return $this->response($response, self::UPDATE);
-    // }
     
     //To accept the order AND change state
     //state:on way to pick order or in store or picked or ongoing or cash or deliverd
@@ -198,15 +180,15 @@ class OrderController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
-     /**
-     * @Route("/getTopOwners", name="getTopOwnersInThisMonthAndCountOrdersForOwnerInDay",methods={"GET"})
+   /**
+     * @Route("/countordersandtopowner", name="getTopOwnersInThisMonthAndCountOrdersForOwnerInDay",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
      */
-    public function getTopOwners()
+    public function getCountOrdersInDayAndTopOwnersInThisMonth()
     {
-        $result = $this->orderService->getTopOwners();
+        $result = $this->orderService->getCountOrdersInDayAndTopOwnersInThisMonth();
 
         return $this->response($result, self::FETCH);
     }
@@ -218,7 +200,7 @@ class OrderController extends BaseController
       */
       public function getAcceptedOrderByCaptainId()
       {
-          $result = $this->captainService->getAcceptedOrderByCaptainId($this->getUserId());
+          $result = $this->orderService->getAcceptedOrderByCaptainId($this->getUserId());
   
           return $this->response($result, self::FETCH);
       }

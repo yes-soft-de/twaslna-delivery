@@ -219,7 +219,7 @@ class CaptainProfileService
         
         if ($item) {
             $sumPayments = $this->captainPaymentService->getSumPayments($item[0]['captainID']);
-            $payments = $this->captainPaymentService->getpayments($item[0]['captainID']);
+            $payments = $this->captainPaymentService->getCaptainPayments($item[0]['captainID']);
             $countAcceptedOrder = $this->captainService->countCaptainOrdersDelivered($item[0]['captainID']);
 
              $item['countOrdersDeliverd'] = $countAcceptedOrder[0]['countOrdersDeliverd'];
