@@ -4,11 +4,8 @@ namespace App\Controller;
 
 use App\AutoMapping;
 use App\Service\OrderService;
-use App\Service\CaptainService;
 use App\Request\OrderCreateRequest;
-use App\Request\OrderUpdateRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
-use App\Request\DeleteRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,16 +21,14 @@ class OrderController extends BaseController
     private $autoMapping;
     private $validator;
     private $orderService;
-    private $captainService;
    
 
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, OrderService $orderService, CaptainService $captainService)
+    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, OrderService $orderService)
     {
         parent::__construct($serializer);
         $this->autoMapping = $autoMapping;
         $this->validator = $validator;
         $this->orderService = $orderService;
-        $this->captainService = $captainService;
     }
 
     /**

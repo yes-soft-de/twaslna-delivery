@@ -6,9 +6,7 @@ use App\AutoMapping;
 use App\Entity\OrderEntity;
 use App\Repository\OrderEntityRepository;
 use App\Request\OrderCreateRequest;
-use App\Request\OrderUpdateRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
-use App\Request\DeleteRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class OrderManager
@@ -69,23 +67,6 @@ class OrderManager
     {
         return $this->orderEntityRepository->getPendingOrders();
     }
-//reomve it
-    // public function update(OrderUpdateRequest $request)
-    // {
-    //     $item = $this->orderEntityRepository->find($request->getId());
-       
-
-    //     if ($item) {
-    //         $item = $this->autoMapping->mapToObject(OrderUpdateRequest::class, OrderEntity::class, $request, $item);
-
-    //         $item->setUpdateDate($item->getUpdateDate());
-            
-    //         $this->entityManager->flush();
-    //         $this->entityManager->clear();
-
-    //         return $item;
-    //     }
-    // }
 
     public function orderUpdateStateByCaptain(OrderUpdateStateByCaptainRequest $request)
     {
