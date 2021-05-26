@@ -126,7 +126,7 @@ class OrderService
     public function getOrderById($orderId)
     {
         $acceptedOrder=[];
-        $record=[];
+        $log=[];
         $order = $this->orderManager->getOrderById($orderId);
      
         if ($order){
@@ -136,13 +136,13 @@ class OrderService
             if ($order['captainID'] == true) {
                 $acceptedOrder = $this->captainProfileService->getCaptainProfileByCaptainID($order['captainID']);
                 }
-            $record = $this->logService->getFirstDate($orderId);
+            $log = $this->logService->getFirstDate($orderId);
         }
         $response = $this->autoMapping->map('array', OrderByIdResponse::class, $order);
 
         if ($order) {
             $response->acceptedOrder =  $acceptedOrder;
-            $response->record =  $record;
+            $response->log =  $log;
         }
 
         return $response;
@@ -166,7 +166,7 @@ class OrderService
             if ($order['productID'] == true) {
                 $order['product'] = $this->productService->getProductById($order['productID']);
                 }
-            $order['record'] = $this->logService->getLogByOrderId($order['id']);
+            $order['log'] = $this->logService->getLogByOrderId($order['id']);
             $response[] = $this->autoMapping->map('array', OrdersByOwnerResponse::class, $order);
         }
 
@@ -188,7 +188,7 @@ class OrderService
             if ($order['productID'] == true) {
                 $order['product'] = $this->productService->getProductById($order['productID']);
                 }
-            $order['record'] = $this->logService->getLogByOrderId($orderId);
+            $order['log'] = $this->logService->getLogByOrderId($orderId);
         }
         $response = $this->autoMapping->map('array', OrderStatusResponse::class, $order);
 
@@ -242,13 +242,6 @@ class OrderService
         }
         return $response;
     }
-//remove it
-    // public function update(OrderUpdateRequest $request)
-    // {
-    //     $item = $this->orderManager->update($request);
-
-    //     return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $item);
-    // }
 
     public function orderUpdateStateByCaptain(OrderUpdateStateByCaptainRequest $request)
     {
@@ -375,7 +368,7 @@ class OrderService
                     if ($order['captainID'] == true) {
                         $order['acceptedOrder'] = $this->captainProfileService->getCaptainProfileByCaptainID($order['captainID']);
                         }
-                    $order['record'] = $this->logService->getLogByOrderId($order['id']); 
+                    $order['log'] = $this->logService->getLogByOrderId($order['id']); 
                     $firstDate = $this->logService->getFirstDate($order['id']); 
                     $lastDate = $this->logService->getLastDate($order['id']);
                 

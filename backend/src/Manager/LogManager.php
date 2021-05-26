@@ -20,9 +20,9 @@ class LogManager
         $this->logEntityRepository = $logEntityRepository;
     }
 
-    public function createLog($record)
+    public function createLog($log)
     {
-        $logEntity = $this->autoMapping->map('array', LogEntity::class, $record);
+        $logEntity = $this->autoMapping->map('array', LogEntity::class, $log);
         $logEntity->setDate($logEntity->getDate());
         
         $this->entityManager->persist($logEntity);

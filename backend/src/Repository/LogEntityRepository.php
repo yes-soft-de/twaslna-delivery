@@ -21,24 +21,24 @@ class LogEntityRepository extends ServiceEntityRepository
 
     public function getLogByOrderId($orderId)
     {
-        return $this->createQueryBuilder('RecordEntity')
-            ->select('RecordEntity.id, RecordEntity.orderID, RecordEntity.state, RecordEntity.startTime')
+        return $this->createQueryBuilder('logEntity')
+            ->select('logEntity.id, logEntity.orderID, logEntity.state, logEntity.startTime')
             
-            ->andWhere("RecordEntity.orderID =:orderId")
+            ->andWhere("logEntity.orderID =:orderId")
             ->setParameter('orderId', $orderId)
             ->setMaxResults(1)
-            ->addOrderBy('RecordEntity.id','DESC')
-            ->groupBy('RecordEntity.id')
+            ->addOrderBy('logEntity.id','DESC')
+            ->groupBy('logEntity.id')
             ->getQuery()
             ->getResult();
     }
 
     public function getLogsByOrderId($orderId)
     {
-        return $this->createQueryBuilder('RecordEntity')
-            ->select('RecordEntity.id, RecordEntity.orderID, RecordEntity.state, RecordEntity.date')
+        return $this->createQueryBuilder('logEntity')
+            ->select('logEntity.id, logEntity.orderID, logEntity.state, logEntity.date')
             
-            ->andWhere("RecordEntity.orderID =:orderId")
+            ->andWhere("logEntity.orderID =:orderId")
             ->setParameter('orderId', $orderId)
             ->getQuery()
             ->getResult();
@@ -46,35 +46,35 @@ class LogEntityRepository extends ServiceEntityRepository
     
     public function getFirstDate($orderId)
     {
-        return $this->createQueryBuilder('RecordEntity')
-            ->select('RecordEntity.id, RecordEntity.state, RecordEntity.date')
+        return $this->createQueryBuilder('logEntity')
+            ->select('logEntity.id, logEntity.state, logEntity.date')
             
-            ->andWhere("RecordEntity.orderID =:orderId")
+            ->andWhere("logEntity.orderID =:orderId")
             ->setParameter('orderId', $orderId)
             ->setMaxResults(1)
-            ->addOrderBy('RecordEntity.id','ASC')
+            ->addOrderBy('logEntity.id','ASC')
             ->getQuery()
             ->getResult();
     }
 
     public function getLastDate($orderId)
     {
-        return $this->createQueryBuilder('RecordEntity')
-            ->select('RecordEntity.id, RecordEntity.state, RecordEntity.date')
+        return $this->createQueryBuilder('logEntity')
+            ->select('logEntity.id, logEntity.state, logEntity.date')
             
-            ->andWhere("RecordEntity.orderID =:orderId")
+            ->andWhere("logEntity.orderID =:orderId")
             ->setParameter('orderId', $orderId)
             ->setMaxResults(1)
-            ->addOrderBy('RecordEntity.id','DESC')
+            ->addOrderBy('logEntity.id','DESC')
             ->getQuery()
             ->getResult();
     }
 
     public function getOrderIdByOwnerId($ownerID)
     {
-        return $this->createQueryBuilder('RecordEntity')
-            ->select('RecordEntity.id, RecordEntity.state, RecordEntity.date, RecordEntity.userID, RecordEntity.orderID')
-            ->andWhere("RecordEntity.userID = :ownerID ")
+        return $this->createQueryBuilder('logEntity')
+            ->select('logEntity.id, logEntity.state, logEntity.date, logEntity.userID, logEntity.orderID')
+            ->andWhere("logEntity.userID = :ownerID ")
             ->setParameter('ownerID', $ownerID) 
             ->getQuery()
             ->getResult();
@@ -82,9 +82,9 @@ class LogEntityRepository extends ServiceEntityRepository
 
     public function getOrderIdByCaptainId($captainID)
     {
-        return $this->createQueryBuilder('RecordEntity')
-            ->select('RecordEntity.id, RecordEntity.state, RecordEntity.date, RecordEntity.userID, RecordEntity.orderID')
-            ->andWhere("RecordEntity.userID = :captainID ")
+        return $this->createQueryBuilder('logEntity')
+            ->select('logEntity.id, logEntity.state, logEntity.date, logEntity.userID, logEntity.orderID')
+            ->andWhere("logEntity.userID = :captainID ")
             ->setParameter('captainID', $captainID) 
             ->getQuery()
             ->getResult();

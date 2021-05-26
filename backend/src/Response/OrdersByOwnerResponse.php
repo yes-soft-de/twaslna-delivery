@@ -16,7 +16,7 @@ class OrdersByOwnerResponse
     public $state;
     public $fromBranch;
     public $acceptedOrder;
-    public $record;
+    public $log;
     public $kilometer;
     public $rating;
     public $createdAt;

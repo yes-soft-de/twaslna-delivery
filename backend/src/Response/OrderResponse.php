@@ -21,7 +21,7 @@ class OrderResponse
     public $brancheName;
     public $branchCity;
     public $acceptedOrder;
-    public $record;
+    public $log;
     public $completionTime;
     public $uuid;
     public $countOrdersInMonth;

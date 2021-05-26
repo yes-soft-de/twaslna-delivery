@@ -159,7 +159,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getRecordsForCaptain($CaptainId)
+    public function getLogsForCaptain($CaptainId)
     {
         return $this->createQueryBuilder('OrderEntity')
         

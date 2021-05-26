@@ -128,9 +128,9 @@ class OrderManager
         return $this->orderEntityRepository->ongoingOrders();
     }
     
-    public function getRecordsForCaptain($user)
+    public function getLogsForCaptain($user)
     {
-        return $this->orderEntityRepository->getRecordsForCaptain($user);
+        return $this->orderEntityRepository->getLogsForCaptain($user);
     }
 
     public function getOrders()

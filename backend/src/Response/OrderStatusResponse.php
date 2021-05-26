@@ -16,7 +16,7 @@ class OrderStatusResponse
     public $state;
     public $fromBranch;
     public $acceptedOrder;
-    public $record;
+    public $log;
     public $uuid;
     public $owner;
     public $image;
