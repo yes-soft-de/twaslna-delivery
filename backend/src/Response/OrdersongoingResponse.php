@@ -27,5 +27,5 @@ class OrdersongoingResponse
     public $baseURL;
     public $fromBranch;
     public $record;
-    
+    public $createdAt;
 }

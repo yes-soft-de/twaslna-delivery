@@ -6,7 +6,6 @@ use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainProfileEntity;
-use App\Entity\AcceptedOrderEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
@@ -24,7 +23,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, StoreOwnerProfileEntity::class);
     }
 
-    public function getUserProfileByUserID($userID)
+    public function getStoreOwnerProfileByUserID($userID)
     {
         return $this->createQueryBuilder('profile')
 
@@ -37,7 +36,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getUserProfileByID($id)
+    public function getStoreOwnerProfileByID($id)
     {
         return $this->createQueryBuilder('profile')
             ->select('profile.id', 'profile.userName','profile.userID', 'profile.image', 'profile.story', 'profile.branch', 'profile.free', 'profile.status', 'profile.phone')
@@ -72,9 +71,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
 
             ->leftJoin(StoreOwnerBranchEntity::class, 'branchesEntity', Join::WITH, 'orderEntity.fromBranch = branchesEntity.id')
 
-            ->leftJoin(AcceptedOrderEntity::class, 'acceptedOrderEntity', Join::WITH, 'orderEntity.id = acceptedOrderEntity.orderID')
-
-            ->leftJoin(CaptainProfileEntity::class, 'captainProfileEntity', Join::WITH, 'acceptedOrderEntity.captainID = captainProfileEntity.captainID')
+            ->leftJoin(CaptainProfileEntity::class, 'captainProfileEntity', Join::WITH, 'orderEntity.captainID = captainProfileEntity.captainID')
 
             ->getQuery()
             ->getResult();

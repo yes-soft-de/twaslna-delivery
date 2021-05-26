@@ -4,15 +4,18 @@ namespace App\Service;
 
 use App\AutoMapping;
 use App\Entity\CaptainProfileEntity;
+use App\Entity\UserEntity;
 use App\Request\CaptainProfileCreateRequest;
 use App\Request\CaptainVacationCreateRequest;
 use App\Request\CaptainProfileUpdateRequest;
+use App\Request\UserRegisterRequest;
 use App\Request\CaptainProfileUpdateByAdminRequest;
 use App\Response\CaptainProfileCreateResponse;
 use App\Response\CaptainFinancialAccountDetailsResponse;
+use App\Response\UserRegisterResponse ;
 use App\Service\CaptainPaymentService;
 use App\Service\RoomIdHelperService;
-use App\Service\AcceptedOrderService;
+use App\Service\CaptainService;
 use App\Service\RatingService;
 use App\Service\DateFactoryService;
 use App\Manager\UserManager;
@@ -23,28 +26,41 @@ class CaptainProfileService
 {
     private $autoMapping;
     private $userManager;
-    // private $acceptedOrderService;
     private $ratingService;
     private $params;
     private $captainPaymentService;
     private $roomIdHelperService;
     private $dateFactoryService;
-    private $acceptedOrderService;
+    private $captainService;
 
     public function __construct(AutoMapping $autoMapping, ParameterBagInterface $params, CaptainPaymentService $captainPaymentService,  RoomIdHelperService $roomIdHelperService, UserManager $userManager,
-    //  AcceptedOrderService $acceptedOrderService,
-      RatingService $ratingService, DateFactoryService $dateFactoryService, AcceptedOrderService $acceptedOrderService)
+      RatingService $ratingService, DateFactoryService $dateFactoryService, CaptainService $captainService)
     {
         $this->autoMapping = $autoMapping;
         $this->captainPaymentService = $captainPaymentService;
         $this->roomIdHelperService = $roomIdHelperService;
         $this->userManager = $userManager;
-        // $this->acceptedOrderService = $acceptedOrderService;
         $this->ratingService = $ratingService;
         $this->dateFactoryService = $dateFactoryService;
-        $this->acceptedOrderService = $acceptedOrderService;
+        $this->captainService = $captainService;
 
         $this->params = $params->get('upload_base_url') . '/';
+    }
+    
+    public function captainRegister(UserRegisterRequest $request)
+    {
+        $userRegister = $this->userManager->captainRegister($request);
+        if ($userRegister instanceof UserEntity) {
+            
+        return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $userRegister);
+
+        }
+        if ($userRegister == true) {
+          
+            $user = $this->userManager->getUserByUserID($request->getUserID());
+            $user['found']="yes";
+            return $user;
+        }
     }
 
     public function createCaptainProfile(CaptainProfileCreateRequest $request)
@@ -89,7 +105,7 @@ class CaptainProfileService
 
         $bounce = $this->getCaptainFinancialAccountDetailsByCaptainId($captainID);
 
-        $countOrdersDeliverd = $this->acceptedOrderService->countCaptainOrdersDelivered($captainID);
+        $countOrdersDeliverd = $this->captainService->countCaptainOrdersDelivered($captainID);
 
         $item['imageURL'] = $item['image'];
         $item['image'] = $this->params.$item['image'];
@@ -119,7 +135,7 @@ class CaptainProfileService
             $item['drivingLicenceURL'] = $item['drivingLicence'];
             $item['drivingLicence'] = $this->params.$item['drivingLicence'];
             $item['baseURL'] = $this->params;
-            $countOrdersDeliverd = $this->acceptedOrderService->countCaptainOrdersDelivered($item['captainID']);
+            $countOrdersDeliverd = $this->captainService->countCaptainOrdersDelivered($item['captainID']);
 
             $item['rating'] = $this->ratingService->getRatingByCaptainID($item['captainID']);
         }
@@ -204,7 +220,7 @@ class CaptainProfileService
         if ($item) {
             $sumPayments = $this->captainPaymentService->getSumPayments($item[0]['captainID']);
             $payments = $this->captainPaymentService->getpayments($item[0]['captainID']);
-            $countAcceptedOrder = $this->acceptedOrderService->countCaptainOrdersDelivered($item[0]['captainID']);
+            $countAcceptedOrder = $this->captainService->countCaptainOrdersDelivered($item[0]['captainID']);
 
              $item['countOrdersDeliverd'] = $countAcceptedOrder[0]['countOrdersDeliverd'];
              //bounce = total bounce
@@ -229,7 +245,7 @@ class CaptainProfileService
         $payments = $this->captainPaymentService->getpayments($captainId);
         
         if ($item) {
-             $countAcceptedOrder = $this->acceptedOrderService->countCaptainOrdersDelivered($item[0]['captainID']);
+             $countAcceptedOrder = $this->captainService->countCaptainOrdersDelivered($item[0]['captainID']);
              $item['countOrdersDeliverd'] = $countAcceptedOrder[0]['countOrdersDeliverd'];
              $item['bounce'] = $item[0]['bounce'] * $item['countOrdersDeliverd'];
              $item['sumPayments'] = $sumPayments[0]['sumPayments'];

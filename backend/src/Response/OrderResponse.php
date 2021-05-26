@@ -8,8 +8,8 @@ class OrderResponse
     public $ownerID;
     public $userName;
     public $source = [];
-    public $destination = [];
-    public $date;
+    public $destination;
+    public $deliveryDate;
     public $updateDate;
     public $note;
     public $payment;
@@ -33,4 +33,6 @@ class OrderResponse
     public $kilometer;
     public $rating;
     public $currentStage;
+    public $createdAt;
+    public $productID;
 }

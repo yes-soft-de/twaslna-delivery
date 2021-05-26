@@ -30,7 +30,7 @@ class OrderManager
         $request->setSubscribeId($subscribeId);
         $item = $this->autoMapping->map(OrderCreateRequest::class, OrderEntity::class, $request);
 
-        $item->setDate($item->getDate());
+        $item->setDeliveryDate($item->getDeliveryDate());
         $item->setState('pending');
         
         $this->entityManager->persist($item);
@@ -95,21 +95,6 @@ class OrderManager
             $item = $this->autoMapping->mapToObject(OrderUpdateStateByCaptainRequest::class, OrderEntity::class, $request, $item);
 
             $item->setUpdateDate($item->getUpdateDate());
-            
-            $this->entityManager->flush();
-            $this->entityManager->clear();
-
-            return $item;
-        }
-    }
-//مراجعة للحذف
-    public function orderUpdateStateByCaptain2($orderID)
-    {
-        $item = $this->orderEntityRepository->find($orderID);
-       
-
-        if ($item) {
-            $item->setState('on way to pick order');
             
             $this->entityManager->flush();
             $this->entityManager->clear();
@@ -207,5 +192,20 @@ class OrderManager
     public function countCaptainOrdersInDay($captainID, $fromDate, $toDate)
     {
         return $this->orderEntityRepository->countCaptainOrdersInDay($captainID, $fromDate, $toDate);
+    }
+
+    public function createClientOrder(OrderCreateRequest $request, $uuid)
+    {
+        $request->setUuid($uuid);
+        $item = $this->autoMapping->map(OrderCreateRequest::class, OrderEntity::class, $request);
+
+        $item->setDeliveryDate($item->getDeliveryDate());
+        $item->setState('pending');
+        
+        $this->entityManager->persist($item);
+        $this->entityManager->flush();
+        $this->entityManager->clear();
+
+        return $item;
     }
 }

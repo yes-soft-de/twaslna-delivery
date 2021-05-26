@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OrderEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=OrderEntityRepository::class)
@@ -18,7 +19,7 @@ class OrderEntity
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $ownerID;
 
@@ -35,7 +36,7 @@ class OrderEntity
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $date;
+    private $deliveryDate;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -92,6 +93,21 @@ class OrderEntity
      */
     private $captainID;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $clientID;
+
+    /**
+     * @ORM\Column(type="integer", length=255, nullable=true)
+     */
+    private $productID;
+
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
 
     public function getId(): ?int
     {
@@ -141,14 +157,14 @@ class OrderEntity
         return $this;
     }
 
-    public function getDate()
+    public function getDeliveryDate()
     {
-        return $this->date;
+        return $this->deliveryDate;
     }
 
-    public function setDate($date): self
+    public function setDeliveryDate($deliveryDate): self
     {
-        $this->date = new \DateTime($date);
+        $this->deliveryDate = new \DateTime($deliveryDate);
 
         return $this;
     }
@@ -281,6 +297,42 @@ class OrderEntity
     public function setCaptainID(string $captainID): self
     {
         $this->captainID = $captainID;
+
+        return $this;
+    }
+
+    public function getClientID(): ?string
+    {
+        return $this->clientID;
+    }
+
+    public function setClientID(string $clientID): self
+    {
+        $this->clientID = $clientID;
+
+        return $this;
+    }
+
+    public function getProductID(): ?int
+    {
+        return $this->productID;
+    }
+
+    public function setProductID(int $productID): self
+    {
+        $this->productID = $productID;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

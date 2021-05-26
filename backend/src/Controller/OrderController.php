@@ -4,11 +4,10 @@ namespace App\Controller;
 
 use App\AutoMapping;
 use App\Service\OrderService;
-use App\Service\AcceptedOrderService;
+use App\Service\CaptainService;
 use App\Request\OrderCreateRequest;
 use App\Request\OrderUpdateRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
-use App\Request\AcceptedOrderCreateRequest;
 use App\Request\DeleteRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,17 +24,18 @@ class OrderController extends BaseController
     private $autoMapping;
     private $validator;
     private $orderService;
-    private $acceptedOrderService;
+    private $captainService;
    
 
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, OrderService $orderService, AcceptedOrderService $acceptedOrderService)
+    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, OrderService $orderService, CaptainService $captainService)
     {
         parent::__construct($serializer);
         $this->autoMapping = $autoMapping;
         $this->validator = $validator;
         $this->orderService = $orderService;
-        $this->acceptedOrderService = $acceptedOrderService;
+        $this->captainService = $captainService;
     }
+
     /**
      * @Route("order", name="createOrder", methods={"POST"})
      * @IsGranted("ROLE_OWNER")
@@ -244,8 +244,24 @@ class OrderController extends BaseController
       */
       public function getAcceptedOrderByCaptainId()
       {
-          $result = $this->acceptedOrderService->getAcceptedOrderByCaptainId($this->getUserId());
+          $result = $this->captainService->getAcceptedOrderByCaptainId($this->getUserId());
   
           return $this->response($result, self::FETCH);
       }
+
+     /**
+     * @Route("clientorder", name="createClientOrder", methods={"POST"})
+     * @IsGranted("ROLE_CLIENT")
+     */
+    public function createClientOrder(Request $request)
+    {  
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderCreateRequest::class, (object)$data);
+        $request->setClientID($this->getUserId());
+
+        $response = $this->orderService->createClientOrder($request);
+
+        return $this->response($response, self::CREATE);
+    }
 }

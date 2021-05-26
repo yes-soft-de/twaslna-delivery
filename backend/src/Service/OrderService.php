@@ -18,12 +18,13 @@ use App\Service\StoreOwnerProfileService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use App\Service\RoomIdHelperService;
 use App\Service\DateFactoryService;
-use App\Service\AcceptedOrderService;
+use App\Service\CaptainService;
 use App\Service\CaptainProfileService;
 use App\Service\StoreOwnerBranchService;
+use App\Constant\ResponseConstant;
 use App\Constant\StatusConstant;
 
-class OrderService extends StatusConstant
+class OrderService
 {
     private $autoMapping;
     private $orderManager;
@@ -36,17 +37,17 @@ class OrderService extends StatusConstant
     // private $notificationService;
     private $roomIdHelperService;
     private $dateFactoryService;
-    private $acceptedOrderService;
+    private $captainService;
     private $captainProfileService;
 
     public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, LogService $logService, StoreOwnerBranchService $storeOwnerBranchService, StoreOwnerSubscriptionService $storeOwnerSubscriptionService, StoreOwnerProfileService $storeOwnerProfileService, ParameterBagInterface $params,  RatingService $ratingService
                                 // , NotificationService $notificationService
-                               , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, AcceptedOrderService $acceptedOrderService, CaptainProfileService $captainProfileService
+                               , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, CaptainService $captainService, CaptainProfileService $captainProfileService
                                 )
     {
         $this->autoMapping = $autoMapping;
         $this->orderManager = $orderManager;
-        $this->acceptedOrderService = $acceptedOrderService;
+        $this->captainService = $captainService;
         $this->logService = $logService;
         $this->storeOwnerBranchService = $storeOwnerBranchService;
         $this->storeOwnerSubscriptionService = $storeOwnerSubscriptionService;
@@ -56,13 +57,12 @@ class OrderService extends StatusConstant
         $this->dateFactoryService = $dateFactoryService;
         $this->params = $params->get('upload_base_url') . '/';
         // $this->notificationService = $notificationService;
-        $this->acceptedOrderService = $acceptedOrderService;
         $this->captainProfileService = $captainProfileService;
     }
 
     public function createOrder(OrderCreateRequest $request)
     {  
-        $response = self::$PLEASE_SUBSCRIBE;
+        $response = ResponseConstant::$PLEASE_SUBSCRIBE;
         //get Subscribe id Current
         $subscriptionCurrent =  $this->storeOwnerSubscriptionService->getSubscriptionCurrent($request->getOwnerID());
       
@@ -90,19 +90,19 @@ class OrderService extends StatusConstant
                 $response =$this->autoMapping->map(OrderEntity::class, OrderResponse::class, $item);
             }
             
-            if ($status == self::$INACTIVE) {
-                $response = self::$SUBSCRIBE_IS_AWAITING_ACTIVATION;
+            if ($status == StatusConstant::$INACTIVE) {
+                $response = ResponseConstant::$SUBSCRIBE_IS_AWAITING_ACTIVATION;
             }
-            if ($status == self::$ORDERS_FINISHED) {
-                $response = self::$SUBSCRIBE_AND_COUNT_ORDER_FINISHED;
-            }
-
-            if ($status == self::$DATE_FINISHED) {
-                $response = self::$SUBSCRIBE_AND_DATE_FINISHED;
+            if ($status == StatusConstant::$ORDERS_FINISHED) {
+                $response = ResponseConstant::$SUBSCRIBE_AND_COUNT_ORDER_FINISHED;
             }
 
-            if ($status == self::$UNACCEPT) {
-                $response = self::$SUBSCRIBE_UNACCEPTED;
+            if ($status == StatusConstant::$DATE_FINISHED) {
+                $response = ResponseConstant::$SUBSCRIBE_AND_DATE_FINISHED;
+            }
+
+            if ($status == StatusConstant::$UNACCEPT) {
+                $response = ResponseConstant::$SUBSCRIBE_UNACCEPTED;
             }
     }
         return $response;
@@ -162,7 +162,7 @@ class OrderService extends StatusConstant
                     $order['fromBranch'] = $this->storeOwnerBranchService->getBrancheById($order['fromBranch']);
                }
             
-            $order['owner'] = $this->storeOwnerProfileService->getUserProfileByUserID($order['ownerID']);
+            $order['owner'] = $this->storeOwnerProfileService->getStoreOwnerProfileByUserID($order['ownerID']);
             if ($order['captainID'] == true) {
             $order['acceptedOrder'] = $this->captainProfileService->getCaptainProfileByCaptainID($order['captainID']);
             }
@@ -187,7 +187,7 @@ class OrderService extends StatusConstant
                 }
                 $order['record'] = $this->logService->getLogByOrderId($order['id']);
                
-                $order['owner'] = $this->storeOwnerProfileService->getUserProfileByUserID($order['ownerID']);
+                $order['owner'] = $this->storeOwnerProfileService->getStoreOwnerProfileByUserID($order['ownerID']);
                 $response[] = $this->autoMapping->map('array', OrderResponse::class, $order);
             }
         // }
@@ -345,9 +345,9 @@ class OrderService extends StatusConstant
 
         if ($userType == "captain") {
         
-            $response['countOrdersInMonth'] = $this->acceptedOrderService->countOrdersInMonthForCaptain($date[0], $date[1], $userId);
-            $response['countOrdersInDay'] = $this->acceptedOrderService->countCaptainOrdersInDay($userId, $date[0],$date[1]);
-            $acceptedInMonth = $this->acceptedOrderService->getAcceptedOrderByCaptainIdInMonth($date[0], $date[1], $userId);
+            $response['countOrdersInMonth'] = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $userId);
+            $response['countOrdersInDay'] = $this->captainService->countCaptainOrdersInDay($userId, $date[0],$date[1]);
+            $acceptedInMonth = $this->captainService->getAcceptedOrderByCaptainIdInMonth($date[0], $date[1], $userId);
             
             foreach ($acceptedInMonth as $item){
                 $ordersInMonth =  $this->orderManager->orderById($item['id']);  
@@ -405,5 +405,17 @@ class OrderService extends StatusConstant
         {
             return $this->params;
         }
+    }
+
+    public function createClientOrder(OrderCreateRequest $request)
+    {  
+        $uuid = $this->roomIdHelperService->roomIdGenerate();
+                
+        $item = $this->orderManager->createClientOrder($request, $uuid);
+        if ($item) {
+            $this->logService->createLog($item->getId(), $item->getState(), $request->getClientID());
+            }
+        $response =$this->autoMapping->map(OrderEntity::class, OrderResponse::class, $item);
+        return $response;
     }
 }

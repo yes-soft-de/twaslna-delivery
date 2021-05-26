@@ -3,14 +3,11 @@
 namespace App\Controller;
 
 use App\AutoMapping;
-use App\Request\UserProfileCreateRequest;
-use App\Request\UserProfileUpdateRequest;
+
 use App\Request\CaptainProfileCreateRequest;
 use App\Request\CaptainProfileUpdateRequest;
 use App\Request\CaptainProfileUpdateByAdminRequest;
-use App\Request\userProfileUpdateByAdminRequest;
 use App\Request\UserRegisterRequest;
-use App\Service\StoreOwnerProfileService;
 use App\Service\CaptainProfileService;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,30 +19,28 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
-class UserController extends BaseController
+class CaptainProfileController extends BaseController
 {
     private $autoMapping;
     private $validator;
-    private $storeOwnerProfileService;
     private $captainProfileService;
    
 
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, StoreOwnerProfileService $storeOwnerProfileService, CaptainProfileService $captainProfileService)
+    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, CaptainProfileService $captainProfileService)
     {
         parent::__construct($serializer);
         $this->autoMapping = $autoMapping;
         $this->validator = $validator;
-        $this->storeOwnerProfileService = $storeOwnerProfileService;
         $this->captainProfileService = $captainProfileService;
         
     }
 
-    /**
-     * @Route("/user", name="userRegister", methods={"POST"})
+     /**
+     * @Route("/captainregister", name="captainRegister", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      */
-    public function userRegister(Request $request)
+    public function captainRegister(Request $request)
     {
         $data = json_decode($request->getContent(), true);
         
@@ -59,110 +54,13 @@ class UserController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $response = $this->storeOwnerProfileService->userRegister($request);
+        $response = $this->captainProfileService->captainRegister($request);
        
         return $this->response($response, self::CREATE);
     }
 
     /**
-     * @Route("/userprofile", name="userProfileCreate", methods={"POST"})
-     * @IsGranted("ROLE_OWNER")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function userProfileCreate(Request $request)
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class, UserProfileCreateRequest::class, (object)$data);
-
-        $request->setUserID($this->getUserId());
-
-        $violations = $this->validator->validate($request);
-        if (\count($violations) > 0) {
-            $violationsString = (string) $violations;
-
-            return new JsonResponse($violationsString, Response::HTTP_OK);
-        }
-
-        $response = $this->storeOwnerProfileService->userProfileCreate($request);
-
-        return $this->response($response, self::CREATE);
-    }
-
-    /**
-     * @Route("/userprofile", name="updateUserProfile", methods={"PUT"})
-     * @IsGranted("ROLE_OWNER")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function updateUserProfile(Request $request)
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class, UserProfileUpdateRequest::class, (object)$data);
-        $request->setUserID($this->getUserId());
-
-        $response = $this->storeOwnerProfileService->userProfileUpdate($request);
-
-        return $this->response($response, self::UPDATE);
-    }
-
-    /**
-     * @Route("/userProfileUpdateByAdmin", name="userProfileUpdateByAdmin", methods={"PUT"})
-     * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function userProfileUpdateByAdmin(Request $request)
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class, userProfileUpdateByAdminRequest::class, (object)$data);
-
-        $response = $this->storeOwnerProfileService->userProfileUpdateByAdmin($request);
-
-        return $this->response($response, self::UPDATE);
-    }
-
-    /**
-     * @Route("/userprofileByID/{id}", name="getUserProfileByID",methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
-     * @return JsonResponse
-     */
-    public function getUserProfileByID($id)
-    {
-        $response = $this->storeOwnerProfileService->getUserProfileByID($id);
-
-        return $this->response($response, self::FETCH);
-    }
-
-   /**
-     * @Route("/userprofilebyuserid/{userId}", name="getUserProfileByID",methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
-     * @return JsonResponse
-     */
-    public function getUserProfile($userId)
-    {
-        $response = $this->storeOwnerProfileService->getUserProfileByUserID($userId);
-
-        return $this->response($response, self::FETCH);
-    }
-
-    /**
-     * @Route("/userprofile", name="getUserProfileByUserId",methods={"GET"})
-     * @IsGranted("ROLE_OWNER")
-     * @return JsonResponse
-     */
-    public function getUserProfileByUserID()
-    {
-        $response = $this->storeOwnerProfileService->getUserProfileByUserID($this->getUserId());
-
-        return $this->response($response, self::FETCH);
-    }
-
-    /**
-     * @Route("/captainprofile", name="captainprofileCreate", methods={"POST"})
+     * @Route("/captainprofile", name="captainProfileCreate", methods={"POST"})
      * @IsGranted("ROLE_CAPTAIN")
      * @param Request $request
      * @return JsonResponse
@@ -188,7 +86,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/captainprofile", name="captainprofileUpdate", methods={"PUT"})
+     * @Route("/captainprofile", name="captainProfileUpdate", methods={"PUT"})
      * @IsGranted("ROLE_CAPTAIN")
      * @param Request $request
      * @return JsonResponse
@@ -213,7 +111,7 @@ class UserController extends BaseController
     }
   
     /**
-     * @Route("/captainprofileUpdateByAdmin", name="captainprofileUpdateByAdmin", methods={"PUT"})
+     * @Route("/captainprofileupdatebyadmin", name="captainProfileUpdateByAdmin", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -287,7 +185,7 @@ class UserController extends BaseController
     // }
 
     /**
-     * @Route("/dashboardCaptains", name="dashboardCaptains",methods={"GET"})
+     * @Route("/dashboardcaptains", name="dashboardCaptains",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -300,7 +198,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/getDayOfCaptains", name="getDayOfCaptains",methods={"GET"})
+     * @Route("/getdayofcaptains", name="getDayOfCaptains",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -313,7 +211,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/totalBounceCaptain/{captainProfileId}", name="TotalBounceCaptain",methods={"GET"})
+     * @Route("/totalbouncecaptain/{captainProfileId}", name="TotalBounceCaptain",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -325,18 +223,7 @@ class UserController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
-     /**
-     * @Route("/storeowners", name="getAllStoreOwners",methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
-     * @return JsonResponse
-     */
-    public function getAllStoreOwners()
-    {
-        $response = $this->storeOwnerProfileService->getAllStoreOwners();
-
-        return $this->response($response, self::FETCH);
-    }
-     /**
+    /**
      * @Route("/captains", name="getCaptains",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
@@ -348,7 +235,7 @@ class UserController extends BaseController
         return $this->response($response, self::FETCH);
     }
 
-     /**
+    /**
      * @Route("/captainmybalance", name="getCaptainMyBalance",methods={"GET"})
      * @IsGranted("ROLE_CAPTAIN")
      *  @return JsonResponse
@@ -390,7 +277,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/getTop5Captains", name="GetTop5Captains",methods={"GET"})
+     * @Route("/gettop5captains", name="GetTop5Captains",methods={"GET"})
      * @param Request $request
      * @return JsonResponse
      */

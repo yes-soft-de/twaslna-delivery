@@ -2,7 +2,7 @@
 
 namespace App\Request;
 
-class userProfileUpdateByAdminRequest
+class StoreOwnerUpdateByAdminRequest
 {
     private $id;
     private $status;

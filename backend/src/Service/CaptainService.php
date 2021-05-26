@@ -7,7 +7,7 @@ use App\Manager\OrderManager;
 use App\Response\OrderResponse;
 use App\Service\LogService;
 
-class AcceptedOrderService
+class CaptainService
 {
     private $autoMapping;
     private $orderManager;

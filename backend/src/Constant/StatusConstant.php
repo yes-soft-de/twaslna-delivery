@@ -2,7 +2,7 @@
 
 namespace App\Constant;
 
-abstract class StatusConstant extends ResponseConstant
+abstract class StatusConstant
 {
     static $ACTIVE = "active";
 

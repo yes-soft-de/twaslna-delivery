@@ -71,7 +71,7 @@ class StoreOwnerSubscriptionManager
     {
         $subscribeEntity = $this->storeOwnersubscribeRepository->find($request->getId());
         
-        $request->setEndDate($request->getEndDate());
+        $subscribeEntity->setEndDate(date_modify(new DateTime('now'),'+1 month'));
 
         if (!$subscribeEntity) {
             return null;
@@ -155,6 +155,16 @@ class StoreOwnerSubscriptionManager
     public function getRemainingOrders($ownerID, $id)
     {
         return $this->storeOwnersubscribeRepository->getRemainingOrders($ownerID, $id);
+    }
+
+    public function getCountCancelledOrders($ownerID, $id)
+    {
+        return $this->storeOwnersubscribeRepository->getCountCancelledOrders($ownerID, $id);
+    }
+
+    public function getCountDeliveredOrders($ownerID, $id)
+    {
+        return $this->storeOwnersubscribeRepository->getCountDeliveredOrders($ownerID, $id);
     }
 
     public function subscripeNewUsers($fromDate, $toDate)

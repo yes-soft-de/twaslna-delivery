@@ -190,7 +190,7 @@ methods: GET
 #### Update Order
 ROLE_OWNER
 
-state: deliverd or cancelled.
+state: delivered or cancelled.
 
 ```
 /order
@@ -200,7 +200,7 @@ methods: PUT
 #### Update order State By Captain
 ROLE_CAPTAIN
 
-<!-- state: picked or ongoing or deliverd . -->
+<!-- state: picked or ongoing or delivered . -->
 <!-- next was  adopted -->
 state: in store or picked or ongoing or cash or deliverd
 kilometer: number of integer
