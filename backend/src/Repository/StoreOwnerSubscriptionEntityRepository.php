@@ -154,26 +154,30 @@ class StoreOwnerSubscriptionEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getCountCancelledOrders()
+    public function getCountCancelledOrders($subscribeId)
     {
         return $this->createQueryBuilder('subscription')
 
             ->select('count (subscription.id) as countCancelledOrder')
             ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.subscribeId = subscription.id')
             ->andWhere("orderEntity.state = 'cancelled'")
-
+            ->andWhere("orderEntity.subscribeId = :subscribeId")
+            ->setParameter('subscribeId', $subscribeId)
+            
             ->getQuery()
             ->getOneOrNullResult();
     }
 
-    public function getCountDeliveredOrders()
+    public function getCountConsumedOrders($subscribeId)
     {
         return $this->createQueryBuilder('subscription')
 
-            ->select('count (subscription.id) as countDeliveredOrders')
+            ->select('count (subscription.id) as countConsumedOrders')
             ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.subscribeId = subscription.id')
-            ->andWhere("orderEntity.state = 'deliverd'")
 
+            ->andWhere("subscription.id = :subscribeId")
+            ->andWhere("orderEntity.state != 'cancelled'")
+            ->setParameter('subscribeId', $subscribeId)
             ->getQuery()
             ->getOneOrNullResult();
     }

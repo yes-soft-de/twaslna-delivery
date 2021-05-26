@@ -157,14 +157,14 @@ class StoreOwnerSubscriptionManager
         return $this->storeOwnersubscribeRepository->getRemainingOrders($ownerID, $id);
     }
 
-    public function getCountCancelledOrders($ownerID, $id)
+    public function getCountCancelledOrders($subscribeId)
     {
-        return $this->storeOwnersubscribeRepository->getCountCancelledOrders($ownerID, $id);
+        return $this->storeOwnersubscribeRepository->getCountCancelledOrders($subscribeId);
     }
 
-    public function getCountDeliveredOrders($ownerID, $id)
+    public function getCountConsumedOrders($subscribeId)
     {
-        return $this->storeOwnersubscribeRepository->getCountDeliveredOrders($ownerID, $id);
+        return $this->storeOwnersubscribeRepository->getCountConsumedOrders($subscribeId);
     }
 
     public function subscripeNewUsers($fromDate, $toDate)

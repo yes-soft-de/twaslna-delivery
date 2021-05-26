@@ -132,11 +132,11 @@ class StoreOwnerSubscriptionService
         //Get full information for the current subscription
         $remainingOrdersOfPackage = $this->storeOwnerSubscriptionManager->getRemainingOrders($ownerID, $subscribeId);
         $countCancelledOrder = $this->storeOwnerSubscriptionManager->getCountCancelledOrders($ownerID, $subscribeId);
-        $countDeliveredOrder = $this->storeOwnerSubscriptionManager->getCountDeliveredOrders($ownerID, $subscribeId);
-        //Not counting canceled orders
+        $countConsumedOrders = $this->storeOwnerSubscriptionManager->getCountConsumedOrders($subscribeId);
+        //Not counting cancelled orders
         $remainingOrdersOfPackage['remainingOrders'] = $remainingOrdersOfPackage['remainingOrders'] + $countCancelledOrder['countCancelledOrder'];
        
-        $remainingOrdersOfPackage['countOrdersDelivered'] = $countDeliveredOrder['countDeliveredOrders'];
+        $remainingOrdersOfPackage['countConsumedOrders'] = $countConsumedOrders['countConsumedOrders'];
         if ($remainingOrdersOfPackage['subscriptionEndDate']) {
    
             $endDate =date_timestamp_get($remainingOrdersOfPackage['subscriptionEndDate']);

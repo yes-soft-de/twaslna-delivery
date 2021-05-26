@@ -51,11 +51,11 @@ class NotificationService
         $devicesToken = [];
         $userTokenOne = $this->getNotificationTokenByUserID($request->getUserIdOne());
         $devicesToken[] = $userTokenOne;
-        $userTokenTwo = $this->getNotificationTokenByUserID($request->getUserIdTwo());
-        $devicesToken[] = $userTokenTwo;
+        // $userTokenTwo = $this->getNotificationTokenByUserID($request->getUserIdTwo());
+        // $devicesToken[] = $userTokenTwo;
 
         $message = CloudMessage::new()
-            ->withNotification(Notification::create('C4D', MessageConstant::$MESSAGE_CAPTAIN_NEW_ORDER));
+            ->withNotification(Notification::create('C4D', MessageConstant::$MESSAGE_CAPTAIN_NEW_ORDER.$request->getOrderID()));
 
         $this->messaging->sendMulticast($message, $devicesToken);
     }

@@ -9,7 +9,7 @@ class StoreOwnerSubscriptionBalanceResponse
     public $packagename;
     public $subscriptionID;
     public $remainingOrders;
-    public $countOrdersDelivered;
+    public $countConsumedOrders;
     public $subscriptionstatus;
     public $subscriptionStartDate;
     public $subscriptionEndDate;

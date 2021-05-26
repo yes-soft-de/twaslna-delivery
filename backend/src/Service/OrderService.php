@@ -8,7 +8,7 @@ use App\Manager\OrderManager;
 use App\Request\OrderCreateRequest;
 use App\Request\OrderUpdateRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
-// use App\Request\SendNotificationRequest;
+use App\Request\SendNotificationRequest;
 use App\Response\OrderCreateResponse;
 use App\Response\OrderResponse;
 use App\Response\DeleteResponse;
@@ -267,10 +267,9 @@ class OrderService
 
         //start-----> notification
         // try {
-        // $notificationRequest = new SendNotificationRequest();
-        // $notificationRequest->setUserIdOne($item->getOwnerID());
-        // $notificationRequest->setUserIdTwo($acceptedOrder[0]['captainID']);
-
+        $notificationRequest = new SendNotificationRequest();
+        $notificationRequest->setUserIdOne($item->getOwnerID());
+        $notificationRequest->setOrderID($item->getId());
         // $this->notificationService->notificationOrderUpdate($notificationRequest);
         //notification <------end
         // }
