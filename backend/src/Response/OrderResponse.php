@@ -18,7 +18,7 @@ class OrderResponse
     public $state;
     public $fromBranch;
     public $location;
-    public $brancheName;
+    public $branchName;
     public $branchCity;
     public $acceptedOrder;
     public $log;

@@ -32,7 +32,7 @@ class AllUsersResponse
 
     public $location;
 
-    public $brancheName;
+    public $branchName;
 
     public $branchCity;
 

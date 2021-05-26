@@ -7,7 +7,7 @@ class StoreOwnerBranchUpdateRequest
     private $id;
     private $location = [];
     private $city;
-    private $brancheName;
+    private $branchName;
       
     /**
      * @return mixed

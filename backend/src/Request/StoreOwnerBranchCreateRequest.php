@@ -7,7 +7,7 @@ class StoreOwnerBranchCreateRequest
     private $ownerID;
     private $location = [];
     private $city;
-    private $brancheName;
+    private $branchName;
     private $isActive;
       
     /**

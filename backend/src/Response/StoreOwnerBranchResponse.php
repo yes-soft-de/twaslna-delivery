@@ -8,7 +8,7 @@ class StoreOwnerBranchResponse
     public $ownerID;
     public $location = [];
     public $city;
-    public $brancheName;
+    public $branchName;
     public $free;
     public $storeOwnerName;
     public $isActive;
