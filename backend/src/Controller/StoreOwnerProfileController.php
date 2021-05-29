@@ -145,7 +145,6 @@ class StoreOwnerProfileController extends BaseController
 
     /**
      * @Route("/storeowners", name="getAllStoreOwners",methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
     public function getAllStoreOwners()

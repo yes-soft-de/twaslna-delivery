@@ -75,6 +75,18 @@ class ProductController extends BaseController
     }
 
     /**
+     * @Route("/productsstoreownerbyprofileid/{id}", name="getProductsbyStoreOwnerProfile  ", methods={"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getProductsbyStoreOwnerProfile($id)
+    {
+        $result = $this->productService->getProductsbyStoreOwnerProfile($id);
+
+        return $this->response($result, self::CREATE);
+    }
+
+    /**
      * @Route("/products", name="getProducts", methods={"GET"})
      * @return JsonResponse
      */

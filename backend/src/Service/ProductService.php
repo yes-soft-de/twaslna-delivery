@@ -29,7 +29,7 @@ class ProductService
 
     public function createProductByStoreOwner(ProductCreateRequest $request, $userID)
     {
-        $storeOwnerProfileID = $this->getStoreOwnerProfileByUserID($userID);
+        $storeOwnerProfileID = $this->getStoreOwnerProfileByStoreOwnerID($userID);
 
         $item = $this->productManager->createProductByStoreOwner($request);
         $request->setStoreOwnerProfileID($storeOwnerProfileID);
@@ -39,11 +39,21 @@ class ProductService
 
     public function getProductsbystoreowner($userID)
     {
-        $storeOwnerProfileID = $this->getStoreOwnerProfileByUserID($userID);
+        $storeOwnerProfileID = $this->getStoreOwnerProfileByStoreOwnerID($userID);
 
         $items = $this->productManager->getProductsbyStoreOwnerProfile($storeOwnerProfileID[0]['id']);
         foreach ($items as $item) {
-            $response[] = $this->autoMapping->map('array', ProductCreateResponse::class, $item);
+            $response[] = $this->autoMapping->map('array', ProductsResponse::class, $item);
+            }  
+        return $response;
+    }
+
+    public function getProductsbyStoreOwnerProfile($id)
+    {
+        $response = [];
+        $items = $this->productManager->getProductsbyStoreOwnerProfile($id);
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', ProductsResponse::class, $item);
             }  
         return $response;
     }
@@ -63,8 +73,8 @@ class ProductService
        return $this->autoMapping->map('array', ProductsResponse::class, $item);
     }
 
-    public function getStoreOwnerProfileByUserID($userID)
+    public function getStoreOwnerProfileByStoreOwnerID($userID)
     {
-        return $this->productManager->getStoreOwnerProfileByUserID($userID);
+        return $this->productManager->getStoreOwnerProfileByStoreOwnerID($userID);
     }
 }
