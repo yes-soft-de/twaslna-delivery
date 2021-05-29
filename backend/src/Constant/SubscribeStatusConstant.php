@@ -2,7 +2,7 @@
 
 namespace App\Constant;
 
-abstract class StatusConstant
+abstract class SubscribeStatusConstant
 {
     static $ACTIVE = "active";
 

@@ -33,7 +33,7 @@ use App\Service\CaptainProfileService;
 use App\Service\StoreOwnerBranchService;
 use App\Service\ProductService;
 use App\Constant\ResponseConstant;
-use App\Constant\StatusConstant;
+use App\Constant\SubscribeStatusConstant;
 
 class OrderService
 {
@@ -103,18 +103,18 @@ class OrderService
                 $response =$this->autoMapping->map(OrderEntity::class, OrderCreateResponse::class, $item);
             }
             
-            if ($status == StatusConstant::$INACTIVE) {
+            if ($status == SubscribeStatusConstant::$INACTIVE) {
                 $response = ResponseConstant::$SUBSCRIBE_IS_AWAITING_ACTIVATION;
             }
-            if ($status == StatusConstant::$ORDERS_FINISHED) {
+            if ($status == SubscribeStatusConstant::$ORDERS_FINISHED) {
                 $response = ResponseConstant::$SUBSCRIBE_AND_COUNT_ORDER_FINISHED;
             }
 
-            if ($status == StatusConstant::$DATE_FINISHED) {
+            if ($status == SubscribeStatusConstant::$DATE_FINISHED) {
                 $response = ResponseConstant::$SUBSCRIBE_AND_DATE_FINISHED;
             }
 
-            if ($status == StatusConstant::$UNACCEPT) {
+            if ($status == SubscribeStatusConstant::$UNACCEPT) {
                 $response = ResponseConstant::$SUBSCRIBE_UNACCEPTED;
             }
     }
