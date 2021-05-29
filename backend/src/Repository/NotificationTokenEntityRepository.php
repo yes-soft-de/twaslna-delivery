@@ -21,28 +21,28 @@ class NotificationTokenEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, NotificationTokenEntity::class);
     }
     
-    public function getByReprotUuid($uuid)
+    public function getByReprotRoomID($roomID)
     {
         return $this->createQueryBuilder('NotificationTokenEntity')
         ->addSelect('reportEntity.userId') 
 
-        ->leftJoin(SupportEntity::class, 'reportEntity', Join::WITH, 'reportEntity.uuid = :uuid')
+        ->leftJoin(SupportEntity::class, 'reportEntity', Join::WITH, 'reportEntity.roomID = :roomID')
 
-        ->andWhere("reportEntity.uuid = :uuid ")
-        ->setParameter('uuid', $uuid) 
+        ->andWhere("reportEntity.roomID = :roomID ")
+        ->setParameter('roomID', $roomID) 
         ->getQuery()
         ->getResult();
     }
     
-    public function getCaptainUuid($uuid)
+    public function getCaptainRoomID($roomID)
     {
         return $this->createQueryBuilder('NotificationTokenEntity')
         ->addSelect('captainProfileEntity.captainID') 
 
-        ->leftJoin(CaptainProfileEntity::class, 'captainProfileEntity', Join::WITH, 'captainProfileEntity.uuid = :uuid')
+        ->leftJoin(CaptainProfileEntity::class, 'captainProfileEntity', Join::WITH, 'captainProfileEntity.roomID = :roomID')
 
-        ->andWhere("captainProfileEntity.uuid = :uuid ")
-        ->setParameter('uuid', $uuid) 
+        ->andWhere("captainProfileEntity.roomID = :roomID ")
+        ->setParameter('roomID', $roomID) 
         ->getQuery()
         ->getResult();
     }

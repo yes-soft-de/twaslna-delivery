@@ -12,5 +12,5 @@ class OrderCreateClientResponse
     public $recipientPhone;
     public $state;
     public $fromBranch;
-    public $uuid;
+    public $roomID;
 }

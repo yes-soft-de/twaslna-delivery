@@ -128,9 +128,9 @@ class UserManager
         return $this->userRepository->getUserByUserID($userID);
     }
 
-    public function createStoreOwnerProfile(StoreOwnerProfileCreateRequest $request, $uuid)
+    public function createStoreOwnerProfile(StoreOwnerProfileCreateRequest $request, $roomID)
     {
-        $request->setUuid($uuid);
+        $request->setRoomID($roomID);
         $userProfile = $this->getStoreOwnerProfileByID($request->getStoreOwnerID());
         if ($userProfile == null) {
             $userProfile = $this->autoMapping->map(StoreOwnerProfileCreateRequest::class, StoreOwnerProfileEntity::class, $request);
@@ -192,9 +192,9 @@ class UserManager
         return $this->storeOwnerProfileEntityRepository->getremainingOrders($userID);
     }
 
-    public function createCaptainProfile(CaptainProfileCreateRequest $request, $uuid)
+    public function createCaptainProfile(CaptainProfileCreateRequest $request, $roomID)
     {
-        $request->setUuid($uuid);
+        $request->setRoomID($roomID);
         $isCaptainProfile = $this->captainProfileEntityRepository->getcaptainprofileByCaptainID($request->getCaptainID());
 
         if ($isCaptainProfile == null) {
@@ -329,9 +329,9 @@ class UserManager
         return $this->captainProfileEntityRepository->getAllCaptains();
     }
 
-    public function getcaptainByUuid($uuid)
+    public function getcaptainByRoomID($roomID)
     {
-        return $this->captainProfileEntityRepository->getcaptainByUuid($uuid);
+        return $this->captainProfileEntityRepository->getcaptainByRoomID($roomID);
     }
 
     public function updateCaptainNewMessageStatus($request, $NewMessageStatus)
@@ -365,9 +365,9 @@ class UserManager
     }
 
 //User section 
-    public function createclientProfile(ClientProfileCreateRequest $request, $uuid)
+    public function createclientProfile(ClientProfileCreateRequest $request, $roomID)
     {
-        $request->setUuid($uuid);
+        $request->setRoomID($roomID);
         $userProfile = $this->getClientProfileByClientID($request->getClientID());
         if ($userProfile == null) {
             $userProfile = $this->autoMapping->map(ClientProfileCreateRequest::class, ClientProfileEntity::class, $request);

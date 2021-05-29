@@ -22,7 +22,7 @@ class ClientProfileEntityRepository extends ServiceEntityRepository
     public function getClientProfileByClientID($clientID)
     {
         return $this->createQueryBuilder('clientProfile')
-            ->select('clientProfile.id', 'clientProfile.clientName','clientProfile.clientID', 'clientProfile.image', 'clientProfile.phone', 'clientProfile.uuid')
+            ->select('clientProfile.id', 'clientProfile.clientName','clientProfile.clientID', 'clientProfile.image', 'clientProfile.phone', 'clientProfile.roomID')
 
             ->andWhere('clientProfile.clientID = :clientID')
 
@@ -35,7 +35,7 @@ class ClientProfileEntityRepository extends ServiceEntityRepository
     public function getClientProfileByID($id)
     {
         return $this->createQueryBuilder('clientProfile')
-            ->select('clientProfile.id', 'clientProfile.clientName','clientProfile.clientID', 'clientProfile.image', 'clientProfile.phone', 'clientProfile.uuid')
+            ->select('clientProfile.id', 'clientProfile.clientName','clientProfile.clientID', 'clientProfile.image', 'clientProfile.phone', 'clientProfile.roomID')
 
             ->andWhere('clientProfile.id = :id')
 
@@ -48,7 +48,7 @@ class ClientProfileEntityRepository extends ServiceEntityRepository
     public function getClientsProfile()
     {
         return $this->createQueryBuilder('clientProfile')
-            ->select('clientProfile.id', 'clientProfile.clientName','clientProfile.clientID', 'clientProfile.image', 'clientProfile.phone', 'clientProfile.uuid')
+            ->select('clientProfile.id', 'clientProfile.clientName','clientProfile.clientID', 'clientProfile.image', 'clientProfile.phone', 'clientProfile.roomID')
 
             ->getQuery()
             ->getResult();

@@ -81,7 +81,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('profile')
 
-            ->select('profile.id', 'profile.storeOwnerID', 'profile.storeOwnerName', 'profile.free', 'profile.branch', 'profile.uuid')
+            ->select('profile.id', 'profile.storeOwnerID', 'profile.storeOwnerName', 'profile.free', 'profile.branch', 'profile.roomID')
 
             ->getQuery()
             ->getResult();

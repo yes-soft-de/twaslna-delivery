@@ -68,13 +68,13 @@ class NotificationManager
         return $token[0]->getToken();
     }
 
-    public function getByReprotUuid($uuid)
+    public function getByReprotRoomID($roomID)
     {
-        return $this->notificationTokenEntityRepository->getByReprotUuid($uuid);
+        return $this->notificationTokenEntityRepository->getByReprotRoomID($roomID);
     }
 
-    public function getCaptainUuid($uuid)
+    public function getCaptainRoomID($roomID)
     {
-        return $this->notificationTokenEntityRepository->getCaptainUuid($uuid);
+        return $this->notificationTokenEntityRepository->getCaptainRoomID($roomID);
     }
 }

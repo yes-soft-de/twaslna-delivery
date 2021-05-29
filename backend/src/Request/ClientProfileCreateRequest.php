@@ -10,7 +10,7 @@ class ClientProfileCreateRequest
 
     private $image;
 
-    private $uuid;
+    private $roomID;
     
     private $phone;
 
@@ -46,14 +46,14 @@ class ClientProfileCreateRequest
         $this->clientName = $clientName;
     }
 
-    public function getUuid(): ?string
+    public function getRoomID(): ?string
     {
-        return $this->uuid;
+        return $this->roomID;
     }
 
-    public function setUuid(?string $uuid): self
+    public function seRoomID(?string $roomID): self
     {
-        $this->uuid = $uuid;
+        $this->roomID = $roomID;
 
         return $this;
     }

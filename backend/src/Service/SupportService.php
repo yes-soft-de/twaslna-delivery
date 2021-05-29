@@ -24,9 +24,9 @@ class SupportService
 
     public function createSupport(SupportCreateRequest $request)
     {
-        $uuid = $this->roomIdHelperService->roomIdGenerate();
+        $roomID = $this->roomIdHelperService->roomIdGenerate();
         
-        $reprot = $this->supportManager->createSupport($request, $uuid);
+        $reprot = $this->supportManager->createSupport($request, $roomID);
 
         return $this->autoMapping->map(SupportEntity::class, SupportResponse::class, $reprot);
     }
@@ -51,7 +51,7 @@ class SupportService
 
     public function update($request, $NewMessageStatus)
     {
-        $item = $this->supportManager->getReportByUuid($request->getRoomID());
+        $item = $this->supportManager->getReportByRoomID($request->getRoomID());
    
         return $this->supportManager->update($item, $NewMessageStatus);
      }

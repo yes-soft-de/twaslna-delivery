@@ -20,7 +20,7 @@ class CaptainProfileCreateRequest
 
     private $status;
 
-    private $uuid;
+    private $roomID;
     
     private $specialLink;
     
@@ -194,14 +194,14 @@ class CaptainProfileCreateRequest
         return $this;
     }
     
-    public function getUuid(): ?string
+    public function getRoomID(): ?string
     {
-        return $this->uuid;
+        return $this->roomID;
     }
 
-    public function setUuid(?string $uuid): self
+    public function setRoomID(?string $roomID): self
     {
-        $this->uuid = $uuid;
+        $this->roomID = $roomID;
 
         return $this;
     }

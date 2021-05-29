@@ -22,9 +22,9 @@ class OrderManager
         $this->orderEntityRepository = $orderEntityRepository;
     }
 
-    public function createOrder(OrderCreateRequest $request, $uuid, $subscribeId)
+    public function createOrder(OrderCreateRequest $request, $roomID, $subscribeId)
     {
-        $request->setUuid($uuid);
+        $request->setRoomID($roomID);
         $request->setSubscribeId($subscribeId);
         $item = $this->autoMapping->map(OrderCreateRequest::class, OrderEntity::class, $request);
 
@@ -164,9 +164,9 @@ class OrderManager
         return $this->orderEntityRepository->countCaptainOrdersInDay($captainID, $fromDate, $toDate);
     }
 
-    public function createClientOrder(OrderCreateRequest $request, $uuid)
+    public function createClientOrder(OrderCreateRequest $request, $roomID)
     {
-        $request->setUuid($uuid);
+        $request->setRoomID($roomID);
         $item = $this->autoMapping->map(OrderCreateRequest::class, OrderEntity::class, $request);
 
         $item->setDeliveryDate($item->getDeliveryDate());

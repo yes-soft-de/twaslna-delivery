@@ -43,7 +43,7 @@ class DeliveryCompanyProfileEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('CompanyInfoEntity') 
             ->select('CompanyInfoEntity.id, CompanyInfoEntity.phone, CompanyInfoEntity.phone2, CompanyInfoEntity.whatsapp, CompanyInfoEntity.fax, CompanyInfoEntity.bank, CompanyInfoEntity.stc, CompanyInfoEntity.email')
-            ->addSelect('userProfileEntity.uuid')
+            ->addSelect('userProfileEntity.roomID')
             ->leftJoin(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.storeOwnerID = :storeOwnerID')
             ->setParameter('storeOwnerID',$storeOwnerID)
             ->getQuery()
@@ -54,7 +54,7 @@ class DeliveryCompanyProfileEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('CompanyInfoEntity') 
             ->select('CompanyInfoEntity.id, CompanyInfoEntity.phone, CompanyInfoEntity.phone2, CompanyInfoEntity.whatsapp, CompanyInfoEntity.fax, CompanyInfoEntity.bank, CompanyInfoEntity.stc, CompanyInfoEntity.email')
-            ->addSelect('captainProfileEntity.uuid')
+            ->addSelect('captainProfileEntity.roomID')
             ->leftJoin(CaptainProfileEntity::class, 'captainProfileEntity', Join::WITH, 'captainProfileEntity.captainID = :captainID')
             ->setParameter('captainID',$captainID)
             ->getQuery()

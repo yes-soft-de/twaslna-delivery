@@ -19,7 +19,7 @@ class OrderByIdResponse
     public $fromBranch;
     public $acceptedOrder;
     public $log;
-    public $uuid;
+    public $roomID;
     public $kilometer;
     public $rating;
     public $createdAt;

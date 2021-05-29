@@ -15,7 +15,7 @@ class OrderClosestResponse
     public $recipientPhone;
     public $state;
     public $fromBranch;
-    public $uuid;
+    public $roomID;
     public $owner;
     public $createdAt;
     public $productID;

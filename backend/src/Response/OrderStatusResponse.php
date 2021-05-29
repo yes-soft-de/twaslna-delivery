@@ -17,7 +17,7 @@ class OrderStatusResponse
     public $fromBranch;
     public $acceptedOrder;
     public $log;
-    public $uuid;
+    public $roomID;
     public $owner;
     public $image;
     public $imageURL;

@@ -23,7 +23,7 @@ class OrderResponse
     public $acceptedOrder;
     public $log;
     public $completionTime;
-    public $uuid;
+    public $roomID;
     public $countOrdersInMonth;
     public $countOrdersInDay;
     public $owner;

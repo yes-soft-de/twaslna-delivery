@@ -23,7 +23,7 @@ class SupportEntityRepository extends ServiceEntityRepository
     public function getSupports()
     {
         return $this->createQueryBuilder('ReportEntity')
-            ->addSelect('ReportEntity.id', 'ReportEntity.orderId', 'ReportEntity.reason', 'ReportEntity.userId', 'userProfileEntity.storeOwnerName', 'ReportEntity.uuid', 'ReportEntity.newMessageStatus') 
+            ->addSelect('ReportEntity.id', 'ReportEntity.orderId', 'ReportEntity.reason', 'ReportEntity.userId', 'userProfileEntity.storeOwnerName', 'ReportEntity.roomID', 'ReportEntity.newMessageStatus') 
 
             ->leftJoin(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.userID = ReportEntity.userId')
             
@@ -34,7 +34,7 @@ class SupportEntityRepository extends ServiceEntityRepository
     public function getSupport($id)
     {
         return $this->createQueryBuilder('ReportEntity')
-            ->addSelect('ReportEntity.id', 'ReportEntity.orderId', 'ReportEntity.reason', 'ReportEntity.userId', 'userProfileEntity.storeOwnerName', 'ReportEntity.uuid', 'ReportEntity.newMessageStatus') 
+            ->addSelect('ReportEntity.id', 'ReportEntity.orderId', 'ReportEntity.reason', 'ReportEntity.userId', 'userProfileEntity.storeOwnerName', 'ReportEntity.roomID', 'ReportEntity.newMessageStatus') 
 
             ->leftJoin(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.userID = ReportEntity.userId')
             ->andWhere('ReportEntity.id = :id')
@@ -43,11 +43,11 @@ class SupportEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getreortByUuid($uuid)
+    public function getreortByRoomID($roomID)
     {
         return $this->createQueryBuilder('ReportEntity')
-            ->andWhere('ReportEntity.uuid = :uuid')
-            ->setParameter('uuid',$uuid)
+            ->andWhere('ReportEntity.roomID = :roomID')
+            ->setParameter('roomID',$roomID)
             ->getQuery()
             ->getOneOrNullResult();
     }

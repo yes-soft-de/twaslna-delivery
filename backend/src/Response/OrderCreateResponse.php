@@ -13,6 +13,6 @@ class OrderCreateResponse
     public $recipientName;
     public $recipientPhone;
     public $state;
-    public $uuid;
+    public $roomID;
     public $createdAt;
 }

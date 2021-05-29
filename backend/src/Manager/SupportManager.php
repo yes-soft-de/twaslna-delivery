@@ -21,9 +21,9 @@ class SupportManager
         $this->supportEntityRepository = $supportEntityRepository;
     }
 
-    public function createSupport(SupportCreateRequest $request, $uuid)
+    public function createSupport(SupportCreateRequest $request, $roomID)
     {
-        $request->setUuid($uuid);
+        $request->setRoomID($roomID);
         $entity = $this->autoMapping->map(SupportCreateRequest::class, SupportEntity::class, $request);
 
         $this->entityManager->persist($entity);
@@ -43,9 +43,9 @@ class SupportManager
         return $this->supportEntityRepository->getSupport($id);
     }
 
-    public function getReportByUuid($uuid)
+    public function getReportByRoomID($roomID)
     {
-        return $this->supportEntityRepository->getreortByUuid($uuid);
+        return $this->supportEntityRepository->getreortByRoomID($roomID);
     }
 
     public function update($request, $NewMessageStatus)

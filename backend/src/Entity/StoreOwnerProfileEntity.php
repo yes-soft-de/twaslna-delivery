@@ -55,7 +55,7 @@ class StoreOwnerProfileEntity
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $uuid;
+    private $roomID;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -151,14 +151,14 @@ class StoreOwnerProfileEntity
         return $this;
     }
 
-    public function getUuid(): ?string
+    public function getRoomID(): ?string
     {
-        return $this->uuid;
+        return $this->roomID;
     }
 
-    public function setUuid(?string $uuid): self
+    public function setRoomID(?string $roomID): self
     {
-        $this->uuid = $uuid;
+        $this->roomID = $roomID;
 
         return $this;
     }

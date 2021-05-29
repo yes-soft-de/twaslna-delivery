@@ -84,9 +84,9 @@ class OrderService
             $status = $this->storeOwnerSubscriptionService->subscriptionIsActive($request->getOwnerID(), $subscriptionCurrent['id']);
         
             if ($status == 'active') {
-                $uuid = $this->roomIdHelperService->roomIdGenerate();
+                $roomID = $this->roomIdHelperService->roomIdGenerate();
                 
-                $item = $this->orderManager->createOrder($request, $uuid, $subscriptionCurrent['id']);
+                $item = $this->orderManager->createOrder($request, $roomID, $subscriptionCurrent['id']);
 
                 //start-----> notification
                 // try{
@@ -435,9 +435,9 @@ class OrderService
 
     public function createClientOrder(OrderCreateRequest $request):?object
     {  
-        $uuid = $this->roomIdHelperService->roomIdGenerate();
+        $roomID = $this->roomIdHelperService->roomIdGenerate();
                 
-        $item = $this->orderManager->createClientOrder($request, $uuid);
+        $item = $this->orderManager->createClientOrder($request, $roomID);
         if ($item) {
             $this->orderlogService->createOrderLog($item->getId(), $item->getState(), $request->getClientID());
             }

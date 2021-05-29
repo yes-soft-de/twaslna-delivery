@@ -10,7 +10,7 @@ class ClientProfileResponse
 
     public $clientName;
 
-    public $uuid;
+    public $roomID;
 
     public $phone;
     

@@ -103,7 +103,7 @@ class NotificationService
     public function notificationToCaptainFromAdmin($request)
     {
         $response=[];
-        $item = $this->getCaptainUuid($request->getRoomID());
+        $item = $this->getCaptainRoomID($request->getRoomID());
        
         if($item) {
             $devicesToken = [];
@@ -122,7 +122,7 @@ class NotificationService
     public function notificationToReportFromAdmin($request)
     {
         $response=[];
-        $item = $this->getByReprotUuid($request->getRoomID());
+        $item = $this->getByReprotRoomID($request->getRoomID());
        
         if($item) {
             $devicesToken = [];
@@ -149,13 +149,13 @@ class NotificationService
         return $this->notificationManager->getNotificationTokenByUserID($userID);
     }
 
-    public function getByReprotUuid($uuid)
+    public function getByReprotRoomID($roomID)
     {
-        return $this->notificationManager->getByReprotUuid($uuid);
+        return $this->notificationManager->getByReprotRoomID($roomID);
     }
 
-    public function getCaptainUuid($uuid)
+    public function getCaptainRoomID($roomID)
     {
-        return $this->notificationManager->getCaptainUuid($uuid);
+        return $this->notificationManager->getCaptainRoomID($roomID);
     }
 }

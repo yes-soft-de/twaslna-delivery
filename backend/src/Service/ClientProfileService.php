@@ -50,9 +50,9 @@ class ClientProfileService
 
     public function createclientProfile(ClientProfileCreateRequest $request)
     {  
-       $uuid = $this->roomIdHelperService->roomIdGenerate();
+       $roomID = $this->roomIdHelperService->roomIdGenerate();
     
-       $userProfile = $this->userManager->createclientProfile($request, $uuid);
+       $userProfile = $this->userManager->createclientProfile($request, $roomID);
       
         if ($userProfile instanceof ClientProfileEntity) {
 

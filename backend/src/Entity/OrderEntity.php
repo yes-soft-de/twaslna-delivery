@@ -76,7 +76,7 @@ class OrderEntity
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $uuid;
+    private $roomID;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -253,14 +253,14 @@ class OrderEntity
         return $this;
     }
 
-    public function getUuid(): ?string
+    public function getRoomID(): ?string
     {
-        return $this->uuid;
+        return $this->roomID;
     }
 
-    public function setUuid(?string $uuid): self
+    public function setRoomID(?string $roomID): self
     {
-        $this->uuid = $uuid;
+        $this->roomID = $roomID;
 
         return $this;
     }

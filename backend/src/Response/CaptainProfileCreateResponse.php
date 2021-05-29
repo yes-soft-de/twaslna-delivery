@@ -34,7 +34,7 @@ class CaptainProfileCreateResponse
 
     public $totalBounce;
 
-    public $uuid;
+    public $roomID;
 
     public $image;
     

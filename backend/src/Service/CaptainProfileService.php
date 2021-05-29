@@ -65,8 +65,8 @@ class CaptainProfileService
 
     public function createCaptainProfile(CaptainProfileCreateRequest $request)
     { 
-        $uuid = $this->roomIdHelperService->roomIdGenerate();
-        $captainProfile = $this->userManager->createCaptainProfile($request, $uuid);
+        $roomID = $this->roomIdHelperService->roomIdGenerate();
+        $captainProfile = $this->userManager->createCaptainProfile($request, $roomID);
         
         if ($captainProfile instanceof CaptainProfileEntity) {
            
@@ -308,7 +308,7 @@ class CaptainProfileService
 
     public function updateCaptainNewMessageStatus($request, $NewMessageStatus)
     {
-        $item = $this->userManager->getcaptainByUuid($request->getRoomID());
+        $item = $this->userManager->getcaptainByRoomID($request->getRoomID());
    
        $response = $this->userManager->updateCaptainNewMessageStatus($item, $NewMessageStatus);
     

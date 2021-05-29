@@ -55,8 +55,8 @@ class StoreOwnerProfileService
 
     public function createStoreOwnerProfile(StoreOwnerProfileCreateRequest $request)
     {
-        $uuid = $this->roomIdHelperService->roomIdGenerate();
-        $userProfile = $this->userManager->createStoreOwnerProfile($request, $uuid);
+        $roomID = $this->roomIdHelperService->roomIdGenerate();
+        $userProfile = $this->userManager->createStoreOwnerProfile($request, $roomID);
 
         if ($userProfile instanceof StoreOwnerProfileEntity) {
 
