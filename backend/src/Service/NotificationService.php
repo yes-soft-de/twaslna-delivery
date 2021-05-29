@@ -16,6 +16,7 @@ use Kreait\Firebase\Messaging;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 use App\Constant\MessageConstant;
+use App\Constant\ProjectNameConstant;
 
 class NotificationService
 {
@@ -41,7 +42,7 @@ class NotificationService
     public function notificationToCaptain()
     {
         $message = CloudMessage::withTarget('topic', $this::CAPTAIN_TOPIC)
-            ->withNotification(Notification::create('C4D', MessageConstant::$MESSAGE_CAPTAIN_NEW_ORDER));
+            ->withNotification(Notification::create(ProjectNameConstant::$PROJECT_NAME, MessageConstant::$MESSAGE_CAPTAIN_NEW_ORDER));
 
         $this->messaging->send($message);
     }
@@ -55,7 +56,7 @@ class NotificationService
         // $devicesToken[] = $userTokenTwo;
 
         $message = CloudMessage::new()
-            ->withNotification(Notification::create('C4D', MessageConstant::$MESSAGE_CAPTAIN_NEW_ORDER.$request->getOrderID()));
+            ->withNotification(Notification::create(ProjectNameConstant::$PROJECT_NAME, MessageConstant::$MESSAGE_CAPTAIN_NEW_ORDER.$request->getOrderID()));
 
         $this->messaging->sendMulticast($message, $devicesToken);
     }
@@ -72,7 +73,7 @@ class NotificationService
             $devicesToken[] = $userTokenTwo;
 
             $message = CloudMessage::new()
-                ->withNotification(Notification::create('C4D', MessageConstant::$MESSAGE_NEW_CHAT));
+                ->withNotification(Notification::create(ProjectNameConstant::$PROJECT_NAME, MessageConstant::$MESSAGE_NEW_CHAT));
 
             $this->messaging->sendMulticast($message, $devicesToken);   
         }    
@@ -110,8 +111,8 @@ class NotificationService
             $userTokenOne = $this->getNotificationTokenByUserID($item[0]['captainID']);
             $devicesToken[] = $userTokenOne;
             $message = CloudMessage::new()
-                ->withNotification(Notification::create('C4D', MessageConstant::$MESSAGE_NEW_CHAT_FROM_ADMIN));
-
+                ->withNotification(Notification::create(ProjectNameConstant::$PROJECT_NAME, MessageConstant::$MESSAGE_NEW_CHAT_FROM_ADMIN));
+                
             $this->messaging->sendMulticast($message, $devicesToken); 
             $this->messaging->sendMulticast($message, $devicesToken);  
             $response[]= $this->autoMapping->map('array',NotificationTokenResponse::class, $devicesToken);
@@ -129,7 +130,7 @@ class NotificationService
             $userTokenOne = $this->getNotificationTokenByUserID($item[0]['userId']);
             $devicesToken[] = $userTokenOne;
             $message = CloudMessage::new()
-                ->withNotification(Notification::create('C4D', MessageConstant::$MESSAGE_NEW_CHAT_FROM_ADMIN));
+                ->withNotification(Notification::create(ProjectNameConstant::$PROJECT_NAME, MessageConstant::$MESSAGE_NEW_CHAT_FROM_ADMIN));
 
             $this->messaging->sendMulticast($message, $devicesToken);  
             $response[]= $this->autoMapping->map('array',NotificationTokenResponse::class, $devicesToken);
