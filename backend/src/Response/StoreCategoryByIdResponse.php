@@ -2,10 +2,8 @@
 
 namespace App\Response;
 
-class StoreCategoryCreateResponse
+class StoreCategoryResponse
 {
-    public $id;
     public $storeCategoryName;
-    public $description;
     public $image;
 }

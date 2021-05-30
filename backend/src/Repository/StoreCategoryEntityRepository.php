@@ -18,33 +18,4 @@ class StoreCategoryEntityRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, StoreCategoryEntity::class);
     }
-
-    // /**
-    //  * @return StoreCategoryEntity[] Returns an array of StoreCategoryEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?StoreCategoryEntity
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

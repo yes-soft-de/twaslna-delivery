@@ -20,6 +20,8 @@ class StoreOwnerProfileCreateRequest
     
     private $phone;
 
+    private $storeCategoryId;
+
     /**
      * @return mixed
      */
@@ -112,4 +114,24 @@ class StoreOwnerProfileCreateRequest
         $this->image = $image;
     }
 
+
+    /**
+     * Get the value of storeCategoryId
+     */ 
+    public function getStoreCategoryId()
+    {
+        return $this->storeCategoryId;
+    }
+
+    /**
+     * Set the value of storeCategoryId
+     *
+     * @return  self
+     */ 
+    public function setStoreCategoryId($storeCategoryId)
+    {
+        $this->storeCategoryId = $storeCategoryId;
+
+        return $this;
+    }
 }

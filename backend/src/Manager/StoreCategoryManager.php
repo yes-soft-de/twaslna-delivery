@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\StoreCategoryEntity;
 use App\Repository\StoreCategoryEntityRepository;
 use App\Request\StoreCategoryCreateRequest;
+use App\Request\StoreCategoryUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class StoreCategoryManager
@@ -30,5 +31,29 @@ class StoreCategoryManager
         $this->entityManager->clear();
 
         return $entity;
+    }
+
+    public function updateStoreCategory(StoreCategoryUpdateRequest $request)
+    {
+        $entity = $this->storeCategoryEntityRepository->find($request->getId());
+
+        if (!$entity) {
+            return null;
+        }
+        $entity = $this->autoMapping->mapToObject(StoreCategoryUpdateRequest::class, StoreCategoryEntity::class, $request, $entity);
+
+        $this->entityManager->flush();
+
+        return $entity;
+    }
+
+    public function getStoreCategories()
+    {
+       return $this->storeCategoryEntityRepository->findAll();
+    }
+
+    public function getStoreCategory($id)
+    {
+       return $this->storeCategoryEntityRepository->find($id);
     }
 }

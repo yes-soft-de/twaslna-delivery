@@ -63,6 +63,11 @@ class StoreOwnerProfileEntity
     private $city;
 
     /**
+     * @ORM\Column(type="integer", length=255, nullable=true)
+     */
+    private $storeCategoryId;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $phone;
@@ -183,6 +188,18 @@ class StoreOwnerProfileEntity
     public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getStoreCategoryId(): ?int
+    {
+        return $this->storeCategoryId;
+    }
+
+    public function setStoreCategoryId(?int $storeCategoryId): self
+    {
+        $this->storeCategoryId = $storeCategoryId;
 
         return $this;
     }

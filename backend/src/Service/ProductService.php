@@ -8,6 +8,7 @@ use App\Manager\ProductManager;
 use App\Request\ProductCreateRequest;
 use App\Response\ProductCreateResponse;
 use App\Response\ProductsResponse;
+use App\Response\ProductsByStoreOwnerProfileIdResponse;
 
 class ProductService
 {
@@ -48,12 +49,12 @@ class ProductService
         return $response;
     }
 
-    public function getProductsByStoreOwnerProfile($id)
+    public function getProductsByStoreOwnerProfile($storeOwnerProfileId)
     {
         $response = [];
-        $items = $this->productManager->getProductsByStoreOwnerProfile($id);
+        $items = $this->productManager->getProductsByStoreOwnerProfile($storeOwnerProfileId);
         foreach ($items as $item) {
-            $response[] = $this->autoMapping->map('array', ProductsResponse::class, $item);
+            $response[] = $this->autoMapping->map('array', ProductsByStoreOwnerProfileIdResponse::class, $item);
             }  
         return $response;
     }

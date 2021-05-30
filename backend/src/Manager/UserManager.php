@@ -411,4 +411,9 @@ class UserManager
     {
         return $this->clientProfileEntityRepository->getClientsProfile();
     }
+    
+    public function getStoreOwnerByCategoryId($storeCategoryId)
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnerByCategoryId($storeCategoryId);
+    }
 }

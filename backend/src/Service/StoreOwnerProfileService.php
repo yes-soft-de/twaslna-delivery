@@ -12,6 +12,7 @@ use App\Request\StoreOwnerUpdateByAdminRequest;
 use App\Request\UserRegisterRequest;
 use App\Response\StoreOwnerProfileCreateResponse;
 use App\Response\StoreOwnerProfileResponse;
+use App\Response\StoreOwnerByCategoryIdResponse;
 use App\Response\UserRegisterResponse;
 use App\Service\RoomIdHelperService;
 use App\Service\StoreOwnerBranchService;
@@ -119,4 +120,16 @@ class StoreOwnerProfileService
             }        
         return $response;
     }
+
+    public function getStoreOwnerByCategoryId($storeCategoryId):array
+    {
+        $response = [];
+        $items = $this->userManager->getStoreOwnerByCategoryId($storeCategoryId);
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', StoreOwnerByCategoryIdResponse::class, $item);
+            }        
+        return $response;
+       
+    }
+
 }

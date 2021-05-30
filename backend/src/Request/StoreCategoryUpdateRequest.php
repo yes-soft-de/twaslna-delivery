@@ -2,8 +2,9 @@
 
 namespace App\Request;
 
-class StoreCategoryCreateRequest
+class StoreCategoryUpdateRequest
 {
+    private $id;
     private $storeCategoryName;
     private $description;
     private $image;
@@ -66,5 +67,13 @@ class StoreCategoryCreateRequest
         $this->image = $image;
 
         return $this;
+    }
+
+    /**
+     * Get the value of id
+     */ 
+    public function getId()
+    {
+        return $this->id;
     }
 }

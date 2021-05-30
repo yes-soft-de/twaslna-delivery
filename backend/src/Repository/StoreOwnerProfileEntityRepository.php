@@ -49,6 +49,19 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function getStoreOwnerByCategoryId($storeCategoryId)
+    {
+        return $this->createQueryBuilder('profile')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone')
+
+            ->andWhere('profile.storeCategoryId = :storeCategoryId')
+
+            ->setParameter('storeCategoryId', $storeCategoryId)
+
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getUserProfile($storeOwnerID)
     {
         return $this->createQueryBuilder('profile')

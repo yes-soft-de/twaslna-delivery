@@ -153,4 +153,15 @@ class StoreOwnerProfileController extends BaseController
 
         return $this->response($response, self::FETCH);
     }
+
+    /**
+     * @Route("/storeownerbycategoryid/{storeCategoryId}", name="getStoreOwnerByCategoryId",methods={"GET"})
+     * @return JsonResponse
+     */
+    public function getStoreOwnerByCategoryId($storeCategoryId)
+    {
+        $response = $this->storeOwnerProfileService->getStoreOwnerByCategoryId($storeCategoryId);
+
+        return $this->response($response, self::FETCH);
+    }
 }

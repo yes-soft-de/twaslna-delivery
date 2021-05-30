@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\AutoMapping;
 use App\Request\StoreCategoryCreateRequest;
+use App\Request\StoreCategoryUpdateRequest;
 use App\Service\StoreCategoryService;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,7 +24,7 @@ class StoreCategoryController extends BaseController
         $this->autoMapping = $autoMapping;
         $this->storeCategoryService = $storeCategoryService;
     }
-    //TODO:test and end point for get all ,get by id
+    
     /**
      * @Route("/createstorecategory", name="createStoreCategory", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
@@ -39,4 +40,45 @@ class StoreCategoryController extends BaseController
 
         return $this->response($result, self::CREATE);
     }
+
+    /**
+     * @Route("/createstorecategory", name="createStoreCategory", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateStoreCategory(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, StoreCategoryUpdateRequest::class, (object)$data);
+        $result = $this->storeCategoryService->updateStoreCategory($request);
+
+        return $this->response($result, self::CREATE);
+    }
+
+    /**
+      * @Route("/storecategories", name="getStoreCategories", methods={"GET"})
+      * @param Request $request
+      * @return JsonResponse
+      */
+      public function getStoreCategories()
+      {
+          $result = $this->storeCategoryService->getStoreCategories();
+  
+          return $this->response($result, self::FETCH);
+      }
+
+    /**
+      * @Route("/storecategory/{id}", name="getStoreCategory", methods={"GET"})
+      * @param Request $request
+      * @return JsonResponse
+      */
+      public function getStoreCategory($id)
+      {
+          $result = $this->storeCategoryService->getStoreCategory($id);
+  
+          return $this->response($result, self::FETCH);
+      }
+
 }

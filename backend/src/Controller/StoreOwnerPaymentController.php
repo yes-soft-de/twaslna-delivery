@@ -64,7 +64,6 @@ class StoreOwnerPaymentController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
-
     /**
       * @Route("/storeownerpayments", name="GetpaymentsForOwner", methods={"GET"})
       * @IsGranted("ROLE_OWNER")
@@ -76,7 +75,5 @@ class StoreOwnerPaymentController extends BaseController
           $result = $this->storeOwnerPaymentService->getpaymentsForOwner($this->getUserId());
   
           return $this->response($result, self::FETCH);
-      }
-
-     
+      }     
 }

@@ -7,7 +7,7 @@ use App\Entity\StoreCategoryEntity;
 use App\Manager\StoreCategoryManager;
 use App\Request\StoreCategoryCreateRequest;
 use App\Response\StoreCategoryCreateResponse;
-use App\Response\StoreCategoriesResponse;
+use App\Response\StoreCategoryResponse;
 
 class StoreCategoryService
 {
@@ -25,5 +25,29 @@ class StoreCategoryService
         $item = $this->storeCategoryManager->createStoreCategory($request);
 
         return $this->autoMapping->map(StoreCategoryEntity::class, StoreCategoryCreateResponse::class, $item);
+    }
+
+    public function updateStoreCategory($request)
+    {
+        $item = $this->storeCategoryManager->updateStoreCategory($request);
+
+        return $this->autoMapping->map(StoreCategoryEntity::class, StoreCategoryCreateResponse::class, $item);
+    }
+
+    public function getStoreCategories():array
+    {
+       $response = [];
+       $items = $this->storeCategoryManager->getStoreCategories();
+       foreach ($items as $item) {  
+           $response[] =  $this->autoMapping->map(StoreCategoryEntity::class, StoreCategoryCreateResponse::class, $item);  
+        }
+      return $response;
+    }
+
+    public function getStoreCategory($id)
+    {
+       $item = $this->storeCategoryManager->getStoreCategory($id);
+       return $this->autoMapping->map(StoreCategoryEntity::class, StoreCategoryResponse::class, $item);  
+       
     }
 }
