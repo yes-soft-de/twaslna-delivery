@@ -416,4 +416,24 @@ class UserManager
     {
         return $this->storeOwnerProfileEntityRepository->getStoreOwnerByCategoryId($storeCategoryId);
     }
+
+    public function createStoreOwnerProfileByAdmin(StoreOwnerProfileCreateRequest $request)
+    {
+        $userProfile = $this->getStoreOwnerProfileByID($request->getStoreOwnerID());
+        if ($userProfile == null) {
+            $userProfile = $this->autoMapping->map(StoreOwnerProfileCreateRequest::class, StoreOwnerProfileEntity::class, $request);
+
+            $userProfile->setStatus('inactive');
+            $userProfile->setFree(false);
+
+            $this->entityManager->persist($userProfile);
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+
+            return $userProfile;
+        }
+        else {
+            return true;
+        }
+    }
 }

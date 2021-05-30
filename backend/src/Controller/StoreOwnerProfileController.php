@@ -164,4 +164,28 @@ class StoreOwnerProfileController extends BaseController
 
         return $this->response($response, self::FETCH);
     }
+
+     /**
+     * @Route("/storeownercreatbyadmin", name="CreateStoreOwnerProfileByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createStoreOwnerProfileByAdmin(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, StoreOwnerProfileCreateRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->storeOwnerProfileService->createStoreOwnerProfileByAdmin($request);
+
+        return $this->response($response, self::CREATE);
+    }
 }

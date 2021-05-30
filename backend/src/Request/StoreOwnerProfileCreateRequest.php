@@ -4,7 +4,7 @@ namespace App\Request;
 
 class StoreOwnerProfileCreateRequest
 {
-    private $storeOwnerIDstoreOwnerID;
+    private $storeOwnerID;
 
     private $storeOwnerName;
 

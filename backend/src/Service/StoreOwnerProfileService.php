@@ -129,7 +129,19 @@ class StoreOwnerProfileService
             $response[] = $this->autoMapping->map('array', StoreOwnerByCategoryIdResponse::class, $item);
             }        
         return $response;
-       
     }
 
+    public function createStoreOwnerProfileByAdmin(StoreOwnerProfileCreateRequest $request)
+    {
+        $userProfile = $this->userManager->createStoreOwnerProfileByAdmin($request);
+
+        if ($userProfile instanceof StoreOwnerProfileEntity) {
+
+            return $this->autoMapping->map(StoreOwnerProfileEntity::class,StoreOwnerProfileCreateResponse::class, $userProfile);
+       }
+        if ($userProfile == true) {
+          
+           return $this->getStoreOwnerProfileByID($request->getStoreOwnerID());
+       }
+    }
 }
