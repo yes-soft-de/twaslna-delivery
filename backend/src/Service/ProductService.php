@@ -37,21 +37,21 @@ class ProductService
         return $this->autoMapping->map(ProductEntity::class, ProductCreateResponse::class, $item);
     }
 
-    public function getProductsbystoreowner($userID)
+    public function getProductsByStoreOwner($userID)
     {
         $storeOwnerProfileID = $this->getStoreOwnerProfileByStoreOwnerID($userID);
 
-        $items = $this->productManager->getProductsbyStoreOwnerProfile($storeOwnerProfileID[0]['id']);
+        $items = $this->productManager->getProductsByStoreOwnerProfile($storeOwnerProfileID[0]['id']);
         foreach ($items as $item) {
             $response[] = $this->autoMapping->map('array', ProductsResponse::class, $item);
             }  
         return $response;
     }
 
-    public function getProductsbyStoreOwnerProfile($id)
+    public function getProductsByStoreOwnerProfile($id)
     {
         $response = [];
-        $items = $this->productManager->getProductsbyStoreOwnerProfile($id);
+        $items = $this->productManager->getProductsByStoreOwnerProfile($id);
         foreach ($items as $item) {
             $response[] = $this->autoMapping->map('array', ProductsResponse::class, $item);
             }  

@@ -33,7 +33,7 @@ class ProductEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getProductsbyStoreOwnerProfile($storeOwnerProfileID)
+    public function getProductsByStoreOwnerProfile($storeOwnerProfileID)
     {
         return $this->createQueryBuilder('product')
             ->select('product.id', 'product.productName', 'product.productImage', 'product.productImage','product.productPrice','product.storeOwnerProfileID', 'product.ProductCategoryID')
