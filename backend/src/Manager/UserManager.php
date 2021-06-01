@@ -365,7 +365,7 @@ class UserManager
     }
 
 //User section 
-    public function createclientProfile(ClientProfileCreateRequest $request, $roomID)
+    public function createClientProfile(ClientProfileCreateRequest $request, $roomID)
     {
         $request->setRoomID($roomID);
         $userProfile = $this->getClientProfileByClientID($request->getClientID());

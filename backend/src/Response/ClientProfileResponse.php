@@ -15,4 +15,6 @@ class ClientProfileResponse
     public $phone;
     
     public $image;
+
+    public $location;
 }
