@@ -70,7 +70,7 @@ class StoreOwnerProfileController extends BaseController
 
         $request = $this->autoMapping->map(stdClass::class, StoreOwnerProfileCreateRequest::class, (object)$data);
 
-        $request->setUserID($this->getUserId());
+        $request->setStoreOwnerID($this->getUserId());
 
         $violations = $this->validator->validate($request);
         if (\count($violations) > 0) {
@@ -136,16 +136,15 @@ class StoreOwnerProfileController extends BaseController
      * @IsGranted("ROLE_OWNER")
      * @return JsonResponse
      */
-    public function getStoreOwnerProfileByUserID()
+    public function getStoreOwnerProfileByStoreOwnerID()
     {
-        $response = $this->storeOwnerProfileService->getStoreOwnerProfileByUserID($this->getUserId());
+        $response = $this->storeOwnerProfileService->getStoreOwnerProfileByStoreOwnerID($this->getUserId());
 
         return $this->response($response, self::FETCH);
     }
 
     /**
      * @Route("/storeowners", name="getAllStoreOwners",methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
     public function getAllStoreOwners()
@@ -153,5 +152,40 @@ class StoreOwnerProfileController extends BaseController
         $response = $this->storeOwnerProfileService->getAllStoreOwners();
 
         return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * @Route("/storeownerbycategoryid/{storeCategoryId}", name="getStoreOwnerByCategoryId",methods={"GET"})
+     * @return JsonResponse
+     */
+    public function getStoreOwnerByCategoryId($storeCategoryId)
+    {
+        $response = $this->storeOwnerProfileService->getStoreOwnerByCategoryId($storeCategoryId);
+
+        return $this->response($response, self::FETCH);
+    }
+
+     /**
+     * @Route("/storeownercreatbyadmin", name="CreateStoreOwnerProfileByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createStoreOwnerProfileByAdmin(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, StoreOwnerProfileCreateRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->storeOwnerProfileService->createStoreOwnerProfileByAdmin($request);
+
+        return $this->response($response, self::CREATE);
     }
 }

@@ -28,7 +28,7 @@ class AnnouncementEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function  getAllAnnouncements()
+    public function  getAnnouncements()
     {
         return $this->createQueryBuilder('UpdateEntity') 
             ->select('UpdateEntity.id, UpdateEntity.title, UpdateEntity.content')

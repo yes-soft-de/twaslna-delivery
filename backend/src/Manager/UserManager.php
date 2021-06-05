@@ -128,10 +128,10 @@ class UserManager
         return $this->userRepository->getUserByUserID($userID);
     }
 
-    public function createStoreOwnerProfile(StoreOwnerProfileCreateRequest $request, $uuid)
+    public function createStoreOwnerProfile(StoreOwnerProfileCreateRequest $request, $roomID)
     {
-        $request->setUuid($uuid);
-        $userProfile = $this->getStoreOwnerProfileByID($request->getUserID());
+        $request->setRoomID($roomID);
+        $userProfile = $this->getStoreOwnerProfileByID($request->getStoreOwnerID());
         if ($userProfile == null) {
             $userProfile = $this->autoMapping->map(StoreOwnerProfileCreateRequest::class, StoreOwnerProfileEntity::class, $request);
 
@@ -151,7 +151,7 @@ class UserManager
 
     public function updateStoreOwnerProfile(StoreOwnerProfileUpdateRequest $request)
     {
-        $item = $this->storeOwnerProfileEntityRepository->getUserProfile($request->getUserID());
+        $item = $this->storeOwnerProfileEntityRepository->getUserProfile($request->getStoreOwnerID());
 
         if ($item) {
             $item = $this->autoMapping->mapToObject(StoreOwnerProfileUpdateRequest::class, StoreOwnerProfileEntity::class, $request, $item);
@@ -182,9 +182,9 @@ class UserManager
         return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByID($id);
     }
 
-    public function getStoreOwnerProfileByUserID($userID)
+    public function getStoreOwnerProfileByStoreOwnerID($storeOwnerID)
     {
-        return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByUserID($userID);
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByStoreOwnerID($storeOwnerID);
     }
 
     public function getremainingOrders($userID)
@@ -192,9 +192,9 @@ class UserManager
         return $this->storeOwnerProfileEntityRepository->getremainingOrders($userID);
     }
 
-    public function createCaptainProfile(CaptainProfileCreateRequest $request, $uuid)
+    public function createCaptainProfile(CaptainProfileCreateRequest $request, $roomID)
     {
-        $request->setUuid($uuid);
+        $request->setRoomID($roomID);
         $isCaptainProfile = $this->captainProfileEntityRepository->getcaptainprofileByCaptainID($request->getCaptainID());
 
         if ($isCaptainProfile == null) {
@@ -217,7 +217,7 @@ class UserManager
         }
     }
 
-    public function UpdateCaptainProfile(CaptainProfileUpdateRequest $request)
+    public function updateCaptainProfile(CaptainProfileUpdateRequest $request)
     {
         $item = $this->captainProfileEntityRepository->getByCaptainIDForUpdate($request->getUserID());
         if ($item) {
@@ -329,9 +329,9 @@ class UserManager
         return $this->captainProfileEntityRepository->getAllCaptains();
     }
 
-    public function getcaptainByUuid($uuid)
+    public function getcaptainByRoomID($roomID)
     {
-        return $this->captainProfileEntityRepository->getcaptainByUuid($uuid);
+        return $this->captainProfileEntityRepository->getcaptainByRoomID($roomID);
     }
 
     public function updateCaptainNewMessageStatus($request, $NewMessageStatus)
@@ -365,10 +365,10 @@ class UserManager
     }
 
 //User section 
-    public function createclientProfile(ClientProfileCreateRequest $request, $uuid)
+    public function createclientProfile(ClientProfileCreateRequest $request, $roomID)
     {
-        $request->setUuid($uuid);
-        $userProfile = $this->getClientProfileByUserID($request->getUserID());
+        $request->setRoomID($roomID);
+        $userProfile = $this->getClientProfileByClientID($request->getClientID());
         if ($userProfile == null) {
             $userProfile = $this->autoMapping->map(ClientProfileCreateRequest::class, ClientProfileEntity::class, $request);
 
@@ -383,14 +383,14 @@ class UserManager
         }
     }
 
-    public function getClientProfileByUserID($userID)
+    public function getClientProfileByClientID($clientID)
     {
-        return $this->clientProfileEntityRepository->getClientProfileByUserID($userID);
+        return $this->clientProfileEntityRepository->getClientProfileByClientID($clientID);
     }
 
     public function updateClientProfile(ClientProfileUpdateRequest $request)
     {
-        $item = $this->clientProfileEntityRepository->findOneBy(['userID'=>$request->getUserID()]);
+        $item = $this->clientProfileEntityRepository->findOneBy(['userID'=>$request->getClientID()]);
 
         if ($item) {
             $item = $this->autoMapping->mapToObject(ClientProfileUpdateRequest::class, ClientProfileEntity::class, $request, $item);
@@ -410,5 +410,30 @@ class UserManager
     public function getClientsProfile()
     {
         return $this->clientProfileEntityRepository->getClientsProfile();
+    }
+    
+    public function getStoreOwnerByCategoryId($storeCategoryId)
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnerByCategoryId($storeCategoryId);
+    }
+
+    public function createStoreOwnerProfileByAdmin(StoreOwnerProfileCreateRequest $request)
+    {
+        $userProfile = $this->getStoreOwnerProfileByID($request->getStoreOwnerID());
+        if ($userProfile == null) {
+            $userProfile = $this->autoMapping->map(StoreOwnerProfileCreateRequest::class, StoreOwnerProfileEntity::class, $request);
+
+            $userProfile->setStatus('inactive');
+            $userProfile->setFree(false);
+
+            $this->entityManager->persist($userProfile);
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+
+            return $userProfile;
+        }
+        else {
+            return true;
+        }
     }
 }

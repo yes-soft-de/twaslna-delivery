@@ -2,13 +2,14 @@
 
 namespace App\Response;
 
-class StoreOwnerRemainingOrdersResponse
+class StoreOwnerSubscriptionBalanceResponse
+
 {
     public $packageID;
     public $packagename;
     public $subscriptionID;
     public $remainingOrders;
-    public $countOrdersDelivered;
+    public $countConsumedOrders;
     public $subscriptionstatus;
     public $subscriptionStartDate;
     public $subscriptionEndDate;

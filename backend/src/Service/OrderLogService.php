@@ -3,45 +3,45 @@
 namespace App\Service;
 
 use App\AutoMapping;
-use App\Entity\LogEntity;
-use App\Manager\LogManager;
-use App\Response\LogResponse;
+use App\Entity\OrderLogEntity;
+use App\Manager\OrderLogManager;
+use App\Response\OrderLogResponse;
 use App\Service\DateFactoryService;
-class LogService
+class OrderLogService
 {
     private $autoMapping;
-    private $logManager;
+    private $orderlogManager;
     private $dateFactoryService;
 
-    public function __construct(AutoMapping $autoMapping, LogManager $logManager, DateFactoryService $dateFactoryService)
+    public function __construct(AutoMapping $autoMapping, OrderLogManager $orderlogManager, DateFactoryService $dateFactoryService)
     {
         $this->autoMapping = $autoMapping;
-        $this->logManager = $logManager;
+        $this->orderlogManager = $orderlogManager;
         $this->dateFactoryService = $dateFactoryService;
     }
 
-    public function createLog($orderID, $state, $userID)
+    public function createOrderLog($orderID, $state, $userID)
     {
         $item['orderID'] = $orderID;
         $item['state'] = $state;
         $item['userID'] = $userID;
         
-        $result = $this->logManager->createLog($item);
+        $result = $this->orderlogManager->createOrderLog($item);
 
-        return $this->autoMapping->map(LogEntity::class, LogResponse::class, $result);
+        return $this->autoMapping->map(OrderLogEntity::class, OrderLogResponse::class, $result);
     }
     
-    public function getLogByOrderId($orderId)
+    public function getOrderLogByOrderId($orderId)
     {
-        return $this->logManager->getLogByOrderId($orderId);
+        return $this->orderlogManager->getOrderLogByOrderId($orderId);
     }
 
     public function getLogsByOrderId($orderId)
     {
-        return $this->logManager->getLogsByOrderId($orderId);
+        return $this->orderlogManager->getLogsByOrderId($orderId);
     }
 
-    public function getLogsWithcompletionTime($orderId)
+    public function getOrderLogsWithcompletionTime($orderId)
     {
         $response=[];
         $items = $this->getLogsByOrderId($orderId);
@@ -54,35 +54,35 @@ class LogService
             if($firstDate[0]['date'] && $lastDate[0]['date']) {
                 $state['completionTime'] = $this->dateFactoryService->subtractTwoDates($firstDate[0]['date'], $lastDate[0]['date']);
             }
-            $record[] = $this->autoMapping->map('array', LogResponse::class, $item);
+            $log[] = $this->autoMapping->map('array', OrderLogResponse::class, $item);
         } 
         $state['currentStage'] = $lastDate[0]['state'] ;
-        $orderStatus[] = $this->autoMapping->map('array', LogResponse::class, $state);
+        $orderStatus[] = $this->autoMapping->map('array', OrderLogResponse::class, $state);
         if($firstDate && $lastDate) {
             $response['orderStatus'] = $orderStatus ;
-            $response['record'] = $record ;
+            $response['log'] = $log ;
             }
         return  $response;
     }
 
     public function getFirstDate($orderId)
     {
-        return $this->logManager->getFirstDate($orderId);
+        return $this->orderlogManager->getFirstDate($orderId);
     }
 
     public function getLastDate($orderId)
     {
-        return $this->logManager->getLastDate($orderId);
+        return $this->orderlogManager->getLastDate($orderId);
     } 
 
-    public function getLogsByStoreOwner($ownerID):array
+    public function getOrderLogsByStoreOwner($ownerID):array
     {
         $response = [];
       
-        $items = $this->logManager->getOrderIdByOwnerId($ownerID);
+        $items = $this->orderlogManager->getOrderIdByOwnerId($ownerID);
      
             foreach ($items as $item) {
-                $item['record'] = $this->getLogsByOrderId($item['orderID']);
+                $item['log'] = $this->getLogsByOrderId($item['orderID']);
                
                 $firstDate = $this->getFirstDate($item['orderID']); 
                 $lastDate = $this->getLastDate($item['orderID']);
@@ -91,19 +91,19 @@ class LogService
                 if($firstDate[0]['date'] && $lastDate[0]['date']) {
                     $item['completionTime'] = $this->dateFactoryService->subtractTwoDates($firstDate[0]['date'], $lastDate[0]['date']);
                 }
-                $response[] = $this->autoMapping->map('array', LogResponse::class, $item);
+                $response[] = $this->autoMapping->map('array', OrderLogResponse::class, $item);
             }
             return $response;
     }
 
-    public function getLogsByCaptain($captainID):array
+    public function getOrderLogsByCaptain($captainID):array
     {
          $response = [];
       
-        $items = $this->logManager->getOrderIdByCaptainId($captainID);
+        $items = $this->orderlogManager->getOrderIdByCaptainId($captainID);
    
             foreach ($items as $item) {
-                $item['record'] = $this->getLogsByOrderId($item['orderID']);
+                $item['log'] = $this->getLogsByOrderId($item['orderID']);
                
                 $firstDate = $this->getFirstDate($item['orderID']); 
                 $lastDate = $this->getLastDate($item['orderID']);
@@ -112,7 +112,7 @@ class LogService
                 if($firstDate[0]['date'] && $lastDate[0]['date']) {
                     $item['completionTime'] = $this->dateFactoryService->subtractTwoDates($firstDate[0]['date'], $lastDate[0]['date']);
                 }
-                $response[] = $this->autoMapping->map('array', LogResponse::class, $item);
+                $response[] = $this->autoMapping->map('array', OrderLogResponse::class, $item);
             }
             return $response;
     }

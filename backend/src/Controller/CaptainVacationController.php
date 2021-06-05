@@ -29,7 +29,7 @@ class CaptainVacationController extends BaseController
     }
 
     /**
-     * @Route("vacation", name="createVacation", methods={"POST"})
+     * @Route("captainvacation", name="createVacation", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse

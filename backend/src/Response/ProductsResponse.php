@@ -15,6 +15,6 @@ class ProductsResponse
     public $image;
     public $phone;
     public $location;
-    public $brancheName;
+    public $branchName;
     public $city;
 }

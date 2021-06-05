@@ -31,7 +31,7 @@ class StoreOwnerBranchController extends BaseController
     }
     
     /**
-     * @Route("branches", name="createBranches", methods={"POST"})
+     * @Route("storeownerbranch", name="createBranches", methods={"POST"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse
@@ -58,7 +58,7 @@ class StoreOwnerBranchController extends BaseController
     }
 
     /**
-     * @Route("branches", name="updateBranches", methods={"PUT"})
+     * @Route("storeownerbranch", name="updateBranches", methods={"PUT"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse
@@ -83,7 +83,7 @@ class StoreOwnerBranchController extends BaseController
     }
 
     /**
-     * @Route("branches", name="getBranchesByUserId", methods={"GET"})
+     * @Route("storeownerbranchs", name="getBranchesByUserId", methods={"GET"})
      * @IsGranted("ROLE_OWNER")
      * @return JsonResponse
      */
@@ -95,7 +95,7 @@ class StoreOwnerBranchController extends BaseController
     }
 
     /**
-     * @Route("branche", name="updateActiveBranche", methods={"PUT"})
+     * @Route("storeownerbranchupdatestate", name="updateActiveBranche", methods={"PUT"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse

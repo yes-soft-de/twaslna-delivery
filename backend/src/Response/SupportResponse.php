@@ -8,7 +8,7 @@ class SupportResponse
     public $userId;
     public $orderId;
     public $reason;
-    public $uuid;
-    public $userName;
+    public $roomID;
+    public $storeOwnerName;
     public $newMessageStatus;
 }

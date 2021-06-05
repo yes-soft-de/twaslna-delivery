@@ -6,7 +6,7 @@ class OrderResponse
 {
     public $id;
     public $ownerID;
-    public $userName;
+    public $storeOwnerName;
     public $source = [];
     public $destination;
     public $deliveryDate;
@@ -18,12 +18,12 @@ class OrderResponse
     public $state;
     public $fromBranch;
     public $location;
-    public $brancheName;
+    public $branchName;
     public $branchCity;
     public $acceptedOrder;
-    public $record;
+    public $log;
     public $completionTime;
-    public $uuid;
+    public $roomID;
     public $countOrdersInMonth;
     public $countOrdersInDay;
     public $owner;
@@ -35,4 +35,5 @@ class OrderResponse
     public $currentStage;
     public $createdAt;
     public $productID;
+    public $product;
 }

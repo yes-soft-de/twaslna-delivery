@@ -2,14 +2,14 @@
 
 namespace App\Response;
 
-class BranchesResponse
+class StoreOwnerBranchResponse
 {
     public $id;
     public $ownerID;
     public $location = [];
     public $city;
-    public $brancheName;
+    public $branchName;
     public $free;
-    public $userName;
+    public $storeOwnerName;
     public $isActive;
 }

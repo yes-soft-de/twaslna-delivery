@@ -63,13 +63,25 @@ class ProductController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function getProductsbystoreowner(Request $request)
+    public function getProductsByStoreOwner(Request $request)
     {
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, ProductCreateRequest::class, (object)$data);
 
-        $result = $this->productService->getProductsbystoreowner($this->getUserId());
+        $result = $this->productService->getProductsByStoreOwner($this->getUserId());
+
+        return $this->response($result, self::CREATE);
+    }
+
+    /**
+     * @Route("/productsstoreownerbyprofileid/{storeOwnerProfileId}", name="getProductsbyStoreOwnerProfileId  ", methods={"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getProductsByStoreOwnerProfile($storeOwnerProfileId)
+    {
+        $result = $this->productService->getProductsByStoreOwnerProfile($storeOwnerProfileId);
 
         return $this->response($result, self::CREATE);
     }

@@ -33,12 +33,12 @@ class AppointmentManager
         return $entity;
     }
 
-    public function getAllAppointements()
+    public function getAppointments()
     {
-        return $this->appointmentEntityRepository->getAllAppointements();
+        return $this->appointmentEntityRepository->getAppointments();
     }
 
-    public function update(AppointmentUpdateIsDoneRequest $request)
+    public function updateAppointment(AppointmentUpdateIsDoneRequest $request)
     {
         $entity = $this->appointmentEntityRepository->find($request->getId());
 

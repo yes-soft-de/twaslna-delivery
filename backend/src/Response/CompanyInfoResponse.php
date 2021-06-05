@@ -12,5 +12,5 @@ class DeliveryCompanyInfoResponse
     public $bank;
     public $stc;
     public $email;
-    public $uuid;
+    public $roomID;
 }

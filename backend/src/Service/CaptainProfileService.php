@@ -65,8 +65,8 @@ class CaptainProfileService
 
     public function createCaptainProfile(CaptainProfileCreateRequest $request)
     { 
-        $uuid = $this->roomIdHelperService->roomIdGenerate();
-        $captainProfile = $this->userManager->createCaptainProfile($request, $uuid);
+        $roomID = $this->roomIdHelperService->roomIdGenerate();
+        $captainProfile = $this->userManager->createCaptainProfile($request, $roomID);
         
         if ($captainProfile instanceof CaptainProfileEntity) {
            
@@ -77,9 +77,9 @@ class CaptainProfileService
         }
     }
 
-    public function UpdateCaptainProfile(CaptainProfileUpdateRequest $request)
+    public function updateCaptainProfile(CaptainProfileUpdateRequest $request)
     {
-        $item = $this->userManager->UpdateCaptainProfile($request);
+        $item = $this->userManager->updateCaptainProfile($request);
         
         return $this->autoMapping->map(CaptainProfileEntity::class, CaptainProfileCreateResponse::class, $item);
     }
@@ -219,7 +219,7 @@ class CaptainProfileService
         
         if ($item) {
             $sumPayments = $this->captainPaymentService->getSumPayments($item[0]['captainID']);
-            $payments = $this->captainPaymentService->getpayments($item[0]['captainID']);
+            $payments = $this->captainPaymentService->getCaptainPayments($item[0]['captainID']);
             $countAcceptedOrder = $this->captainService->countCaptainOrdersDelivered($item[0]['captainID']);
 
              $item['countOrdersDeliverd'] = $countAcceptedOrder[0]['countOrdersDeliverd'];
@@ -242,7 +242,7 @@ class CaptainProfileService
         $item = $this->userManager->getCaptainAsArrayByCaptainId($captainId);
        
         $sumPayments = $this->captainPaymentService->getSumPayments($captainId);
-        $payments = $this->captainPaymentService->getpayments($captainId);
+        $payments = $this->captainPaymentService->getCaptainPayments($captainId);
         
         if ($item) {
              $countAcceptedOrder = $this->captainService->countCaptainOrdersDelivered($item[0]['captainID']);
@@ -308,7 +308,7 @@ class CaptainProfileService
 
     public function updateCaptainNewMessageStatus($request, $NewMessageStatus)
     {
-        $item = $this->userManager->getcaptainByUuid($request->getRoomID());
+        $item = $this->userManager->getcaptainByRoomID($request->getRoomID());
    
        $response = $this->userManager->updateCaptainNewMessageStatus($item, $NewMessageStatus);
     

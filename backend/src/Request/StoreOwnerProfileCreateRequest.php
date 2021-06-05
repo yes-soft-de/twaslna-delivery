@@ -4,9 +4,9 @@ namespace App\Request;
 
 class StoreOwnerProfileCreateRequest
 {
-    private $userID;
+    private $storeOwnerID;
 
-    private $userName;
+    private $storeOwnerName;
 
     // private $story;
 
@@ -16,40 +16,42 @@ class StoreOwnerProfileCreateRequest
     
     private $city;
 
-    private $uuid;
+    private $roomID;
     
     private $phone;
 
-    /**
-     * @return mixed
-     */
-    public function getUserID()
-    {
-        return $this->userID;
-    }
-
-    /**
-     * @param mixed $userID
-     */
-    public function setUserID($userID): void
-    {
-        $this->userID = $userID;
-    }
+    private $storeCategoryId;
 
     /**
      * @return mixed
      */
-    public function getUserName()
+    public function getStoreOwnerID()
     {
-        return $this->userName;
+        return $this->storeOwnerID;
     }
 
     /**
-     * @param mixed $userName
+     * @param mixed $storeOwnerID
      */
-    public function setUserName($userName): void
+    public function setStoreOwnerID($storeOwnerID): void
     {
-        $this->userName = $userName;
+        $this->storeOwnerID = $storeOwnerID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStoreOwnerName()
+    {
+        return $this->storeOwnerName;
+    }
+
+    /**
+     * @param mixed $storeOwnerName
+     */
+    public function setStoreOwnerName($storeOwnerName): void
+    {
+        $this->storeOwnerName = $storeOwnerName;
     }
 
     // /**
@@ -84,14 +86,14 @@ class StoreOwnerProfileCreateRequest
     //     $this->image = $image;
     // }
 
-    public function getUuid(): ?string
+    public function getRoomID(): ?string
     {
-        return $this->uuid;
+        return $this->roomID;
     }
 
-    public function setUuid(?string $uuid): self
+    public function setRoomID(?string $roomID): self
     {
-        $this->uuid = $uuid;
+        $this->roomID = $roomID;
 
         return $this;
     }
@@ -112,4 +114,24 @@ class StoreOwnerProfileCreateRequest
         $this->image = $image;
     }
 
+
+    /**
+     * Get the value of storeCategoryId
+     */ 
+    public function getStoreCategoryId()
+    {
+        return $this->storeCategoryId;
+    }
+
+    /**
+     * Set the value of storeCategoryId
+     *
+     * @return  self
+     */ 
+    public function setStoreCategoryId($storeCategoryId)
+    {
+        $this->storeCategoryId = $storeCategoryId;
+
+        return $this;
+    }
 }

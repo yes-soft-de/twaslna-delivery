@@ -6,9 +6,7 @@ use App\AutoMapping;
 use App\Entity\OrderEntity;
 use App\Repository\OrderEntityRepository;
 use App\Request\OrderCreateRequest;
-use App\Request\OrderUpdateRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
-use App\Request\DeleteRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class OrderManager
@@ -24,9 +22,9 @@ class OrderManager
         $this->orderEntityRepository = $orderEntityRepository;
     }
 
-    public function createOrder(OrderCreateRequest $request, $uuid, $subscribeId)
+    public function createOrder(OrderCreateRequest $request, $roomID, $subscribeId)
     {
-        $request->setUuid($uuid);
+        $request->setRoomID($roomID);
         $request->setSubscribeId($subscribeId);
         $item = $this->autoMapping->map(OrderCreateRequest::class, OrderEntity::class, $request);
 
@@ -70,23 +68,6 @@ class OrderManager
         return $this->orderEntityRepository->getPendingOrders();
     }
 
-    public function update(OrderUpdateRequest $request)
-    {
-        $item = $this->orderEntityRepository->find($request->getId());
-       
-
-        if ($item) {
-            $item = $this->autoMapping->mapToObject(OrderUpdateRequest::class, OrderEntity::class, $request, $item);
-
-            $item->setUpdateDate($item->getUpdateDate());
-            
-            $this->entityManager->flush();
-            $this->entityManager->clear();
-
-            return $item;
-        }
-    }
-
     public function orderUpdateStateByCaptain(OrderUpdateStateByCaptainRequest $request)
     {
         $item = $this->orderEntityRepository->find($request->getId());
@@ -101,17 +82,6 @@ class OrderManager
 
             return $item;
         }
-    }
-
-    public function delete(DeleteRequest $request)
-    {
-        $entity = $this->orderEntityRepository->find($request->getId());
-        if ($entity) {
-        
-            $this->entityManager->remove($entity);
-            $this->entityManager->flush();
-        }
-        return $entity;
     }
 
     public function countAllOrders()
@@ -139,9 +109,9 @@ class OrderManager
         return $this->orderEntityRepository->ongoingOrders();
     }
     
-    public function getRecordsForCaptain($user)
+    public function getLogsForCaptain($user)
     {
-        return $this->orderEntityRepository->getRecordsForCaptain($user);
+        return $this->orderEntityRepository->getLogsForCaptain($user);
     }
 
     public function getOrders()
@@ -154,9 +124,9 @@ class OrderManager
         return $this->orderEntityRepository->countOrdersInMonthForOwner($fromDate, $toDate, $ownerId);
     }
 
-    public function getAllOrders($fromDate, $toDate, $ownerId)
+    public function getOrdersInMonthForOwner($fromDate, $toDate, $ownerId)
     {
-        return $this->orderEntityRepository->getAllOrders($fromDate, $toDate, $ownerId);
+        return $this->orderEntityRepository->getOrdersInMonthForOwner($fromDate, $toDate, $ownerId);
     }
 
     public function getTopOwners($fromDate, $toDate)
@@ -194,9 +164,9 @@ class OrderManager
         return $this->orderEntityRepository->countCaptainOrdersInDay($captainID, $fromDate, $toDate);
     }
 
-    public function createClientOrder(OrderCreateRequest $request, $uuid)
+    public function createClientOrder(OrderCreateRequest $request, $roomID)
     {
-        $request->setUuid($uuid);
+        $request->setRoomID($roomID);
         $item = $this->autoMapping->map(OrderCreateRequest::class, OrderEntity::class, $request);
 
         $item->setDeliveryDate($item->getDeliveryDate());

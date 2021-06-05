@@ -22,24 +22,24 @@ class ProductEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, ProductEntity::class);
     }
 
-    public function getStoreOwnerProfileByUserID($userID)
+    public function getStoreOwnerProfileByStoreOwnerID($storeOwnerID)
     {
         return $this->createQueryBuilder('product')
             ->select('storeOwnerProfile.id')
 
-            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.userID = :userID')
-            ->setParameter('userID',$userID)
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.storeOwnerID = :storeOwnerID')
+            ->setParameter('storeOwnerID',$storeOwnerID)
             ->getQuery()
             ->getResult();
     }
 
-    public function getProductsbyStoreOwnerProfile($storeOwnerProfileID)
+    public function getProductsByStoreOwnerProfile($storeOwnerProfileID)
     {
         return $this->createQueryBuilder('product')
             ->select('product.id', 'product.productName', 'product.productImage', 'product.productImage','product.productPrice','product.storeOwnerProfileID', 'product.ProductCategoryID')
 
-            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.userID = :storeOwnerProfileID')
-
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.storeOwnerID = :storeOwnerProfileID')
+            ->andWhere('product.storeOwnerProfileID =:storeOwnerProfileID')
             ->setParameter('storeOwnerProfileID',$storeOwnerProfileID)
             ->getQuery()
             ->getResult();
@@ -50,9 +50,9 @@ class ProductEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('product')
             ->select('product.id', 'product.productName', 'product.productImage', 'product.productImage','product.productPrice','product.storeOwnerProfileID', 'product.ProductCategoryID')
 
-            ->addSelect('storeOwnerProfile.id', 'storeOwnerProfile.userName as storeOwnerName','storeOwnerProfile.userID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.branch', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone')
+            ->addSelect('storeOwnerProfile.id', 'storeOwnerProfile.storeOwnerName as storeOwnerName','storeOwnerProfile.storeOwnerID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.branch', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone')
 
-            ->addSelect('storeOwnerBranch.location','storeOwnerBranch.brancheName','storeOwnerBranch.city')
+            ->addSelect('storeOwnerBranch.location','storeOwnerBranch.branchName','storeOwnerBranch.city')
 
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = product.id')
 
@@ -67,9 +67,9 @@ class ProductEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('product')
             ->select('product.id', 'product.productName', 'product.productImage', 'product.productImage','product.productPrice','product.storeOwnerProfileID', 'product.ProductCategoryID')
 
-            ->addSelect('storeOwnerProfile.id', 'storeOwnerProfile.userName as storeOwnerName','storeOwnerProfile.userID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.branch', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone', 'storeOwnerProfile.userID as ownerID')
+            ->addSelect('storeOwnerProfile.id', 'storeOwnerProfile.storeOwnerName as storeOwnerName','storeOwnerProfile.storeOwnerID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.branch', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone', 'storeOwnerProfile.storeOwnerID as ownerID')
 
-            ->addSelect('storeOwnerBranch.location','storeOwnerBranch.brancheName','storeOwnerBranch.city')
+            ->addSelect('storeOwnerBranch.location','storeOwnerBranch.branchName','storeOwnerBranch.city')
 
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = product.id')
 

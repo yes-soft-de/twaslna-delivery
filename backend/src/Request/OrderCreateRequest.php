@@ -14,7 +14,7 @@ class OrderCreateRequest
     private $recipientPhone;
     private $state;
     private $fromBranch;
-    private $uuid;
+    private $roomID;
     private $subscribeId;
     private $clientID;
     private $productID;
@@ -47,14 +47,14 @@ class OrderCreateRequest
         return $this;
     }
 
-    public function getUuid(): ?string
+    public function getRoomID(): ?string
     {
-        return $this->uuid;
+        return $this->roomID;
     }
 
-    public function setUuid(?string $uuid): self
+    public function setRoomID(?string $roomID): self
     {
-        $this->uuid = $uuid;
+        $this->roomID = $roomID;
 
         return $this;
     }

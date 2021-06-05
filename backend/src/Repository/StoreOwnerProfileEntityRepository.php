@@ -23,14 +23,14 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, StoreOwnerProfileEntity::class);
     }
 
-    public function getStoreOwnerProfileByUserID($userID)
+    public function getStoreOwnerProfileByStoreOwnerID($storeOwnerID)
     {
         return $this->createQueryBuilder('profile')
 
-            ->select('profile.id', 'profile.userName','profile.userID', 'profile.image', 'profile.story',
+            ->select('profile.id', 'profile.storeOwnerName','profile.storeOwnerID', 'profile.image', 'profile.story',
                 'profile.branch', 'profile.free', 'profile.status', 'profile.city', 'profile.phone', 'profile.image')
-            ->andWhere('profile.userID=:userID')
-            ->setParameter('userID', $userID)
+            ->andWhere('profile.storeOwnerID=:storeOwnerID')
+            ->setParameter('storeOwnerID', $storeOwnerID)
 
             ->getQuery()
             ->getOneOrNullResult();
@@ -39,7 +39,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     public function getStoreOwnerProfileByID($id)
     {
         return $this->createQueryBuilder('profile')
-            ->select('profile.id', 'profile.userName','profile.userID', 'profile.image', 'profile.story', 'profile.branch', 'profile.free', 'profile.status', 'profile.phone')
+            ->select('profile.id', 'profile.storeOwnerName','profile.storeOwnerID', 'profile.image', 'profile.story', 'profile.branch', 'profile.free', 'profile.status', 'profile.phone')
 
             ->andWhere('profile.id = :id')
 
@@ -49,12 +49,25 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getUserProfile($userID)
+    public function getStoreOwnerByCategoryId($storeCategoryId)
+    {
+        return $this->createQueryBuilder('profile')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone')
+
+            ->andWhere('profile.storeCategoryId = :storeCategoryId')
+
+            ->setParameter('storeCategoryId', $storeCategoryId)
+
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getUserProfile($storeOwnerID)
     {
         return $this->createQueryBuilder('profile')
 
-            ->andWhere('profile.userID = :userID')
-            ->setParameter('userID', $userID)
+            ->andWhere('profile.storeOwnerID = :storeOwnerID')
+            ->setParameter('storeOwnerID', $storeOwnerID)
 
             ->getQuery()
             ->getOneOrNullResult();
@@ -64,10 +77,10 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('profile')
 
-            ->select('profile.id', 'profile.userID', 'profile.userName', 'profile.image', 'profile.story', 'profile.free', 'profile.branch as branchcount')
-            ->addSelect('orderEntity.id as orderID', 'orderEntity.date', 'orderEntity.source', 'orderEntity.fromBranch', 'orderEntity.payment', 'orderEntity.destination','branchesEntity.location','branchesEntity.brancheName','branchesEntity.city as branchCity', 'acceptedOrderEntity.captainID','captainProfileEntity.name as captainName')
+            ->select('profile.id', 'profile.storeOwnerID', 'profile.storeOwnerName', 'profile.image', 'profile.story', 'profile.free', 'profile.branch as branchcount')
+            ->addSelect('orderEntity.id as orderID', 'orderEntity.date', 'orderEntity.source', 'orderEntity.fromBranch', 'orderEntity.payment', 'orderEntity.destination','branchesEntity.location','branchesEntity.branchName','branchesEntity.city as branchCity', 'acceptedOrderEntity.captainID','captainProfileEntity.captainName')
        
-            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'profile.userID = orderEntity.ownerID')
+            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'profile.storeOwnerID = orderEntity.ownerID')
 
             ->leftJoin(StoreOwnerBranchEntity::class, 'branchesEntity', Join::WITH, 'orderEntity.fromBranch = branchesEntity.id')
 
@@ -81,7 +94,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('profile')
 
-            ->select('profile.id', 'profile.userID', 'profile.userName', 'profile.free', 'profile.branch', 'profile.uuid')
+            ->select('profile.id', 'profile.storeOwnerID', 'profile.storeOwnerName', 'profile.free', 'profile.branch', 'profile.roomID')
 
             ->getQuery()
             ->getResult();

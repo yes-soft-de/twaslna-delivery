@@ -50,16 +50,16 @@ class ClientProfileService
 
     public function createclientProfile(ClientProfileCreateRequest $request)
     {  
-       $uuid = $this->roomIdHelperService->roomIdGenerate();
+       $roomID = $this->roomIdHelperService->roomIdGenerate();
     
-       $userProfile = $this->userManager->createclientProfile($request, $uuid);
+       $userProfile = $this->userManager->createclientProfile($request, $roomID);
       
         if ($userProfile instanceof ClientProfileEntity) {
 
             return $this->autoMapping->map(ClientProfileEntity::class,ClientProfileResponse::class, $userProfile);
        }
         if ($userProfile == true) {
-            return $this->getClientProfileByUserID($request->getUserID());
+            return $this->getClientProfileByClientID($request->getClientID());
        }
     }
 
@@ -70,9 +70,9 @@ class ClientProfileService
         return $this->autoMapping->map(ClientProfileEntity ::class, ClientProfileResponse::class, $item);
     }
 
-    public function getClientProfileByUserID($userID)
+    public function getClientProfileByClientID($clientID)
     {
-        $item = $this->userManager->getClientProfileByUserID($userID);  
+        $item = $this->userManager->getClientProfileByClientID($clientID);  
             
         return $this->autoMapping->map('array', ClientProfileResponse::class, $item);
     }

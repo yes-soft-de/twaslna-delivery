@@ -25,7 +25,7 @@ class RoomIdHelperManager
         $entity = $this->autoMapping->map('array', RoomIdHelperEntity::class, $request);
         $entity->setCaptainID($request[0]['captainID']);
         $entity->setOwnerID($request[0]['ownerID']);
-        $entity->setRoomID($request[0]['uuid']);
+        $entity->setRoomID($request[0]['roomID']);
 
         $this->entityManager->persist($entity);
         $this->entityManager->flush();

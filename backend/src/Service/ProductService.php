@@ -8,6 +8,7 @@ use App\Manager\ProductManager;
 use App\Request\ProductCreateRequest;
 use App\Response\ProductCreateResponse;
 use App\Response\ProductsResponse;
+use App\Response\ProductsByStoreOwnerProfileIdResponse;
 
 class ProductService
 {
@@ -29,7 +30,7 @@ class ProductService
 
     public function createProductByStoreOwner(ProductCreateRequest $request, $userID)
     {
-        $storeOwnerProfileID = $this->getStoreOwnerProfileByUserID($userID);
+        $storeOwnerProfileID = $this->getStoreOwnerProfileByStoreOwnerID($userID);
 
         $item = $this->productManager->createProductByStoreOwner($request);
         $request->setStoreOwnerProfileID($storeOwnerProfileID);
@@ -37,13 +38,23 @@ class ProductService
         return $this->autoMapping->map(ProductEntity::class, ProductCreateResponse::class, $item);
     }
 
-    public function getProductsbystoreowner($userID)
+    public function getProductsByStoreOwner($userID)
     {
-        $storeOwnerProfileID = $this->getStoreOwnerProfileByUserID($userID);
+        $storeOwnerProfileID = $this->getStoreOwnerProfileByStoreOwnerID($userID);
 
-        $items = $this->productManager->getProductsbyStoreOwnerProfile($storeOwnerProfileID[0]['id']);
+        $items = $this->productManager->getProductsByStoreOwnerProfile($storeOwnerProfileID[0]['id']);
         foreach ($items as $item) {
-            $response[] = $this->autoMapping->map('array', ProductCreateResponse::class, $item);
+            $response[] = $this->autoMapping->map('array', ProductsResponse::class, $item);
+            }  
+        return $response;
+    }
+
+    public function getProductsByStoreOwnerProfile($storeOwnerProfileId)
+    {
+        $response = [];
+        $items = $this->productManager->getProductsByStoreOwnerProfile($storeOwnerProfileId);
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', ProductsByStoreOwnerProfileIdResponse::class, $item);
             }  
         return $response;
     }
@@ -63,8 +74,8 @@ class ProductService
        return $this->autoMapping->map('array', ProductsResponse::class, $item);
     }
 
-    public function getStoreOwnerProfileByUserID($userID)
+    public function getStoreOwnerProfileByStoreOwnerID($userID)
     {
-        return $this->productManager->getStoreOwnerProfileByUserID($userID);
+        return $this->productManager->getStoreOwnerProfileByStoreOwnerID($userID);
     }
 }

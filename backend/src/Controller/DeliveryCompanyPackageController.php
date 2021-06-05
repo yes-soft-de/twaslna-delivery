@@ -30,7 +30,7 @@ class DeliveryCompanyPackageController extends BaseController
     }
 
     /**
-     * @Route("package", name="createPackage", methods={"POST"})
+     * @Route("companypackage", name="createPackage", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -55,46 +55,46 @@ class DeliveryCompanyPackageController extends BaseController
     }
 
     /**
-     * @Route("packages", name="getPackagesUserCompatible", methods={"GET"})
+     * @Route("companypackagesactive", name="getPackagesUserCompatible", methods={"GET"})
      * @return JsonResponse
      */
-    public function getPackages()
+    public function getCompanyPackagesActive()
     {
-        $result = $this->deliveryCompanyPackageService->getPackages();
+        $result = $this->deliveryCompanyPackageService->getCompanyPackagesActive();
 
         return $this->response($result, self::FETCH);
     }
 
     /**
-     * @Route("getAllpackages", name="getAllPackages", methods={"GET"})
+     * @Route("companypackages", name="getAllPackages", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
-    public function getAllpackages()
+    public function getCompanyPackages()
     {
-        $result = $this->deliveryCompanyPackageService->getAllpackages();
+        $result = $this->deliveryCompanyPackageService->getCompanyPackages();
 
         return $this->response($result, self::FETCH);
     }
 
     /**
-     * @Route("getpackageById/{id}", name="getpackageById", methods={"GET"})
+     * @Route("companypackagebyid/{id}", name="getpackageById", methods={"GET"})
      * @return JsonResponse
      */
-    public function getpackagesById($id)
+    public function getCompanyPackageById($id)
     {
-        $result = $this->deliveryCompanyPackageService->getpackagesById($id);
+        $result = $this->deliveryCompanyPackageService->getCompanyPackageById($id);
 
         return $this->response($result, self::FETCH);
     }
 
     /**
-     * @Route("package", name="updatePackage", methods={"PUT"})
+     * @Route("companypackage", name="updatePackage", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
      */
-    public function updatePackageState(Request $request)
+    public function updateDeliveryCompanyPackageState(Request $request)
     {
         $data = json_decode($request->getContent(), true);
 
@@ -108,7 +108,7 @@ class DeliveryCompanyPackageController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->deliveryCompanyPackageService->updatePackageState($request);
+        $result = $this->deliveryCompanyPackageService->updateDeliveryCompanyPackageState($request);
 
         return $this->response($result, self::UPDATE);
     }

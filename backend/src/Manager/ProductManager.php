@@ -43,14 +43,14 @@ class ProductManager
         return $entity;
     }
 
-    public function getStoreOwnerProfileByUserID($userID)
+    public function getStoreOwnerProfileByStoreOwnerID($userID)
     {
-        return $this->productEntityRepository->getStoreOwnerProfileByUserID($userID);
+        return $this->productEntityRepository->getStoreOwnerProfileByStoreOwnerID($userID);
     }
 
-    public function getProductsbyStoreOwnerProfile($storeOwnerProfileID)
+    public function getProductsByStoreOwnerProfile($storeOwnerProfileID)
     {
-        return $this->productEntityRepository->getProductsbyStoreOwnerProfile($storeOwnerProfileID);
+        return $this->productEntityRepository->getProductsByStoreOwnerProfile($storeOwnerProfileID);
     }
 
     public function getProducts()

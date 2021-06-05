@@ -31,7 +31,7 @@ class StoreOwnerSubscriptionController extends BaseController
     }
 
     /**
-     * @Route("subscription", name="createSubscription", methods={"POST"})
+     * @Route("storeownersubscription", name="createSubscription", methods={"POST"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse
@@ -57,12 +57,12 @@ class StoreOwnerSubscriptionController extends BaseController
         return $this->response($result, self::CREATE);
     }
     /**
-     * @Route("nextsubscription", name="nxetSubscription", methods={"POST"})
+     * @Route("storeownersubscriptionrenew", name="nxetSubscription", methods={"POST"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse
      */
-    public function nxetSubscription(Request $request)
+    public function storeOwnerSubscriptionRenew(Request $request)
     {
         $data = json_decode($request->getContent(), true);
 
@@ -70,30 +70,30 @@ class StoreOwnerSubscriptionController extends BaseController
 
         $request->setOwnerID($this->getUserId());
 
-        $result = $this->storeOwnersubscriptionService->nxetSubscription($request);
+        $result = $this->storeOwnersubscriptionService->storeOwnerSubscriptionRenew($request);
 
         return $this->response($result, self::CREATE);
     }
 
     /**
-     * @Route("getSubscriptionForOwner", name="getSubscriptionForOwner", methods={"GET"})
+     * @Route("storeownersubscriptionforowner", name="getSubscriptionForOwner", methods={"GET"})
      * @IsGranted("ROLE_OWNER")
      * @return JsonResponse
      */
-    public function getSubscriptionForOwner()
+    public function getStoreOwnerSubscriptionforowner()
     {
-        $result = $this->storeOwnersubscriptionService->getSubscriptionForOwner($this->getUserId());
+        $result = $this->storeOwnersubscriptionService->getStoreOwnerSubscriptionforowner($this->getUserId());
 
         return $this->response($result, self::FETCH);
     }
 
     /**
-     * @Route("subscriptionUpdateState", name="SubscriptionUpdateState", methods={"PUT"})
+     * @Route("storeownersubscriptionUpdateState", name="SubscriptionUpdateState", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
      */
-    public function subscriptionUpdateState(Request $request)
+    public function storeOwnerSubscriptionUpdateState(Request $request)
     {
         $data = json_decode($request->getContent(), true);
 
@@ -107,31 +107,31 @@ class StoreOwnerSubscriptionController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->storeOwnersubscriptionService->subscriptionUpdateState($request);
+        $result = $this->storeOwnersubscriptionService->storeOwnerSubscriptionUpdateState($request);
 
         return $this->response($result, self::UPDATE);
     }
 
     /**
-     * @Route("getSubscriptionsPending", name="getSubscriptionsPending", methods={"GET"})
+     * @Route("storeownersubscriptionpending", name="getSubscriptionsPending", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
-    public function getSubscriptionsPending()
+    public function getStoreOwnerSubscriptionPending()
     {
-        $result = $this->storeOwnersubscriptionService->getSubscriptionsPending();
+        $result = $this->storeOwnersubscriptionService->getStoreOwnerSubscriptionPending();
 
         return $this->response($result, self::FETCH);
     }
     
     /**
-     * @Route("getSubscriptionById/{id}", name="getSubscriptionById", methods={"GET"})
+     * @Route("storeownersubscriptionbyid/{id}", name="getStoreOwnerSubscriptionById", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
-    public function getSubscriptionById($id)
+    public function getStoreOwnerSubscriptionById($id)
     {
-        $result = $this->storeOwnersubscriptionService->getSubscriptionById($id);
+        $result = $this->storeOwnersubscriptionService->getStoreOwnerSubscriptionById($id);
 
         return $this->response($result, self::FETCH);
     }
@@ -150,14 +150,14 @@ class StoreOwnerSubscriptionController extends BaseController
     }
 
     /**
-     * @Route("/packagebalance", name="packagebalanceForOwner",methods={"GET"})
+     * @Route("/storeownersubscriptionbalance", name="packagebalanceForOwner",methods={"GET"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse
      */
-    public function packagebalance()
+    public function storeOwnerSubscriptionBalance()
     {
-        $result = $this->storeOwnersubscriptionService->packagebalance($this->getUserId());
+        $result = $this->storeOwnersubscriptionService->storeOwnerSubscriptionBalance($this->getUserId());
 
         return $this->response($result, self::FETCH);
     }

@@ -26,10 +26,10 @@ class DeliveryCompanyPackageService
         return $this->autoMapping->map(PackageEntity::class, DeliveryCompanyPackageResponse::class, $result);
     }
 
-    public function getPackages()
+    public function getCompanyPackagesActive()
     {
         $respons = [];
-        $items = $this->deliveryCompanyPackageManager->getPackages();
+        $items = $this->deliveryCompanyPackageManager->getCompanyPackagesActive();
 
         foreach ($items as $item) {
             $respons[] = $this->autoMapping->map('array', DeliveryCompanyPackageResponse::class, $item);
@@ -37,19 +37,19 @@ class DeliveryCompanyPackageService
         return $respons;
     }
 
-    public function getAllpackages()
+    public function getCompanyPackages()
     {
-        return $this->deliveryCompanyPackageManager->getAllpackages();
+        return $this->deliveryCompanyPackageManager->getCompanyPackages();
     }
 
-    public function getpackagesById($id)
+    public function getCompanyPackageById($id)
     {
-        return $this->deliveryCompanyPackageManager->getpackagesById($id);
+        return $this->deliveryCompanyPackageManager->getCompanyPackageById($id);
     }
 
-    public function updatePackageState($request)
+    public function updateDeliveryCompanyPackageState($request)
     {
-        $result = $this->deliveryCompanyPackageManager->updatePackageState($request);
+        $result = $this->deliveryCompanyPackageManager->updateDeliveryCompanyPackageState($request);
 
         return $this->autoMapping->map(PackageEntity::class, DeliveryCompanyPackageResponse::class, $result);
     }

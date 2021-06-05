@@ -36,7 +36,7 @@ class StoreOwnerBranchEntity
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $brancheName;
+    private $branchName;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -84,14 +84,14 @@ class StoreOwnerBranchEntity
         return $this;
     }
 
-    public function getBrancheName(): ?string
+    public function getBranchName(): ?string
     {
-        return $this->brancheName;
+        return $this->branchName;
     }
 
-    public function setBrancheName(?string $brancheName): self
+    public function setBranchName(?string $branchName): self
     {
-        $this->brancheName = $brancheName;
+        $this->branchName = $branchName;
 
         return $this;
     }

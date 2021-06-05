@@ -5,32 +5,19 @@ namespace App\Service;
 use App\AutoMapping;
 use App\Manager\OrderManager;
 use App\Response\OrderResponse;
-use App\Service\LogService;
+use App\Service\OrderLogService;
 
 class CaptainService
 {
     private $autoMapping;
     private $orderManager;
-    private $logService;
+    private $orderlogService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, LogService $logService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, OrderLogService $orderlogService)
     {
         $this->autoMapping = $autoMapping;
         $this->orderManager = $orderManager;
-        $this->logService = $logService;
-    }
-
-    public function getAcceptedOrderByCaptainId($captainID):array
-    {
-        $response = [];
-        $orders = $this->orderManager->getAcceptedOrderByCaptainId($captainID);
-   
-        foreach ($orders as $order){
-            $order['record'] = $this->logService->getLogByOrderId($order['id']);
-            $response[] = $this->autoMapping->map('array', OrderResponse::class, $order);
-        }
-    
-        return $response;
+        $this->orderlogService = $orderlogService;
     }
 
     public function countCaptainOrdersDelivered($captainId)

@@ -12,6 +12,7 @@ use App\Request\StoreOwnerUpdateByAdminRequest;
 use App\Request\UserRegisterRequest;
 use App\Response\StoreOwnerProfileCreateResponse;
 use App\Response\StoreOwnerProfileResponse;
+use App\Response\StoreOwnerByCategoryIdResponse;
 use App\Response\UserRegisterResponse;
 use App\Service\RoomIdHelperService;
 use App\Service\StoreOwnerBranchService;
@@ -55,8 +56,8 @@ class StoreOwnerProfileService
 
     public function createStoreOwnerProfile(StoreOwnerProfileCreateRequest $request)
     {
-        $uuid = $this->roomIdHelperService->roomIdGenerate();
-        $userProfile = $this->userManager->createStoreOwnerProfile($request, $uuid);
+        $roomID = $this->roomIdHelperService->roomIdGenerate();
+        $userProfile = $this->userManager->createStoreOwnerProfile($request, $roomID);
 
         if ($userProfile instanceof StoreOwnerProfileEntity) {
 
@@ -64,7 +65,7 @@ class StoreOwnerProfileService
        }
         if ($userProfile == true) {
           
-           return $this->getStoreOwnerProfileByID($request->getUserID());
+           return $this->getStoreOwnerProfileByID($request->getStoreOwnerID());
        }
     }
 
@@ -90,10 +91,10 @@ class StoreOwnerProfileService
         return $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $item);
     }
 
-    public function getStoreOwnerProfileByUserID($userID)
+    public function getStoreOwnerProfileByStoreOwnerID($storeOwnerID)
     {
-        $item = $this->userManager->getStoreOwnerProfileByUserID($userID);
-        $item['branches'] = $this->storeOwnerBranchService->branchesByUserId($userID);
+        $item = $this->userManager->getStoreOwnerProfileByStoreOwnerID($storeOwnerID);
+        $item['branches'] = $this->storeOwnerBranchService->branchesByUserId($storeOwnerID);
 
         try {
             if ($item['image'])
@@ -118,5 +119,29 @@ class StoreOwnerProfileService
             $response[] = $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $owner);
             }        
         return $response;
+    }
+
+    public function getStoreOwnerByCategoryId($storeCategoryId):array
+    {
+        $response = [];
+        $items = $this->userManager->getStoreOwnerByCategoryId($storeCategoryId);
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', StoreOwnerByCategoryIdResponse::class, $item);
+            }        
+        return $response;
+    }
+
+    public function createStoreOwnerProfileByAdmin(StoreOwnerProfileCreateRequest $request)
+    {
+        $userProfile = $this->userManager->createStoreOwnerProfileByAdmin($request);
+
+        if ($userProfile instanceof StoreOwnerProfileEntity) {
+
+            return $this->autoMapping->map(StoreOwnerProfileEntity::class,StoreOwnerProfileCreateResponse::class, $userProfile);
+       }
+        if ($userProfile == true) {
+          
+           return $this->getStoreOwnerProfileByID($request->getStoreOwnerID());
+       }
     }
 }

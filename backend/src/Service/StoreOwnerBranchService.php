@@ -5,8 +5,8 @@ namespace App\Service;
 use App\AutoMapping;
 use App\Entity\StoreOwnerBranchEntity;
 use App\Manager\StoreOwnerBranchManager;
-use App\Request\BranchesCreateRequest;
-use App\Response\BranchesResponse;
+use App\Request\StoreOwnerBranchCreateRequest;
+use App\Response\StoreOwnerBranchResponse;
 
 class StoreOwnerBranchService
 {
@@ -19,18 +19,18 @@ class StoreOwnerBranchService
         $this->storeOwnerBranchManager = $storeOwnerBranchManager;
     }
 
-    public function createBranches(BranchesCreateRequest $request)
+    public function createBranches(StoreOwnerBranchCreateRequest $request)
     {
         $branche = $this->storeOwnerBranchManager->createBranches($request);
 
-        return $this->autoMapping->map(StoreOwnerBranchEntity::class, BranchesResponse::class, $branche);
+        return $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $branche);
     }
 
     public function updateBranche($request)
     {
         $result = $this->storeOwnerBranchManager->updateBranche($request);
 
-        return $this->autoMapping->map(StoreOwnerBranchEntity::class, BranchesResponse::class, $result);
+        return $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $result);
     }
 
     public function getBranchesByUserId($userId):array
@@ -38,7 +38,7 @@ class StoreOwnerBranchService
         $response = [];
         $items = $this->storeOwnerBranchManager->getBranchesByUserId($userId);
         foreach ($items as $item) {
-        $response[] =  $this->autoMapping->map('array', BranchesResponse::class, $item);
+        $response[] =  $this->autoMapping->map('array', StoreOwnerBranchResponse::class, $item);
         }
         return $response;
     }
@@ -57,6 +57,6 @@ class StoreOwnerBranchService
     {
         $result = $this->storeOwnerBranchManager->updateBranchAvailability($request);
 
-        return $this->autoMapping->map(StoreOwnerBranchEntity::class, BranchesResponse::class, $result);
+        return $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $result);
     }
 }

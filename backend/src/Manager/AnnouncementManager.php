@@ -33,7 +33,7 @@ class AnnouncementManager
         return $entity;
     }
 
-    public function update(AnnouncementUpdateRequest $request)
+    public function updateAnnouncement(AnnouncementUpdateRequest $request)
     {
         $entity = $this->announcementEntityRepository->find($request->getId());
 
@@ -52,9 +52,9 @@ class AnnouncementManager
         return $this->announcementEntityRepository->getAnnouncementById($id);
     }
 
-    public function getAllAnnouncements()
+    public function getAnnouncements()
     {
-       return $this->announcementEntityRepository->getAllAnnouncements();
+       return $this->announcementEntityRepository->getAnnouncements();
     }
 
 }

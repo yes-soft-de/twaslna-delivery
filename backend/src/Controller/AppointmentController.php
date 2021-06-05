@@ -31,7 +31,7 @@ class AppointmentController extends BaseController
     }
     
     /**
-     * @Route("dating", name="createdating", methods={"POST"})
+     * @Route("appointment", name="createAppointment", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      */
@@ -55,25 +55,25 @@ class AppointmentController extends BaseController
     }
 
     /**
-      * @Route("/datings", name="Getdatings", methods={"GET"})
+      * @Route("/appointments", name="GetAppointments", methods={"GET"})
       * @IsGranted("ROLE_ADMIN")
       * @param Request $request
       * @return JsonResponse
       */
-      public function getAllAppointements()
+      public function getAppointments()
       {
-          $result = $this->appointmentService->getAllAppointements();
+          $result = $this->appointmentService->getAppointments();
   
           return $this->response($result, self::FETCH);
       }
 
       /**
-     * @Route("dating", name="updateDatingIsDone", methods={"PUT"})
+     * @Route("appointment", name="updateAppointmentIsDone", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
      */
-    public function update(Request $request)
+    public function updateAppointment(Request $request)
     {
         $data = json_decode($request->getContent(), true);
 
@@ -87,7 +87,7 @@ class AppointmentController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->appointmentService->update($request);
+        $result = $this->appointmentService->updateAppointment($request);
 
         return $this->response($result, self::UPDATE);
     }

@@ -30,7 +30,7 @@ class CaptainPaymentController extends BaseController
     }
     
     /**
-     * @Route("/paymentcaptain", name="createpaymentCaptain", methods={"POST"})
+     * @Route("/captainpayment", name="createCaptainPayment", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -54,14 +54,14 @@ class CaptainPaymentController extends BaseController
     }
 
      /**
-      * @Route("/paymentscaptain", name="GetpaymentsForCaptain", methods={"GET"})
+      * @Route("/captainpayments", name="getCaptainPayments", methods={"GET"})
       * @IsGranted("ROLE_CAPTAIN")
       * @param Request $request
       * @return JsonResponse
       */
-      public function getpaymentsForCaptain()
+      public function getCaptainPayments()
       {
-          $result = $this->captainPaymentService->getpayments($this->getUserId());
+          $result = $this->captainPaymentService->getCaptainPayments($this->getUserId());
   
           return $this->response($result, self::FETCH);
       }

@@ -14,10 +14,9 @@ class StoreOwnerSubscriptionByIdResponse
 
     public $endDate;
 
-    public $userName;
+    public $storeOwnerName;
 
     public $packageNote;
 
     public $subscriptionNote;
-
 }

@@ -4,11 +4,8 @@ namespace App\Controller;
 
 use App\AutoMapping;
 use App\Service\OrderService;
-use App\Service\CaptainService;
 use App\Request\OrderCreateRequest;
-use App\Request\OrderUpdateRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
-use App\Request\DeleteRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,16 +21,14 @@ class OrderController extends BaseController
     private $autoMapping;
     private $validator;
     private $orderService;
-    private $captainService;
    
 
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, OrderService $orderService, CaptainService $captainService)
+    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, OrderService $orderService)
     {
         parent::__construct($serializer);
         $this->autoMapping = $autoMapping;
         $this->validator = $validator;
         $this->orderService = $orderService;
-        $this->captainService = $captainService;
     }
 
     /**
@@ -112,7 +107,7 @@ class OrderController extends BaseController
     }
 
     /**
-     * @Route("/getPendingOrders", name="GetPendingOrders", methods={"GET"})
+     * @Route("/getpendingorders", name="GetPendingOrders", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
@@ -122,25 +117,8 @@ class OrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
-
-    /**
-     * @Route("/order", name="orderUpdate", methods={"PUT"})
-     * @IsGranted("ROLE_OWNER")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function update(Request $request)
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class, OrderUpdateRequest::class, (object) $data);
-        $request->setOwnerID($this->getUserId());
-
-        $response = $this->orderService->update($request);
-
-        return $this->response($response, self::UPDATE);
-    }
     
+    //To accept the order AND change state
     //state:on way to pick order or in store or picked or ongoing or cash or deliverd
     /**
      * @Route("/orderUpdateState", name="orderUpdateStateByCaptain", methods={"PUT"})
@@ -158,33 +136,6 @@ class OrderController extends BaseController
       
         return $this->response($response, self::UPDATE);
     }
-
-    /**
-     * @Route("order/{id}", name="deleteOrder", methods={"DELETE"})
-     * @IsGranted("ROLE_OWNER")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function delete(Request $request)
-    {
-        $request = new DeleteRequest($request->get('id'));
-
-        $result = $this->orderService->delete($request);
-
-        return $this->response($result, self::DELETE);
-    }
-
-     /**
-      * @Route("/countAllOrders", name="CountAllOrders", methods={"GET"})
-      * @IsGranted("ROLE_ADMIN")
-      * @return JsonResponse
-      */
-      public function countAllOrders()
-      {
-          $result = $this->orderService->countAllOrders();
-  
-          return $this->response($result, self::FETCH);
-      }
 
     /**
      * @Route("/dashboardOrders", name="dashboardOrders",methods={"GET"})
@@ -224,15 +175,15 @@ class OrderController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
-     /**
-     * @Route("/getTopOwners", name="getTopOwnersInThisMonthAndCountOrdersForOwnerInDay",methods={"GET"})
+   /**
+     * @Route("/countordersandtopowner", name="getTopOwnersInThisMonthAndCountOrdersForOwnerInDay",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
      */
-    public function getTopOwners()
+    public function getCountOrdersInDayAndTopOwnersInThisMonth()
     {
-        $result = $this->orderService->getTopOwners();
+        $result = $this->orderService->getCountOrdersInDayAndTopOwnersInThisMonth();
 
         return $this->response($result, self::FETCH);
     }
@@ -244,7 +195,7 @@ class OrderController extends BaseController
       */
       public function getAcceptedOrderByCaptainId()
       {
-          $result = $this->captainService->getAcceptedOrderByCaptainId($this->getUserId());
+          $result = $this->orderService->getAcceptedOrderByCaptainId($this->getUserId());
   
           return $this->response($result, self::FETCH);
       }
@@ -259,7 +210,7 @@ class OrderController extends BaseController
 
         $request = $this->autoMapping->map(stdClass::class, OrderCreateRequest::class, (object)$data);
         $request->setClientID($this->getUserId());
-
+ 
         $response = $this->orderService->createClientOrder($request);
 
         return $this->response($response, self::CREATE);
