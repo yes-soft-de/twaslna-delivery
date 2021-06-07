@@ -86,8 +86,7 @@ class StoreOwnerProfileService
     public function getStoreOwnerProfileById($id)
     {
         $item = $this->userManager->getStoreOwnerProfileByID($id);
-      
-        $item['branches'] = $this->storeOwnerBranchService->branchesByUserId($item['userID']);
+        $item['branches'] = $this->storeOwnerBranchService->branchesByUserId($item['storeOwnerID']);
         return $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $item);
     }
 

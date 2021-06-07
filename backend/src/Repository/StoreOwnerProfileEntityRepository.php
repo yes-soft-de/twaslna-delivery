@@ -52,7 +52,10 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     public function getStoreOwnerByCategoryId($storeCategoryId)
     {
         return $this->createQueryBuilder('profile')
-            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone','profile.branch')
+            ->addSelect('StoreOwnerBranchEntity.location')
+
+            ->leftJoin(StoreOwnerBranchEntity::class, 'StoreOwnerBranchEntity', Join::WITH, 'StoreOwnerBranchEntity.id = profile.branch ')
 
             ->andWhere('profile.storeCategoryId = :storeCategoryId')
 

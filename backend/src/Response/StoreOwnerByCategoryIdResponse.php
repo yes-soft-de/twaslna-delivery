@@ -11,4 +11,6 @@ class StoreOwnerByCategoryIdResponse
     public $image;
     
     public $phone;
+    
+    public $location;
 }

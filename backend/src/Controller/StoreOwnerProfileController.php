@@ -121,7 +121,6 @@ class StoreOwnerProfileController extends BaseController
 
     /**
      * @Route("/storeownerprofilebyid/{id}", name="getStoreOwnerProfileByID",methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
     public function getStoreOwnerProfileByID($id)
@@ -132,7 +131,7 @@ class StoreOwnerProfileController extends BaseController
     }
 
     /**
-     * @Route("/storeownerprofile", name="getStoreOwnerProfileByUserId",methods={"GET"})
+     * @Route("/storeownerprofile", name="getStoreOwnerProfileByStoreOwnerID",methods={"GET"})
      * @IsGranted("ROLE_OWNER")
      * @return JsonResponse
      */
