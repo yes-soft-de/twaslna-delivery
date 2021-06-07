@@ -62,4 +62,9 @@ class ProductManager
     {
         return $this->productEntityRepository->getProductById($id);
     }
+
+    public function getProductByIdWithFullInfo($id)
+    {
+        return $this->productEntityRepository->getProductByIdWithFullInfo($id);
+    }
 }

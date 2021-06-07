@@ -58,6 +58,11 @@ class OrderManager
         return $this->orderEntityRepository->orderStatus($orderId);
     }
 
+    public function orderStatusByOrderId($orderId)
+    {
+        return $this->orderEntityRepository->orderStatusByOrderId($orderId);
+    }
+
     public function closestOrders()
     {
         return $this->orderEntityRepository->closestOrders();

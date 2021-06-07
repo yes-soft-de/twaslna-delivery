@@ -94,7 +94,7 @@ class ClientProfileController extends BaseController
     }
 
     /**
-     * @Route("/clientProfile", name="getClientProfileByUserID",methods={"GET"})
+     * @Route("/clientProfile", name="getClientProfileByClientID",methods={"GET"})
      * @IsGranted("ROLE_CLIENT")
      * @return JsonResponse
      */

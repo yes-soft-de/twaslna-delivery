@@ -17,4 +17,5 @@ class ProductsResponse
     public $location;
     public $branchName;
     public $city;
+    public $countProduct;
 }

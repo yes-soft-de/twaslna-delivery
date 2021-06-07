@@ -32,6 +32,7 @@ use App\Service\CaptainService;
 use App\Service\CaptainProfileService;
 use App\Service\StoreOwnerBranchService;
 use App\Service\ProductService;
+use App\Service\OrderNumberService;
 use App\Constant\ResponseConstant;
 use App\Constant\SubscribeStatusConstant;
 
@@ -51,10 +52,11 @@ class OrderService
     private $captainService;
     private $captainProfileService;
     private $productService;
+    private $orderNumberService;
 
     public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, OrderLogService $orderlogService, StoreOwnerBranchService $storeOwnerBranchService, StoreOwnerSubscriptionService $storeOwnerSubscriptionService, StoreOwnerProfileService $storeOwnerProfileService, ParameterBagInterface $params,  RatingService $ratingService
                                 // , NotificationService $notificationService
-                               , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, CaptainService $captainService, CaptainProfileService $captainProfileService, ProductService $productService
+                               , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, CaptainService $captainService, CaptainProfileService $captainProfileService, ProductService $productService, OrderNumberService $orderNumberService
                                 )
     {
         $this->autoMapping = $autoMapping;
@@ -71,6 +73,7 @@ class OrderService
         // $this->notificationService = $notificationService;
         $this->captainProfileService = $captainProfileService;
         $this->productService = $productService;
+        $this->orderNumberService = $orderNumberService;
     }
 
     public function createOrder(OrderCreateRequest $request)
@@ -435,13 +438,67 @@ class OrderService
 
     public function createClientOrder(OrderCreateRequest $request):?object
     {  
+        $orderNumber = 1;
         $roomID = $this->roomIdHelperService->roomIdGenerate();
-                
-        $item = $this->orderManager->createClientOrder($request, $roomID);
-        if ($item) {
-            $this->orderlogService->createOrderLog($item->getId(), $item->getState(), $request->getClientID());
+        $lastOrderNumber =  $this->orderNumberService->getLastOrderNumber();
+
+        if ($lastOrderNumber) {
+            $orderNumber = $lastOrderNumber['orderNumber'] + 1;
+       }
+    
+        $products = $request->getProductID();
+
+        foreach ($products as $product) {
+       
+            $request->setProductID($product['productID']);
+            $request->setCountProduct($product['count']);
+
+            $item = $this->orderManager->createClientOrder($request, $roomID);
+
+            if ($item) {
+                $this->orderNumberService->createOrderNumber($item->getId(),  $orderNumber);
             }
+            // if ($item) {
+            //     $this->orderlogService->createOrderLog($item->getId(), $item->getState(), $request->getClientID());
+            //     }
+
+        }
+
         $response =$this->autoMapping->map(OrderEntity::class, OrderCreateClientResponse::class, $item);
+        $response->orderNumber = $orderNumber;
+        return $response;
+    }
+
+    public function searchMyArray($arrays, $key, $search)
+    {       
+        $count = 0;
+
+        foreach ($arrays as $object) {
+            if (is_object($object)) {
+                $object = get_object_vars($object);
+            }
+            if (array_key_exists($key, $object) && $object[$key] == $search) {
+                $count++;
+            }
+
+        }
+        return $count;
+    }
+
+    public function getOrderStatusByOrderNumber($orderNumber) {
+        $orderIds = $this->orderNumberService->getOrderIdByOrderNumber($orderNumber);
+        foreach ($orderIds as $orderId) {
+                    $orders[] = $this->orderManager->orderStatusByOrderId($orderId['orderID']);
+                }
+        foreach ($orders as $order) {
+            $products[] = $this->productService->getProductById($order[0]['productID']);
+            foreach($products as $product) {}
+            if ($this->searchMyArray($products,'id', $order[0]['productID'])) {
+                $product->countProduct = (int)$order[0]['countProduct']; 
+                    } 
+            }
+        $response['order'] = $order;
+        $response['products'] = $products;
         return $response;
     }
 }

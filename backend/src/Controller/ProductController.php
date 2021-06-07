@@ -101,9 +101,9 @@ class ProductController extends BaseController
      * @Route("/product/{id}", name="getProductById", methods={"GET"})
      * @return JsonResponse
      */
-    public function getProductById($id)
+    public function getProductByIdWithFullInfo($id)
     {
-        $result = $this->productService->getProductById($id);
+        $result = $this->productService->getProductByIdWithFullInfo($id);
 
         return $this->response($result, self::CREATE);
     }

@@ -74,6 +74,12 @@ class ProductService
        return $this->autoMapping->map('array', ProductsResponse::class, $item);
     }
 
+    public function getProductByIdWithFullInfo($id)
+    {
+       $item = $this->productManager->getProductByIdWithFullInfo($id);
+       return $this->autoMapping->map('array', ProductsResponse::class, $item);
+    }
+
     public function getStoreOwnerProfileByStoreOwnerID($userID)
     {
         return $this->productManager->getStoreOwnerProfileByStoreOwnerID($userID);

@@ -25,6 +25,4 @@ class OrderStatusResponse
     public $kilometer;
     public $rating;
     public $createdAt;
-    public $productID;
-    public $product;
 }

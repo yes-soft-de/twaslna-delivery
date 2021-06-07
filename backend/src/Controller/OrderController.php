@@ -32,7 +32,7 @@ class OrderController extends BaseController
     }
 
     /**
-     * @Route("order", name="createOrder", methods={"POST"})
+     * @Route("order", name="createOrderByStoreOwner", methods={"POST"})
      * @IsGranted("ROLE_OWNER")
      */
     public function createOrder(Request $request)
@@ -207,12 +207,25 @@ class OrderController extends BaseController
     public function createClientOrder(Request $request)
     {  
         $data = json_decode($request->getContent(), true);
-
+      
         $request = $this->autoMapping->map(stdClass::class, OrderCreateRequest::class, (object)$data);
         $request->setClientID($this->getUserId());
- 
+      
+        $request->setProductID($data['products']);
+  
         $response = $this->orderService->createClientOrder($request);
 
         return $this->response($response, self::CREATE);
     }
+
+    /**
+      * @Route("orderstatusbyordernumber/{orderNumber}", name="getOrderStatusByOrderNumber", methods={"GET"})
+      * @return JsonResponse
+      */
+    public function getOrderStatusByOrderNumber($orderNumber)
+      {
+        $result = $this->orderService->getOrderStatusByOrderNumber($orderNumber);
+  
+        return $this->response($result, self::FETCH);
+      }
 }

@@ -104,6 +104,11 @@ class OrderEntity
     private $productID;
 
     /**
+     * @ORM\Column(type="integer", length=255, nullable=true)
+     */
+    private $countProduct;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -321,6 +326,18 @@ class OrderEntity
     public function setProductID(int $productID): self
     {
         $this->productID = $productID;
+
+        return $this;
+    }
+
+    public function getCountProduct(): ?int
+    {
+        return $this->countProduct;
+    }
+
+    public function setCountProduct(int $countProduct): self
+    {
+        $this->countProduct = $countProduct;
 
         return $this;
     }
