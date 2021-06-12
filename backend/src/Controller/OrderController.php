@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\AutoMapping;
 use App\Service\OrderService;
 use App\Request\OrderCreateRequest;
+use App\Request\OrderClientCreateRequest ;
 use App\Request\OrderUpdateStateByCaptainRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -208,10 +209,10 @@ class OrderController extends BaseController
     {  
         $data = json_decode($request->getContent(), true);
       
-        $request = $this->autoMapping->map(stdClass::class, OrderCreateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, OrderClientCreateRequest::class, (object)$data);
         $request->setClientID($this->getUserId());
       
-        $request->setProductID($data['products']);
+        $request->setProducts($data['products']);
   
         $response = $this->orderService->createClientOrder($request);
 

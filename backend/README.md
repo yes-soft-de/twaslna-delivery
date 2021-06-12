@@ -1,825 +1,438 @@
-#  Backend  🚧
-*. env file and private-public keys not enclosed .*
-## Project setup
-
-### Composer thing
-```
-composer update
-```
-### Database setup
-First add to** .env** file correct connection string
-`DATABASE_URL=mysql://root@127.0.0.1:3306/DB?serverVersion=8`
-
-Then, create database
-```
-php bin/console doctrine:database:create
-```
-
-After that make migration
-```
-php bin/console make:migration
-```
-
-Finally, run migration versions to create tables
-```
-php bin/console doctrine:migration:migrate
-```
-
-#### API guide
-* [Account](#account)
-* [Login](#login)
-* [Package](#package)
-* [Order](#orde)
-
-
 ### Account
-#### Create admin
-
-"roles":["ROLE_ADMIN"]
+#### Create Admin
 ```
 /createAdmin
 methods: POST
 ```
 
-#### Create new user
-
-"roles":["ROLE_OWNER"]
-"roles":["ROLE_CAPTAIN"]
+#### Create Captain
 ```
-/user
+/captainregister
 methods: POST
 ```
 
-#### login
+#### Create Client
 ```
-/login_check
+/clientregister
 methods: POST
 ```
-#### Create user profile
+
+#### Create StoreOwner
 ```
-/userprofile
+/storeownerregister
 methods: POST
 ```
-#### Update user profile
+### Order 
+### Client Order
+#### Create Client Order
 ```
-/userprofile
-methods: PUT
+/clientorder
+methods: POST
 ```
-#### Get user profile by userID
+
+#### Get Order Status By OrderNumber
 ```
-/userprofile
+/orderstatusbyordernumber/{orderNumber}
 methods: GET
 ```
 
-#### Create captain profile 
+### Store Owner Profile
+### Create StoreOwner Profile
 ```
+ROLE_OWNER
+/storeowner
+methods: POST
+```
+### Create StoreOwner Profile By Admin
+```
+ROLE_ADMIN
+/storeownercreatbyadmin
+methods: POST
+```
+### Get StoreOwner By CategoryId
+```
+/storeownerbycategoryid/{storeCategoryId}
+methods: GET
+```
+### Get All StoreOwners
+```
+/storeowners
+methods: GET
+```
+### Get StoreOwner Profile By UserId
+```
+ROLE_OWNER
+/storeownerprofile
+methods: GET
+```
+### Get StoreOwner Profile By ID
+```
+ROLE_ADMIN
+/storeownerprofilebyid/{id}
+methods: GET
+```
+### storeOwner Profile Update By Admin
+```
+ROLE_ADMIN
+/storeownerprofileupdatebyadmin/{id}
+methods: PUT
+```
+### Update StoreOwner Profile
+```
+ROLE_OWNER
+/storeowner
+methods: PUT
+```
+### Client Profile 
+### Create Client Profile
+```
+ROLE_CLIENT
+/clientprofile
+methods: POST
+```
+### Update Client Profile
+```
+ROLE_CLIENT
+/clientprofile
+methods: PUT
+```
+### Get Client Profile By ClientID
+```
+ROLE_CLIENT
+/clientProfile
+methods: GET
+```
+### Get Client Profile By ID
+```
+ROLE_ADMIN
+/clientprofilebyid/{id}
+methods: GET
+```
+### Get Clients Profiles
+```
+ROLE_ADMIN
+/clientsProfile
+methods: GET
+```
+### Client Payment 
+### Create Client Payment
+```
+ROLE_CAPTAIN
+/clientpayment
+methods: POST
+```
+### Announcement 
+### Create Announcement
+```
+ROLE_ADMIN
+/announcement
+methods: POST
+```
+### Update Announcement
+```
+ROLE_ADMIN
+/announcement
+methods: PUT
+```
+### Get Announcement By Id
+```
+/announcement/{id}
+methods: GET
+```
+### Get Announcements
+```
+/announcements
+methods: GET
+```
+
+### Appointment 
+### Create Appointment
+```
+/appointment
+methods: POST
+```
+### Get Appointments
+```
+/appointments
+methods: GET
+```
+### Update Appointment Is Done
+```
+/appointment
+methods: PUT
+```
+### Captain Payment 
+### Create Captain Payment
+```
+ROLE_ADMIN
+/captainpayment
+methods: POST
+```
+### Get Captain Payments
+```
+ROLE_CAPTAIN
+/captainpayments
+methods: POST
+```
+
+### Captain Profile 
+### Create Captain Profile
+```
+ROLE_CAPTAIN
 /captainprofile
 methods: POST
 ```
-#### Update captain profile 
-
-isOnline: active or inactive .
-
+### Captain Profile Update
 ```
 /captainprofile
 methods: PUT
 ```
-#### Get captainprofile by captainID 
-
-ROLE_CAPTAIN
+### Captain Profile Update By Admin
 ```
+ROLE_ADMIN
+/captainprofileupdatebyadmin
+methods: PUT
+```
+### Get Captain profile By CaptainID
+```
+ROLE_CAPTAIN
 /captainprofile
 methods: GET
 ```
-#### Get Captain My Balance 
-
-ROLE_CAPTAIN
+### Get Captain profile By captain Profile ID
 ```
-/captainmybalance
-methods: GET
-```
-
-### Package
-
-#### get Packages User Compatible
-ROLE_OWNER
-```
-/packages
-methods: GET
-```
-
-#### get package By Id
-
-```
-/getpackageById/id
-methods: GET
-```
-
-### Subscription
-#### Create Subscription
-ROLE_OWNER
-
-```
-/package
-methods: POST
-```
-
-#### Get All Subscriptions for owner
-ROLE_OWNER
-
-```
-/getSubscriptionForOwner
-methods: GET
-```
-
-#### Get package balance
-ROLE_OWNER
-
-```
-/packagebalance
-methods: GET
-```
-
-#### Pay the next payment
-ROLE_OWNER
-
-```
-/nextsubscription
-methods: POST
-```
-
-### Order
-#### Create Order
-ROLE_OWNER
-
-must send value for source(map json) or fromBranch(branch name)
-
-```
-/order
-methods: POST
-```
-#### Get Order By ID
-
-```
-/order/orderId
-methods: GET
-```
-#### Get Orders By Owner ID
-
-```
-/orders
-methods: GET
-```
-#### Order status For Owner
-
-ROLE_OWNER
-
-```
-/orderStatus/orderId
-methods: GET
-```
-#### Get Pending Orders | orders that no captain has taken yet
-
-ROLE_CAPTAIN
-
-```
-/closestOrders
-methods: GET
-```
-
-#### Update Order
-ROLE_OWNER
-
-state: delivered or cancelled.
-
-```
-/order
-methods: PUT
-```
-
-#### Update order State By Captain
-ROLE_CAPTAIN
-
-<!-- state: picked or ongoing or delivered . -->
-<!-- next was  adopted -->
-state: in store or picked or ongoing or cash or deliverd
-kilometer: number of integer
-
-```
-/orderUpdateState
-methods: PUT
-```
-
-#### Delete Order
-ROLE_OWNER
-
-```
-/order/id
-methods: DELETE
-```
-
-### AcceptedOrder
-#### Create acceptedOrder
-ROLE_CAPTAIN
-
-```
-/acceptedOrder
-methods: POST
-```
-#### Get order status for captain
-ROLE_CAPTAIN
-
-```
-/getOrderStatusForCaptain/orderId
-methods: GET
-```
-#### Get total Earn for captain
-ROLE_CAPTAIN
-
-```
-/totalEarn
-methods: GET
-```
-#### Update AcceptedOrder
-ROLE_CAPTAIN
-
-```
-/acceptedOrder
-methods: PUT
-```
-
-### Rating
-#### Create Rating
-ROLE_OWNER
-
-```
-/rating
-methods: POST
-```
-
-### Bank Account
-
-#### Create bank account
-ROLE_OWNER
-
-```
-/bankaccount
-methods: POST
-```
-
-#### Update bank account
-ROLE_OWNER
-
-```
-/bankaccount
-methods: PUT
-```
-
-#### Get bank account by userId
-ROLE_OWNER
-
-```
-/bankaccountbyuserid
-methods: GET
-```
-
-### report
-
-#### Create report
-ROLE_OWNER
-
-```
-/report
-methods: POST
-```
-#### Get By id
-/report/{id}
-methods: GET
-```
-
-### Dating
-
-#### Get reports
-ROLE_OWNER
-```
-/dating
-methods: POST
-```
-
-### Branch
-
-#### create branches
-ROLE_OWNER
-```
-/branches
-methods: POST
-```
-
-#### update branches
-ROLE_OWNER
-```
-/branches
-methods: PUT
-```
-
-#### Get branches by UserId
-ROLE_OWNER
-```
-/branches
-methods: GET
-```
-
-#### Update IsActive branche
-ROLE_OWNER
-```
-/branche
-methods: PUT
-```
-
-### Payments
-
-#### Get payments
-ROLE_OWNER
-```
-/payments
-methods: GET
-```
-
-### CompanyInfo
-
-#### GET companyinfo all
-
-```
-/companyinfoall
-methods: GET
-```
-
-### Update
-
-#### GET Update ById
-
-```
-update/{id}
-methods: GET
-```
-#### GET Update All
-
-```
-updateall
-methods: GET
-```
-
-### TermsCaptain
-
-#### Get TermsCaptain 
-
-```
-/termscaptain
-methods: GET
-```
-
-#### Get TermsCaptain By Id
-
-```
-/termscaptainbyid/{id}
-methods: GET
-```
-
-### notification
-
-#### Notificationtoken
-
-must run it during start app
-send firebase token  
-```
-/notificationtoken
-methods: POST
-```
-
-#### Notification New Chat 
-
-send roomID 
-```
-/notificationnewchat
-methods: POST
-```
-
-#### Notification Message From Captain Or Reprot To Admin
-
-send roomID 
-```
-/notificationtoadmin
-methods: POST
-```
-
-
-
-
-
-# dashboard 
-
-
-### dashboard
-
-### user
-
-### User profile update by admin
-
-status : active .
-
-```
-/userProfileUpdateByAdmin
-methods: PUT
-```
-
-### Get user profile by userId
-
-```
-/userprofilebyuserid/{userId}
-methods: GET
-```
-
-### captain profile Update By Admin
-
-
-```
-/captainprofileUpdateByAdmin
-methods: PUT
-```
-
-### get captain profile by captainProfileId
-
-```
+ROLE_ADMIN
 /captainprofile/{captainProfileId}
 methods: GET
 ```
-
-### get captain pending (inactive)
-
+### Get Captains Pending
 ```
+ROLE_ADMIN
 /getcaptainsinactive
 methods: GET
 ```
-
-### Get captains state
-
-state = ongoing or deliverd
+### Dashboard Captains
 ```
-/getCaptainsState/{state}
+ROLE_ADMIN
+/dashboardcaptains
 methods: GET
 ```
-
-### dashboard Captains
-
+### Get Day Of Captains
 ```
-/dashboardCaptains
+ROLE_ADMIN
+/getdayofcaptains
 methods: GET
 ```
-
-### Get day of captains
-
+### Total Bounce Captain
 ```
-/getDayOfCaptains
+ROLE_ADMIN
+/captainFinancialaccount/{captainProfileId}
 methods: GET
 ```
-
-### total bounce captain
-
+### Get Captains
 ```
-/totalBounceCaptain/{captainProfileId}
+ROLE_ADMIN
+/captains
 methods: GET
 ```
-### The Remaining Captain Has A Boost
-
+### Get Captain My Balance
 ```
-/remainingcaptain
+ROLE_CAPTAIN
+/captainFinancialaccount
 methods: GET
 ```
-
-### Package
-
-### Package create 
-
+### Get Captains With Unfinished Payments
 ```
-/package
-methods: POST
-```
-
-### Get all packages 
-
-```
-/getAllpackages
+ROLE_ADMIN
+/captainsunfinishedpayments
 methods: GET
 ```
-
-### Get package by Id
-
+### Captain Update New Message Status
 ```
-/getpackageById/{id}
+ROLE_ADMIN
+/captainupdatenewmessagestatus
 methods: GET
 ```
-
-### Package update
-
-status :  active or inactive .
+### Get Top 5 Captains
 ```
-/package
-methods: PUT
-```
-
-### Order
-
-#### Get Order By ID
-
-```
-/order/orderId
+ROLE_ADMIN
+/gettop5captains
 methods: GET
 ```
-
-#### Count All Orders
-
+### Get Top Captains In This Month
 ```
-/countAllOrders
-methods: GET
-```
-
-#### Get (All Orders And Count ) in mounth by ownerId
-
-
-```
-/getAllOrdersAndCount/{year}/{month}/{ownerId}
-methods: GET
-```
-
-#### Get top owners in this month and count orders for owner in day
-
-
-```
-/getTopOwners
-methods: GET
-```
-
-
-### Dashboard orders 
-
-```
-/dashboardOrders
-methods: GET
-```
-
-### Dashboard contracts 
-
-```
-/dashboardContracts/{year}/{month}
-methods: GET
-```
-
-### Get subscriptions pending 
-
-```
-/getSubscriptionsPending
-methods: GET
-```
-
-
-#### Get subscription by Id
-
-```
-/getSubscriptionById/id
-methods: GET
-```
-
-### Subscription update
-
-status = active or inactive.
-
-```
-/subscriptionUpdateState
-methods: PUT
-```
-### Records for Admin
-
-## get orders
-```
-/getOrders
-methods: GET
-```
-## get users (owners OR captains)
-
-userType = owner OR captain .
-
-```
-/getUsers/userType
-methods: GET
-```
-
-## get Records By OrderId
-
-```
-/records/orderId
-methods: GET
-```
-
-### Bank Account
-
-#### Get bank account by userId for admin
-
-```
-/bankaccount/{userID}
-methods: GET
-```
-
-#### Get bank accounts for admin
-
-```
-/bankaccounts
-methods: GET
-```
-### Accepted Order
-
-#### Get top captains in this month
-
-```
+ROLE_ADMIN
 /topCaptains
 methods: GET
 ```
 
-### report
-
-#### Get reports
+### Captain Term 
+### Create Terms Captain
 ```
-/reports
-methods: GET
-```
-
-#### Update Report NewMeessageStatus
-
-Turn it on when you click chat
-```
-/reportupdatenewmessagestatus/{id}
-methods: PUT
-```
-
-### Dating
-
-#### Get datings
-```
-/datings
-methods: GET
-```
-
-#### Update dating isDone
-
-isDone = false or true .
-```
-/dating
-methods: PUT
-```
-
-
-### Payments
-
-#### Get payments
-
-```
-/payment
+ROLE_ADMIN
+/createTermsCaptain
 methods: POST
 ```
-
-### CompanyInfo
-
-#### Create CompanyInfo
-
-```
-/companyinfo
-methods: POST
-```
-
-#### Update CompanyInfo
-
-```
-/companyinfo
-methods: PUT
-```
-
-#### GET companyinfo all
-
-```
-/companyinfoall
-methods: GET
-```
-
-### Update
-
-#### Create Update 
-
-```
-/update
-methods: POST
-```
-
-#### Update update
-
-```
-/update/{id}
-methods: PUT
-```
-
-### Vacation
-
-#### Creeate vacation 
-
-state = vacation  OR work
-```
-/vacation
-methods: POST
-```
-
-### TermsCaptain
-
-#### Create TermsCaptain 
-
+### Get Terms Captain
 ```
 /termscaptain
-methods: POST
+methods: GET
 ```
-
-#### Update TermsCaptain 
-
+### Get Terms Captain By Id
 ```
+/termscaptainbyid/{id}
+methods: GET
+```
+### Terms Update
+```
+ROLE_ADMIN
 /termscaptain
 methods: PUT
 ```
 
-
-### notification
-
-#### Notificationtoken
-
-#### Notification To Report From Admin 
+### Captain Vacation
+### Create Vacation
 ```
-send roomID 
-
-/notificationtoreportfromadmin
+ROLE_ADMIN
+/captainvacation
 methods: POST
 ```
 
-#### Notification To Captain From Admin 
+### Company Package
+### Create Package
 ```
-send roomID 
-
-/notificationtocaptainfromadmin
+ROLE_ADMIN
+/companypackage
 methods: POST
 ```
-
-### How send notification from Admin
-
-from all captains page 
-
-1- on click talk with captain
-
+### Get Packages User Compatible
 ```
-/captainupdatenewmessagestatus
-
+/companypackagesactive
+methods: GET
+```
+### Get All Packages
+```
+/companypackages
+methods: GET
+```
+### Get Package By Id
+```
+/companypackagebyid/{id}
+methods: GET
+```
+### Update Package
+```
+ROLE_ADMIN
+/companypackage
 methods: PUT
-
-request:
-{
-    "roomID":" "
-}
 ```
 
-2- on click send from chat
-
+### Delivery Company Profile
+### Create Company Info
 ```
-
-/notificationtocaptainfromadmin
-methods={"POST"}
-request:
-{
-    "roomID":" "
-}
+ROLE_ADMIN
+/companyinfo
+methods: POST
 ```
-
-from report page 
-
-1- on click chat
-
+### Update Company Info
 ```
-/reportupdatenewmessagestatus/{id}
-
+ROLE_ADMIN
+/companyinfo
 methods: PUT
-
+```
+### Get Company Info By Id
+```
+ROLE_ADMIN
+/companyinfo/{id}
+methods: GET
+```
+### Get Company Info All
+```
+/companyinfoall/{id}
+methods: GET
+```
+### Get Company Info All For User
+```
+/companyinfoforuser
+methods: GET
 ```
 
-2- on click send from chat
 
+
+
+
+
+### Order
+### Create Order By Client
+```
+ROLE_CLIENT
+/clientorder
+methods: POST
+```
+### Create Order By Client
+```
+ROLE_CLIENT
+/clientorder
+methods: POST
+```
+### Get Order Status By Order Number
+```
+/orderstatusbyordernumber/{orderNumber}
+methods: GET
 ```
 
-/notificationtoreportfromadmin
-methods={"POST"}
-request:
-{
-    "roomID":" "
-}
+
+
+### Store Category
+### Create Store Category
+```
+ROLE_ADMIN
+/createstorecategory
+methods: POST
+```
+### Update Store Category
+```
+ROLE_ADMIN
+/createstorecategory
+methods: PUT
+```
+### Get Store Categories
+```
+/storecategories
+methods: GET
+```
+### Get Store Category By Id
+```
+/storecategory/{id}
+methods: GET
+```
+
+### Product
+### Create Product By Admin
+```
+ROLE_ADMIN
+/createproductbyadmin
+methods: POST
+```
+### Create Product By Store Owner
+```
+ROLE_OWNER
+/createproductbystoreowner
+methods: POST
+```
+### Products By Store Owner
+```
+ROLE_OWNER
+/productsbystoreowner
+methods: GET
+```
+### Get Products
+```
+/products
+methods: GET
+```
+### Get Product By Id
+```
+/product/{id}
+methods: GET
 ```

@@ -99,16 +99,6 @@ class OrderEntity
     private $clientID;
 
     /**
-     * @ORM\Column(type="integer", length=255, nullable=true)
-     */
-    private $productID;
-
-    /**
-     * @ORM\Column(type="integer", length=255, nullable=true)
-     */
-    private $countProduct;
-
-    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -314,30 +304,6 @@ class OrderEntity
     public function setClientID(string $clientID): self
     {
         $this->clientID = $clientID;
-
-        return $this;
-    }
-
-    public function getProductID(): ?int
-    {
-        return $this->productID;
-    }
-
-    public function setProductID(int $productID): self
-    {
-        $this->productID = $productID;
-
-        return $this;
-    }
-
-    public function getCountProduct(): ?int
-    {
-        return $this->countProduct;
-    }
-
-    public function setCountProduct(int $countProduct): self
-    {
-        $this->countProduct = $countProduct;
 
         return $this;
     }

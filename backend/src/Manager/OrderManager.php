@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\OrderEntity;
 use App\Repository\OrderEntityRepository;
 use App\Request\OrderCreateRequest;
+use App\Request\OrderClientCreateRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -169,10 +170,10 @@ class OrderManager
         return $this->orderEntityRepository->countCaptainOrdersInDay($captainID, $fromDate, $toDate);
     }
 
-    public function createClientOrder(OrderCreateRequest $request, $roomID)
+    public function createClientOrder(OrderClientCreateRequest $request, $roomID)
     {
         $request->setRoomID($roomID);
-        $item = $this->autoMapping->map(OrderCreateRequest::class, OrderEntity::class, $request);
+        $item = $this->autoMapping->map(OrderClientCreateRequest::class, OrderEntity::class, $request);
 
         $item->setDeliveryDate($item->getDeliveryDate());
         $item->setState('pending');

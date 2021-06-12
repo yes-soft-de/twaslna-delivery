@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\OrderNumberEntityRepository;
+use App\Repository\OrderDetailEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=OrderNumberEntityRepository::class)
+ * @ORM\Entity(repositoryClass=OrderDetailEntityRepository::class)
  */
-class OrderNumberEntity
+class OrderDetailEntity
 {
     /**
      * @ORM\Id
@@ -26,6 +26,17 @@ class OrderNumberEntity
      * @ORM\Column(type="integer", nullable=true)
      */
     private $orderID;
+
+    /**
+     * @ORM\Column(type="integer", length=255, nullable=true)
+     */
+    private $productID;
+
+    /**
+     * @ORM\Column(type="integer", length=255, nullable=true)
+     */
+    private $countProduct;
+
 
     public function getId(): ?int
     {
@@ -52,6 +63,30 @@ class OrderNumberEntity
     public function setOrderID(?int $orderID): self
     {
         $this->orderID = $orderID;
+
+        return $this;
+    }
+
+    public function getProductID(): ?int
+    {
+        return $this->productID;
+    }
+
+    public function setProductID(int $productID): self
+    {
+        $this->productID = $productID;
+
+        return $this;
+    }
+
+    public function getCountProduct(): ?int
+    {
+        return $this->countProduct;
+    }
+
+    public function setCountProduct(int $countProduct): self
+    {
+        $this->countProduct = $countProduct;
 
         return $this;
     }

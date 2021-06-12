@@ -2,11 +2,15 @@
 
 namespace App\Response;
 
-class OrderNumberResponse
+class OrderCreateDetailResponse
 {
     public $id;
 
     public $orderNumber;
 
     public $orderID;
+    
+    public $productID;
+    
+    public $countProduct;
 }

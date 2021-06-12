@@ -13,5 +13,5 @@ class OrderCreateClientResponse
     public $state;
     public $fromBranch;
     public $roomID;
-    public $orderNumber;
+    public $orderDetail;
 }

@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\OrderEntity;
 use App\Manager\OrderManager;
 use App\Request\OrderCreateRequest;
+use App\Request\OrderClientCreateRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
 use App\Request\SendNotificationRequest;
 use App\Response\OrderCreateResponse;
@@ -22,6 +23,7 @@ use App\Response\OrderCreateClientResponse;
 use App\Response\AcceptedOrderResponse;
 use App\Response\OrdersAndTopOwnerResponse;
 use App\Response\OrdersAndCountResponse;
+use App\Response\OrderClientStatusResponse;
 use App\Service\StoreOwnerSubscriptionService;
 use App\Service\RatingService;
 use App\Service\StoreOwnerProfileService;
@@ -32,7 +34,7 @@ use App\Service\CaptainService;
 use App\Service\CaptainProfileService;
 use App\Service\StoreOwnerBranchService;
 use App\Service\ProductService;
-use App\Service\OrderNumberService;
+use App\Service\OrderDetailService;
 use App\Constant\ResponseConstant;
 use App\Constant\SubscribeStatusConstant;
 
@@ -52,11 +54,11 @@ class OrderService
     private $captainService;
     private $captainProfileService;
     private $productService;
-    private $orderNumberService;
+    private $orderDetailService;
 
     public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, OrderLogService $orderlogService, StoreOwnerBranchService $storeOwnerBranchService, StoreOwnerSubscriptionService $storeOwnerSubscriptionService, StoreOwnerProfileService $storeOwnerProfileService, ParameterBagInterface $params,  RatingService $ratingService
                                 // , NotificationService $notificationService
-                               , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, CaptainService $captainService, CaptainProfileService $captainProfileService, ProductService $productService, OrderNumberService $orderNumberService
+                               , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, CaptainService $captainService, CaptainProfileService $captainProfileService, ProductService $productService, OrderDetailService $orderDetailService
                                 )
     {
         $this->autoMapping = $autoMapping;
@@ -73,7 +75,7 @@ class OrderService
         // $this->notificationService = $notificationService;
         $this->captainProfileService = $captainProfileService;
         $this->productService = $productService;
-        $this->orderNumberService = $orderNumberService;
+        $this->orderDetailService = $orderDetailService;
     }
 
     public function createOrder(OrderCreateRequest $request)
@@ -436,69 +438,44 @@ class OrderService
         return $response;
     }
 
-    public function createClientOrder(OrderCreateRequest $request):?object
+    public function createClientOrder(OrderClientCreateRequest $request):?object
     {  
         $orderNumber = 1;
-        $roomID = $this->roomIdHelperService->roomIdGenerate();
-        $lastOrderNumber =  $this->orderNumberService->getLastOrderNumber();
-
+        $lastOrderNumber = $this->orderDetailService->getLastOrderNumber();
         if ($lastOrderNumber) {
             $orderNumber = $lastOrderNumber['orderNumber'] + 1;
        }
-    
-        $products = $request->getProductID();
-
-        foreach ($products as $product) {
-       
-            $request->setProductID($product['productID']);
-            $request->setCountProduct($product['count']);
-
-            $item = $this->orderManager->createClientOrder($request, $roomID);
-
-            if ($item) {
-                $this->orderNumberService->createOrderNumber($item->getId(),  $orderNumber);
-            }
+        $roomID = $this->roomIdHelperService->roomIdGenerate();
+        $item = $this->orderManager->createClientOrder($request, $roomID);
+        if ($item) {
+            
+           
+            $products = $request->getProducts();
+            foreach ($products as $product) {
+               
+               $productID = $product['productID'];
+               $countProduct = $product['countProduct'];
+               $orderDetail = $this->orderDetailService->createOrderDetail($item->getId(), $productID, $countProduct, $orderNumber);
+            }   
+          }
             // if ($item) {
             //     $this->orderlogService->createOrderLog($item->getId(), $item->getState(), $request->getClientID());
             //     }
 
-        }
-
-        $response =$this->autoMapping->map(OrderEntity::class, OrderCreateClientResponse::class, $item);
-        $response->orderNumber = $orderNumber;
+        $response = $this->autoMapping->map(OrderEntity::class, OrderCreateClientResponse::class, $item);
+        $response->orderDetail = $orderDetail;
         return $response;
     }
 
-    public function searchMyArray($arrays, $key, $search)
-    {       
-        $count = 0;
-
-        foreach ($arrays as $object) {
-            if (is_object($object)) {
-                $object = get_object_vars($object);
-            }
-            if (array_key_exists($key, $object) && $object[$key] == $search) {
-                $count++;
-            }
-
-        }
-        return $count;
-    }
-
     public function getOrderStatusByOrderNumber($orderNumber) {
-        $orderIds = $this->orderNumberService->getOrderIdByOrderNumber($orderNumber);
-        foreach ($orderIds as $orderId) {
-                    $orders[] = $this->orderManager->orderStatusByOrderId($orderId['orderID']);
-                }
-        foreach ($orders as $order) {
-            $products[] = $this->productService->getProductById($order[0]['productID']);
-            foreach($products as $product) {}
-            if ($this->searchMyArray($products,'id', $order[0]['productID'])) {
-                $product->countProduct = (int)$order[0]['countProduct']; 
-                    } 
-            }
+        $orderDetails = $this->orderDetailService->getOrderIdByOrderNumber($orderNumber);
+        $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
+     
+        $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($orderDetails[0]->storeOwnerProfileID);
+
+        $response['orderDetails'] = $orderDetails;
         $response['order'] = $order;
-        $response['products'] = $products;
+
         return $response;
     }
 }

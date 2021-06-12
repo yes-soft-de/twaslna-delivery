@@ -8,6 +8,8 @@ use App\Manager\ProductManager;
 use App\Request\ProductCreateRequest;
 use App\Response\ProductCreateResponse;
 use App\Response\ProductsResponse;
+use App\Response\ProductResponse;
+use App\Response\ProductFullInfoResponse;
 use App\Response\ProductsByStoreOwnerProfileIdResponse;
 
 class ProductService
@@ -71,13 +73,13 @@ class ProductService
     public function getProductById($id)
     {
        $item = $this->productManager->getProductById($id);
-       return $this->autoMapping->map('array', ProductsResponse::class, $item);
+       return $this->autoMapping->map('array', ProductResponse::class, $item);
     }
 
     public function getProductByIdWithFullInfo($id)
     {
        $item = $this->productManager->getProductByIdWithFullInfo($id);
-       return $this->autoMapping->map('array', ProductsResponse::class, $item);
+       return $this->autoMapping->map('array', ProductFullInfoResponse::class, $item);
     }
 
     public function getStoreOwnerProfileByStoreOwnerID($userID)
