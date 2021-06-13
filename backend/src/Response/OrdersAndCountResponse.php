@@ -9,7 +9,7 @@ class OrdersAndCountResponse
     public $source = [];
     public $destination;
     public $deliveryDate;
-    public $updateDate;
+    public $updatedAt;
     public $note;
     public $payment;
     public $recipientName;

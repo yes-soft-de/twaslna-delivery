@@ -8,7 +8,7 @@ class OrderUpdateStateByCaptainRequest
 
     private $state;
 
-    private $updateDate;
+    private $updatedAt;
     
     private $kilometer;
 

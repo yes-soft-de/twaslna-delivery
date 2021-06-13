@@ -6,11 +6,11 @@ class OrderByIdResponse
 {
     public $id;
     public $ownerID;//remove in future
-    public $storeOwnerName; //fix this from repository
+    public $storeOwnerName;
     public $source = [];
     public $destination;
     public $deliveryDate;
-    public $updateDate;
+    public $updatedAt;
     public $note;
     public $payment;
     public $recipientName;

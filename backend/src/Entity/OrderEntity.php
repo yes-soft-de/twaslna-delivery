@@ -61,7 +61,7 @@ class OrderEntity
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updateDate;
+    private $updatedAt;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -212,14 +212,14 @@ class OrderEntity
         return $this;
     }
 
-    public function getUpdateDate()
+    public function getUpdatedAt()
     {
-        return $this->updateDate;
+        return $this->updatedAt;
     }
 
-    public function setUpdateDate($updateDate): self
+    public function setUpdatedAt($updatedAt): self
     {
-        $this->updateDate = new \DateTime($updateDate);
+        $this->updatedAt = new \DateTime($updatedAt);
 
         return $this;
     }
