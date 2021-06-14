@@ -15,7 +15,7 @@ class OrdersAndCountResponse
     public $recipientName;
     public $recipientPhone;
     public $state;
-    public $fromBranch;
+    public $branchId;
     public $acceptedOrder;
     public $kilometer;
     public $productID;

@@ -24,7 +24,7 @@ class AllUsersResponse
 
     public $source;
 
-    public $fromBranch;
+    public $branchId;
 
     public $payment;
 

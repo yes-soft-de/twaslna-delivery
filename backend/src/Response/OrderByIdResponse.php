@@ -16,7 +16,7 @@ class OrderByIdResponse
     public $recipientName;
     public $recipientPhone;
     public $state;
-    public $fromBranch;
+    public $branchId;
     public $acceptedOrder;
     public $log;
     public $roomID;

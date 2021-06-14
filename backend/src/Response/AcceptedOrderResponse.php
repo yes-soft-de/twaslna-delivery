@@ -14,6 +14,6 @@ class AcceptedOrderResponse
     public $recipientName;
     public $recipientPhone;
     public $state;
-    public $fromBranch;
+    public $branchId;
     public $product;
 }

@@ -71,7 +71,7 @@ class OrderEntity
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $fromBranch;
+    private $branchId;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -236,14 +236,14 @@ class OrderEntity
         return $this;
     }
 
-    public function getFromBranch(): ?int
+    public function getBranchId(): ?int
     {
-        return $this->fromBranch;
+        return $this->branchId;
     }
 
-    public function setFromBranch(string $fromBranch): self
+    public function setBranchId(string $branchId): self
     {
-        $this->fromBranch = $fromBranch;
+        $this->branchId = $branchId;
 
         return $this;
     }

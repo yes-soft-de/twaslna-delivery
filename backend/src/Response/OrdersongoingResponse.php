@@ -17,5 +17,5 @@ class OrdersongoingResponse
     public $image;
     public $imageURL;
     public $baseURL;
-    public $fromBranch;
+    public $branchId;
 }

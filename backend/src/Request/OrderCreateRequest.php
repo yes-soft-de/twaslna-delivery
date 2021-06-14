@@ -13,7 +13,7 @@ class OrderCreateRequest
     private $recipientName;
     private $recipientPhone;
     private $state;
-    private $fromBranch;
+    private $branchId;
     private $roomID;
     private $subscribeId;
     private $clientID;

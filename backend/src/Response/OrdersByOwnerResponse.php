@@ -14,7 +14,7 @@ class OrdersByOwnerResponse
     public $recipientName;
     public $recipientPhone;
     public $state;
-    public $fromBranch;
+    public $branchId;
     public $acceptedOrder;
     public $log;
     public $kilometer;

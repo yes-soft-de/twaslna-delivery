@@ -14,7 +14,7 @@ class OrderUpdateStateResponse
     public $recipientName;
     public $recipientPhone;
     public $state;
-    public $fromBranch;
+    public $branchId;
     public $roomID;
     public $owner;
     public $createdAt;
