@@ -71,7 +71,7 @@ class ProductController extends BaseController
 
         $result = $this->productService->getProductsByStoreOwner($this->getUserId());
 
-        return $this->response($result, self::CREATE);
+        return $this->response($result, self::FETCH);
     }
 
     /**
@@ -83,7 +83,31 @@ class ProductController extends BaseController
     {
         $result = $this->productService->getProductsByStoreOwnerProfile($storeOwnerProfileId);
 
-        return $this->response($result, self::CREATE);
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * @Route("/productscategoryid/{productCategoryID}", name="getProductsByProductCategoryId  ", methods={"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getProductsByProductCategoryId($productCategoryID)
+    {
+        $result = $this->productService->getProductsByProductCategoryId($productCategoryID);
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * @Route("/productsbycategoryidandstoreownerprofileid/{productCategoryID}/{storeOwnerProfileId}", name="getProductsByProductCategoryIdAndStoreOwnerProfileId  ", methods={"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getProductsByCategoryIdAndStoreOwnerProfileId($productCategoryID, $storeOwnerProfileId)
+    {
+        $result = $this->productService->getProductsByCategoryIdAndStoreOwnerProfileId($productCategoryID, $storeOwnerProfileId);
+
+        return $this->response($result, self::FETCH);
     }
 
     /**
@@ -94,7 +118,7 @@ class ProductController extends BaseController
     {
         $result = $this->productService->getProducts();
 
-        return $this->response($result, self::CREATE);
+        return $this->response($result, self::FETCH);
     }
 
     /**
@@ -105,7 +129,18 @@ class ProductController extends BaseController
     {
         $result = $this->productService->getProductByIdWithFullInfo($id);
 
-        return $this->response($result, self::CREATE);
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * @Route("/productstopwanted", name="productsTopWanted", methods={"GET"})
+     * @return JsonResponse
+     */
+    public function getProductsTopWanted()
+    {
+        $result = $this->productService->getProductsTopWanted();
+
+        return $this->response($result, self::FETCH);
     }
 
 }

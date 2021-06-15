@@ -16,8 +16,6 @@ class OrderClientCreateRequest
     private $branchId;
     private $roomID;
     private $clientID;
-    private $productID;
-    private $countProduct;
     private $products;
 
      /**
@@ -74,46 +72,6 @@ class OrderClientCreateRequest
     public function getClientID()
     {
         return $this->clientID;
-    }
-
-    /**
-     * Get the value of productID
-     */ 
-    public function getProductID()
-    {
-        return $this->productID;
-    }
-
-    /**
-     * Set the value of productID
-     *
-     * @return  self
-     */ 
-    public function setProductID($productID)
-    {
-        $this->productID = $productID;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of countProduct
-     */ 
-    public function getCountProduct()
-    {
-        return $this->countProduct;
-    }
-
-    /**
-     * Set the value of countProduct
-     *
-     * @return  self
-     */ 
-    public function setCountProduct($countProduct)
-    {
-        $this->countProduct = $countProduct;
-
-        return $this;
     }
 
     /**

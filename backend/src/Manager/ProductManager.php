@@ -53,6 +53,16 @@ class ProductManager
         return $this->productEntityRepository->getProductsByStoreOwnerProfile($storeOwnerProfileID);
     }
 
+    public function getProductsByProductCategoryId($productCategoryID)
+    {
+        return $this->productEntityRepository->getProductsByProductCategoryId($productCategoryID);
+    }
+
+    public function getProductsByCategoryIdAndStoreOwnerProfileId($productCategoryID, $storeOwnerProfileId)
+    {
+        return $this->productEntityRepository->getProductsByCategoryIdAndStoreOwnerProfileId($productCategoryID, $storeOwnerProfileId);
+    }
+
     public function getProducts()
     {
         return $this->productEntityRepository->getProducts();
@@ -66,5 +76,10 @@ class ProductManager
     public function getProductByIdWithFullInfo($id)
     {
         return $this->productEntityRepository->getProductByIdWithFullInfo($id);
+    }
+
+    public function getProductsTopWanted()
+    {
+        return $this->productEntityRepository->getProductsTopWanted();
     }
 }

@@ -8,4 +8,6 @@ class ProductsByStoreOwnerProfileIdResponse
     public $productName;
     public $productImage;
     public $productPrice;
+    public $storeOwnerProfileID;
+    public $ProductCategoryID;
 }
