@@ -34,8 +34,8 @@ class OrderDetailEntityRepository extends ServiceEntityRepository
     public function getOrderIdByOrderNumber($orderNumber)
     {
         return $this->createQueryBuilder('OrderDetailEntity')
-            ->select('OrderDetailEntity.orderID', 'OrderDetailEntity.productID', 'OrderDetailEntity.countProduct')
-            ->addSelect('ProductEntity.id', 'ProductEntity.productName', 'ProductEntity.productImage', 'ProductEntity.productPrice', 'ProductEntity.storeOwnerProfileID', 'ProductEntity.ProductCategoryID')
+            ->select('OrderDetailEntity.id','OrderDetailEntity.orderID', 'OrderDetailEntity.productID', 'OrderDetailEntity.countProduct')
+            ->addSelect('ProductEntity.id as productID', 'ProductEntity.productName', 'ProductEntity.productImage', 'ProductEntity.productPrice', 'ProductEntity.storeOwnerProfileID', 'ProductEntity.ProductCategoryID', 'OrderDetailEntity.orderNumber')
             ->leftJoin(ProductEntity::class, 'ProductEntity', Join::WITH, 'ProductEntity.id = OrderDetailEntity.productID')
             
             ->andWhere('OrderDetailEntity.orderNumber = :orderNumber')

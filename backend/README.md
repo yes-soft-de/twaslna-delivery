@@ -361,14 +361,10 @@ methods: GET
 
 
 
+********************************************************
+
 
 ### Order
-### Create Order By Client
-```
-ROLE_CLIENT
-/clientorder
-methods: POST
-```
 ### Create Order By Client
 ```
 ROLE_CLIENT
@@ -380,9 +376,11 @@ methods: POST
 /orderstatusbyordernumber/{orderNumber}
 methods: GET
 ```
-
-
-
+### Order Cancel
+```
+/ordercancel/{orderNumber}
+methods: PUT
+```
 ### Store Category
 ### Create Store Category
 ```
@@ -434,5 +432,38 @@ methods: GET
 ### Get Product By Id
 ```
 /product/{id}
+methods: GET
+```
+### Get Product By ProductCategoryId
+```
+/productscategoryid/{productCategoryID}
+methods: GET
+```
+### Get Products By ProductCategoryId And StoreOwnerProfileId
+```
+/productsbycategoryidandstoreownerprofileid/{productCategoryID}/{storeOwnerProfileId}
+methods: GET
+```
+### ProductCategory
+### Create ProductCategory
+```
+ROLE_ADMIN
+/createproductcategory
+methods: POST
+```
+### Update Product Category
+```
+ROLE_ADMIN
+/updateproductcategory
+methods: PUT
+```
+### Get Product Categories
+```
+/productcategories
+methods: GET
+```
+### Get ProductCategory
+```
+/productcategory/{id}
 methods: GET
 ```

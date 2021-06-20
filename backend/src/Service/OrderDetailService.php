@@ -7,6 +7,7 @@ use App\Entity\OrderDetailEntity;
 use App\Manager\OrderDetailManager;
 use App\Response\OrderCreateDetailResponse;
 use App\Response\OrderDetailResponse;
+use App\Request\OrderDetailUpdateByClientRequest;
 
 class OrderDetailService
 {
@@ -45,5 +46,10 @@ class OrderDetailService
             $response[] = $this->autoMapping->map('array', OrderDetailResponse::class, $item);
         }
        return $response;
+    }
+
+    public function orderDetailDelete($id)
+    {
+        return $this->orderDetailManager->orderDetailDelete($id);
     }
 }

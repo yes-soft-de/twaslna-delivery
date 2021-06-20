@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\OrderDetailEntity;
 use App\Repository\OrderDetailEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Request\OrderDetailUpdateByClientRequest;
 
 class OrderDetailManager
 {
@@ -39,5 +40,35 @@ class OrderDetailManager
     public function getOrderIdByOrderNumber($orderNumber)
     {
        return $this->orderDetailEntityRepository->getOrderIdByOrderNumber($orderNumber);
+    }
+
+    public function orderUpdateByClient(OrderDetailUpdateByClientRequest $request, $orderDetail)
+    {
+        $item = $this->orderDetailEntityRepository->find($orderDetail->getId());
+    //    dd($item, $request);
+       
+        if ($item) {
+            $item = $this->autoMapping->mapToObject(OrderDetailUpdateByClientRequest::class, OrderDetailEntity::class, $request, $item);
+
+            // dd($item);
+            
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+
+            return $item;
+        }
+    }
+
+    public function orderDetailDelete($id)
+    {
+        $item = $this->orderDetailEntityRepository->find($id);
+
+        if ($item)
+        {
+            $this->entityManager->remove($item);
+            $this->entityManager->flush();
+            return "Deleted";
+        }
+        
     }
 }

@@ -7,6 +7,7 @@ use App\Service\OrderService;
 use App\Request\OrderCreateRequest;
 use App\Request\OrderClientCreateRequest ;
 use App\Request\OrderUpdateStateByCaptainRequest;
+use App\Request\OrderUpdateByClientRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -229,4 +230,32 @@ class OrderController extends BaseController
   
         return $this->response($result, self::FETCH);
       }
+
+    /**
+     * @Route("/orderUpdatebyclient", name="orderUpdateByClient", methods={"PUT"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function orderUpdateByClient(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderUpdateByClientRequest::class, (object) $data);
+        $request->setProducts($data['products']);
+        $response = $this->orderService->orderUpdateByClient($request);
+      
+        return $this->response($response, self::UPDATE);
+    }
+    /**
+     * @Route("/ordercancel/{orderNumber}", name="orderCancel", methods={"PUT"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function orderCancel($orderNumber)
+    {
+        $response = $this->orderService->orderCancel($orderNumber);
+      
+        return $this->response($response, self::UPDATE);
+    }    
 }
+
