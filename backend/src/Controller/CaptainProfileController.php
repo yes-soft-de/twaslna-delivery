@@ -248,7 +248,7 @@ class CaptainProfileController extends BaseController
     }
 
      /**
-     * @Route("/ccaptainsunfinishedpayments", name="getCaptainsWithUnfinishedPayments",methods={"GET"})
+     * @Route("/captainsunfinishedpayments", name="getCaptainsWithUnfinishedPayments",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */

@@ -61,7 +61,7 @@ class OrderEntity
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updateDate;
+    private $updatedAt;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -71,7 +71,7 @@ class OrderEntity
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $fromBranch;
+    private $branchId;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -97,11 +97,6 @@ class OrderEntity
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $clientID;
-
-    /**
-     * @ORM\Column(type="integer", length=255, nullable=true)
-     */
-    private $productID;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -217,14 +212,14 @@ class OrderEntity
         return $this;
     }
 
-    public function getUpdateDate()
+    public function getUpdatedAt()
     {
-        return $this->updateDate;
+        return $this->updatedAt;
     }
 
-    public function setUpdateDate($updateDate): self
+    public function setUpdatedAt($updatedAt): self
     {
-        $this->updateDate = new \DateTime($updateDate);
+        $this->updatedAt = new \DateTime($updatedAt);
 
         return $this;
     }
@@ -241,14 +236,14 @@ class OrderEntity
         return $this;
     }
 
-    public function getFromBranch(): ?int
+    public function getBranchId(): ?int
     {
-        return $this->fromBranch;
+        return $this->branchId;
     }
 
-    public function setFromBranch(string $fromBranch): self
+    public function setBranchId(string $branchId): self
     {
-        $this->fromBranch = $fromBranch;
+        $this->branchId = $branchId;
 
         return $this;
     }
@@ -309,18 +304,6 @@ class OrderEntity
     public function setClientID(string $clientID): self
     {
         $this->clientID = $clientID;
-
-        return $this;
-    }
-
-    public function getProductID(): ?int
-    {
-        return $this->productID;
-    }
-
-    public function setProductID(int $productID): self
-    {
-        $this->productID = $productID;
 
         return $this;
     }

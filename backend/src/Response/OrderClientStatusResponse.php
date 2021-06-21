@@ -2,9 +2,17 @@
 
 namespace App\Response;
 
-class OrdersByOwnerResponse
+class OrderClientStatusResponse
 {
     public $id;
+    public $orderID;
+    public $productName;
+    public $productImage;
+    public $productPrice;
+    public $countProduct;
+    public $storeOwnerProfileID;
+    public $ProductCategoryID;
+    public $ownerID;
     public $source = [];
     public $destination;
     public $deliveryDate;
@@ -14,12 +22,6 @@ class OrdersByOwnerResponse
     public $recipientName;
     public $recipientPhone;
     public $state;
-    public $branchId;
-    public $acceptedOrder;
-    public $log;
     public $kilometer;
-    public $rating;
-    public $createdAt;
-    public $productID;
-    public $product;
+  
 }

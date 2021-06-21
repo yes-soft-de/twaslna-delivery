@@ -25,7 +25,7 @@ class StoreOwnerBranchManager
 
     public function createBranches(StoreOwnerBranchCreateRequest $request)
     {
-        $entity = $this->autoMapping->map(BranchesCreateRequest::class, StoreOwnerBranchEntity::class, $request);
+        $entity = $this->autoMapping->map(StoreOwnerBranchCreateRequest::class, StoreOwnerBranchEntity::class, $request);
         $entity->setIsActive(1);
         $this->entityManager->persist($entity);
         $this->entityManager->flush();

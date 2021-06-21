@@ -42,6 +42,12 @@ class ClientProfileEntity
      */
     private $roomID;
 
+     /**
+     * @ORM\Column(type="json")
+     */
+    private $location = [];
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +109,18 @@ class ClientProfileEntity
     public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getLocation(): ?array
+    {
+        return $this->location;
+    }
+
+    public function setLocation(array $location): self
+    {
+        $this->location = $location;
 
         return $this;
     }

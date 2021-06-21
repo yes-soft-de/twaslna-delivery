@@ -57,12 +57,12 @@ class ClientProfileController extends BaseController
     }
 
     /**
-     * @Route("/clientprofile", name="createclientProfile", methods={"POST"})
+     * @Route("/clientprofile", name="createClientProfile", methods={"POST"})
      * @IsGranted("ROLE_CLIENT")
      * @param Request $request
      * @return JsonResponse
      */
-    public function createclientProfile(Request $request)
+    public function createClientProfile(Request $request)
     {
         $data = json_decode($request->getContent(), true);
 
@@ -70,7 +70,7 @@ class ClientProfileController extends BaseController
        
         $request->setClientID($this->getUserId());
        
-        $response = $this->clientProfileService->createclientProfile($request);
+        $response = $this->clientProfileService->createClientProfile($request);
 
         return $this->response($response, self::CREATE);
     }
@@ -94,7 +94,7 @@ class ClientProfileController extends BaseController
     }
 
     /**
-     * @Route("/clientProfile", name="getClientProfileByUserID",methods={"GET"})
+     * @Route("/clientProfile", name="getClientProfileByClientID",methods={"GET"})
      * @IsGranted("ROLE_CLIENT")
      * @return JsonResponse
      */

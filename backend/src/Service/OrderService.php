@@ -6,8 +6,11 @@ use App\AutoMapping;
 use App\Entity\OrderEntity;
 use App\Manager\OrderManager;
 use App\Request\OrderCreateRequest;
+use App\Request\OrderClientCreateRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
+use App\Request\OrderUpdateByClientRequest;
 use App\Request\SendNotificationRequest;
+use App\Request\OrderDetailUpdateByClientRequest;
 use App\Response\OrderCreateResponse;
 use App\Response\OrderResponse;
 use App\Response\OrdersongoingResponse;
@@ -22,6 +25,7 @@ use App\Response\OrderCreateClientResponse;
 use App\Response\AcceptedOrderResponse;
 use App\Response\OrdersAndTopOwnerResponse;
 use App\Response\OrdersAndCountResponse;
+use App\Response\OrderClientStatusResponse;
 use App\Service\StoreOwnerSubscriptionService;
 use App\Service\RatingService;
 use App\Service\StoreOwnerProfileService;
@@ -32,8 +36,10 @@ use App\Service\CaptainService;
 use App\Service\CaptainProfileService;
 use App\Service\StoreOwnerBranchService;
 use App\Service\ProductService;
+use App\Service\OrderDetailService;
 use App\Constant\ResponseConstant;
 use App\Constant\SubscribeStatusConstant;
+use DateTime;
 
 class OrderService
 {
@@ -51,10 +57,11 @@ class OrderService
     private $captainService;
     private $captainProfileService;
     private $productService;
+    private $orderDetailService;
 
     public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, OrderLogService $orderlogService, StoreOwnerBranchService $storeOwnerBranchService, StoreOwnerSubscriptionService $storeOwnerSubscriptionService, StoreOwnerProfileService $storeOwnerProfileService, ParameterBagInterface $params,  RatingService $ratingService
                                 // , NotificationService $notificationService
-                               , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, CaptainService $captainService, CaptainProfileService $captainProfileService, ProductService $productService
+                               , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, CaptainService $captainService, CaptainProfileService $captainProfileService, ProductService $productService, OrderDetailService $orderDetailService
                                 )
     {
         $this->autoMapping = $autoMapping;
@@ -71,6 +78,7 @@ class OrderService
         // $this->notificationService = $notificationService;
         $this->captainProfileService = $captainProfileService;
         $this->productService = $productService;
+        $this->orderDetailService = $orderDetailService;
     }
 
     public function createOrder(OrderCreateRequest $request)
@@ -128,8 +136,8 @@ class OrderService
         $order = $this->orderManager->getOrderById($orderId);
      
         if ($order){
-            if ($order['fromBranch']){
-                $order['fromBranch'] = $this->storeOwnerBranchService->getBrancheById($order['fromBranch']);
+            if ($order['branchId']){
+                $order['branchId'] = $this->storeOwnerBranchService->getBrancheById($order['branchId']);
                 }
             if ($order['captainID'] == true) {
                 $acceptedOrder = $this->captainProfileService->getCaptainProfileByCaptainID($order['captainID']);
@@ -153,8 +161,8 @@ class OrderService
        
         foreach ($orders as $order) {
 
-            if ($order['fromBranch'] == true){
-                $order['fromBranch'] = $this->storeOwnerBranchService->getBrancheById($order['fromBranch']);
+            if ($order['branchId'] == true){
+                $order['branchId'] = $this->storeOwnerBranchService->getBrancheById($order['branchId']);
             }
             
             if ($order['captainID'] == true) {
@@ -175,8 +183,8 @@ class OrderService
     {
         $order = $this->orderManager->orderStatus($orderId);
         if ($order){
-               if ($order['fromBranch'] == true) {
-                    $order['fromBranch'] = $this->storeOwnerBranchService->getBrancheById($order['fromBranch']);
+               if ($order['branchId'] == true) {
+                    $order['branchId'] = $this->storeOwnerBranchService->getBrancheById($order['branchId']);
                }
             
             $order['owner'] = $this->storeOwnerProfileService->getStoreOwnerProfileByStoreOwnerID($order['ownerID']);
@@ -202,8 +210,8 @@ class OrderService
             $orders = $this->orderManager->closestOrders();
 
             foreach ($orders as $order) {
-                if ($order['fromBranch'] == true){
-                    $order['fromBranch'] = $this->storeOwnerBranchService->getBrancheById($order['fromBranch']);
+                if ($order['branchId'] == true){
+                    $order['branchId'] = $this->storeOwnerBranchService->getBrancheById($order['branchId']);
                 }
 
                 if ($order['productID'] == true) {
@@ -229,9 +237,9 @@ class OrderService
 
         foreach ($orders as $order) {
 
-            if ($order['fromBranch']){
+            if ($order['branchId']){
 
-                $order['fromBranch'] = $this->storeOwnerBranchService->getBrancheById($order['fromBranch']);
+                $order['branchId'] = $this->storeOwnerBranchService->getBrancheById($order['branchId']);
                 }
             if ($order['productID'] == true) {
                 $order['product'] = $this->productService->getProductById($order['productID']);
@@ -247,14 +255,14 @@ class OrderService
         $item = $this->orderManager->orderUpdateStateByCaptain($request);
         if($item) {        
             $this->orderlogService->createOrderLog($item->getId(), $request->getState(), $request->getcaptainID());
-            $fromBranch = $this->storeOwnerBranchService->getBrancheById($item->getFromBranch());
+            $branchId = $this->storeOwnerBranchService->getBrancheById($item->getBranchId());
             
             $product = $this->productService->getProductById($item->getProductID());
         }
         $response = $this->autoMapping->map(OrderEntity::class, OrderUpdateStateResponse::class, $item);
         if($item) {
             $response->product =  $product;
-            $response->fromBranch =  $fromBranch;
+            $response->branchId =  $branchId;
         }
 
         //start-----> notification
@@ -287,8 +295,8 @@ class OrderService
             $ongoingOrder['imageURL'] = $ongoingOrder['image'];
             
             
-            if ($ongoingOrder['fromBranch']){
-                $ongoingOrder['fromBranch'] = $this->storeOwnerBranchService->getBrancheById($ongoingOrder['fromBranch']);
+            if ($ongoingOrder['branchId']){
+                $ongoingOrder['branchId'] = $this->storeOwnerBranchService->getBrancheById($ongoingOrder['branchId']);
                 }
 
             $response[]  = $this->autoMapping->map('array',OrdersongoingResponse::class,  $ongoingOrder);
@@ -304,8 +312,8 @@ class OrderService
        
         foreach ($orders as $order) {
 
-            if ($order['fromBranch']){
-                $order['fromBranch'] = $this->storeOwnerBranchService->getBrancheById($order['fromBranch']);
+            if ($order['branchId']){
+                $order['branchId'] = $this->storeOwnerBranchService->getBrancheById($order['branchId']);
                 }
 
             if ($order['captainID'] == true) {
@@ -334,8 +342,8 @@ class OrderService
             
             foreach ($ordersInMonth as $order) {
 
-                if ($order['fromBranch']){
-                    $order['fromBranch'] = $this->storeOwnerBranchService->getBrancheById($order['fromBranch']);
+                if ($order['branchId']){
+                    $order['branchId'] = $this->storeOwnerBranchService->getBrancheById($order['branchId']);
                     }
     
                 if ($order['captainID'] == true) {
@@ -360,8 +368,8 @@ class OrderService
             
                 foreach ($ordersInMonth as $order) {
         
-                    if ($order['fromBranch']){
-                        $order['fromBranch'] = $this->storeOwnerBranchService->getBrancheById($order['fromBranch']);
+                    if ($order['branchId']){
+                        $order['branchId'] = $this->storeOwnerBranchService->getBrancheById($order['branchId']);
                         }
 
                     if ($order['captainID'] == true) {
@@ -422,8 +430,8 @@ class OrderService
    
         foreach ($orders as $order){
 
-            if ($order['fromBranch']){
-                $order['fromBranch'] = $this->storeOwnerBranchService->getBrancheById($order['fromBranch']);
+            if ($order['branchId']){
+                $order['branchId'] = $this->storeOwnerBranchService->getBrancheById($order['branchId']);
                 }
             if ($order['productID'] == true) {
                 $order['product'] = $this->productService->getProductById($order['productID']);
@@ -434,15 +442,83 @@ class OrderService
         return $response;
     }
 
-    public function createClientOrder(OrderCreateRequest $request):?object
+    public function createClientOrder(OrderClientCreateRequest $request):?object
     {  
+        $orderNumber = 1;
+        $lastOrderNumber = $this->orderDetailService->getLastOrderNumber();
+        if ($lastOrderNumber) {
+            $orderNumber = $lastOrderNumber['orderNumber'] + 1;
+       }
         $roomID = $this->roomIdHelperService->roomIdGenerate();
-                
         $item = $this->orderManager->createClientOrder($request, $roomID);
         if ($item) {
-            $this->orderlogService->createOrderLog($item->getId(), $item->getState(), $request->getClientID());
+            $products = $request->getProducts();
+            foreach ($products as $product) {
+               $productID = $product['productID'];
+               $countProduct = $product['countProduct'];
+               $orderDetail = $this->orderDetailService->createOrderDetail($item->getId(), $productID, $countProduct, $orderNumber);
+            }   
+          }
+            // if ($item) {
+            //     $this->orderlogService->createOrderLog($item->getId(), $item->getState(), $request->getClientID());
+            //     }
+
+        $response = $this->autoMapping->map(OrderEntity::class, OrderCreateClientResponse::class, $item);
+        $response->orderDetail = $orderDetail;
+        return $response;
+    }
+
+    public function getOrderStatusByOrderNumber($orderNumber) {
+        $orderDetails = $this->orderDetailService->getOrderIdByOrderNumber($orderNumber);
+        $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
+     
+        $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($orderDetails[0]->storeOwnerProfileID);
+
+        $response['orderDetails'] = $orderDetails;
+        $response['order'] = $order;
+
+        return $response;
+    }
+
+    public function orderUpdateByClient(OrderUpdateByClientRequest $request)
+    {
+        $response = ['Error, Not updated'];
+        $orderDetails = $this->orderDetailService->getOrderIdByOrderNumber($request->getOrderNumber());
+        $orderUpdate = $this->orderManager->orderUpdateByClient($request, $orderDetails[0]->getOrderID());
+
+        foreach ($orderDetails as $orderDetail) {
+          $orderDetailDelete = $this->orderDetailService->orderDetailDelete($orderDetail->getId());
+        }
+
+        if ($orderDetailDelete == "Deleted") {
+            $products = $request->getProducts();
+            foreach ($products as $product) {
+                $productID = $product['productID'];
+                $countProduct = $product['countProduct'];
+                $createOrderDetail = $this->orderDetailService->createOrderDetail($orderDetails[0]->getOrderID(), $productID, $countProduct, $request->getOrderNumber());
             }
-        $response =$this->autoMapping->map(OrderEntity::class, OrderCreateClientResponse::class, $item);
+           return $response = $this->getOrderStatusByOrderNumber($request->getOrderNumber());  
+        }         
+        return $response;
+    }
+
+    public function orderCancel($orderNumber)
+    {
+        $orderDetails = $this->orderDetailService->getOrderIdByOrderNumber($orderNumber);
+        $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
+      
+        $halfHourLaterTime = date_modify($order[0]['createdAt'],'+30 minutes');
+        $nowDate = new DateTime('now');
+        if ( $halfHourLaterTime < $nowDate) {
+            $response=(object)"can not remove it";
+        }
+        else {
+            $item = $this->orderManager->orderCancel($orderDetails[0]->orderID);
+            // if($item) {
+            //     $this->logService->create($orderDetails[0]->orderID, 'cancelled');
+            // }
+            $response = $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $item);
+        }
         return $response;
     }
 }

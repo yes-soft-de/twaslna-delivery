@@ -48,7 +48,7 @@ class ClientProfileService
         }
     }
 
-    public function createclientProfile(ClientProfileCreateRequest $request)
+    public function createClientProfile(ClientProfileCreateRequest $request)
     {  
        $roomID = $this->roomIdHelperService->roomIdGenerate();
     

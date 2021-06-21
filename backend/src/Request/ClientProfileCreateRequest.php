@@ -13,6 +13,8 @@ class ClientProfileCreateRequest
     private $roomID;
     
     private $phone;
+    
+    private $location;
 
     /**
      * @return mixed
@@ -51,7 +53,7 @@ class ClientProfileCreateRequest
         return $this->roomID;
     }
 
-    public function seRoomID(?string $roomID): self
+    public function setRoomID(?string $roomID): self
     {
         $this->roomID = $roomID;
 
@@ -91,6 +93,26 @@ class ClientProfileCreateRequest
     public function setPhone($phone)
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of location
+     */ 
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * Set the value of location
+     *
+     * @return  self
+     */ 
+    public function setLocation($location)
+    {
+        $this->location = $location;
 
         return $this;
     }

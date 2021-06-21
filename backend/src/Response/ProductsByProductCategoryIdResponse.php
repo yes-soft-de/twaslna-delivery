@@ -2,7 +2,7 @@
 
 namespace App\Response;
 
-class ProductsByStoreOwnerProfileIdResponse
+class ProductsByProductCategoryIdResponse
 {
     public $id;
     public $productName;

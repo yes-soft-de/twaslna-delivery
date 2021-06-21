@@ -8,13 +8,13 @@ class OrderStatusResponse
     public $source = [];
     public $destination;
     public $deliveryDate;
-    public $updateDate;
+    public $updatedAt;
     public $note;
     public $payment;
     public $recipientName;
     public $recipientPhone;
     public $state;
-    public $fromBranch;
+    public $branchId;
     public $acceptedOrder;
     public $log;
     public $roomID;
@@ -25,6 +25,4 @@ class OrderStatusResponse
     public $kilometer;
     public $rating;
     public $createdAt;
-    public $productID;
-    public $product;
 }

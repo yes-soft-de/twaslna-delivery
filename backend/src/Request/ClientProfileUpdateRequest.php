@@ -16,6 +16,8 @@ class ClientProfileUpdateRequest
     
     private $phone;
 
+    private $location;
+
     /**
      * @return mixed
      */
@@ -133,6 +135,26 @@ class ClientProfileUpdateRequest
     public function setPhone($phone)
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of location
+     */ 
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * Set the value of location
+     *
+     * @return  self
+     */ 
+    public function setLocation($location)
+    {
+        $this->location = $location;
 
         return $this;
     }

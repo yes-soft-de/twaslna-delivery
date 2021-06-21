@@ -2,7 +2,7 @@
 
 namespace App\Response;
 
-class ProductsResponse
+class ProductFullInfoResponse
 {
     public $id;
     public $productName;
@@ -11,11 +11,10 @@ class ProductsResponse
     public $storeOwnerProfileID;
     public $ProductCategoryID;
     public $storeOwnerName;
-    public $ownerID;
+    public $storeOwnerID;
     public $image;
     public $phone;
     public $location;
     public $branchName;
     public $city;
-    public $countProduct;
 }

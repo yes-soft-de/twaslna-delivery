@@ -8,13 +8,13 @@ class OrderClosestResponse
     public $source = [];
     public $destination;
     public $deliveryDate;
-    public $updateDate;
+    public $updatedAt;
     public $note;
     public $payment;
     public $recipientName;
     public $recipientPhone;
     public $state;
-    public $fromBranch;
+    public $branchId;
     public $roomID;
     public $owner;
     public $createdAt;

@@ -8,7 +8,10 @@ use App\Manager\ProductManager;
 use App\Request\ProductCreateRequest;
 use App\Response\ProductCreateResponse;
 use App\Response\ProductsResponse;
+use App\Response\ProductResponse;
+use App\Response\ProductFullInfoResponse;
 use App\Response\ProductsByStoreOwnerProfileIdResponse;
+use App\Response\ProductsByProductCategoryIdResponse;
 
 class ProductService
 {
@@ -59,6 +62,26 @@ class ProductService
         return $response;
     }
 
+    public function getProductsByProductCategoryId($productCategoryID)
+    {
+        $response = [];
+        $items = $this->productManager->getProductsByProductCategoryId($productCategoryID);
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', ProductsByProductCategoryIdResponse::class, $item);
+            }  
+        return $response;
+    }
+
+    public function getProductsByCategoryIdAndStoreOwnerProfileId($productCategoryID, $storeOwnerProfileId)
+    {
+        $response = [];
+        $items = $this->productManager->getProductsByCategoryIdAndStoreOwnerProfileId($productCategoryID, $storeOwnerProfileId);
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', ProductsByProductCategoryIdResponse::class, $item);
+            }  
+        return $response;
+    }
+
     public function getProducts()
     {
         $items = $this->productManager->getProducts();
@@ -71,11 +94,35 @@ class ProductService
     public function getProductById($id)
     {
        $item = $this->productManager->getProductById($id);
-       return $this->autoMapping->map('array', ProductsResponse::class, $item);
+       return $this->autoMapping->map('array', ProductResponse::class, $item);
+    }
+
+    public function getProductByIdWithFullInfo($id)
+    {
+       $item = $this->productManager->getProductByIdWithFullInfo($id);
+       return $this->autoMapping->map('array', ProductFullInfoResponse::class, $item);
     }
 
     public function getStoreOwnerProfileByStoreOwnerID($userID)
     {
         return $this->productManager->getStoreOwnerProfileByStoreOwnerID($userID);
     }
+
+    public function getProductsTopWanted():?array
+    {
+       $response=[];
+ 
+       $Products = $this->productManager->getProductsTopWanted();
+    
+        foreach ($Products as $Product) {
+         
+            // $topOwner['imageURL'] = $Product['image'];
+            // $topOwner['image'] = $this->params.$Product['image'];
+            // $topOwner['baseURL'] = $this->params;
+           
+            $response[] = $this->autoMapping->map('array', ProductFullInfoResponse::class, $Product);
+        }
+    
+       return $response;
+   }
 }

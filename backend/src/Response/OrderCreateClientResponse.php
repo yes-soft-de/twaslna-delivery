@@ -11,6 +11,7 @@ class OrderCreateClientResponse
     public $recipientName;
     public $recipientPhone;
     public $state;
-    public $fromBranch;
+    public $branchId;
     public $roomID;
+    public $orderDetail;
 }

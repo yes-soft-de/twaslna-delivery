@@ -2,7 +2,7 @@
 
 namespace App\Request;
 
-class OrderCreateRequest
+class OrderClientCreateRequest
 {
     private $ownerID;
     private $source = [];
@@ -15,10 +15,8 @@ class OrderCreateRequest
     private $state;
     private $branchId;
     private $roomID;
-    private $subscribeId;
     private $clientID;
-    private $productID;
-    private $countProduct;
+    private $products;
 
      /**
      * @param mixed $ownerID
@@ -59,18 +57,6 @@ class OrderCreateRequest
 
         return $this;
     }
-    
-    public function getSubscribeId(): ?int
-    {
-        return $this->subscribeId;
-    }
-
-    public function setSubscribeId(?int $subscribeId): self
-    {
-        $this->subscribeId = $subscribeId;
-
-        return $this;
-    }
 
      /**
      * @param mixed $clientID
@@ -89,41 +75,21 @@ class OrderCreateRequest
     }
 
     /**
-     * Get the value of productID
+     * Get the value of products
      */ 
-    public function getProductID()
+    public function getProducts()
     {
-        return $this->productID;
+        return $this->products;
     }
 
     /**
-     * Set the value of productID
+     * Set the value of products
      *
      * @return  self
      */ 
-    public function setProductID($productID)
+    public function setProducts($products)
     {
-        $this->productID = $productID;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of countProduct
-     */ 
-    public function getCountProduct()
-    {
-        return $this->countProduct;
-    }
-
-    /**
-     * Set the value of countProduct
-     *
-     * @return  self
-     */ 
-    public function setCountProduct($countProduct)
-    {
-        $this->countProduct = $countProduct;
+        $this->products = $products;
 
         return $this;
     }

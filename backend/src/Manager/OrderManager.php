@@ -6,6 +6,8 @@ use App\AutoMapping;
 use App\Entity\OrderEntity;
 use App\Repository\OrderEntityRepository;
 use App\Request\OrderCreateRequest;
+use App\Request\OrderClientCreateRequest;
+use App\Request\OrderUpdateByClientRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -58,6 +60,11 @@ class OrderManager
         return $this->orderEntityRepository->orderStatus($orderId);
     }
 
+    public function orderStatusByOrderId($orderId)
+    {
+        return $this->orderEntityRepository->orderStatusByOrderId($orderId);
+    }
+
     public function closestOrders()
     {
         return $this->orderEntityRepository->closestOrders();
@@ -75,7 +82,7 @@ class OrderManager
         if ($item) {
             $item = $this->autoMapping->mapToObject(OrderUpdateStateByCaptainRequest::class, OrderEntity::class, $request, $item);
 
-            $item->setUpdateDate($item->getUpdateDate());
+            $item->setUpdatedAt($item->getUpdatedAt());
             
             $this->entityManager->flush();
             $this->entityManager->clear();
@@ -164,10 +171,10 @@ class OrderManager
         return $this->orderEntityRepository->countCaptainOrdersInDay($captainID, $fromDate, $toDate);
     }
 
-    public function createClientOrder(OrderCreateRequest $request, $roomID)
+    public function createClientOrder(OrderClientCreateRequest $request, $roomID)
     {
         $request->setRoomID($roomID);
-        $item = $this->autoMapping->map(OrderCreateRequest::class, OrderEntity::class, $request);
+        $item = $this->autoMapping->map(OrderClientCreateRequest::class, OrderEntity::class, $request);
 
         $item->setDeliveryDate($item->getDeliveryDate());
         $item->setState('pending');
@@ -177,5 +184,35 @@ class OrderManager
         $this->entityManager->clear();
 
         return $item;
+    }
+
+    public function orderUpdateByClient(OrderUpdateByClientRequest $request, $id)
+    {
+        $item = $this->orderEntityRepository->find($id);
+        $request->setRoomID($item->getRoomID());
+        if ($item) {
+            $item = $this->autoMapping->mapToObject(OrderUpdateByClientRequest::class, OrderEntity::class, $request, $item);
+           
+            $item->setDeliveryDate($request->getDeliveryDate());
+            
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+        }
+        return $item;
+    }
+
+    public function orderCancel($orderId)
+    {
+        $item = $this->orderEntityRepository->find($orderId);
+        $item->setState('cancelled');
+
+        if ($item) {
+            $item = $this->autoMapping->mapToObject(OrderEntity::class, OrderEntity::class, $item, $item);
+            
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+
+            return $item;
+        }
     }
 }

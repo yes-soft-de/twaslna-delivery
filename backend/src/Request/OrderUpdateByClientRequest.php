@@ -2,8 +2,9 @@
 
 namespace App\Request;
 
-class OrderCreateRequest
+class OrderUpdateByClientRequest
 {
+    private $orderNumber;
     private $ownerID;
     private $source = [];
     private $destination = [];
@@ -15,11 +16,29 @@ class OrderCreateRequest
     private $state;
     private $branchId;
     private $roomID;
-    private $subscribeId;
     private $clientID;
-    private $productID;
-    private $countProduct;
+    private $products;
 
+     /**
+     * Get the value of orderNumber
+     */ 
+    public function getOrderNumber()
+    {
+        return $this->orderNumber;
+    }
+
+    /**
+     * Set the value of orderNumber
+     *
+     * @return  self
+     */ 
+    public function setOrderNumber($orderNumber)
+    {
+        $this->orderNumber = $orderNumber;
+
+        return $this;
+    }
+    
      /**
      * @param mixed $ownerID
      */
@@ -59,18 +78,6 @@ class OrderCreateRequest
 
         return $this;
     }
-    
-    public function getSubscribeId(): ?int
-    {
-        return $this->subscribeId;
-    }
-
-    public function setSubscribeId(?int $subscribeId): self
-    {
-        $this->subscribeId = $subscribeId;
-
-        return $this;
-    }
 
      /**
      * @param mixed $clientID
@@ -89,41 +96,41 @@ class OrderCreateRequest
     }
 
     /**
-     * Get the value of productID
+     * Get the value of products
      */ 
-    public function getProductID()
+    public function getProducts()
     {
-        return $this->productID;
+        return $this->products;
     }
 
     /**
-     * Set the value of productID
+     * Set the value of products
      *
      * @return  self
      */ 
-    public function setProductID($productID)
+    public function setProducts($products)
     {
-        $this->productID = $productID;
+        $this->products = $products;
 
         return $this;
     }
 
     /**
-     * Get the value of countProduct
+     * Get the value of deliveryDate
      */ 
-    public function getCountProduct()
+    public function getDeliveryDate()
     {
-        return $this->countProduct;
+        return $this->deliveryDate;
     }
 
     /**
-     * Set the value of countProduct
+     * Set the value of deliveryDate
      *
      * @return  self
      */ 
-    public function setCountProduct($countProduct)
+    public function setDeliveryDate($deliveryDate)
     {
-        $this->countProduct = $countProduct;
+        $this->deliveryDate = $deliveryDate;
 
         return $this;
     }

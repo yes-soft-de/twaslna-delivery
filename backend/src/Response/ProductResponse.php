@@ -2,7 +2,7 @@
 
 namespace App\Response;
 
-class ProductsResponse
+class ProductResponse
 {
     public $id;
     public $productName;
@@ -10,12 +10,5 @@ class ProductsResponse
     public $productPrice;
     public $storeOwnerProfileID;
     public $ProductCategoryID;
-    public $storeOwnerName;
-    public $ownerID;
-    public $image;
-    public $phone;
-    public $location;
-    public $branchName;
-    public $city;
     public $countProduct;
 }

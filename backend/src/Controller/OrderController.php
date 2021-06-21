@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\AutoMapping;
 use App\Service\OrderService;
 use App\Request\OrderCreateRequest;
+use App\Request\OrderClientCreateRequest ;
 use App\Request\OrderUpdateStateByCaptainRequest;
+use App\Request\OrderUpdateByClientRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +34,7 @@ class OrderController extends BaseController
     }
 
     /**
-     * @Route("order", name="createOrder", methods={"POST"})
+     * @Route("order", name="createOrderByStoreOwner", methods={"POST"})
      * @IsGranted("ROLE_OWNER")
      */
     public function createOrder(Request $request)
@@ -207,12 +209,53 @@ class OrderController extends BaseController
     public function createClientOrder(Request $request)
     {  
         $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class, OrderCreateRequest::class, (object)$data);
+      
+        $request = $this->autoMapping->map(stdClass::class, OrderClientCreateRequest::class, (object)$data);
         $request->setClientID($this->getUserId());
- 
+      
+        $request->setProducts($data['products']);
+  
         $response = $this->orderService->createClientOrder($request);
 
         return $this->response($response, self::CREATE);
     }
+
+    /**
+      * @Route("orderstatusbyordernumber/{orderNumber}", name="getOrderStatusByOrderNumber", methods={"GET"})
+      * @return JsonResponse
+      */
+    public function getOrderStatusByOrderNumber($orderNumber)
+      {
+        $result = $this->orderService->getOrderStatusByOrderNumber($orderNumber);
+  
+        return $this->response($result, self::FETCH);
+      }
+
+    /**
+     * @Route("/orderUpdatebyclient", name="orderUpdateByClient", methods={"PUT"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function orderUpdateByClient(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderUpdateByClientRequest::class, (object) $data);
+        $request->setProducts($data['products']);
+        $response = $this->orderService->orderUpdateByClient($request);
+      
+        return $this->response($response, self::UPDATE);
+    }
+    /**
+     * @Route("/ordercancel/{orderNumber}", name="orderCancel", methods={"PUT"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function orderCancel($orderNumber)
+    {
+        $response = $this->orderService->orderCancel($orderNumber);
+      
+        return $this->response($response, self::UPDATE);
+    }    
 }
+

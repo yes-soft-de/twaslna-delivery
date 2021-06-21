@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 use App\AutoMapping;
-use App\Request\BranchesCreateRequest;
-use App\Request\BranchesUpdateRequest;
+use App\Request\StoreOwnerBranchCreateRequest;
+use App\Request\StoreOwnerBranchUpdateRequest;
 use App\Request\BranchesDeleteRequest;
 use App\Service\StoreOwnerBranchService;
 use stdClass;
@@ -40,7 +40,7 @@ class StoreOwnerBranchController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, BranchesCreateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, StoreOwnerBranchCreateRequest::class, (object)$data);
 
         $request->setOwnerID($this->getUserId());
 
@@ -67,7 +67,7 @@ class StoreOwnerBranchController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(\stdClass::class, BranchesUpdateRequest::class, (object) $data);
+        $request = $this->autoMapping->map(\stdClass::class, StoreOwnerBranchUpdateRequest::class, (object) $data);
 
         $violations = $this->validator->validate($request);
 
