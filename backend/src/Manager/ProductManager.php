@@ -82,4 +82,9 @@ class ProductManager
     {
         return $this->productEntityRepository->getProductsTopWanted();
     }
+
+    public function productsTopWantedOfSpecificStoreOwner($storeOwnerProfileId)
+    {
+        return $this->productEntityRepository->productsTopWantedOfSpecificStoreOwner($storeOwnerProfileId);
+    }
 }

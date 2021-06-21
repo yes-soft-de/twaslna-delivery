@@ -157,4 +157,32 @@ class ProductEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function productsTopWantedOfSpecificStoreOwner($storeOwnerProfileId)
+    {
+        return $this->createQueryBuilder('product')
+            ->select('product.id', 'product.productName', 'product.productImage', 'product.productImage','product.productPrice','product.storeOwnerProfileID', 'product.ProductCategoryID')
+
+            ->addSelect('count(orderDetailEntity.productID) as countProduct, orderDetailEntity.productID')
+            ->addSelect('storeOwnerProfile.id as storeOwnerProfileID', 'storeOwnerProfile.storeOwnerName as storeOwnerName','storeOwnerProfile.storeOwnerID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.branch', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone', 'storeOwnerProfile.storeOwnerID')
+
+            ->addSelect('storeOwnerBranch.location','storeOwnerBranch.branchName','storeOwnerBranch.city')
+
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = :storeOwnerProfileId')
+
+            ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerProfile.storeOwnerID = storeOwnerBranch.ownerID')
+
+            ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.productID = product.id')
+
+            ->andWhere('orderDetailEntity.productID = product.id')
+            ->andWhere('product.storeOwnerProfileID = :storeOwnerProfileId')
+
+            ->addGroupBy('orderDetailEntity.productID')
+            ->having('count(orderDetailEntity.productID) > 0')
+            ->setMaxResults(20)
+            ->setParameter('storeOwnerProfileId',$storeOwnerProfileId)
+            ->addOrderBy('countProduct','DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }
