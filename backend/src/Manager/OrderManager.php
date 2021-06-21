@@ -215,4 +215,9 @@ class OrderManager
             return $item;
         }
     }
+
+    public function getOrdersByClientID($clientID)
+    {
+        return $this->orderEntityRepository->getOrdersByClientID($clientID);
+    }
 }
