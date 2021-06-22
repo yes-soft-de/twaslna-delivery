@@ -256,6 +256,18 @@ class OrderController extends BaseController
         $response = $this->orderService->orderCancel($orderNumber);
       
         return $this->response($response, self::UPDATE);
-    }    
+    }   
+    
+    /**
+      * @Route("ordersbyclientid", name="GetOrdersByClientID", methods={"GET"})
+      * @IsGranted("ROLE_CLIENT")
+      * @return JsonResponse
+      */
+      public function getOrdersByClientID()
+      {
+          $result = $this->orderService->getOrdersByClientID($this->getUserId());
+  
+          return $this->response($result, self::FETCH);
+      }
 }
 

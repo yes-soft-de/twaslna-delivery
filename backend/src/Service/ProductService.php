@@ -116,7 +116,24 @@ class ProductService
     
         foreach ($Products as $Product) {
          
-            // $topOwner['imageURL'] = $Product['image'];
+            $topOwner['imageURL'] = $Product['image'];
+            // $topOwner['image'] = $this->params.$Product['image'];
+            // $topOwner['baseURL'] = $this->params;
+           
+            $response[] = $this->autoMapping->map('array', ProductFullInfoResponse::class, $Product);
+        }
+    
+       return $response;
+   }
+    public function productsTopWantedOfSpecificStoreOwner($storeOwnerProfileId):?array
+    {
+       $response=[];
+ 
+       $Products = $this->productManager->productsTopWantedOfSpecificStoreOwner($storeOwnerProfileId);
+    
+        foreach ($Products as $Product) {
+         
+            $topOwner['imageURL'] = $Product['image'];
             // $topOwner['image'] = $this->params.$Product['image'];
             // $topOwner['baseURL'] = $this->params;
            

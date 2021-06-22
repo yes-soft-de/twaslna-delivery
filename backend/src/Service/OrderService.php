@@ -26,6 +26,7 @@ use App\Response\AcceptedOrderResponse;
 use App\Response\OrdersAndTopOwnerResponse;
 use App\Response\OrdersAndCountResponse;
 use App\Response\OrderClientStatusResponse;
+use App\Response\OrdersByClientResponse;
 use App\Service\StoreOwnerSubscriptionService;
 use App\Service\RatingService;
 use App\Service\StoreOwnerProfileService;
@@ -519,6 +520,17 @@ class OrderService
             // }
             $response = $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $item);
         }
+        return $response;
+    }
+
+    public function getOrdersByClientID($clientID)
+    {
+        $response = [];
+        $orders = $this->orderManager->getOrdersByClientID($clientID);
+       foreach ($orders as $order) {
+            $response[] = $this->autoMapping->map('array', OrdersByClientResponse::class, $order);
+       }
+
         return $response;
     }
 }

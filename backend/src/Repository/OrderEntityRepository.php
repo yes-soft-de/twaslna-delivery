@@ -6,6 +6,8 @@ use App\Entity\OrderEntity;
 use App\Entity\CaptainProfileEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\BranchesEntity;
+use App\Entity\OrderDetailEntity;
+use App\Entity\ClientPaymentEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
@@ -361,7 +363,25 @@ class OrderEntityRepository extends ServiceEntityRepository
           ->setParameter('toDate', $toDate)
           
           ->getQuery()
-          ->getResult();
-       
+          ->getResult(); 
+    }
+
+    
+    public function getOrdersByClientID($clientID)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+            ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.state', 'OrderEntity.createdAt')
+            ->addSelect('orderDetailEntity.id as orderDetailId', 'orderDetailEntity.orderNumber')
+            ->addSelect('clientPaymentEntity.id as clientPaymentId', 'clientPaymentEntity.amount')
+
+            ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
+
+            ->leftJoin(ClientPaymentEntity::class, 'clientPaymentEntity', Join::WITH, 'clientPaymentEntity.orderID = OrderEntity.id')
+
+            ->andWhere('OrderEntity.clientID = :clientID')
+            ->setParameter('clientID', $clientID)
+            ->addGroupBy('clientPaymentId')
+            ->getQuery()
+            ->getResult();
     }
 }

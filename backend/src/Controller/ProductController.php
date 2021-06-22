@@ -143,4 +143,15 @@ class ProductController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
+    /**
+     * @Route("/productstopwantedofspecificstoreowner/{storeOwnerProfileId}", name="productsTopWantedOfSpecificStoreOwner", methods={"GET"})
+     * @return JsonResponse
+     */
+    public function productsTopWantedOfSpecificStoreOwner($storeOwnerProfileId)
+    {
+        $result = $this->productService->productsTopWantedOfSpecificStoreOwner($storeOwnerProfileId);
+
+        return $this->response($result, self::FETCH);
+    }
+
 }

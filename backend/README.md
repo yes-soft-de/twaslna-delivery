@@ -444,6 +444,16 @@ methods: GET
 /productsbycategoryidandstoreownerprofileid/{productCategoryID}/{storeOwnerProfileId}
 methods: GET
 ```
+### Get products Top Wanted
+```
+/productstopwanted
+methods: GET
+```
+### Get products Top Wanted Of Specific Store Owner
+```
+/productstopwantedofspecificstoreowner/{storeOwnerProfileId}
+methods: GET
+```
 ### ProductCategory
 ### Create ProductCategory
 ```
