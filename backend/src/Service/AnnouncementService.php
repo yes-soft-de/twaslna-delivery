@@ -26,9 +26,9 @@ class AnnouncementService
         return $this->autoMapping->map(AnnouncementEntity::class, AnnouncementResponse::class, $item);
     }
 
-    public function update($request):object
+    public function updateAnnouncement($request):object
     {
-        $result = $this->announcementManager->update($request);
+        $result = $this->announcementManager->updateAnnouncement($request);
 
         return $this->autoMapping->map(AnnouncementEntity::class, AnnouncementResponse::class, $result);
     }
@@ -40,10 +40,10 @@ class AnnouncementService
   
     }
 
-    public function  getAllAnnouncements():array
+    public function  getAnnouncements():array
     {
         $respons=[];
-        $results = $this->announcementManager->getAllAnnouncements();
+        $results = $this->announcementManager->getAnnouncements();
        
         foreach ($results as  $result) {
            $respons[]= $this->autoMapping->map('array', AnnouncementResponse::class, $result);

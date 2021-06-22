@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OrderEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=OrderEntityRepository::class)
@@ -18,7 +19,7 @@ class OrderEntity
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $ownerID;
 
@@ -35,7 +36,7 @@ class OrderEntity
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $date;
+    private $deliveryDate;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -60,7 +61,7 @@ class OrderEntity
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updateDate;
+    private $updatedAt;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -70,12 +71,12 @@ class OrderEntity
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $fromBranch;
+    private $branchId;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $uuid;
+    private $roomID;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -92,6 +93,16 @@ class OrderEntity
      */
     private $captainID;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $clientID;
+
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
 
     public function getId(): ?int
     {
@@ -141,14 +152,14 @@ class OrderEntity
         return $this;
     }
 
-    public function getDate()
+    public function getDeliveryDate()
     {
-        return $this->date;
+        return $this->deliveryDate;
     }
 
-    public function setDate($date): self
+    public function setDeliveryDate($deliveryDate): self
     {
-        $this->date = new \DateTime($date);
+        $this->deliveryDate = new \DateTime($deliveryDate);
 
         return $this;
     }
@@ -201,14 +212,14 @@ class OrderEntity
         return $this;
     }
 
-    public function getUpdateDate()
+    public function getUpdatedAt()
     {
-        return $this->updateDate;
+        return $this->updatedAt;
     }
 
-    public function setUpdateDate($updateDate): self
+    public function setUpdatedAt($updatedAt): self
     {
-        $this->updateDate = new \DateTime($updateDate);
+        $this->updatedAt = new \DateTime($updatedAt);
 
         return $this;
     }
@@ -225,26 +236,26 @@ class OrderEntity
         return $this;
     }
 
-    public function getFromBranch(): ?int
+    public function getBranchId(): ?int
     {
-        return $this->fromBranch;
+        return $this->branchId;
     }
 
-    public function setFromBranch(string $fromBranch): self
+    public function setBranchId(string $branchId): self
     {
-        $this->fromBranch = $fromBranch;
+        $this->branchId = $branchId;
 
         return $this;
     }
 
-    public function getUuid(): ?string
+    public function getRoomID(): ?string
     {
-        return $this->uuid;
+        return $this->roomID;
     }
 
-    public function setUuid(?string $uuid): self
+    public function setRoomID(?string $roomID): self
     {
-        $this->uuid = $uuid;
+        $this->roomID = $roomID;
 
         return $this;
     }
@@ -281,6 +292,30 @@ class OrderEntity
     public function setCaptainID(string $captainID): self
     {
         $this->captainID = $captainID;
+
+        return $this;
+    }
+
+    public function getClientID(): ?string
+    {
+        return $this->clientID;
+    }
+
+    public function setClientID(string $clientID): self
+    {
+        $this->clientID = $clientID;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

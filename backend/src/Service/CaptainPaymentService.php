@@ -26,9 +26,9 @@ class CaptainPaymentService
         return $this->autoMapping->map(CaptainPaymentEntity::class, CaptainPaymentCreateResponse::class, $item);
     }
 
-    public function getpayments($captainId)
+    public function getCaptainPayments($captainId)
     {
-       return $this->captainPaymentManager->getpayments($captainId);
+       return $this->captainPaymentManager->getCaptainPayments($captainId);
     }
 
     public function getSumPayments($captainId)

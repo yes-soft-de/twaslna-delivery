@@ -39,7 +39,7 @@ class StoreOwnerSubscriptionManager
         return $subscriptionEntity;
     }
 
-    public function nxetSubscription(StoreOwnerSubscriptionNextRequest $request, $status)
+    public function storeOwnerSubscriptionRenew(StoreOwnerSubscriptionNextRequest $request, $status)
     { 
         // NOTE: change active to inactive 
         $request->setStatus('active');
@@ -62,16 +62,16 @@ class StoreOwnerSubscriptionManager
         return $subscriptionEntity;
     }
 
-    public function getSubscriptionForOwner($userId)
+    public function getStoreOwnerSubscriptionforowner($userId)
     {
-        return $this->storeOwnersubscribeRepository->getSubscriptionForOwner($userId);
+        return $this->storeOwnersubscribeRepository->getStoreOwnerSubscriptionforowner($userId);
     }
 
-    public function subscriptionUpdateState(StoreOwnerSubscriptionUpdateStateRequest $request)
+    public function storeOwnerSubscriptionUpdateState(StoreOwnerSubscriptionUpdateStateRequest $request)
     {
         $subscribeEntity = $this->storeOwnersubscribeRepository->find($request->getId());
         
-        $request->setEndDate($request->getEndDate());
+        $subscribeEntity->setEndDate(date_modify(new DateTime('now'),'+1 month'));
 
         if (!$subscribeEntity) {
             return null;
@@ -122,14 +122,14 @@ class StoreOwnerSubscriptionManager
         return $subscribeEntity;
     }
 
-    public function getSubscriptionsPending()
+    public function getStoreOwnerSubscriptionPending()
     {
-        return $this->storeOwnersubscribeRepository->getSubscriptionsPending();
+        return $this->storeOwnersubscribeRepository->getStoreOwnerSubscriptionPending();
     }
 
-    public function getSubscriptionById($id)
+    public function getStoreOwnerSubscriptionById($id)
     {
-        return $this->storeOwnersubscribeRepository->getSubscriptionById($id);
+        return $this->storeOwnersubscribeRepository->getStoreOwnerSubscriptionById($id);
     }
 
     public function subscriptionIsActive($ownerID, $subscribeId)
@@ -155,6 +155,16 @@ class StoreOwnerSubscriptionManager
     public function getRemainingOrders($ownerID, $id)
     {
         return $this->storeOwnersubscribeRepository->getRemainingOrders($ownerID, $id);
+    }
+
+    public function getCountCancelledOrders($subscribeId)
+    {
+        return $this->storeOwnersubscribeRepository->getCountCancelledOrders($subscribeId);
+    }
+
+    public function getCountConsumedOrders($subscribeId)
+    {
+        return $this->storeOwnersubscribeRepository->getCountConsumedOrders($subscribeId);
     }
 
     public function subscripeNewUsers($fromDate, $toDate)

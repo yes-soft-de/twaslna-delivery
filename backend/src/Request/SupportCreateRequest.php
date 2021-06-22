@@ -7,7 +7,7 @@ class SupportCreateRequest
     private $userId;
     private $orderId;
     private $reason;
-    private $uuid;
+    private $roomID;
       
     /**
     * @param mixed $userId
@@ -26,21 +26,21 @@ class SupportCreateRequest
     }
 
     /**
-     * Get the value of uuid
+     * Get the value of roomID
      */ 
-    public function getUuid()
+    public function getRoomID()
     {
-        return $this->uuid;
+        return $this->roomID;
     }
 
     /**
-     * Set the value of uuid
+     * Set the value of roomID
      *
      * @return  self
      */ 
-    public function setUuid($uuid)
+    public function setRoomID($roomID)
     {
-        $this->uuid = $uuid;
+        $this->roomID = $roomID;
 
         return $this;
     }

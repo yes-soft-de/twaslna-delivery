@@ -6,24 +6,24 @@ class OrderResponse
 {
     public $id;
     public $ownerID;
-    public $userName;
+    public $storeOwnerName;
     public $source = [];
-    public $destination = [];
-    public $date;
-    public $updateDate;
+    public $destination;
+    public $deliveryDate;
+    public $updatedAt;
     public $note;
     public $payment;
     public $recipientName;
     public $recipientPhone;
     public $state;
-    public $fromBranch;
+    public $branchId;
     public $location;
-    public $brancheName;
+    public $branchName;
     public $branchCity;
     public $acceptedOrder;
-    public $record;
+    public $log;
     public $completionTime;
-    public $uuid;
+    public $roomID;
     public $countOrdersInMonth;
     public $countOrdersInDay;
     public $owner;
@@ -33,4 +33,7 @@ class OrderResponse
     public $kilometer;
     public $rating;
     public $currentStage;
+    public $createdAt;
+    public $productID;
+    public $product;
 }

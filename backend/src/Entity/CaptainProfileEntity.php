@@ -25,7 +25,7 @@ class CaptainProfileEntity
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $captainName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -75,7 +75,7 @@ class CaptainProfileEntity
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $uuid;
+    private $roomID;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -129,14 +129,14 @@ class CaptainProfileEntity
         return $this;
     }
 
-    public function getName(): ?string
+    public function getCaptainName(): ?string
     {
-        return $this->name;
+        return $this->captainName;
     }
 
-    public function setName(string $name): self
+    public function setCaptainName(string $captainName): self
     {
-        $this->name = $name;
+        $this->captainName = $captainName;
 
         return $this;
     }
@@ -249,14 +249,14 @@ class CaptainProfileEntity
         return $this;
     }
 
-    public function getUuid(): ?string
+    public function getRoomID(): ?string
     {
-        return $this->uuid;
+        return $this->roomID;
     }
 
-    public function setUuid(?string $uuid): self
+    public function setRoomID(?string $roomID): self
     {
-        $this->uuid = $uuid;
+        $this->roomID = $roomID;
 
         return $this;
     }

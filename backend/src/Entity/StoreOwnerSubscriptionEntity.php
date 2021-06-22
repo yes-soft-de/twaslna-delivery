@@ -54,10 +54,6 @@ class StoreOwnerSubscriptionEntity
      */
     private $isFuture;
 
-    // /**
-    //  * @ORM\Column(type="boolean", nullable=true)
-    //  */
-    // private $pay;
 
 
     public function getId(): ?int

@@ -19,7 +19,7 @@ class AppointmentEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, AppointmentEntity::class);
     }
 
-    public function getAllAppointements()
+    public function getAppointments()
     {
         return $this->createQueryBuilder('DatingEntityRepository')
             ->select('DatingEntityRepository.id','DatingEntityRepository.userName', 'DatingEntityRepository.phone', 'DatingEntityRepository.isDone')

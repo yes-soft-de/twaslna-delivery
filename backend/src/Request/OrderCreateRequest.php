@@ -7,15 +7,18 @@ class OrderCreateRequest
     private $ownerID;
     private $source = [];
     private $destination = [];
-    private $date;
+    private $deliveryDate;
     private $note;
     private $payment;
     private $recipientName;
     private $recipientPhone;
     private $state;
-    private $fromBranch;
-    private $uuid;
+    private $branchId;
+    private $roomID;
     private $subscribeId;
+    private $clientID;
+    private $productID;
+    private $countProduct;
 
      /**
      * @param mixed $ownerID
@@ -32,6 +35,7 @@ class OrderCreateRequest
     {
         return $this->ownerID;
     }
+
     public function getState(): ?string
     {
         return $this->state;
@@ -44,14 +48,14 @@ class OrderCreateRequest
         return $this;
     }
 
-    public function getUuid(): ?string
+    public function getRoomID(): ?string
     {
-        return $this->uuid;
+        return $this->roomID;
     }
 
-    public function setUuid(?string $uuid): self
+    public function setRoomID(?string $roomID): self
     {
-        $this->uuid = $uuid;
+        $this->roomID = $roomID;
 
         return $this;
     }
@@ -64,6 +68,62 @@ class OrderCreateRequest
     public function setSubscribeId(?int $subscribeId): self
     {
         $this->subscribeId = $subscribeId;
+
+        return $this;
+    }
+
+     /**
+     * @param mixed $clientID
+     */
+    public function setClientID($clientID): void
+    {
+        $this->clientID = $clientID;
+    }
+
+     /**
+     * @return mixed
+     */
+    public function getClientID()
+    {
+        return $this->clientID;
+    }
+
+    /**
+     * Get the value of productID
+     */ 
+    public function getProductID()
+    {
+        return $this->productID;
+    }
+
+    /**
+     * Set the value of productID
+     *
+     * @return  self
+     */ 
+    public function setProductID($productID)
+    {
+        $this->productID = $productID;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of countProduct
+     */ 
+    public function getCountProduct()
+    {
+        return $this->countProduct;
+    }
+
+    /**
+     * Set the value of countProduct
+     *
+     * @return  self
+     */ 
+    public function setCountProduct($countProduct)
+    {
+        $this->countProduct = $countProduct;
 
         return $this;
     }

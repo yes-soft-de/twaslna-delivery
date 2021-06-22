@@ -6,9 +6,9 @@ use App\AutoMapping;
 use App\Entity\OrderEntity;
 use App\Repository\OrderEntityRepository;
 use App\Request\OrderCreateRequest;
-use App\Request\OrderUpdateRequest;
+use App\Request\OrderClientCreateRequest;
+use App\Request\OrderUpdateByClientRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
-use App\Request\DeleteRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class OrderManager
@@ -24,13 +24,13 @@ class OrderManager
         $this->orderEntityRepository = $orderEntityRepository;
     }
 
-    public function createOrder(OrderCreateRequest $request, $uuid, $subscribeId)
+    public function createOrder(OrderCreateRequest $request, $roomID, $subscribeId)
     {
-        $request->setUuid($uuid);
+        $request->setRoomID($roomID);
         $request->setSubscribeId($subscribeId);
         $item = $this->autoMapping->map(OrderCreateRequest::class, OrderEntity::class, $request);
 
-        $item->setDate($item->getDate());
+        $item->setDeliveryDate($item->getDeliveryDate());
         $item->setState('pending');
         
         $this->entityManager->persist($item);
@@ -60,6 +60,11 @@ class OrderManager
         return $this->orderEntityRepository->orderStatus($orderId);
     }
 
+    public function orderStatusByOrderId($orderId)
+    {
+        return $this->orderEntityRepository->orderStatusByOrderId($orderId);
+    }
+
     public function closestOrders()
     {
         return $this->orderEntityRepository->closestOrders();
@@ -70,23 +75,6 @@ class OrderManager
         return $this->orderEntityRepository->getPendingOrders();
     }
 
-    public function update(OrderUpdateRequest $request)
-    {
-        $item = $this->orderEntityRepository->find($request->getId());
-       
-
-        if ($item) {
-            $item = $this->autoMapping->mapToObject(OrderUpdateRequest::class, OrderEntity::class, $request, $item);
-
-            $item->setUpdateDate($item->getUpdateDate());
-            
-            $this->entityManager->flush();
-            $this->entityManager->clear();
-
-            return $item;
-        }
-    }
-
     public function orderUpdateStateByCaptain(OrderUpdateStateByCaptainRequest $request)
     {
         $item = $this->orderEntityRepository->find($request->getId());
@@ -94,39 +82,13 @@ class OrderManager
         if ($item) {
             $item = $this->autoMapping->mapToObject(OrderUpdateStateByCaptainRequest::class, OrderEntity::class, $request, $item);
 
-            $item->setUpdateDate($item->getUpdateDate());
+            $item->setUpdatedAt($item->getUpdatedAt());
             
             $this->entityManager->flush();
             $this->entityManager->clear();
 
             return $item;
         }
-    }
-//مراجعة للحذف
-    public function orderUpdateStateByCaptain2($orderID)
-    {
-        $item = $this->orderEntityRepository->find($orderID);
-       
-
-        if ($item) {
-            $item->setState('on way to pick order');
-            
-            $this->entityManager->flush();
-            $this->entityManager->clear();
-
-            return $item;
-        }
-    }
-
-    public function delete(DeleteRequest $request)
-    {
-        $entity = $this->orderEntityRepository->find($request->getId());
-        if ($entity) {
-        
-            $this->entityManager->remove($entity);
-            $this->entityManager->flush();
-        }
-        return $entity;
     }
 
     public function countAllOrders()
@@ -154,9 +116,9 @@ class OrderManager
         return $this->orderEntityRepository->ongoingOrders();
     }
     
-    public function getRecordsForCaptain($user)
+    public function getLogsForCaptain($user)
     {
-        return $this->orderEntityRepository->getRecordsForCaptain($user);
+        return $this->orderEntityRepository->getLogsForCaptain($user);
     }
 
     public function getOrders()
@@ -169,9 +131,9 @@ class OrderManager
         return $this->orderEntityRepository->countOrdersInMonthForOwner($fromDate, $toDate, $ownerId);
     }
 
-    public function getAllOrders($fromDate, $toDate, $ownerId)
+    public function getOrdersInMonthForOwner($fromDate, $toDate, $ownerId)
     {
-        return $this->orderEntityRepository->getAllOrders($fromDate, $toDate, $ownerId);
+        return $this->orderEntityRepository->getOrdersInMonthForOwner($fromDate, $toDate, $ownerId);
     }
 
     public function getTopOwners($fromDate, $toDate)
@@ -207,5 +169,55 @@ class OrderManager
     public function countCaptainOrdersInDay($captainID, $fromDate, $toDate)
     {
         return $this->orderEntityRepository->countCaptainOrdersInDay($captainID, $fromDate, $toDate);
+    }
+
+    public function createClientOrder(OrderClientCreateRequest $request, $roomID)
+    {
+        $request->setRoomID($roomID);
+        $item = $this->autoMapping->map(OrderClientCreateRequest::class, OrderEntity::class, $request);
+
+        $item->setDeliveryDate($item->getDeliveryDate());
+        $item->setState('pending');
+        
+        $this->entityManager->persist($item);
+        $this->entityManager->flush();
+        $this->entityManager->clear();
+
+        return $item;
+    }
+
+    public function orderUpdateByClient(OrderUpdateByClientRequest $request, $id)
+    {
+        $item = $this->orderEntityRepository->find($id);
+        $request->setRoomID($item->getRoomID());
+        if ($item) {
+            $item = $this->autoMapping->mapToObject(OrderUpdateByClientRequest::class, OrderEntity::class, $request, $item);
+           
+            $item->setDeliveryDate($request->getDeliveryDate());
+            
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+        }
+        return $item;
+    }
+
+    public function orderCancel($orderId)
+    {
+        $item = $this->orderEntityRepository->find($orderId);
+        $item->setState('cancelled');
+
+        if ($item) {
+            $item = $this->autoMapping->mapToObject(OrderEntity::class, OrderEntity::class, $item, $item);
+            
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+
+            return $item;
+        }
+    }
+
+    public function getOrdersByClientID($clientID)
+    {
+        return $this->orderEntityRepository->getOrdersByClientID($clientID);
     }
 }

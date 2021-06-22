@@ -33,21 +33,21 @@ class DeliveryCompanyPackageManager
         return $packageEntity;
     }
 
-    public function getPackages()
+    public function getCompanyPackagesActive()
     {
-        return $this->deliveryCompanyPackageRepository->getPackages();
+        return $this->deliveryCompanyPackageRepository->getCompanyPackagesActive();
     }
 
-    public function getAllpackages()
+    public function getCompanyPackages()
     {
-        return $this->deliveryCompanyPackageRepository->getAllpackages();
+        return $this->deliveryCompanyPackageRepository->getCompanyPackages();
     }
-    public function getpackagesById($id)
+    public function getCompanyPackageById($id)
     {
-        return $this->deliveryCompanyPackageRepository->getpackagesById($id);
+        return $this->deliveryCompanyPackageRepository->getCompanyPackageById($id);
     }
 
-    public function updatePackageState(DeliveryCompanyPackageUpdateStateRequest $request)
+    public function updateDeliveryCompanyPackageState(DeliveryCompanyPackageUpdateStateRequest $request)
     {
         $entity = $this->deliveryCompanyPackageRepository->find($request->getId());
 

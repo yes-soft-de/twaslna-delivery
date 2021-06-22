@@ -12,6 +12,8 @@ class SendNotificationRequest
 
     private $message;
 
+    private $orderID;
+
     /**
      * @return mixed
      */
@@ -60,5 +62,19 @@ class SendNotificationRequest
         $this->userIdTwo = $userIdTwo;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getOrderID()
+    {
+        return $this->orderID;
+    }
 
+    /**
+     * @param mixed $orderID
+     */
+    public function setOrderID($orderID): void
+    {
+        $this->orderID = $orderID;
+    }
 }

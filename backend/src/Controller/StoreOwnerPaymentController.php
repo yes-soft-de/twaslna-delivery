@@ -29,7 +29,7 @@ class StoreOwnerPaymentController extends BaseController
     }
     
     /**
-     * @Route("/payment", name="createpayment", methods={"POST"})
+     * @Route("/storeownerpayment", name="createpayment", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -53,7 +53,7 @@ class StoreOwnerPaymentController extends BaseController
     }
 
     /**
-     * @Route("/paymentsOfOwner/{ownerId}", name="paymentsOfOwner",methods={"GET"})
+     * @Route("/storeownerpayment/{ownerId}", name="paymentsOfOwner",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
@@ -64,9 +64,8 @@ class StoreOwnerPaymentController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
-
     /**
-      * @Route("/payments", name="GetpaymentsForOwner", methods={"GET"})
+      * @Route("/storeownerpayments", name="GetpaymentsForOwner", methods={"GET"})
       * @IsGranted("ROLE_OWNER")
       * @param Request $request
       * @return JsonResponse
@@ -76,7 +75,5 @@ class StoreOwnerPaymentController extends BaseController
           $result = $this->storeOwnerPaymentService->getpaymentsForOwner($this->getUserId());
   
           return $this->response($result, self::FETCH);
-      }
-
-     
+      }     
 }

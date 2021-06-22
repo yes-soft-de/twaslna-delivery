@@ -6,12 +6,13 @@ use App\AutoMapping;
 use App\Entity\UserEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\UserManager;
-use App\Request\UserProfileCreateRequest;
-use App\Request\UserProfileUpdateRequest;
-use App\Request\userProfileUpdateByAdminRequest;
+use App\Request\StoreOwnerProfileCreateRequest;
+use App\Request\StoreOwnerProfileUpdateRequest;
+use App\Request\StoreOwnerUpdateByAdminRequest;
 use App\Request\UserRegisterRequest;
-use App\Response\UserProfileCreateResponse;
-use App\Response\UserProfileResponse;
+use App\Response\StoreOwnerProfileCreateResponse;
+use App\Response\StoreOwnerProfileResponse;
+use App\Response\StoreOwnerByCategoryIdResponse;
 use App\Response\UserRegisterResponse;
 use App\Service\RoomIdHelperService;
 use App\Service\StoreOwnerBranchService;
@@ -37,9 +38,9 @@ class StoreOwnerProfileService
         $this->params = $params->get('upload_base_url') . '/';
     }
 
-    public function userRegister(UserRegisterRequest $request)
+    public function storeOwnerRegister(UserRegisterRequest $request)
     {
-        $userRegister = $this->userManager->userRegister($request);
+        $userRegister = $this->userManager->storeOwnerRegister($request);
         if ($userRegister instanceof UserEntity) {
             
         return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $userRegister);
@@ -53,47 +54,46 @@ class StoreOwnerProfileService
         }
     }
 
-    public function userProfileCreate(UserProfileCreateRequest $request)
+    public function createStoreOwnerProfile(StoreOwnerProfileCreateRequest $request)
     {
-        $uuid = $this->roomIdHelperService->roomIdGenerate();
-        $userProfile = $this->userManager->userProfileCreate($request, $uuid);
+        $roomID = $this->roomIdHelperService->roomIdGenerate();
+        $userProfile = $this->userManager->createStoreOwnerProfile($request, $roomID);
 
         if ($userProfile instanceof StoreOwnerProfileEntity) {
 
-            return $this->autoMapping->map(StoreOwnerProfileEntity::class,UserProfileCreateResponse::class, $userProfile);
+            return $this->autoMapping->map(StoreOwnerProfileEntity::class,StoreOwnerProfileCreateResponse::class, $userProfile);
        }
         if ($userProfile == true) {
           
-           return $this->getUserProfileByUserID($request->getUserID());
+           return $this->getStoreOwnerProfileByID($request->getStoreOwnerID());
        }
     }
 
-    public function userProfileUpdate(UserProfileUpdateRequest $request)
+    public function updateStoreOwnerProfile(StoreOwnerProfileUpdateRequest $request)
     {
-        $item = $this->userManager->userProfileUpdate($request);
+        $item = $this->userManager->updateStoreOwnerProfile($request);
         
-        return $this->autoMapping->map(StoreOwnerProfileEntity::class, UserProfileResponse::class, $item);
+        return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerProfileResponse::class, $item);
     }
 
-    public function userProfileUpdateByAdmin(userProfileUpdateByAdminRequest $request)
+    public function updateStoreOwnerByAdmin(StoreOwnerUpdateByAdminRequest $request)
     {
-        $item = $this->userManager->userProfileUpdateByAdmin($request);
+        $item = $this->userManager->updateStoreOwnerByAdmin($request);
 
-        return $this->autoMapping->map(StoreOwnerProfileEntity::class, UserProfileResponse::class, $item);
+        return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerProfileResponse::class, $item);
     }
 
-    public function getUserProfileByID($id)
+    public function getStoreOwnerProfileById($id)
     {
-        $item = $this->userManager->getUserProfileByID($id);
-      
-        $item['branches'] = $this->storeOwnerBranchService->branchesByUserId($item['userID']);
-        return $this->autoMapping->map('array', UserProfileCreateResponse::class, $item);
+        $item = $this->userManager->getStoreOwnerProfileByID($id);
+        $item['branches'] = $this->storeOwnerBranchService->branchesByUserId($item['storeOwnerID']);
+        return $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $item);
     }
 
-    public function getUserProfileByUserID($userID)
+    public function getStoreOwnerProfileByStoreOwnerID($storeOwnerID)
     {
-        $item = $this->userManager->getUserProfileByUserID($userID);
-        $item['branches'] = $this->storeOwnerBranchService->branchesByUserId($userID);
+        $item = $this->userManager->getStoreOwnerProfileByStoreOwnerID($storeOwnerID);
+        $item['branches'] = $this->storeOwnerBranchService->branchesByUserId($storeOwnerID);
 
         try {
             if ($item['image'])
@@ -107,40 +107,40 @@ class StoreOwnerProfileService
 
         }
         
-        return $this->autoMapping->map('array', UserProfileCreateResponse::class, $item);
+        return $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $item);
     }
-
-//هذا غير مستخدم ولكن يجب أن تتأكد
-    // public function getCaptainsState($state)
-    // {
-    //     $response = [];
-    //     $items = $this->userManager->getCaptainsState($state);
-
-    //     foreach( $items as  $item ) {
-           
-    //         $item['totalBounce'] = $this->totalBounceCaptain($item['id'], 'admin');
-    //         $item['imageURL'] = $item['image'];
-    //         $item['image'] = $this->params.$item['image'];
-    //         $item['drivingLicenceURL'] = $item['drivingLicence'];
-    //         $item['drivingLicence'] = $this->params.$item['drivingLicence'];
-    //         $item['baseURL'] = $this->params;
-
-    //         $item['countOrdersDeliverd'] = $this->acceptedOrderService->countAcceptedOrder($item['captainID']);
-           
-    //         $item['rating'] = $this->ratingService->getRatingByCaptainID($item['captainID']);
-            
-    //         $response[]  = $this->autoMapping->map('array', CaptainProfileCreateResponse::class, $item);
-    //         }
-    //     return $response;
-    // }
 
     public function getAllStoreOwners()
     {
         $response = [];
         $owners = $this->userManager->getAllStoreOwners();
         foreach ($owners as $owner) {
-            $response[] = $this->autoMapping->map('array', UserProfileCreateResponse::class, $owner);
+            $response[] = $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $owner);
             }        
         return $response;
+    }
+
+    public function getStoreOwnerByCategoryId($storeCategoryId):array
+    {
+        $response = [];
+        $items = $this->userManager->getStoreOwnerByCategoryId($storeCategoryId);
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', StoreOwnerByCategoryIdResponse::class, $item);
+            }        
+        return $response;
+    }
+
+    public function createStoreOwnerProfileByAdmin(StoreOwnerProfileCreateRequest $request)
+    {
+        $userProfile = $this->userManager->createStoreOwnerProfileByAdmin($request);
+
+        if ($userProfile instanceof StoreOwnerProfileEntity) {
+
+            return $this->autoMapping->map(StoreOwnerProfileEntity::class,StoreOwnerProfileCreateResponse::class, $userProfile);
+       }
+        if ($userProfile == true) {
+          
+           return $this->getStoreOwnerProfileByID($request->getStoreOwnerID());
+       }
     }
 }

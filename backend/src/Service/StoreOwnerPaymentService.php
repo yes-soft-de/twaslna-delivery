@@ -9,6 +9,7 @@ use App\Request\StoreOwnerPaymentCreateRequest;
 use App\Response\StoreOwnerCreateResponse;
 use App\Service\StoreOwnerSubscriptionService;
 use App\Service\DateFactoryService;
+
 class StoreOwnerPaymentService
 {
     private $autoMapping;

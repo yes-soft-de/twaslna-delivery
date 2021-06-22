@@ -24,7 +24,7 @@ class AllUsersResponse
 
     public $source;
 
-    public $fromBranch;
+    public $branchId;
 
     public $payment;
 
@@ -32,7 +32,7 @@ class AllUsersResponse
 
     public $location;
 
-    public $brancheName;
+    public $branchName;
 
     public $branchCity;
 

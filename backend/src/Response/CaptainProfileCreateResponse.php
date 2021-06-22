@@ -8,7 +8,7 @@ class CaptainProfileCreateResponse
 
     public $captainID;
 
-    public $name;
+    public $captainName;
 
     public $location;
 
@@ -34,7 +34,7 @@ class CaptainProfileCreateResponse
 
     public $totalBounce;
 
-    public $uuid;
+    public $roomID;
 
     public $image;
     

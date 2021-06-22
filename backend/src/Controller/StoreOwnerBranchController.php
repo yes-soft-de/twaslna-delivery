@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 use App\AutoMapping;
-use App\Request\BranchesCreateRequest;
-use App\Request\BranchesUpdateRequest;
+use App\Request\StoreOwnerBranchCreateRequest;
+use App\Request\StoreOwnerBranchUpdateRequest;
 use App\Request\BranchesDeleteRequest;
 use App\Service\StoreOwnerBranchService;
 use stdClass;
@@ -31,7 +31,7 @@ class StoreOwnerBranchController extends BaseController
     }
     
     /**
-     * @Route("branches", name="createBranches", methods={"POST"})
+     * @Route("storeownerbranch", name="createBranches", methods={"POST"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse
@@ -40,7 +40,7 @@ class StoreOwnerBranchController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, BranchesCreateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, StoreOwnerBranchCreateRequest::class, (object)$data);
 
         $request->setOwnerID($this->getUserId());
 
@@ -58,7 +58,7 @@ class StoreOwnerBranchController extends BaseController
     }
 
     /**
-     * @Route("branches", name="updateBranches", methods={"PUT"})
+     * @Route("storeownerbranch", name="updateBranches", methods={"PUT"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse
@@ -67,7 +67,7 @@ class StoreOwnerBranchController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(\stdClass::class, BranchesUpdateRequest::class, (object) $data);
+        $request = $this->autoMapping->map(\stdClass::class, StoreOwnerBranchUpdateRequest::class, (object) $data);
 
         $violations = $this->validator->validate($request);
 
@@ -83,7 +83,7 @@ class StoreOwnerBranchController extends BaseController
     }
 
     /**
-     * @Route("branches", name="getBranchesByUserId", methods={"GET"})
+     * @Route("storeownerbranchs", name="getBranchesByUserId", methods={"GET"})
      * @IsGranted("ROLE_OWNER")
      * @return JsonResponse
      */
@@ -95,7 +95,7 @@ class StoreOwnerBranchController extends BaseController
     }
 
     /**
-     * @Route("branche", name="updateActiveBranche", methods={"PUT"})
+     * @Route("storeownerbranchupdatestate", name="updateActiveBranche", methods={"PUT"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse

@@ -20,12 +20,12 @@ class StoreOwnerProfileEntity
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $userID;
+    private $storeOwnerID;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $userName;
+    private $storeOwnerName;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -55,7 +55,7 @@ class StoreOwnerProfileEntity
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $uuid;
+    private $roomID;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -63,30 +63,35 @@ class StoreOwnerProfileEntity
     private $city;
 
     /**
+     * @ORM\Column(type="integer", length=255, nullable=true)
+     */
+    private $storeCategoryId;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $phone;
 
-    public function getUserID(): ?string
+    public function getStoreOwnerID(): ?string
     {
-        return $this->userID;
+        return $this->storeOwnerID;
     }
 
-    public function setUserID(string $userID): self
+    public function setStoreOwnerID(string $storeOwnerID): self
     {
-        $this->userID = $userID;
+        $this->storeOwnerID = $storeOwnerID;
 
         return $this;
     }
 
-    public function getUserName(): ?string
+    public function getStoreOwnerName(): ?string
     {
-        return $this->userName;
+        return $this->storeOwnerName;
     }
 
-    public function setUserName(string $userName): self
+    public function setStoreOwnerName(string $storeOwnerName): self
     {
-        $this->userName = $userName;
+        $this->storeOwnerName = $storeOwnerName;
 
         return $this;
     }
@@ -151,14 +156,14 @@ class StoreOwnerProfileEntity
         return $this;
     }
 
-    public function getUuid(): ?string
+    public function getRoomID(): ?string
     {
-        return $this->uuid;
+        return $this->roomID;
     }
 
-    public function setUuid(?string $uuid): self
+    public function setRoomID(?string $roomID): self
     {
-        $this->uuid = $uuid;
+        $this->roomID = $roomID;
 
         return $this;
     }
@@ -183,6 +188,18 @@ class StoreOwnerProfileEntity
     public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getStoreCategoryId(): ?int
+    {
+        return $this->storeCategoryId;
+    }
+
+    public function setStoreCategoryId(?int $storeCategoryId): self
+    {
+        $this->storeCategoryId = $storeCategoryId;
 
         return $this;
     }

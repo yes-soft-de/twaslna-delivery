@@ -32,9 +32,9 @@ class CaptainPaymentManager
         return $entity;
     }
 
-    public function getpayments($captainId)
+    public function getCaptainPayments($captainId)
     {
-        return $this->captainPaymentEntityRepository->getpayments($captainId);
+        return $this->captainPaymentEntityRepository->getCaptainPayments($captainId);
     }
 
     public function getSumPayments($captainId)
