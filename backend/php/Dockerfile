@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y zlib1g-dev g++ git libicu-dev zip libzi
     && pecl install grpc \
     && docker-php-ext-enable grpc
 
-WORKDIR /var/www/twaslna
+WORKDIR /var/www/twaslna/backend
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
