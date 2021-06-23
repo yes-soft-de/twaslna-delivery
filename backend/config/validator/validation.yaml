@@ -49,7 +49,7 @@ App\Request\SubscriptionCreateRequest:
     packageID:
       - NotBlank: ~
 
-App\Request\SubscriptionUpdateRequest:
+App\Request\StoreOwnerSubscriptionUpdateRequest:
   properties:
     packageID:
       - NotBlank: ~
@@ -113,7 +113,7 @@ App\Request\userProfileUpdateByAdminRequest:
 
 App\Request\CaptainProfileUpdateRequest:
   properties:
-    name:
+    captainName:
       - NotBlank: ~
     image:
       - NotBlank: ~

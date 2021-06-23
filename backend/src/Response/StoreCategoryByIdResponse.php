@@ -2,7 +2,7 @@
 
 namespace App\Response;
 
-class StoreCategoryResponse
+class StoreCategoryByIdResponse
 {
     public $storeCategoryName;
     public $image;

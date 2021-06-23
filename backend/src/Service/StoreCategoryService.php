@@ -7,7 +7,7 @@ use App\Entity\StoreCategoryEntity;
 use App\Manager\StoreCategoryManager;
 use App\Request\StoreCategoryCreateRequest;
 use App\Response\StoreCategoryCreateResponse;
-use App\Response\StoreCategoryResponse;
+use App\Response\StoreCategoryByIdResponse;
 
 class StoreCategoryService
 {
@@ -47,7 +47,7 @@ class StoreCategoryService
     public function getStoreCategory($id)
     {
        $item = $this->storeCategoryManager->getStoreCategory($id);
-       return $this->autoMapping->map(StoreCategoryEntity::class, StoreCategoryResponse::class, $item);  
+       return $this->autoMapping->map(StoreCategoryEntity::class, StoreCategoryByIdResponse::class, $item);  
        
     }
 }
