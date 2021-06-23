@@ -34,6 +34,10 @@ class CaptainProfileCreateRequest
     
     private $stcPay;
 
+    private $mechanicLicense;
+
+    private $identity;
+
     /**
      * Get the value of captainID
      */
@@ -302,6 +306,45 @@ class CaptainProfileCreateRequest
     public function setStcPay($stcPay)
     {
         $this->stcPay = $stcPay;
+
+        return $this;
+    }
+     /**
+     * Get the value of mechanicLicense
+     */ 
+    public function getMechanicLicense()
+    {
+        return $this->mechanicLicense;
+    }
+
+    /**
+     * Set the value of mechanicLicense
+     *
+     * @return  self
+     */ 
+    public function setMechanicLicense($mechanicLicense)
+    {
+        $this->mechanicLicense = $mechanicLicense;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of identity
+     */ 
+    public function getIdentity()
+    {
+        return $this->identity;
+    }
+
+    /**
+     * Set the value of identity
+     *
+     * @return  self
+     */ 
+    public function setIdentity($identity)
+    {
+        $this->identity = $identity;
 
         return $this;
     }
