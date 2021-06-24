@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Service\OrderService;
 use App\Request\OrderCreateRequest;
 use App\Request\OrderClientCreateRequest ;
+use App\Request\OrderClientSendCreateRequest ;
 use App\Request\OrderUpdateStateByCaptainRequest;
 use App\Request\OrderUpdateByClientRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -121,7 +122,7 @@ class OrderController extends BaseController
     }
     
     //To accept the order AND change state
-    //state:on way to pick order or in store or picked or ongoing or cash or deliverd
+    //state:on way to pick order or in store or picked or ongoing or cash or delivered
     /**
      * @Route("/orderUpdateState", name="orderUpdateStateByCaptain", methods={"PUT"})
      * @IsGranted("ROLE_CAPTAIN")
@@ -212,10 +213,23 @@ class OrderController extends BaseController
       
         $request = $this->autoMapping->map(stdClass::class, OrderClientCreateRequest::class, (object)$data);
         $request->setClientID($this->getUserId());
-      
         $request->setProducts($data['products']);
-  
         $response = $this->orderService->createClientOrder($request);
+
+        return $this->response($response, self::CREATE);
+    }
+
+     /**
+     * @Route("clientsendorder", name="createClientSendOrder", methods={"POST"})
+     * @IsGranted("ROLE_CLIENT")
+     */
+    public function createClientSendOrder(Request $request)
+    {  
+        $data = json_decode($request->getContent(), true);
+      
+        $request = $this->autoMapping->map(stdClass::class, OrderClientSendCreateRequest::class, (object)$data);
+        $request->setClientID($this->getUserId());
+        $response = $this->orderService->createClientSendOrder($request);
 
         return $this->response($response, self::CREATE);
     }

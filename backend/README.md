@@ -57,6 +57,12 @@ ROLE_CLIENT
 /clientorder
 methods: POST
 ```
+### Create Order Send It About Me By Client
+```
+ROLE_CLIENT
+/clientsendorder
+methods: POST
+```
 ### order Update
 ```
 /orderUpdatebyclient
@@ -77,6 +83,14 @@ methods: GET
 /ordercancel/{orderNumber}
 methods: PUT
 ```
+### Get Pending Orders For Captain
+ROLE_CAPTAIN
+```
+/closestOrders
+methods: GET
+```
+
+
 ### Store Category
 ### Create Store Category
 ```

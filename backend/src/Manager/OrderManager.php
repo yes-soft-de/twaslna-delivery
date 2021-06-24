@@ -7,6 +7,7 @@ use App\Entity\OrderEntity;
 use App\Repository\OrderEntityRepository;
 use App\Request\OrderCreateRequest;
 use App\Request\OrderClientCreateRequest;
+use App\Request\OrderClientSendCreateRequest;
 use App\Request\OrderUpdateByClientRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -175,6 +176,21 @@ class OrderManager
     {
         $request->setRoomID($roomID);
         $item = $this->autoMapping->map(OrderClientCreateRequest::class, OrderEntity::class, $request);
+
+        $item->setDeliveryDate($item->getDeliveryDate());
+        $item->setState('pending');
+        
+        $this->entityManager->persist($item);
+        $this->entityManager->flush();
+        $this->entityManager->clear();
+
+        return $item;
+    }
+
+    public function createClientSendOrder(OrderClientSendCreateRequest $request, $roomID)
+    {
+        $request->setRoomID($roomID);
+        $item = $this->autoMapping->map(OrderClientSendCreateRequest::class, OrderEntity::class, $request);
 
         $item->setDeliveryDate($item->getDeliveryDate());
         $item->setState('pending');
