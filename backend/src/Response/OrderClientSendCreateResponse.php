@@ -12,5 +12,6 @@ class OrderClientSendCreateResponse
     public $recipientPhone;
     public $state;
     public $roomID;
+    public $detail;
     public $orderDetail=[];
 }

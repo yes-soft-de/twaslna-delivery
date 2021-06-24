@@ -14,6 +14,7 @@ class OrderClientSendCreateRequest
     private $state;
     private $roomID;
     private $clientID;
+    private $detail;
 
      /**
      * @param mixed $ownerID

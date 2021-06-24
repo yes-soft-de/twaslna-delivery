@@ -5,6 +5,8 @@ namespace App\Request;
 class OrderUpdateStateByCaptainRequest
 {
     private $id;
+    
+    private $orderNumber;
 
     private $state;
 
@@ -76,6 +78,26 @@ class OrderUpdateStateByCaptainRequest
     public function setCaptainID($captainID)
     {
         $this->captainID = $captainID;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of orderNumber
+     */ 
+    public function getOrderNumber()
+    {
+        return $this->orderNumber;
+    }
+
+    /**
+     * Set the value of orderNumber
+     *
+     * @return  self
+     */ 
+    public function setOrderNumber($orderNumber)
+    {
+        $this->orderNumber = $orderNumber;
 
         return $this;
     }

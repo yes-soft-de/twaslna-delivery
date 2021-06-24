@@ -129,6 +129,25 @@ class OrderController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
+    // public function orderUpdateStateByCaptain(Request $request)
+    // {
+    //     $data = json_decode($request->getContent(), true);
+
+    //     $request = $this->autoMapping->map(stdClass::class, OrderUpdateStateByCaptainRequest::class, (object) $data);
+    //     $request->setCaptainID($this->getUserId());
+    //     $response = $this->orderService->orderUpdateStateByCaptain($request);
+      
+    //     return $this->response($response, self::UPDATE);
+    // }
+    
+    //To accept the order AND change state
+    //state:on way to pick order or in store or picked or ongoing or cash or delivered
+    /**
+     * @Route("/orderUpdateState", name="orderUpdateState", methods={"PUT"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function orderUpdateStateByCaptain(Request $request)
     {
         $data = json_decode($request->getContent(), true);

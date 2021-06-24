@@ -4,8 +4,8 @@ namespace App\Response;
 
 class OrderUpdateStateResponse
 {
-    public $id;
-    public $source = [];
+    public $orderNumber;
+    public $source;
     public $destination;
     public $deliveryDate;
     public $updatedAt;
@@ -14,10 +14,7 @@ class OrderUpdateStateResponse
     public $recipientName;
     public $recipientPhone;
     public $state;
-    public $branchId;
     public $roomID;
     public $owner;
     public $createdAt;
-    public $productID;
-    public $product;
 }

@@ -215,6 +215,10 @@ class OrderService
             foreach ($orders as $order) {
                 if ($order['ownerID'] == true) {               
                     $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileByStoreOwnerID($order['ownerID']);
+                $order['storeOwnerID']=$order['storeOwner']->storeOwnerID;
+                $order['storeOwnerName']=$order['storeOwner']->storeOwnerName;
+                $order['image']=$order['storeOwner']->image;
+                $order['branches']=$order['storeOwner']->branches;
                 }
                 $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
             }
@@ -244,20 +248,43 @@ class OrderService
         return $response;
     }
 
+    // public function orderUpdateStateByCaptain(OrderUpdateStateByCaptainRequest $request)
+    // {
+    //     $item = $this->orderManager->orderUpdateStateByCaptain($request);
+    //     if($item) {        
+    //         $this->orderlogService->createOrderLog($item->getId(), $request->getState(), $request->getcaptainID());
+    //         $branchId = $this->storeOwnerBranchService->getBrancheById($item->getBranchId());
+            
+    //         $product = $this->productService->getProductById($item->getProductID());
+    //     }
+    //     $response = $this->autoMapping->map(OrderEntity::class, OrderUpdateStateResponse::class, $item);
+    //     if($item) {
+    //         $response->product =  $product;
+    //         $response->branchId =  $branchId;
+    //     }
+
+        //start-----> notification
+        // try {
+        // $notificationRequest = new SendNotificationRequest();
+        // $notificationRequest->setUserIdOne($item->getOwnerID());
+        // $notificationRequest->setOrderID($item->getId());
+        // $this->notificationService->notificationOrderUpdate($notificationRequest);
+        //notification <------end
+        // }
+        // catch (\Exception $e)
+        // {
+
+        // }
+    //     return $response;
+    // }
+    
     public function orderUpdateStateByCaptain(OrderUpdateStateByCaptainRequest $request)
     {
+        $orderDetails = $this->orderDetailService->getOrderIdByOrderNumber($request->getOrderNumber());
+        $request->setId($orderDetails[0]->orderID);
         $item = $this->orderManager->orderUpdateStateByCaptain($request);
-        if($item) {        
-            $this->orderlogService->createOrderLog($item->getId(), $request->getState(), $request->getcaptainID());
-            $branchId = $this->storeOwnerBranchService->getBrancheById($item->getBranchId());
-            
-            $product = $this->productService->getProductById($item->getProductID());
-        }
+        
         $response = $this->autoMapping->map(OrderEntity::class, OrderUpdateStateResponse::class, $item);
-        if($item) {
-            $response->product =  $product;
-            $response->branchId =  $branchId;
-        }
 
         //start-----> notification
         // try {
@@ -481,13 +508,15 @@ class OrderService
         return $response;
     }
 
-    public function getOrderStatusByOrderNumber($orderNumber) {
+    public function getOrderStatusByOrderNumber($orderNumber) 
+    {
+        $response = [];
         $orderDetails = $this->orderDetailService->getOrderIdByOrderNumber($orderNumber);
         $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
-     
-        $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($orderDetails[0]->storeOwnerProfileID);
-
-        $response['orderDetails'] = $orderDetails;
+        if ($order[0]['ownerID']) {
+            $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($orderDetails[0]->storeOwnerProfileID);
+            $response['orderDetails'] = $orderDetails;
+        }
         $response['order'] = $order;
 
         return $response;
