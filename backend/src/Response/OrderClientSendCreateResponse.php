@@ -2,19 +2,16 @@
 
 namespace App\Response;
 
-class OrderUpdateStateResponse
+class OrderClientSendCreateResponse
 {
-    public $orderNumber;
+    public $id;
     public $source;
     public $destination;
     public $deliveryDate;
-    public $updatedAt;
-    public $note;
-    public $payment;
     public $recipientName;
     public $recipientPhone;
     public $state;
     public $roomID;
-    public $owner;
-    public $createdAt;
+    public $detail;
+    public $orderDetail=[];
 }

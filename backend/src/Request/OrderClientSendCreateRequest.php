@@ -2,17 +2,19 @@
 
 namespace App\Request;
 
-class OrderClientCreateRequest
+class OrderClientSendCreateRequest
 {
-    private $ownerID;
+    private $source;
     private $destination;
     private $deliveryDate;
     private $note;
     private $payment;
+    private $recipientName;
+    private $recipientPhone;
     private $state;
     private $roomID;
     private $clientID;
-    private $products;
+    private $detail;
 
      /**
      * @param mixed $ownerID

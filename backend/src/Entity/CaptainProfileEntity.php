@@ -112,6 +112,17 @@ class CaptainProfileEntity
      */
     private $stcPay;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $mechanicLicense;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $identity;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -341,6 +352,31 @@ class CaptainProfileEntity
     public function setStcPay(?string $stcPay): self
     {
         $this->stcPay = $stcPay;
+
+        return $this;
+    }
+
+    
+    public function getMechanicLicense(): ?string
+    {
+        return $this->mechanicLicense;
+    }
+
+    public function setMechanicLicense(?string $mechanicLicense): self
+    {
+        $this->mechanicLicense = $mechanicLicense;
+
+        return $this;
+    }
+    
+    public function getIdentity(): ?string
+    {
+        return $this->identity;
+    }
+
+    public function setIdentity(?string $identity): self
+    {
+        $this->identity = $identity;
 
         return $this;
     }

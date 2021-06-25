@@ -55,4 +55,8 @@ class CaptainProfileCreateResponse
     public $vacationStatus;
 
     public $newMessageStatus;
+
+    public $mechanicLicense;
+
+    public $identity;
 }
