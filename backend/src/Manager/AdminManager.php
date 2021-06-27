@@ -37,7 +37,7 @@ class AdminManager
         $createAdmin->setCreateDate(new \DateTime('now'));
 
         if ($request->getRoles() == null) {
-            $request->setRoles(['user']);
+            $request->setRoles(['ROLE_ADMIN']);
         }
         $createAdmin->setRoles($request->getRoles());
 
