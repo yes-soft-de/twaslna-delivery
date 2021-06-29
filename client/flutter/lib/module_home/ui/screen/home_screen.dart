@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/module_home/state_manager/home_state_manager.dart';
 import 'package:twaslna_delivery/module_home/ui/state/home_loaded_state.dart';
+import 'package:twaslna_delivery/module_home/ui/state/home_loading_state.dart';
 import 'package:twaslna_delivery/module_home/ui/state/home_state.dart';
 
 @injectable
@@ -23,11 +24,18 @@ class HomeScreenState extends State<HomeScreen> {
       setState(() {});
     }
   }
-
   @override
   void initState() {
     super.initState();
-    currentState = HomeLoadedState(this);
+    currentState = HomeLoadingState(this);
+    widget._homeStateManager.getHomeData(this);
+    widget._homeStateManager.stateStream.listen((event) {
+      currentState = event ;
+      if (mounted) {
+        setState(() {
+        });
+      }
+    });
   }
   @override
   Widget build(BuildContext context) {

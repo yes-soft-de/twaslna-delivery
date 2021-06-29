@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twaslna_delivery/module_store_list/store_routes.dart';
+import 'package:twaslna_delivery/module_stores/store_routes.dart';
 
 class ProductCard extends StatelessWidget {
   final String title;
@@ -45,10 +45,10 @@ class ProductCard extends StatelessWidget {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            Colors.black.withOpacity(0.0),
+                            Colors.black.withOpacity(0.00),
                             Colors.black.withOpacity(0.05),
-                            Colors.black.withOpacity(0.1),
-                            Colors.black.withOpacity(0.2),
+                            Colors.black.withOpacity(0.3),
+                            Colors.black.withOpacity(0.3),
                             Colors.black.withOpacity(0.3),
                           ]),
                     ),

@@ -5,13 +5,18 @@ import 'package:twaslna_delivery/module_home/ui/state/home_state.dart';
 import 'package:twaslna_delivery/module_home/ui/widget/home_app_bar.dart';
 import 'package:twaslna_delivery/module_home/ui/widget/product_card.dart';
 import 'package:twaslna_delivery/module_home/ui/widget/show_all.dart';
+import 'package:twaslna_delivery/module_stores/store_routes.dart';
 import 'package:twaslna_delivery/utils/customIcon/custom_icons.dart';
+import 'package:twaslna_delivery/utils/images/images.dart';
+import 'package:twaslna_delivery/utils/models/product.dart';
+import 'package:twaslna_delivery/utils/models/store_category.dart';
 import 'package:twaslna_delivery/utils/text_style/text_style.dart';
 
 class HomeLoadedState extends HomeState {
   HomeScreenState screenState;
-
-  HomeLoadedState(this.screenState) : super(screenState);
+  List<ProductModel> topProducts;
+  List<StoreCategoryModel> categories;
+  HomeLoadedState(this.screenState,this.topProducts,this.categories) : super(screenState);
 
   @override
   Widget getUI(BuildContext context) {
@@ -28,8 +33,8 @@ class HomeLoadedState extends HomeState {
             scrollDirection: Axis.horizontal,
             physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             children: [
-              ProductCard(title:S.of(context).deliverForMe, image:'assets/images/logo.png'),
-              ProductCard(title: S.of(context).externalOrder, image:'assets/images/logo.png'),
+              ProductCard(title:S.of(context).deliverForMe, image:ImageAsset.SEND_ON_ME),
+              ProductCard(title: S.of(context).externalOrder, image:ImageAsset.LOGO),
             ],
           ),
         ),
@@ -39,13 +44,10 @@ class HomeLoadedState extends HomeState {
         ),
         SizedBox(
           height: 125,
-          child: ListView.builder(
+          child: ListView(
             physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             scrollDirection: Axis.horizontal,
-            itemCount: 10,
-            itemBuilder: (_, index) {
-              return ProductCard(title: 'عنوان',image:'https://www.erdeundleben.com/wp-content/uploads/2021/02/folgendes-macht-unser-food-personal-wenn-es-fast-zu-mude-ist-um-zu-kochen-0-Yywyr8ju.jpg',);
-            },
+            children:_getTopProducts(topProducts),
           ),
         ),
         ListTile(leading: Icon(CustomIcon.top_store,color: Theme.of(context).primaryColor,size: 18,),
@@ -81,22 +83,41 @@ class HomeLoadedState extends HomeState {
         ListTile(leading: Icon(Icons.sort,color: Theme.of(context).primaryColor,),
           title: Text(S.of(context).categories,style:StyleText.categoryStyle,),
         ),
-        GridView.builder(
+        GridView(
           physics: ScrollPhysics(),
           shrinkWrap: true,
-          itemCount: 8,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               mainAxisSpacing: 8.0,
               childAspectRatio: (MediaQuery.of(context).size.width / 2) / 135),
-          itemBuilder: (_, index) {
-            return ProductCard(title:'متجر ${index+1}', image: 'https://mk0kaleelao979sb1ktf.kinstacdn.com/wp-content/uploads/2020/03/Supermarket-conversation-in-Arabic.jpg');
-          },
+          children: getCategories(categories),
         ),
         SizedBox(
           height: 75,
         ),
       ],
     );
+  }
+
+  List<Widget> _getTopProducts(List<ProductModel> topProducts) {
+    if (topProducts.isEmpty) return [];
+    List<ProductCard> top = [];
+    topProducts.forEach((element) {
+      top.add(ProductCard(title:element.title,image: element.image,));
+    });
+    return top;
+  }
+
+  List<Widget> getCategories(List<StoreCategoryModel> categories) {
+    if (categories.isEmpty) return [];
+    List<ProductCard> cats = [];
+    categories.forEach((element) {
+      cats.add(ProductCard(title:element.storeCategoryName,image: element.image,
+      onTap: () {
+        Navigator.of(screenState.context).pushNamed(StoreRoutes.STORE_LIST_SCREEN,arguments:element);
+      },
+      ));
+    });
+    return cats;
   }
 }
