@@ -240,5 +240,17 @@
   "cost": "cost",
   "highestRate": "Highest Rate",
   "sortByEarlier": "By Earlier",
-  "searchForOrder": "search for order by order number"
+  "searchForOrder": "search for order by order number",
+  "account": "Account",
+  "personalData": "Personal Data",
+  "orderLog": "Orders Log",
+  "about": "About",
+  "socialMedia": "Social Media",
+  "searchForNotifications": "Search for a notification",
+  "category": "category",
+  "product": "product",
+  "networkError": "There is problem with your problem connection , please try again",
+  "searchF": "Search for"
+
+
 }

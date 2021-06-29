@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/abstracts/module/yes_module.dart';
 import 'package:twaslna_delivery/di/di_config.dart';
+import 'package:twaslna_delivery/module_account/account_module.dart';
+import 'package:twaslna_delivery/module_account/account_routes.dart';
 import 'package:twaslna_delivery/module_auth/authoriazation_module.dart';
 import 'package:twaslna_delivery/module_chat/chat_module.dart';
 import 'package:twaslna_delivery/module_home/home_module.dart';
@@ -10,6 +12,7 @@ import 'package:twaslna_delivery/module_main/main_module.dart';
 import 'package:twaslna_delivery/module_notifications/service/fire_notification_service/fire_notification_service.dart';
 import 'package:twaslna_delivery/module_settings/settings_module.dart';
 import 'package:twaslna_delivery/module_splash/splash_module.dart';
+import 'package:twaslna_delivery/module_stores/store_module.dart';
 import 'package:twaslna_delivery/module_theme/service/theme_service/theme_service.dart';
 import 'package:twaslna_delivery/utils/logger/logger.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -20,11 +23,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'generated/l10n.dart';
+import 'module_my_notifications/my_notifications_module.dart';
 import 'module_notifications/service/local_notification_service/local_notification_service.dart';
 import 'module_splash/splash_routes.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import 'module_store_list/store_module.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,6 +69,8 @@ class MyApp extends StatefulWidget {
   final HomeModule _homeModule;
   final MainModule _mainModule;
   final StoreModule _storeModule;
+  final MyNotificationsModule myNotificationsModule;
+  final AccountModule _accountModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -77,7 +82,9 @@ class MyApp extends StatefulWidget {
       this._settingsModule,
       this._homeModule,
       this._mainModule,
-      this._storeModule
+      this._storeModule,
+      this.myNotificationsModule,
+      this._accountModule
       );
 
   @override

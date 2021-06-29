@@ -24,8 +24,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "BestStores": MessageLookupByLibrary.simpleMessage("Best Stores"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("distance in KM"),
+        "about": MessageLookupByLibrary.simpleMessage("About"),
         "accept": MessageLookupByLibrary.simpleMessage("Accept"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("Accept Order"),
+        "account": MessageLookupByLibrary.simpleMessage("Account"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("Account Created"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("Account Number"),
@@ -71,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "car": MessageLookupByLibrary.simpleMessage("Car"),
         "cash": MessageLookupByLibrary.simpleMessage("Cash"),
         "categories": MessageLookupByLibrary.simpleMessage("Categories"),
+        "category": MessageLookupByLibrary.simpleMessage("category"),
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Change Language"),
         "chatRoom": MessageLookupByLibrary.simpleMessage("Chat Room"),
@@ -186,6 +189,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Name is required"),
         "nearbyOrders": MessageLookupByLibrary.simpleMessage("Nearby Orders"),
         "nearbyStore": MessageLookupByLibrary.simpleMessage("Nearby Store"),
+        "networkError": MessageLookupByLibrary.simpleMessage(
+            "There is problem with your problem connection , please try again"),
         "newName": MessageLookupByLibrary.simpleMessage("New name"),
         "newOrder": MessageLookupByLibrary.simpleMessage("New Order"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
@@ -212,6 +217,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order is finished"),
         "orderIsInUndefinedState":
             MessageLookupByLibrary.simpleMessage("Order is in undefined State"),
+        "orderLog": MessageLookupByLibrary.simpleMessage("Orders Log"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("order id"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("order status"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
@@ -235,6 +241,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentHistory":
             MessageLookupByLibrary.simpleMessage("Payment History"),
         "paymentMethod": MessageLookupByLibrary.simpleMessage("Payment Method"),
+        "personalData": MessageLookupByLibrary.simpleMessage("Personal Data"),
         "phoneIsRequired":
             MessageLookupByLibrary.simpleMessage("Phone is required"),
         "phoneNumber": MessageLookupByLibrary.simpleMessage("Phone Number"),
@@ -262,6 +269,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseSelectABranch":
             MessageLookupByLibrary.simpleMessage("Please Select a Branch"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
+        "product": MessageLookupByLibrary.simpleMessage("product"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "reasonIsRequired":
             MessageLookupByLibrary.simpleMessage("Reason is Required"),
@@ -293,8 +301,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "saveLocationAsBranch01":
             MessageLookupByLibrary.simpleMessage("Save Location as Branch 01"),
         "saveSuccess": MessageLookupByLibrary.simpleMessage("Save Success"),
+        "searchF": MessageLookupByLibrary.simpleMessage("Search for"),
         "searchFor":
             MessageLookupByLibrary.simpleMessage("Search for store , product"),
+        "searchForNotifications":
+            MessageLookupByLibrary.simpleMessage("Search for a notification"),
         "searchForOrder": MessageLookupByLibrary.simpleMessage(
             "search for order by order number"),
         "searchingForCaptain":
@@ -308,6 +319,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "smallLessThan20Employee":
             MessageLookupByLibrary.simpleMessage("1 - 20 Employee"),
+        "socialMedia": MessageLookupByLibrary.simpleMessage("Social Media"),
         "sortByEarlier": MessageLookupByLibrary.simpleMessage("By Earlier"),
         "sortByRate": MessageLookupByLibrary.simpleMessage("highest rate"),
         "startWriting": MessageLookupByLibrary.simpleMessage("Start Writing"),

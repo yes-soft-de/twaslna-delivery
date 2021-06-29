@@ -237,9 +237,18 @@
   "orderDate": "تاريخ الطلب",
   "orderStatus": "حالة الطلب",
   "cost": "التكلفة",
-  "sortByEarlier": "الأحدث",
-  "searchForOrder": "ابحث عن طلب بإدخال رقم الطلب"
-
-
+  "sortByEarlier": "من الأحدث للأقدم",
+  "searchForOrder": "ابحث عن طلب بإدخال رقم الطلب",
+  "highestRate": "الأعلى تقييما",
+  "account": "الحساب",
+  "personalData": "المعلومات الشخصية",
+  "orderLog": "سجل الطلبات",
+  "about": "حول",
+  "socialMedia": "مواقع التواصل الاجتماعي",
+  "searchForNotifications": "ابحث عن إشعار",
+  "category": "تصنيف",
+  "product": "منتج",
+  "networkError": "هناك مشكلة بالاتصال بالشبكة الرجاء إعادة المحاولة لاحقا",
+  "searchF": "ابحث عن"
 
 }

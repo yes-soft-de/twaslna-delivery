@@ -2,7 +2,9 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/di/di_config.dart';
+import 'package:twaslna_delivery/module_account/ui/screen/account_screen.dart';
 import 'package:twaslna_delivery/module_home/ui/screen/home_screen.dart';
+import 'package:twaslna_delivery/module_my_notifications/ui/screen/my_notifications_screen.dart';
 import 'package:twaslna_delivery/module_orders/ui/screen/my_orders_screen.dart';
 import 'package:twaslna_delivery/utils/customIcon/custom_icons.dart';
 
@@ -25,26 +27,20 @@ class _MainScreenState extends State<MainScreen> {
         child: Stack(
           children: [
             PageView(
+              physics: BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
               controller: homeController,
               onPageChanged: (index) {
                 selectedPage = index;
-                setState(() {
-                });
+                setState(() {});
                 homeController.animateToPage(index,
                     duration: Duration(milliseconds: 15), curve: Curves.linear);
               },
               children: [
                 getIt<HomeScreen>(),
                 getIt<MyOrdersScreen>(),
-                Container(
-                  color: Colors.red,
-                ),
-                Container(
-                  color: Colors.yellow,
-                ),
-                Container(
-                  color: Colors.pink,
-                ),
+                getIt<MyNotificationsScreen>(),
+                getIt<AccountScreen>()
               ],
             ),
             Align(
@@ -56,7 +52,7 @@ class _MainScreenState extends State<MainScreen> {
                   floatingActionButton: FloatingActionButton(
                     backgroundColor: Theme.of(context).primaryColor,
                     child: Padding(
-                      padding: const EdgeInsets.only(left:6.0),
+                      padding: const EdgeInsets.only(left: 6.0),
                       child: Icon(
                         CustomIcon.logo,
                         color: Colors.white,
@@ -66,7 +62,7 @@ class _MainScreenState extends State<MainScreen> {
                     onPressed: () {},
                   ),
                   floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerDocked,
+                      FloatingActionButtonLocation.centerDocked,
                   bottomNavigationBar: AnimatedBottomNavigationBar(
                     inactiveColor: Colors.grey,
                     activeColor: Colors.orange,

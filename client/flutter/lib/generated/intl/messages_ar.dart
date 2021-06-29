@@ -24,8 +24,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "BestStores": MessageLookupByLibrary.simpleMessage("أفضل المتاجر"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("المسافة المقطوعة بالكيلومتر"),
+        "about": MessageLookupByLibrary.simpleMessage("حول"),
         "accept": MessageLookupByLibrary.simpleMessage("اقبل"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("قبول الطلب"),
+        "account": MessageLookupByLibrary.simpleMessage("الحساب"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("تم ارسال الطلب"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("رقم حساب البنك"),
@@ -71,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "car": MessageLookupByLibrary.simpleMessage("سيارة "),
         "cash": MessageLookupByLibrary.simpleMessage("الدفع عند الاستلام"),
         "categories": MessageLookupByLibrary.simpleMessage("التصنيفات"),
+        "category": MessageLookupByLibrary.simpleMessage("تصنيف"),
         "changeLanguage": MessageLookupByLibrary.simpleMessage("غير لغة"),
         "chatRoom": MessageLookupByLibrary.simpleMessage("غرفة المحادثة"),
         "chatWithStoreOwner":
@@ -133,6 +136,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "go": MessageLookupByLibrary.simpleMessage("انطلق"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("تواصلوا معي"),
+        "highestRate": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "hours": MessageLookupByLibrary.simpleMessage("ساعة"),
         "howWeWork": MessageLookupByLibrary.simpleMessage("كيف يعمل التطبيق"),
@@ -182,6 +186,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nearbyOrders": MessageLookupByLibrary.simpleMessage("الطلبات القريبة"),
         "nearbyStore":
             MessageLookupByLibrary.simpleMessage("المتاجر القريبة إليك"),
+        "networkError": MessageLookupByLibrary.simpleMessage(
+            "هناك مشكلة بالاتصال بالشبكة الرجاء إعادة المحاولة لاحقا"),
         "newName": MessageLookupByLibrary.simpleMessage("اسم جديد"),
         "newOrder": MessageLookupByLibrary.simpleMessage("طلب جديد"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
@@ -208,6 +214,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم انهاء الطلب"),
         "orderIsInUndefinedState":
             MessageLookupByLibrary.simpleMessage("الطلب في مرحلة غير معروفة"),
+        "orderLog": MessageLookupByLibrary.simpleMessage("سجل الطلبات"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("رقم الطلب"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("حالة الطلب"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("طلب في الشهر"),
@@ -229,6 +236,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paySubscription": MessageLookupByLibrary.simpleMessage("دفع الاشتراك"),
         "paymentHistory": MessageLookupByLibrary.simpleMessage("تاريخ الدفعات"),
         "paymentMethod": MessageLookupByLibrary.simpleMessage("طريقة الدفع"),
+        "personalData":
+            MessageLookupByLibrary.simpleMessage("المعلومات الشخصية"),
         "phoneIsRequired":
             MessageLookupByLibrary.simpleMessage("الرجاء تزويدنا برقم الهاتف"),
         "phoneNumber": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
@@ -238,8 +247,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pickALanguage": MessageLookupByLibrary.simpleMessage("اختار لغتي"),
         "pleaseCompleteTheForm":
             MessageLookupByLibrary.simpleMessage("الرجاء أكمال الفورم"),
-        "pleaseDownloadtwaslna_delivery":
-            MessageLookupByLibrary.simpleMessage("الرجاء تحميل twaslna_delivery"),
+        "pleaseDownloadtwaslna_delivery": MessageLookupByLibrary.simpleMessage(
+            "الرجاء تحميل twaslna_delivery"),
         "pleaseEnterYourEmail": MessageLookupByLibrary.simpleMessage(
             "الرجاء ادخال البريد الالكتروني"),
         "pleaseInputPhoneNumber":
@@ -255,6 +264,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseSelectABranch":
             MessageLookupByLibrary.simpleMessage("الرجاء اختيار فرع تجاري"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("شروط الخصوصية"),
+        "product": MessageLookupByLibrary.simpleMessage("منتج"),
         "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
         "reasonIsRequired":
             MessageLookupByLibrary.simpleMessage("الرجاء تزويدنا بسبب الابلاغ"),
@@ -286,8 +296,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "saveLocationAsBranch01":
             MessageLookupByLibrary.simpleMessage("احفظ مكان الفرع 01"),
         "saveSuccess": MessageLookupByLibrary.simpleMessage("تم بنجاح"),
+        "searchF": MessageLookupByLibrary.simpleMessage("ابحث عن"),
         "searchFor":
             MessageLookupByLibrary.simpleMessage("ابحث عن متجر , منتج ... "),
+        "searchForNotifications":
+            MessageLookupByLibrary.simpleMessage("ابحث عن إشعار"),
         "searchForOrder": MessageLookupByLibrary.simpleMessage(
             "ابحث عن طلب بإدخال رقم الطلب"),
         "searchingForCaptain":
@@ -301,7 +314,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "skip": MessageLookupByLibrary.simpleMessage("تخطي"),
         "smallLessThan20Employee":
             MessageLookupByLibrary.simpleMessage("1 - 20 موظف"),
-        "sortByEarlier": MessageLookupByLibrary.simpleMessage("الأحدث"),
+        "socialMedia":
+            MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),
+        "sortByEarlier":
+            MessageLookupByLibrary.simpleMessage("من الأحدث للأقدم"),
         "sortByRate": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),
         "startWriting": MessageLookupByLibrary.simpleMessage("ابدأ الكتابة"),
         "stcPayCode": MessageLookupByLibrary.simpleMessage("رقم حساب STC PAY"),

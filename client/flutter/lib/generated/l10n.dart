@@ -2449,6 +2449,106 @@ class S {
       args: [],
     );
   }
+
+  /// `Account`
+  String get account {
+    return Intl.message(
+      'Account',
+      name: 'account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal Data`
+  String get personalData {
+    return Intl.message(
+      'Personal Data',
+      name: 'personalData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orders Log`
+  String get orderLog {
+    return Intl.message(
+      'Orders Log',
+      name: 'orderLog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `About`
+  String get about {
+    return Intl.message(
+      'About',
+      name: 'about',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Social Media`
+  String get socialMedia {
+    return Intl.message(
+      'Social Media',
+      name: 'socialMedia',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for a notification`
+  String get searchForNotifications {
+    return Intl.message(
+      'Search for a notification',
+      name: 'searchForNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `category`
+  String get category {
+    return Intl.message(
+      'category',
+      name: 'category',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `product`
+  String get product {
+    return Intl.message(
+      'product',
+      name: 'product',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is problem with your problem connection , please try again`
+  String get networkError {
+    return Intl.message(
+      'There is problem with your problem connection , please try again',
+      name: 'networkError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for`
+  String get searchF {
+    return Intl.message(
+      'Search for',
+      name: 'searchF',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
