@@ -76,4 +76,15 @@ class StoreOwnerBranchManager
 
         return $entity;
     }
+
+    public function createBranchesByAdmin(StoreOwnerBranchCreateRequest $request)
+    {
+        $entity = $this->autoMapping->map(StoreOwnerBranchCreateRequest::class, StoreOwnerBranchEntity::class, $request);
+        $entity->setIsActive(1);
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+        $this->entityManager->clear();
+
+        return $entity;
+    }
 }

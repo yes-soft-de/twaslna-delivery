@@ -21,9 +21,9 @@ class StoreOwnerBranchService
 
     public function createBranches(StoreOwnerBranchCreateRequest $request)
     {
-        $branche = $this->storeOwnerBranchManager->createBranches($request);
+        $branch = $this->storeOwnerBranchManager->createBranches($request);
 
-        return $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $branche);
+        return $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $branch);
     }
 
     public function updateBranche($request)
@@ -58,5 +58,12 @@ class StoreOwnerBranchService
         $result = $this->storeOwnerBranchManager->updateBranchAvailability($request);
 
         return $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $result);
+    }
+
+    public function createBranchesByAdmin(StoreOwnerBranchCreateRequest $request)
+    {
+        $branch = $this->storeOwnerBranchManager->createBranchesByAdmin($request);
+
+        return $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $branch);
     }
 }
