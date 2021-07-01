@@ -72,6 +72,11 @@ class StoreOwnerProfileEntity
      */
     private $phone;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $is_best;
+
     public function getStoreOwnerID(): ?string
     {
         return $this->storeOwnerID;
@@ -203,4 +208,18 @@ class StoreOwnerProfileEntity
 
         return $this;
     }
+
+    
+    public function getIs_best(): ?bool
+    {
+        return $this->is_best;
+    }
+
+    public function setIs_best(?bool $is_best): self
+    {
+        $this->is_best = $is_best;
+
+        return $this;
+    }
+
 }

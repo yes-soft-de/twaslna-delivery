@@ -12,7 +12,7 @@ class StoreOwnerProfileCreateRequest
 
     private $image;
 
-    private $branch;
+    private $is_best;
     
     private $city;
 
@@ -131,6 +131,26 @@ class StoreOwnerProfileCreateRequest
     public function setStoreCategoryId($storeCategoryId)
     {
         $this->storeCategoryId = $storeCategoryId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of is_best
+     */ 
+    public function getIs_best()
+    {
+        return $this->is_best;
+    }
+
+    /**
+     * Set the value of is_best
+     *
+     * @return  self
+     */ 
+    public function setIs_best($is_best)
+    {
+        $this->is_best = $is_best;
 
         return $this;
     }

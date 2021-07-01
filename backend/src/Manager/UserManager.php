@@ -137,6 +137,7 @@ class UserManager
 
             $userProfile->setStatus('inactive');
             $userProfile->setFree(false);
+            $userProfile->setIs_best(false);
 
             $this->entityManager->persist($userProfile);
             $this->entityManager->flush();
@@ -416,6 +417,11 @@ class UserManager
     {
         return $this->storeOwnerProfileEntityRepository->getStoreOwnerByCategoryId($storeCategoryId);
     }
+    
+    public function getStoreOwnerBest()
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnerBest();
+    }
 
     public function createStoreOwnerProfileByAdmin(StoreOwnerProfileCreateRequest $request)
     {
@@ -425,6 +431,7 @@ class UserManager
 
             $userProfile->setStatus('inactive');
             $userProfile->setFree(false);
+            $userProfile->setIs_best(false);
 
             $this->entityManager->persist($userProfile);
             $this->entityManager->flush();

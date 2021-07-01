@@ -6,7 +6,7 @@ class StoreOwnerUpdateByAdminRequest
 {
     private $id;
     private $status;
-    private $free;
+    private $is_best;
 
     /**
      * Get the value of id

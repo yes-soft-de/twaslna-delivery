@@ -37,7 +37,7 @@ class DeliveryCompanyPackageEntityRepository extends ServiceEntityRepository
     //         ->select('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, package.status, package.city, package.branch')
     //         ->join(UserProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.userID = :user')
     //         ->where("package.status = 'active'")
-    //         // ->andWhere('userProfileEntity.branch = package.branch')
+            
     //         ->andWhere('userProfileEntity.city = package.city')
     //         ->setParameter('user', $user)
     //         ->groupBy('package.id')
