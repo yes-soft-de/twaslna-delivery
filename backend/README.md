@@ -186,3 +186,29 @@ methods: GET
 /productcategory/{id}
 methods: GET
 ```
+### Store Owner Branch
+### Create Store Owner Branch By Admin
+```
+ROLE_ADMIN
+/storeOwnerBranchByAdmin
+methods: POST
+```
+### Create Store Owner Branch
+```
+ROLE_OWNER
+/storeownerbranch
+methods: POST
+```
+
+### Store Product Category
+### Create Store Product Category
+```
+ROLE_ADMIN
+/StoreProductCategory
+methods: POST
+```
+### Get Store Products Category For Store Specific
+```
+/storeProductsCategory/{storeOwnerProfileId}
+methods: GET
+```

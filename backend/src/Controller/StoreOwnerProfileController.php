@@ -103,7 +103,7 @@ class StoreOwnerProfileController extends BaseController
     }
 
     /**
-     * @Route("/storeownerprofileupdatebyadmin", name="storeownerProfileUpdateByAdmin", methods={"PUT"})
+     * @Route("/storeownerprofileupdatebyadmin", name="storeOwnerProfileUpdateByAdmin", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -160,6 +160,17 @@ class StoreOwnerProfileController extends BaseController
     public function getStoreOwnerByCategoryId($storeCategoryId)
     {
         $response = $this->storeOwnerProfileService->getStoreOwnerByCategoryId($storeCategoryId);
+
+        return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * @Route("/storeOwnerBest", name="GetStoreOwnerBest",methods={"GET"})
+     * @return JsonResponse
+     */
+    public function getStoreOwnerBest()
+    {
+        $response = $this->storeOwnerProfileService->getStoreOwnerBest();
 
         return $this->response($response, self::FETCH);
     }

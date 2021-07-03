@@ -130,6 +130,16 @@ class StoreOwnerProfileService
         return $response;
     }
 
+    public function getStoreOwnerBest():array
+    {
+        $response = [];
+        $items = $this->userManager->getStoreOwnerBest();
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', StoreOwnerByCategoryIdResponse::class, $item);
+            }        
+        return $response;
+    }
+
     public function createStoreOwnerProfileByAdmin(StoreOwnerProfileCreateRequest $request)
     {
         $userProfile = $this->userManager->createStoreOwnerProfileByAdmin($request);

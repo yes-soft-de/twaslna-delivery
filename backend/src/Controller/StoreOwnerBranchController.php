@@ -118,4 +118,29 @@ class StoreOwnerBranchController extends BaseController
 
         return $this->response($result, self::UPDATE);
     }
+
+     /**
+     * @Route("storeOwnerBranchByAdmin", name="createBranchesByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createBranchesByAdmin(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, StoreOwnerBranchCreateRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+            $result = $this->storeOwnerBranchService->createBranchesByAdmin($request);
+            
+
+        return $this->response($result, self::CREATE);
+    }
 }

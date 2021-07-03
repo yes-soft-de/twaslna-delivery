@@ -99,14 +99,6 @@ class ProductEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('product')
             ->select('product.id', 'product.productName', 'product.productImage', 'product.productImage','product.productPrice','product.storeOwnerProfileID', 'product.ProductCategoryID')
 
-            // ->addSelect('storeOwnerProfile.id', 'storeOwnerProfile.storeOwnerName as storeOwnerName','storeOwnerProfile.storeOwnerID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.branch', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone', 'storeOwnerProfile.storeOwnerID as ownerID')
-
-            // ->addSelect('storeOwnerBranch.location','storeOwnerBranch.branchName','storeOwnerBranch.city')
-
-            // ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = product.id')
-
-            // ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerProfile.branch = storeOwnerBranch.id')
-
             ->andWhere('product.id= :id')
             ->setParameter('id',$id)
             ->getQuery()
@@ -118,7 +110,7 @@ class ProductEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('product')
             ->select('product.id', 'product.productName', 'product.productImage', 'product.productImage','product.productPrice','product.storeOwnerProfileID', 'product.ProductCategoryID')
 
-            ->addSelect('storeOwnerProfile.id', 'storeOwnerProfile.storeOwnerName as storeOwnerName','storeOwnerProfile.storeOwnerID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.branch', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone', 'storeOwnerProfile.storeOwnerID')
+            ->addSelect('storeOwnerProfile.id', 'storeOwnerProfile.storeOwnerName as storeOwnerName','storeOwnerProfile.storeOwnerID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone', 'storeOwnerProfile.storeOwnerID')
 
             ->addSelect('storeOwnerBranch.location','storeOwnerBranch.branchName','storeOwnerBranch.city')
 
@@ -138,7 +130,7 @@ class ProductEntityRepository extends ServiceEntityRepository
             ->select('product.id', 'product.productName', 'product.productImage', 'product.productImage','product.productPrice','product.storeOwnerProfileID', 'product.ProductCategoryID')
 
             ->addSelect('count(orderDetailEntity.productID) as countProduct, orderDetailEntity.productID')
-            ->addSelect('storeOwnerProfile.id as storeOwnerProfileID', 'storeOwnerProfile.storeOwnerName as storeOwnerName','storeOwnerProfile.storeOwnerID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.branch', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone', 'storeOwnerProfile.storeOwnerID')
+            ->addSelect('storeOwnerProfile.id as storeOwnerProfileID', 'storeOwnerProfile.storeOwnerName as storeOwnerName','storeOwnerProfile.storeOwnerID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone', 'storeOwnerProfile.storeOwnerID')
 
             ->addSelect('storeOwnerBranch.location','storeOwnerBranch.branchName','storeOwnerBranch.city')
 
@@ -164,7 +156,7 @@ class ProductEntityRepository extends ServiceEntityRepository
             ->select('product.id', 'product.productName', 'product.productImage', 'product.productImage','product.productPrice','product.storeOwnerProfileID', 'product.ProductCategoryID')
 
             ->addSelect('count(orderDetailEntity.productID) as countProduct, orderDetailEntity.productID')
-            ->addSelect('storeOwnerProfile.id as storeOwnerProfileID', 'storeOwnerProfile.storeOwnerName as storeOwnerName','storeOwnerProfile.storeOwnerID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.branch', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone', 'storeOwnerProfile.storeOwnerID')
+            ->addSelect('storeOwnerProfile.id as storeOwnerProfileID', 'storeOwnerProfile.storeOwnerName as storeOwnerName','storeOwnerProfile.storeOwnerID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone', 'storeOwnerProfile.storeOwnerID')
 
             ->addSelect('storeOwnerBranch.location','storeOwnerBranch.branchName','storeOwnerBranch.city')
 

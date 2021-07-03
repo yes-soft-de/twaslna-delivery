@@ -203,7 +203,7 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
 
             ->addSelect('orderEntity.id as orderID', 'orderEntity.date', 'orderEntity.source', 'orderEntity.branchId', 'orderEntity.payment', 'orderEntity.destination','branchesEntity.location','branchesEntity.branchName','branchesEntity.city as branchCity','orderEntity.ownerID','orderEntity.captainID')
 
-            ->addSelect('StoreOwnerProfileEntity.id', 'StoreOwnerProfileEntity.storeOwnerName', 'StoreOwnerProfileEntity.storeOwnerName', 'StoreOwnerProfileEntity.image', 'StoreOwnerProfileEntity.story', 'StoreOwnerProfileEntity.free', 'StoreOwnerProfileEntity.branch as branchcount')
+            ->addSelect('StoreOwnerProfileEntity.id', 'StoreOwnerProfileEntity.storeOwnerName', 'StoreOwnerProfileEntity.storeOwnerName', 'StoreOwnerProfileEntity.image', 'StoreOwnerProfileEntity.story', 'StoreOwnerProfileEntity.free')
 
             ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'captainProfile.id = orderEntity.captainID')
 

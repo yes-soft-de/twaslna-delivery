@@ -27,8 +27,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('profile')
 
-            ->select('profile.id', 'profile.storeOwnerName','profile.storeOwnerID', 'profile.image', 'profile.story',
-                'profile.branch', 'profile.free', 'profile.status', 'profile.city', 'profile.phone', 'profile.image')
+            ->select('profile.id', 'profile.storeOwnerName','profile.storeOwnerID', 'profile.image', 'profile.story', 'profile.free', 'profile.status', 'profile.city', 'profile.phone', 'profile.image')
             ->andWhere('profile.storeOwnerID=:storeOwnerID')
             ->setParameter('storeOwnerID', $storeOwnerID)
 
@@ -39,7 +38,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     public function getStoreOwnerProfileByID($id)
     {
         return $this->createQueryBuilder('profile')
-            ->select('profile.id', 'profile.storeOwnerName','profile.storeOwnerID', 'profile.image', 'profile.story', 'profile.branch', 'profile.free', 'profile.status', 'profile.phone')
+            ->select('profile.id', 'profile.storeOwnerName','profile.storeOwnerID', 'profile.image', 'profile.story', 'profile.free', 'profile.status', 'profile.phone')
 
             ->andWhere('profile.id = :id')
 
@@ -52,7 +51,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     public function getStoreOwnerByCategoryId($storeCategoryId)
     {
         return $this->createQueryBuilder('profile')
-            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone','profile.branch')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone')
             ->addSelect('StoreOwnerBranchEntity.location')
 
             ->leftJoin(StoreOwnerBranchEntity::class, 'StoreOwnerBranchEntity', Join::WITH, 'StoreOwnerBranchEntity.id = profile.branch ')
@@ -61,6 +60,15 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
 
             ->setParameter('storeCategoryId', $storeCategoryId)
 
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getStoreOwnerBest()
+    {
+        return $this->createQueryBuilder('profile')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone')
+            ->andWhere('profile.is_best = 1')
             ->getQuery()
             ->getResult();
     }
@@ -80,7 +88,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('profile')
 
-            ->select('profile.id', 'profile.storeOwnerID', 'profile.storeOwnerName', 'profile.image', 'profile.story', 'profile.free', 'profile.branch as branchcount')
+            ->select('profile.id', 'profile.storeOwnerID', 'profile.storeOwnerName', 'profile.image', 'profile.story', 'profile.free')
             ->addSelect('orderEntity.id as orderID', 'orderEntity.date', 'orderEntity.source', 'orderEntity.branchId', 'orderEntity.payment', 'orderEntity.destination','branchesEntity.location','branchesEntity.branchName','branchesEntity.city as branchCity', 'acceptedOrderEntity.captainID','captainProfileEntity.captainName')
        
             ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'profile.storeOwnerID = orderEntity.ownerID')
@@ -97,7 +105,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('profile')
 
-            ->select('profile.id', 'profile.storeOwnerID', 'profile.storeOwnerName', 'profile.free', 'profile.branch', 'profile.roomID')
+            ->select('profile.id', 'profile.storeOwnerID', 'profile.storeOwnerName', 'profile.free', 'profile.roomID')
 
             ->getQuery()
             ->getResult();
