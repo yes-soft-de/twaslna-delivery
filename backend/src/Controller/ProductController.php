@@ -39,52 +39,6 @@ class ProductController extends BaseController
 
         return $this->response($result, self::CREATE);
     }
-    
-    /**
-     * @Route("/createproductbystoreowner", name="createProductByStoreOwner", methods={"POST"})
-     * @IsGranted("ROLE_OWNER")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function createProductByStoreOwner(Request $request)
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class, ProductCreateRequest::class, (object)$data);
-
-        $result = $this->productService->createProductByStoreOwner($request, $this->getUserId());
-
-        return $this->response($result, self::CREATE);
-    }
-
-    /**
-     * @Route("/productsbystoreowner", name="productsbystoreowner", methods={"GET"})
-     * @IsGranted("ROLE_OWNER")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function getProductsByStoreOwner(Request $request)
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class, ProductCreateRequest::class, (object)$data);
-
-        $result = $this->productService->getProductsByStoreOwner($this->getUserId());
-
-        return $this->response($result, self::FETCH);
-    }
-
-    /**
-     * @Route("/productsstoreownerbyprofileid/{storeOwnerProfileId}", name="getProductsbyStoreOwnerProfileId  ", methods={"GET"})
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function getProductsByStoreOwnerProfile($storeOwnerProfileId)
-    {
-        $result = $this->productService->getProductsByStoreOwnerProfile($storeOwnerProfileId);
-
-        return $this->response($result, self::FETCH);
-    }
 
     /**
      * @Route("/productscategoryid/{productCategoryID}", name="getProductsByProductCategoryId  ", methods={"GET"})
@@ -121,6 +75,7 @@ class ProductController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
+//TODO
     /**
      * @Route("/product/{id}", name="getProductById", methods={"GET"})
      * @return JsonResponse
@@ -153,5 +108,4 @@ class ProductController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
-
 }
