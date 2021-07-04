@@ -28,16 +28,6 @@ class ProductEntity
     private $productImage;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $productPrice;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $storeOwnerProfileID;
-
-    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $ProductCategoryID;
@@ -67,30 +57,6 @@ class ProductEntity
     public function setProductImage(?string $productImage): self
     {
         $this->productImage = $productImage;
-
-        return $this;
-    }
-
-    public function getProductPrice(): ?float
-    {
-        return $this->productPrice;
-    }
-
-    public function setProductPrice(?float $productPrice): self
-    {
-        $this->productPrice = $productPrice;
-
-        return $this;
-    }
-
-    public function getStoreOwnerProfileID(): ?int
-    {
-        return $this->storeOwnerProfileID;
-    }
-
-    public function setStoreOwnerProfileID(int $storeOwnerProfileID): self
-    {
-        $this->storeOwnerProfileID = $storeOwnerProfileID;
 
         return $this;
     }

@@ -7,15 +7,15 @@ class ProductsResponse
     public $id;
     public $productName;
     public $productImage;
-    public $productPrice;
-    public $storeOwnerProfileID;
+    // public $productPrice;
+    // public $storeOwnerProfileID;
     public $ProductCategoryID;
-    public $storeOwnerName;
-    public $ownerID;
-    public $image;
-    public $phone;
-    public $location;
-    public $branchName;
-    public $city;
-    public $countProduct;
+    // public $storeOwnerName;
+    // public $ownerID;
+    // public $image;
+    // public $phone;
+    // public $location;
+    // public $branchName;
+    // public $city;
+    // public $countProduct;
 }

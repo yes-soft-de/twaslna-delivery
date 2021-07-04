@@ -32,27 +32,6 @@ class ProductManager
         return $entity;
     }
 
-    public function createProductByStoreOwner(ProductCreateRequest $request)
-    {
-        $entity = $this->autoMapping->map(ProductCreateRequest::class, ProductEntity::class, $request);
-
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
-        $this->entityManager->clear();
-
-        return $entity;
-    }
-
-    public function getStoreOwnerProfileByStoreOwnerID($userID)
-    {
-        return $this->productEntityRepository->getStoreOwnerProfileByStoreOwnerID($userID);
-    }
-
-    public function getProductsByStoreOwnerProfile($storeOwnerProfileID)
-    {
-        return $this->productEntityRepository->getProductsByStoreOwnerProfile($storeOwnerProfileID);
-    }
-
     public function getProductsByProductCategoryId($productCategoryID)
     {
         return $this->productEntityRepository->getProductsByProductCategoryId($productCategoryID);
@@ -66,11 +45,6 @@ class ProductManager
     public function getProducts()
     {
         return $this->productEntityRepository->getProducts();
-    }
-
-    public function getProductById($id)
-    {
-        return $this->productEntityRepository->getProductById($id);
     }
 
     public function getProductByIdWithFullInfo($id)
