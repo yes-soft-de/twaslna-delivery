@@ -26,7 +26,7 @@ class StoreProductCategoryEntityRepository extends ServiceEntityRepository
     public function getStoreProductsCategoryForStoreSpecific($storeOwnerProfileId)
     {//TODO 
         //Returns categories that contain products If you want to return all categories related to a store, delete ProductEntity
-        $r= $this->createQueryBuilder('storeProductCategory')
+        return $this->createQueryBuilder('storeProductCategory')
             ->select("storeProductCategory.productCategoryId")
             ->addSelect("productCategoryEntity.id", "productCategoryEntity.ProductCategoryName")
 
@@ -42,6 +42,5 @@ class StoreProductCategoryEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
-        dd($r);
     }
 }

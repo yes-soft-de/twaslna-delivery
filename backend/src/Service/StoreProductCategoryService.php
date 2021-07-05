@@ -41,6 +41,7 @@ class StoreProductCategoryService
 
     public function getStoreProductsCategoryForStoreSpecific($storeOwnerProfileId)
     {
+        $response = [];
        $items = $this->storeProductCategoryManager->getStoreProductsCategoryForStoreSpecific($storeOwnerProfileId);
        foreach($items as $item) {
             $response[] = $this->autoMapping->map('array', StoreProductsCategoryResponse::class, $item); 
