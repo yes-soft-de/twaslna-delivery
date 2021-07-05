@@ -14,5 +14,6 @@ class Urls {
   static const GET_TOP_PRODUCTS_API = BASE_API + '/productstopwanted';
   static const GET_STORE_CATEGORIES_API = BASE_API + '/storecategories';
   static const GET_STORE_CATEGORY_LIST_API = BASE_API + '/storeownerbycategoryid/';
-
+  static const GET_MOST_WANTED_STORE_PRODUCTS = BASE_API + '/productstopwantedofspecificstoreowner';
+  static const GET_PRODUCTS_CATEGORY_API = BASE_API + '/storeProductsCategory';
 }
