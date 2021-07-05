@@ -46,6 +46,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Bank Account Number"),
         "bankName": MessageLookupByLibrary.simpleMessage("Bank Name"),
         "bestStore": MessageLookupByLibrary.simpleMessage("Best Store"),
+        "birthDate": MessageLookupByLibrary.simpleMessage("Birth Date"),
+        "birthDateHint":
+            MessageLookupByLibrary.simpleMessage("choose your birth data"),
         "bookACar": MessageLookupByLibrary.simpleMessage("Book a car"),
         "branch": MessageLookupByLibrary.simpleMessage("Branch"),
         "branch01": MessageLookupByLibrary.simpleMessage("Branch 01"),
@@ -80,10 +83,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "chatWithStoreOwner":
             MessageLookupByLibrary.simpleMessage("Chat with Store Owner"),
         "checkOrders": MessageLookupByLibrary.simpleMessage("Check Orders"),
+        "checkout": MessageLookupByLibrary.simpleMessage("Checkout"),
         "chooseYourCity":
             MessageLookupByLibrary.simpleMessage("Choose Your City"),
         "chooseYourSize":
             MessageLookupByLibrary.simpleMessage("Choose Your Size"),
+        "community": MessageLookupByLibrary.simpleMessage("Community"),
         "completedOrders":
             MessageLookupByLibrary.simpleMessage("Completed Orders"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
@@ -129,11 +134,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "externalOrder": MessageLookupByLibrary.simpleMessage("External Order"),
         "failureRenew": MessageLookupByLibrary.simpleMessage(
             "Your renew has been failed please try again"),
+        "female": MessageLookupByLibrary.simpleMessage("Female"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "Finish Order, Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
             "Your subscription is out of date please renew your subscription"),
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("From WhatsApp"),
+        "gender": MessageLookupByLibrary.simpleMessage("Gender"),
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),
         "go": MessageLookupByLibrary.simpleMessage("Go"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
@@ -171,6 +178,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "locationOfCustomer":
             MessageLookupByLibrary.simpleMessage("Location of customer"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
+        "male": MessageLookupByLibrary.simpleMessage("Male"),
         "me": MessageLookupByLibrary.simpleMessage("ME"),
         "mediumMoreThan20EmployeesLessThan100":
             MessageLookupByLibrary.simpleMessage("21 - 100 Employees"),
@@ -178,6 +186,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "mohammad": MessageLookupByLibrary.simpleMessage("Mohammad"),
         "mostSoldProduct":
             MessageLookupByLibrary.simpleMessage("Most Sold Product"),
+        "mostWanted": MessageLookupByLibrary.simpleMessage("Most wanted"),
         "moveToOrders": MessageLookupByLibrary.simpleMessage("Move to Orders"),
         "myBalance": MessageLookupByLibrary.simpleMessage("My Balance"),
         "myOrders": MessageLookupByLibrary.simpleMessage("My Orders"),
@@ -185,12 +194,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "myProfile": MessageLookupByLibrary.simpleMessage("My Profile"),
         "myStatus": MessageLookupByLibrary.simpleMessage("My Status"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
+        "nameHint": MessageLookupByLibrary.simpleMessage("e.g yazan"),
         "nameIsRequired":
             MessageLookupByLibrary.simpleMessage("Name is required"),
         "nearbyOrders": MessageLookupByLibrary.simpleMessage("Nearby Orders"),
         "nearbyStore": MessageLookupByLibrary.simpleMessage("Nearby Store"),
         "networkError": MessageLookupByLibrary.simpleMessage(
-            "There is problem with your problem connection , please try again"),
+            "There is problem with your connection , please try again"),
         "newName": MessageLookupByLibrary.simpleMessage("New name"),
         "newOrder": MessageLookupByLibrary.simpleMessage("New Order"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
@@ -357,6 +367,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Branch has been updated successfully"),
         "updateBranches":
             MessageLookupByLibrary.simpleMessage("Update Branches"),
+        "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),
         "uploadAndSubmit":
             MessageLookupByLibrary.simpleMessage("Upload and submit"),
         "uploadingAndSubmitting":

@@ -2530,10 +2530,10 @@ class S {
     );
   }
 
-  /// `There is problem with your problem connection , please try again`
+  /// `There is problem with your connection , please try again`
   String get networkError {
     return Intl.message(
-      'There is problem with your problem connection , please try again',
+      'There is problem with your connection , please try again',
       name: 'networkError',
       desc: '',
       args: [],
@@ -2545,6 +2545,106 @@ class S {
     return Intl.message(
       'Search for',
       name: 'searchF',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Most wanted`
+  String get mostWanted {
+    return Intl.message(
+      'Most wanted',
+      name: 'mostWanted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Checkout`
+  String get checkout {
+    return Intl.message(
+      'Checkout',
+      name: 'checkout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Birth Date`
+  String get birthDate {
+    return Intl.message(
+      'Birth Date',
+      name: 'birthDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `e.g yazan`
+  String get nameHint {
+    return Intl.message(
+      'e.g yazan',
+      name: 'nameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `choose your birth data`
+  String get birthDateHint {
+    return Intl.message(
+      'choose your birth data',
+      name: 'birthDateHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gender`
+  String get gender {
+    return Intl.message(
+      'Gender',
+      name: 'gender',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Male`
+  String get male {
+    return Intl.message(
+      'Male',
+      name: 'male',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Female`
+  String get female {
+    return Intl.message(
+      'Female',
+      name: 'female',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Data`
+  String get updateYourData {
+    return Intl.message(
+      'Update Data',
+      name: 'updateYourData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Community`
+  String get community {
+    return Intl.message(
+      'Community',
+      name: 'community',
       desc: '',
       args: [],
     );

@@ -249,8 +249,19 @@
   "searchForNotifications": "Search for a notification",
   "category": "category",
   "product": "product",
-  "networkError": "There is problem with your problem connection , please try again",
-  "searchF": "Search for"
+  "networkError": "There is problem with your connection , please try again",
+  "searchF": "Search for",
+  "mostWanted": "Most wanted",
+  "checkout": "Checkout",
+  "birthDate": "Birth Date",
+  "nameHint": "e.g yazan",
+  "birthDateHint": "choose your birth data",
+  "gender": "Gender",
+  "male": "Male",
+  "female": "Female",
+  "personalData": "Personal Data",
+  "updateYourData": "Update Data",
+  "community": "Community"
 
 
 }

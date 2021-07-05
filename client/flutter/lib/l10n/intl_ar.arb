@@ -249,6 +249,17 @@
   "category": "تصنيف",
   "product": "منتج",
   "networkError": "هناك مشكلة بالاتصال بالشبكة الرجاء إعادة المحاولة لاحقا",
-  "searchF": "ابحث عن"
+  "searchF": "ابحث عن",
+  "mostWanted": "الأكثر طلبا",
+  "checkout": "تأكيد الطلب",
+  "birthDate": "تاريخ الميلاد",
+  "nameHint": "مثال يزن",
+  "birthDateHint": "اختر تاريخ ميلادك",
+  "gender": "الجنس",
+  "male": "ذكر",
+  "female": "أنثى",
+  "personalData": "البيانات الشخصية",
+  "updateYourData": "تحديث البيانات",
+  "community": "مواقع التواصل الاجتماعي"
 
 }

@@ -3,7 +3,6 @@ import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/abstracts/module/yes_module.dart';
 import 'package:twaslna_delivery/di/di_config.dart';
 import 'package:twaslna_delivery/module_account/account_module.dart';
-import 'package:twaslna_delivery/module_account/account_routes.dart';
 import 'package:twaslna_delivery/module_auth/authoriazation_module.dart';
 import 'package:twaslna_delivery/module_chat/chat_module.dart';
 import 'package:twaslna_delivery/module_home/home_module.dart';
