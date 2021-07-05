@@ -1,29 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_home/response/products.dart';
+import 'package:twaslna_delivery/module_stores/model/cart_model.dart';
+import 'package:twaslna_delivery/module_stores/model/category_model.dart';
+import 'package:twaslna_delivery/module_stores/response/store_products.dart';
 import 'package:twaslna_delivery/module_stores/ui/screen/store_products_screen.dart';
 import 'package:twaslna_delivery/module_stores/ui/state/store_products/store_products_state.dart';
+import 'package:twaslna_delivery/module_stores/ui/widget/store_products/checkout_button.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/custom_stores_products_app_bar.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_card.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/products_card.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/products_chip.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/store_products_title_bar.dart';
 import 'package:twaslna_delivery/utils/components/costom_search.dart';
+import 'package:twaslna_delivery/utils/models/product.dart';
+import 'package:twaslna_delivery/utils/models/store.dart';
+import 'package:twaslna_delivery/utils/models/store_category.dart';
 import 'package:twaslna_delivery/utils/text_style/text_style.dart';
 
 class StoreProductsLoadedState extends StoreProductsState {
   StoreProductsScreenState screenState;
-
-  StoreProductsLoadedState(this.screenState) : super(screenState);
-
+  List<ProductModel> topWantedProducts;
+  List<CategoryModel> productsCategory;
+  StoreProductsLoadedState(this.screenState,this.topWantedProducts,this.productsCategory) : super(screenState);
+  late String title;
+  late String backgroundImage;
+  String defaultValue = S.current.mostWanted;
+  List <CartModel> carts = [];
   @override
   Widget getUI(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    var args = ModalRoute.of(context)?.settings.arguments;
+    if (args is StoreModel) {
+      title = args.storeOwnerName;
+      backgroundImage = args.image;
+    }
     return Stack(
       children: [
         Image.network(
-          'https://images.unsplash.com/photo-1513104890138-7c749659a591?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80',
+          backgroundImage,
           height: height,
           width: width,
           fit: BoxFit.cover,
@@ -39,7 +56,7 @@ class StoreProductsLoadedState extends StoreProductsState {
                 padding:
                     const EdgeInsets.only(right: 28.0, left: 28, bottom: 16),
                 child: StoreProductsTitleBar(
-                  title: 'Domainos pizza',
+                  title: title,
                   rate: 4.7,
                   views: 40,
                 ),
@@ -75,48 +92,22 @@ class StoreProductsLoadedState extends StoreProductsState {
                                 padding: EdgeInsets.zero,
                                 scrollDirection: Axis.horizontal,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 8.0, left: 8.0),
-                                    child: InkWell(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: ProductsChips(
-                                        title: 'most demand',
-                                        active: true,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 8.0, left: 8.0),
-                                    child: InkWell(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: ProductsChips(
-                                        title: 'pizza',
-                                        active: false,
-                                      ),
-                                    ),
+                                  ProductsChips(
+                                    onChange: (value){
+                                      defaultValue = value;
+                                      screenState.refresh();
+                                    },
+                                    title: S.of(context).mostWanted,
+                                    active: defaultValue == S.of(context).mostWanted,
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0,left: 8.0),
-                            child: ListView.builder(
-                              physics: ScrollPhysics(),
-                              itemCount: 10,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return ProductsCard(
-                                    title: 'Pizza',
-                                    image:
-                                        'https://images.unsplash.com/photo-1513104890138-7c749659a591?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80',
-                                    price: 20,
-                                    currency: 'US',
-                                    quantity: (quantity) {});
-                              },
-                            ),
+                          ListView(
+                            physics: ScrollPhysics(),
+                            shrinkWrap: true,
+                            children:getProducts(topWantedProducts),
                           ),
                           SizedBox(
                             height: 75,
@@ -126,45 +117,8 @@ class StoreProductsLoadedState extends StoreProductsState {
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 65,
-                        width: double.maxFinite,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Theme.of(context).cardColor.withOpacity(0.2),
-                                Theme.of(context).cardColor,
-                                Theme.of(context).cardColor,
-                                Theme.of(context).cardColor,
-                                Theme.of(context).cardColor,
-                                Theme.of(context).cardColor,
-                              ]),
-                        ),
-                        child:Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            height: 65,
-                            width:double.maxFinite,
-                            child:  Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Theme.of(context).primaryColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)
-                                  )
-                                ),
-                                onPressed: () {},
-                                child: Text('checkout (100 US)',style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16
-                                ),),
-                              ),
-                            ),
-                          ),
-                        ),
+                      child: CheckoutButton(onPressed: (){},
+                      total: getTotal(carts),
                       ),
                     ),
                   ],
@@ -176,4 +130,55 @@ class StoreProductsLoadedState extends StoreProductsState {
       ],
     );
   }
+
+  List<Widget> getProducts(List<ProductModel> topWantedProducts) {
+    if (topWantedProducts.isEmpty) return [];
+      List<ProductsCard> prods = [];
+      topWantedProducts.forEach((element) {
+        prods.add(ProductsCard(title: element.title, image:element.image, price:element.price, quantity:(q){
+          if (q>0){
+            carts.removeWhere((e) =>e.id == element.id);
+            carts.add(CartModel(id: element.id, quantity: q, price: element.price));
+          }
+          if (q==0) {
+            carts.removeWhere((e) =>e.id == element.id);
+          }
+          screenState.refresh();
+        }));
+      });
+      return prods;
+  }
+  List<Widget> getCategories(List<CategoryModel> categoriesModel) {
+    if (categoriesModel.isEmpty) {
+      return [ProductsChips(
+      onChange: (value){
+        defaultValue = value;
+        screenState.refresh();
+      },
+      title: S.current.mostWanted,
+      active: defaultValue == S.current.mostWanted,
+    )];
+    }
+    List <ProductsChips> cats = [];
+    categoriesModel.forEach((element) {
+      cats.add(ProductsChips(
+        title: element.label,
+        active: defaultValue == element.label,
+        onChange: (value){
+          defaultValue = value;
+          screenState.refresh();
+        },
+      ));
+    });
+    return cats;
+  }
+
+}
+
+dynamic getTotal(List<CartModel> carts) {
+  var total = 0;
+  for (int i =0;i<carts.length;i++){
+    total += carts[i].price * carts[i].quantity;
+  }
+  return total.toString();
 }

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 class ProductsCard extends StatefulWidget {
   final String title;
   final String image;
-  final double price;
+  final price;
   final String currency;
   final Function(int) quantity;
   ProductsCard({
-    required this.title,required this.image,required this.price,required this.currency,required this.quantity});
+    required this.title,required this.image,required this.price,this.currency = 'SAR',required this.quantity});
   @override
   _ProductsCardState createState() => _ProductsCardState();
 }

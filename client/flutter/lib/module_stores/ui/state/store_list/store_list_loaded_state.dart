@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_stores/store_routes.dart';
 import 'package:twaslna_delivery/module_stores/ui/screen/store_list_screen.dart';
 import 'package:twaslna_delivery/module_stores/ui/state/store_list/store_list_state.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_card.dart';
@@ -126,7 +127,9 @@ class StoreListLoadedState extends StoreListState {
     if (stores.isEmpty) return [];
     List<StoreCard> storeCardList = [] ;
     stores.forEach((element) {
-      storeCardList.add(StoreCard(title:element.storeOwnerName,));
+      storeCardList.add(StoreCard(title:element.storeOwnerName,onTap: (){
+        Navigator.of(screenState.context).pushNamed(StoreRoutes.STORE_PRODUCTS,arguments: element);
+      },));
     });
     return storeCardList;
  }

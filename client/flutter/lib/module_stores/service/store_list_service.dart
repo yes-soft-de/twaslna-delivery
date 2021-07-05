@@ -6,7 +6,7 @@ import 'package:twaslna_delivery/utils/models/store.dart';
 
 @injectable
 class StoreListService {
-  StoreListManager _storeListManager;
+  final StoreListManager _storeListManager;
 
   StoreListService(this._storeListManager);
 
@@ -20,7 +20,7 @@ class StoreListService {
       stores.add(StoreModel(
           id: element.id ?? -1,
           storeOwnerName: element.storeOwnerName ?? S.current.store,
-          image: element.image,
+          image:'https://www.gannett-cdn.com/media/2020/03/23/USATODAY/usatsports/247WallSt.com-247WS-657876-imageforentry9-vp7.jpg?width=660&height=371&fit=crop&format=pjpg&auto=webp',
           location: element.location,
           phone: element.phone));
     });
