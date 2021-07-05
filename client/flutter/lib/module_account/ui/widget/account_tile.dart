@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 class AccountTile extends StatelessWidget {
   final String text;
   final IconData icon;
-  AccountTile({required this.text,required this.icon});
+  final GestureTapCallback? onTap;
+  AccountTile({required this.text,required this.icon,this.onTap});
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top:8.0,left: 8.0),
       child: ListTile(
+        onTap: onTap,
         leading: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -15,7 +17,7 @@ class AccountTile extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Icon(icon,
-                color: Theme.of(context).backgroundColor),
+                color: Colors.white),
           ),
         ),
         title: Text(text),
