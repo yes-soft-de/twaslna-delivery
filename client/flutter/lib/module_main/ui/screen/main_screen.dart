@@ -64,9 +64,10 @@ class _MainScreenState extends State<MainScreen> {
                   floatingActionButtonLocation:
                       FloatingActionButtonLocation.centerDocked,
                   bottomNavigationBar: AnimatedBottomNavigationBar(
-                    inactiveColor: Colors.grey,
-                    activeColor: Colors.orange,
+                    inactiveColor: Theme.of(context).disabledColor,
+                    activeColor: Theme.of(context).primaryColor,
                     gapLocation: GapLocation.center,
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                     notchSmoothness: NotchSmoothness.defaultEdge,
                     icons: [
                       Icons.home,
