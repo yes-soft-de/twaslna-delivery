@@ -24,7 +24,7 @@ class AppThemeDataService {
   }
 
   static Color get AccentColor {
-    return Color(0xFFBE1E2D);
+    return Colors.orangeAccent;
   }
 
   Future<ThemeData> getActiveTheme() async {
