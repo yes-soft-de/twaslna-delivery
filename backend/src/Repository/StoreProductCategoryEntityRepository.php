@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\StoreProductCategoryEntity;
 use App\Entity\ProductCategoryEntity;
+use App\Entity\ProductEntity;
 use App\Entity\StoreProductEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -24,18 +25,19 @@ class StoreProductCategoryEntityRepository extends ServiceEntityRepository
 
   
     public function getStoreProductsCategoryForStoreSpecific($storeOwnerProfileId)
-    {//TODO 
-        //Returns categories that contain products If you want to return all categories related to a store, delete ProductEntity
+    {
         return $this->createQueryBuilder('storeProductCategory')
             ->select("storeProductCategory.productCategoryId")
             ->addSelect("productCategoryEntity.id", "productCategoryEntity.ProductCategoryName")
 
             ->leftJoin(ProductCategoryEntity::class, 'productCategoryEntity', Join::WITH, 'productCategoryEntity.id = storeProductCategory.productCategoryId')
 
+            ->leftJoin(ProductEntity::class, 'productEntity', Join::WITH, 'productEntity.ProductCategoryID = storeProductCategory.productCategoryId')
+
             ->leftJoin(StoreProductEntity::class, 'storeProductEntity', Join::WITH, 'storeProductEntity.storeOwnerProfileID = :storeOwnerProfileId')
 
             ->andWhere('storeProductCategory.storeOwnerProfileId = :storeOwnerProfileId')
-            // ->andWhere('storeProductEntity.productID = storeProductCategory.productCategoryId')
+            ->andWhere('storeProductEntity.productID = productEntity.id')
             
             ->setParameter('storeOwnerProfileId', $storeOwnerProfileId)
             ->addGroupBy('productCategoryEntity.id')
