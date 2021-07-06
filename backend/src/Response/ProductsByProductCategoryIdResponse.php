@@ -8,4 +8,7 @@ class ProductsByProductCategoryIdResponse
     public $productName;
     public $productImage;
     public $ProductCategoryID;
+    public $productPrice;
+    public $storeOwnerProfileID;
+
 }
