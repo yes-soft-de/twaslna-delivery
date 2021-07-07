@@ -96,15 +96,15 @@ class ProductEntityRepository extends ServiceEntityRepository
             
             ->leftJoin(StoreProductEntity::class, 'StoreProduct', Join::WITH, 'StoreProduct.productID = :id')
 
-            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = product.id')
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = StoreProduct.storeOwnerProfileID')
 
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerProfile.storeOwnerID = storeOwnerBranch.ownerID')
 
             ->andWhere('product.id= :id')
             ->setParameter('id',$id)
             ->getQuery()
-            // ->getOneOrNullResult();
-            ->getResult();
+            ->getOneOrNullResult();
+            // ->getResult();
     }
 
     public function getProductsTopWanted()

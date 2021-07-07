@@ -40,12 +40,7 @@ class OrderManager
 
         return $item;
     }
-
-    public function getOrderById($orderId)
-    {
-        return $this->orderEntityRepository->getOrderById($orderId);
-    }
-
+    
     public function orderById($orderId)
     {
         return $this->orderEntityRepository->orderById($orderId);
@@ -54,11 +49,6 @@ class OrderManager
     public function getOrdersByOwnerID($userID)
     {
         return $this->orderEntityRepository->getOrdersByOwnerID($userID);
-    }
-
-    public function orderStatus($orderId)
-    {
-        return $this->orderEntityRepository->orderStatus($orderId);
     }
 
     public function orderStatusByOrderId($orderId)

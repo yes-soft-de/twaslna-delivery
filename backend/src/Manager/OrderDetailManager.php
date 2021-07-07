@@ -42,16 +42,17 @@ class OrderDetailManager
        return $this->orderDetailEntityRepository->getOrderIdByOrderNumber($orderNumber);
     }
 
+    public function getOrderNumberByOrderId($orderID)
+    {
+       return $this->orderDetailEntityRepository->getOrderNumberByOrderId($orderID);
+    }
+
     public function orderUpdateByClient(OrderDetailUpdateByClientRequest $request, $orderDetail)
     {
-        $item = $this->orderDetailEntityRepository->find($orderDetail->getId());
-    //    dd($item, $request);
-       
+        $item = $this->orderDetailEntityRepository->find($orderDetail->getId());       
         if ($item) {
             $item = $this->autoMapping->mapToObject(OrderDetailUpdateByClientRequest::class, OrderDetailEntity::class, $request, $item);
 
-            // dd($item);
-            
             $this->entityManager->flush();
             $this->entityManager->clear();
 
