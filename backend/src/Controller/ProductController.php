@@ -109,12 +109,12 @@ class ProductController extends BaseController
         return $this->response($result, self::FETCH);
     }
     /**
-     * @Route("/productByProductIdAndStoreOwnerProfileId/{storeOwnerProfileId}/{productId}", name="getPproductByProductIdAndStoreOwnerProfileId", methods={"GET"})
+     * @Route("/productByProductIdAndStoreOwnerProfileId/{storeOwnerProfileId}/{productId}", name="getProductByProductIdAndStoreOwnerProfileId", methods={"GET"})
      * @return JsonResponse
      */
-    public function getPproductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId)
+    public function getProductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId)
     {
-        $result = $this->productService->getPproductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId);
+        $result = $this->productService->getProductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId);
 
         return $this->response($result, self::FETCH);
     }
