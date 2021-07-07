@@ -61,4 +61,9 @@ class ProductManager
     {
         return $this->productEntityRepository->productsTopWantedOfSpecificStoreOwner($storeOwnerProfileId);
     }
+
+    public function getPproductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId)
+    {
+        return $this->productEntityRepository->getPproductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId);
+    }
 }

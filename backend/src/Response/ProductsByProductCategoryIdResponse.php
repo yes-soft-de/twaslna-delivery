@@ -10,5 +10,4 @@ class ProductsByProductCategoryIdResponse
     public $ProductCategoryID;
     public $productPrice;
     public $storeOwnerProfileID;
-
 }

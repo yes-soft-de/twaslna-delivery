@@ -99,4 +99,12 @@ class ProductService
     
        return $response;
    }
+   
+    public function getPproductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId):?array
+    {
+       $response = [];
+       $product = $this->productManager->getPproductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId);
+       $response[] = $this->autoMapping->map('array', ProductFullInfoResponse::class, $product);
+       return $response;
+   }
 }
