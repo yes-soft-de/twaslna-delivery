@@ -107,4 +107,11 @@ class ProductService
        $response[] = $this->autoMapping->map('array', ProductFullInfoResponse::class, $product);
        return $response;
    }
+
+   public function updateProductByAdmin($request)
+   {
+       $item = $this->productManager->updateProductByAdmin($request);
+
+       return $this->autoMapping->map(ProductEntity::class, ProductCreateResponse::class, $item);
+   }
 }
