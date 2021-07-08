@@ -2649,6 +2649,136 @@ class S {
       args: [],
     );
   }
+
+  /// `waiting`
+  String get waiting {
+    return Intl.message(
+      'waiting',
+      name: 'waiting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order List`
+  String get orderList {
+    return Intl.message(
+      'Order List',
+      name: 'orderList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bill`
+  String get bill {
+    return Intl.message(
+      'Bill',
+      name: 'bill',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order price`
+  String get orderPrice {
+    return Intl.message(
+      'order price',
+      name: 'orderPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `total`
+  String get sum {
+    return Intl.message(
+      'total',
+      name: 'sum',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SAR`
+  String get sar {
+    return Intl.message(
+      'SAR',
+      name: 'sar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `deliver price`
+  String get deliverPrice {
+    return Intl.message(
+      'deliver price',
+      name: 'deliverPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `waiting for a captain to accept this order`
+  String get waitingDescription {
+    return Intl.message(
+      'waiting for a captain to accept this order',
+      name: 'waitingDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `captain packing your order`
+  String get captainInStoreDescription {
+    return Intl.message(
+      'captain packing your order',
+      name: 'captainInStoreDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `captain on his way to you`
+  String get deliveringDescription {
+    return Intl.message(
+      'captain on his way to you',
+      name: 'deliveringDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `captain headed to store`
+  String get captainAcceptOrderDescription {
+    return Intl.message(
+      'captain headed to store',
+      name: 'captainAcceptOrderDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `your order has delivered`
+  String get orderDeliveredDescription {
+    return Intl.message(
+      'your order has delivered',
+      name: 'orderDeliveredDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can know your order status in this interface`
+  String get orderStatusDescription {
+    return Intl.message(
+      'You can know your order status in this interface',
+      name: 'orderStatusDescription',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -46,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Bank Account Number"),
         "bankName": MessageLookupByLibrary.simpleMessage("Bank Name"),
         "bestStore": MessageLookupByLibrary.simpleMessage("Best Store"),
+        "bill": MessageLookupByLibrary.simpleMessage("Bill"),
         "birthDate": MessageLookupByLibrary.simpleMessage("Birth Date"),
         "birthDateHint":
             MessageLookupByLibrary.simpleMessage("choose your birth data"),
@@ -55,6 +56,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
         "cancel": MessageLookupByLibrary.simpleMessage("CANCEL"),
         "captain": MessageLookupByLibrary.simpleMessage("Captain"),
+        "captainAcceptOrderDescription":
+            MessageLookupByLibrary.simpleMessage("captain headed to store"),
         "captainAcceptedOrder":
             MessageLookupByLibrary.simpleMessage("Captain Accepted Order"),
         "captainGotCash":
@@ -63,6 +66,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain got the cash"),
         "captainInStore":
             MessageLookupByLibrary.simpleMessage("Captain in Store"),
+        "captainInStoreDescription":
+            MessageLookupByLibrary.simpleMessage("captain packing your order"),
         "captainIsDelivering":
             MessageLookupByLibrary.simpleMessage("Captain is Delivering"),
         "captainIsInStore":
@@ -112,7 +117,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "the order has been deleted successfully"),
         "deliver": MessageLookupByLibrary.simpleMessage("Deliver"),
         "deliverForMe": MessageLookupByLibrary.simpleMessage("Deliver on me"),
+        "deliverPrice": MessageLookupByLibrary.simpleMessage("deliver price"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("Deliver To"),
+        "deliveringDescription":
+            MessageLookupByLibrary.simpleMessage("captain on his way to you"),
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),
         "earnCash": MessageLookupByLibrary.simpleMessage("Earn Cash"),
@@ -219,6 +227,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderCreatedReturnToOrders": MessageLookupByLibrary.simpleMessage(
             "Order Created, Return to Orders"),
         "orderDate": MessageLookupByLibrary.simpleMessage("order date"),
+        "orderDeliveredDescription":
+            MessageLookupByLibrary.simpleMessage("your order has delivered"),
         "orderDetails": MessageLookupByLibrary.simpleMessage("Order Details"),
         "orderIsCreated":
             MessageLookupByLibrary.simpleMessage("Order is created"),
@@ -227,9 +237,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order is finished"),
         "orderIsInUndefinedState":
             MessageLookupByLibrary.simpleMessage("Order is in undefined State"),
+        "orderList": MessageLookupByLibrary.simpleMessage("Order List"),
         "orderLog": MessageLookupByLibrary.simpleMessage("Orders Log"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("order id"),
+        "orderPrice": MessageLookupByLibrary.simpleMessage("order price"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("order status"),
+        "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
+            "You can know your order status in this interface"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),
@@ -303,6 +317,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("Request Meeting"),
         "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
+        "sar": MessageLookupByLibrary.simpleMessage("SAR"),
         "saudiArabia": MessageLookupByLibrary.simpleMessage("Saudi Arabia"),
         "saudiRiyal": MessageLookupByLibrary.simpleMessage("Saudi Riyal"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
@@ -343,6 +358,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),
         "successRenew": MessageLookupByLibrary.simpleMessage(
             "Your subscription has been renewed"),
+        "sum": MessageLookupByLibrary.simpleMessage("total"),
         "sureForDelete": MessageLookupByLibrary.simpleMessage(
             "Are you sure about deleting this order , please confirm"),
         "syria": MessageLookupByLibrary.simpleMessage("Syria"),
@@ -377,6 +393,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "uploadingImagesPleaseWait": MessageLookupByLibrary.simpleMessage(
             "Uploading Images, Please Wait"),
         "views": MessageLookupByLibrary.simpleMessage("views"),
+        "waiting": MessageLookupByLibrary.simpleMessage("waiting"),
+        "waitingDescription": MessageLookupByLibrary.simpleMessage(
+            "waiting for a captain to accept this order"),
         "warnning": MessageLookupByLibrary.simpleMessage("Important Note"),
         "weDeliver": MessageLookupByLibrary.simpleMessage("We Deliver"),
         "weNeedYourImageAndYourDriverLicenceInOrder":
