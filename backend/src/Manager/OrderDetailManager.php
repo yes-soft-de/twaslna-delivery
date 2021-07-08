@@ -42,6 +42,11 @@ class OrderDetailManager
        return $this->orderDetailEntityRepository->getOrderIdByOrderNumber($orderNumber);
     }
 
+    public function getOrderIdWithOutStoreProductByOrderNumber($orderNumber)
+    {
+       return $this->orderDetailEntityRepository->getOrderIdWithOutStoreProductByOrderNumber($orderNumber);
+    }
+
     public function getOrderNumberByOrderId($orderID)
     {
        return $this->orderDetailEntityRepository->getOrderNumberByOrderId($orderID);
