@@ -7,6 +7,7 @@ class StoreProductCreateRequest
     private $storeOwnerProfileID;
     private $productID;
     private $productPrice;
+    private $products;
 
 
     /**
@@ -65,6 +66,26 @@ class StoreProductCreateRequest
     public function setProductPrice($productPrice)
     {
         $this->productPrice = $productPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of products
+     */ 
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
+     * Set the value of products
+     *
+     * @return  self
+     */ 
+    public function setProducts($products)
+    {
+        $this->products = $products;
 
         return $this;
     }

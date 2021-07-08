@@ -9,7 +9,7 @@ class StoreProductsByStoreOwnerProfileIdResponse
     public $productName;
     public $productImage;
     public $productPrice;
-    public $storeOwnerProfileID;
+    public $storeOwnerProfileId;
     public $ProductCategoryID;
     public $storeOwnerName;
     public $storeOwnerImage;

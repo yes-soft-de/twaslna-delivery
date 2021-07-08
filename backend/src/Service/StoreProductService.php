@@ -22,17 +22,25 @@ class StoreProductService
 
     public function createStoreProductByAdmin(StoreProductCreateRequest $request)
     {
-        $item = $this->storeProductManager->createStoreProductByAdmin($request);
-
+        $products = $request->getProducts();
+        foreach ($products as $product) {
+           $request->setProductID($product['productID']);
+           $request->setProductPrice($product['productPrice']);
+           $item = $this->storeProductManager->createStoreProductByAdmin($request);
+        }
         return $this->autoMapping->map(StoreProductEntity::class, StoreProductCreateResponse::class, $item);
     }
  
     public function createStoreProductByStoreOwner(StoreProductCreateRequest $request, $userID)
     {
         $storeOwnerProfileID = $this->getStoreOwnerProfileByStoreOwnerID($userID);
-        $request->setStoreOwnerProfileID($storeOwnerProfileID['id']);
-        $item = $this->storeProductManager->createStoreProductByStoreOwner($request);
-       
+        $products = $request->getProducts();
+        foreach ($products as $product) {
+           $request->setProductID($product['productID']);
+           $request->setProductPrice($product['productPrice']);
+           $request->setStoreOwnerProfileID($storeOwnerProfileID['id']);
+           $item = $this->storeProductManager->createStoreProductByStoreOwner($request);
+        }
         
         return $this->autoMapping->map(StoreProductEntity::class, StoreProductCreateResponse::class, $item);
     }
