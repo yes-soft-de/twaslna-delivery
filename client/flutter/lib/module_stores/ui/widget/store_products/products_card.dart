@@ -5,14 +5,21 @@ class ProductsCard extends StatefulWidget {
   final price;
   final String currency;
   final Function(int) quantity;
+  final int defaultQuantity;
   ProductsCard({
-    required this.title,required this.image,required this.price,this.currency = 'SAR',required this.quantity});
+    required this.title,required this.image,required this.price,this.currency = 'SAR',required this.quantity,this.defaultQuantity = 0});
   @override
   _ProductsCardState createState() => _ProductsCardState();
 }
 
 class _ProductsCardState extends State<ProductsCard> {
-  int quantity = 0;
+  late int quantity ;
+
+  @override
+  void initState() {
+    super.initState();
+    quantity = widget.defaultQuantity;
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(

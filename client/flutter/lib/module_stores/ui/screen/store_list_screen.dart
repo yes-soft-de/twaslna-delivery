@@ -19,7 +19,7 @@ class StoreListScreen extends StatefulWidget {
 
 class StoreListScreenState extends State<StoreListScreen> {
   late StoreListState currentState;
-  bool flag = true;
+  bool flagId = true;
   String? title;
 
   void refresh() {
@@ -41,10 +41,10 @@ class StoreListScreenState extends State<StoreListScreen> {
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
-    if (args is StoreCategoryModel && flag) {
+    if (args is StoreCategoryModel && flagId) {
       title = args.storeCategoryName;
       widget._storeListManager.getStoresCategoryList(args.id, this);
-      flag = false;
+      flagId = false;
     }
     return GestureDetector(
       onTap: () {

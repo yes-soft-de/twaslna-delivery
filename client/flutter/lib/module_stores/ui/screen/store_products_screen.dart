@@ -18,11 +18,14 @@ class StoreProductsScreen extends StatefulWidget {
 
 class StoreProductsScreenState extends State<StoreProductsScreen> {
   late StoreProductsState currentState;
-
+  late AsyncSnapshot snapshot = AsyncSnapshot.nothing();
   void refresh() {
     if (mounted) {
       setState(() {});
     }
+  }
+  void getProductsByCategory(storeId , categoryId) async {
+     widget.stateManager.getProductsByCategory(storeId, categoryId);
   }
 
   @override
@@ -31,6 +34,10 @@ class StoreProductsScreenState extends State<StoreProductsScreen> {
     currentState = StoreProductsLoadingState(this);
     widget.stateManager.stateStream.listen((event) {
       currentState = event;
+      if (mounted) setState(() {});
+    });
+    widget.stateManager.categoryStream.listen((event) {
+      snapshot = event;
       if (mounted) setState(() {});
     });
   }

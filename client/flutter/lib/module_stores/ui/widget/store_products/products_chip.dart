@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ProductsChips extends StatelessWidget {
+  final int id;
   final String title;
   final bool active;
-  final Function(String) onChange;
-  ProductsChips({required this.title, required this.active,required this.onChange});
+  final Function(String,int) onChange;
+  ProductsChips({required this.id,required this.title, required this.active,required this.onChange});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class ProductsChips extends StatelessWidget {
       padding: const EdgeInsets.only(right:8.0,left:8.0),
       child: InkWell(
         onTap: (){
-          onChange(title);
+          onChange(title,id);
         },
         child: Container(
           decoration: BoxDecoration(

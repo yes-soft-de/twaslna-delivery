@@ -23,11 +23,17 @@ class StoreProductsLoadedState extends StoreProductsState {
   StoreProductsScreenState screenState;
   List<ProductModel> topWantedProducts;
   List<CategoryModel> productsCategory;
-  StoreProductsLoadedState(this.screenState,this.topWantedProducts,this.productsCategory) : super(screenState);
+
+  StoreProductsLoadedState(
+      this.screenState, this.topWantedProducts, this.productsCategory)
+      : super(screenState);
   late String title;
   late String backgroundImage;
   String defaultValue = S.current.mostWanted;
-  List <CartModel> carts = [];
+  List<CartModel> carts = [];
+  late int storeId;
+  int categoryId = -1;
+
   @override
   Widget getUI(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -36,6 +42,7 @@ class StoreProductsLoadedState extends StoreProductsState {
     if (args is StoreModel) {
       title = args.storeOwnerName;
       backgroundImage = args.image;
+      storeId = args.id;
     }
     return Stack(
       children: [
@@ -77,7 +84,7 @@ class StoreProductsLoadedState extends StoreProductsState {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(
-                                right: 28.0, left: 28.0,bottom: 25),
+                                right: 28.0, left: 28.0, bottom: 25),
                             child: CustomDeliverySearch(
                               hintText: S.of(context).searchFor,
                             ),
@@ -91,24 +98,27 @@ class StoreProductsLoadedState extends StoreProductsState {
                                     parent: AlwaysScrollableScrollPhysics()),
                                 padding: EdgeInsets.zero,
                                 scrollDirection: Axis.horizontal,
-                                children: [
-                                  ProductsChips(
-                                    onChange: (value){
-                                      defaultValue = value;
-                                      screenState.refresh();
-                                    },
-                                    title: S.of(context).mostWanted,
-                                    active: defaultValue == S.of(context).mostWanted,
-                                  ),
-                                ],
+                                children: getCategories(productsCategory),
                               ),
                             ),
                           ),
-                          ListView(
-                            physics: ScrollPhysics(),
-                            shrinkWrap: true,
-                            children:getProducts(topWantedProducts),
-                          ),
+                          screenState.snapshot.connectionState !=
+                                  ConnectionState.waiting
+                              ? ListView(
+                                  physics: ScrollPhysics(),
+                                  shrinkWrap: true,
+                                  children: getProducts(
+                                      defaultValue == S.of(context).mostWanted
+                                          ? topWantedProducts
+                                          : screenState.snapshot.data),
+                                )
+                              : Container(
+                                  height: 125,
+                                  width: double.maxFinite,
+                                  child: Align(
+                                      alignment:
+                                          AlignmentDirectional.bottomCenter,
+                                      child: CircularProgressIndicator())),
                           SizedBox(
                             height: 75,
                           ),
@@ -117,8 +127,9 @@ class StoreProductsLoadedState extends StoreProductsState {
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
-                      child: CheckoutButton(onPressed: (){},
-                      total: getTotal(carts),
+                      child: CheckoutButton(
+                        onPressed: () {},
+                        total: getTotal(carts),
                       ),
                     ),
                   ],
@@ -133,51 +144,86 @@ class StoreProductsLoadedState extends StoreProductsState {
 
   List<Widget> getProducts(List<ProductModel> topWantedProducts) {
     if (topWantedProducts.isEmpty) return [];
-      List<ProductsCard> prods = [];
-      topWantedProducts.forEach((element) {
-        prods.add(ProductsCard(title: element.title, image:element.image, price:element.price, quantity:(q){
-          if (q>0){
-            carts.removeWhere((e) =>e.id == element.id);
-            carts.add(CartModel(id: element.id, quantity: q, price: element.price));
-          }
-          if (q==0) {
-            carts.removeWhere((e) =>e.id == element.id);
-          }
-          screenState.refresh();
-        }));
-      });
-      return prods;
+    List<ProductsCard> prods = [];
+    topWantedProducts.forEach((element) {
+      prods.add(ProductsCard(
+          title: element.title,
+          image: element.image,
+          price: element.price,
+          defaultQuantity: getQuantity(element.id),
+          quantity: (q) {
+            if (q > 0) {
+              carts.removeWhere((e) => e.id == element.id);
+              carts.add(
+                  CartModel(id: element.id, quantity: q, price: element.price));
+            }
+            if (q == 0) {
+              carts.removeWhere((e) => e.id == element.id);
+            }
+            screenState.refresh();
+          }));
+    });
+    return prods;
   }
+
   List<Widget> getCategories(List<CategoryModel> categoriesModel) {
     if (categoriesModel.isEmpty) {
-      return [ProductsChips(
-      onChange: (value){
+      return [
+        ProductsChips(
+          id: -1,
+          onChange: (value, id) {
+            defaultValue = value;
+            categoryId = id;
+            screenState.refresh();
+          },
+          title: S.current.mostWanted,
+          active: defaultValue == S.current.mostWanted,
+        )
+      ];
+    }
+    List<ProductsChips> cats = [];
+    cats.add(ProductsChips(
+      id: -1,
+      onChange: (value, id) {
         defaultValue = value;
+        categoryId = id;
         screenState.refresh();
       },
       title: S.current.mostWanted,
       active: defaultValue == S.current.mostWanted,
-    )];
-    }
-    List <ProductsChips> cats = [];
+    ));
     categoriesModel.forEach((element) {
       cats.add(ProductsChips(
+        id: element.id,
         title: element.label,
         active: defaultValue == element.label,
-        onChange: (value){
+        onChange: (value, id) {
           defaultValue = value;
-          screenState.refresh();
+          categoryId = id;
+          screenState.getProductsByCategory(storeId, categoryId);
+          //screenState.refresh();
         },
       ));
     });
     return cats;
   }
 
+  int getQuantity(int id) {
+    if (carts.isEmpty) {
+      return 0;
+    } else {
+      int quantity = 0;
+      carts.forEach((element) {
+        quantity = element.id == id ? element.quantity : quantity;
+      });
+      return quantity;
+    }
+  }
 }
 
 dynamic getTotal(List<CartModel> carts) {
   var total = 0;
-  for (int i =0;i<carts.length;i++){
+  for (int i = 0; i < carts.length; i++) {
     total += carts[i].price * carts[i].quantity;
   }
   return total.toString();
