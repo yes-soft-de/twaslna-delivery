@@ -9,6 +9,7 @@ import 'package:twaslna_delivery/module_stores/store_routes.dart';
 import 'package:twaslna_delivery/utils/customIcon/custom_icons.dart';
 import 'package:twaslna_delivery/utils/images/images.dart';
 import 'package:twaslna_delivery/utils/models/product.dart';
+import 'package:twaslna_delivery/utils/models/store.dart';
 import 'package:twaslna_delivery/utils/models/store_category.dart';
 import 'package:twaslna_delivery/utils/text_style/text_style.dart';
 
@@ -16,7 +17,8 @@ class HomeLoadedState extends HomeState {
   HomeScreenState screenState;
   List<ProductModel> topProducts;
   List<StoreCategoryModel> categories;
-  HomeLoadedState(this.screenState,this.topProducts,this.categories) : super(screenState);
+  List<StoreModel> bestStores;
+  HomeLoadedState(this.screenState,this.topProducts,this.categories,this.bestStores) : super(screenState);
 
   @override
   Widget getUI(BuildContext context) {
@@ -33,8 +35,8 @@ class HomeLoadedState extends HomeState {
             scrollDirection: Axis.horizontal,
             physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             children: [
-              ProductCard(title:S.of(context).deliverForMe, image:ImageAsset.SEND_ON_ME),
-              ProductCard(title: S.of(context).externalOrder, image:ImageAsset.LOGO),
+              HomeCard(title:S.of(context).deliverForMe, image:ImageAsset.SEND_ON_ME),
+              HomeCard(title: S.of(context).externalOrder, image:ImageAsset.LOGO),
             ],
           ),
         ),
@@ -56,13 +58,10 @@ class HomeLoadedState extends HomeState {
         ),
         SizedBox(
           height: 125,
-          child: ListView.builder(
+          child: ListView(
             physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             scrollDirection: Axis.horizontal,
-            itemCount: 10,
-            itemBuilder: (_, index) {
-              return ProductCard(title: 'ماركت',image: 'https://images.myguide-cdn.com/content/1/large/spanish-supermarket-shopping-511175.jpeg',);
-            },
+            children:getBestStores(bestStores),
           ),
         ),
         ListTile(leading: Icon(CustomIcon.near_me,color: Theme.of(context).primaryColor,size: 18,),
@@ -76,7 +75,7 @@ class HomeLoadedState extends HomeState {
             scrollDirection: Axis.horizontal,
             itemCount: 10,
             itemBuilder: (_, index) {
-              return ProductCard(title:'متجر', image: 'https://media-cdn.tripadvisor.com/media/photo-s/17/75/3f/d1/restaurant-in-valkenswaard.jpg');
+              return HomeCard(title:'متجر', image: 'https://media-cdn.tripadvisor.com/media/photo-s/17/75/3f/d1/restaurant-in-valkenswaard.jpg');
             },
           ),
         ),
@@ -101,23 +100,35 @@ class HomeLoadedState extends HomeState {
 
   List<Widget> _getTopProducts(List<ProductModel> topProducts) {
     if (topProducts.isEmpty) return [];
-    List<ProductCard> top = [];
+    List<HomeCard> top = [];
     topProducts.forEach((element) {
-      top.add(ProductCard(title:element.title,image: element.image,));
+      top.add(HomeCard(title:element.title,image: element.image,));
     });
     return top;
   }
 
   List<Widget> getCategories(List<StoreCategoryModel> categories) {
     if (categories.isEmpty) return [];
-    List<ProductCard> cats = [];
+    List<HomeCard> cats = [];
     categories.forEach((element) {
-      cats.add(ProductCard(title:element.storeCategoryName,image: element.image,
+      cats.add(HomeCard(title:element.storeCategoryName,image: element.image,
       onTap: () {
         Navigator.of(screenState.context).pushNamed(StoreRoutes.STORE_LIST_SCREEN,arguments:element);
       },
       ));
     });
     return cats;
+  }
+  List<Widget> getBestStores(List<StoreModel> stores) {
+    if (stores.isEmpty) return [];
+    List<HomeCard> bestStoresCards = [];
+    stores.forEach((element) {
+      bestStoresCards.add(HomeCard(title:element.storeOwnerName,image: element.image,
+        onTap: () {
+          Navigator.of(screenState.context).pushNamed(StoreRoutes.STORE_PRODUCTS,arguments:element);
+        },
+      ));
+    });
+    return bestStoresCards;
   }
 }

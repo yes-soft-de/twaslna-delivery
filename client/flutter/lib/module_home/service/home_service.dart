@@ -1,19 +1,21 @@
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_home/manager/home_manager.dart';
+import 'package:twaslna_delivery/module_home/response/best_store.dart';
 import 'package:twaslna_delivery/module_home/response/products.dart';
 import 'package:twaslna_delivery/module_home/response/store_categories.dart';
 import 'package:twaslna_delivery/utils/models/product.dart';
+import 'package:twaslna_delivery/utils/models/store.dart';
 import 'package:twaslna_delivery/utils/models/store_category.dart';
 
 @injectable
 class HomeService {
-  HomeManager _homeManager;
+  final HomeManager _homeManager;
 
   HomeService(this._homeManager);
 
   Future getTopProducts() async {
-    Products? topProducts = await _homeManager.getTopProducts();
+    ProductsResponse? topProducts = await _homeManager.getTopProducts();
     if (topProducts == null) return null;
     if (topProducts.msgErr != null) {
       return topProducts.msgErr;
@@ -31,7 +33,8 @@ class HomeService {
   }
 
   Future getStoreCategories() async {
-    StoreCategories? storeCategories = await _homeManager.getStoreCategories();
+    StoreCategoriesResponse? storeCategories =
+        await _homeManager.getStoreCategories();
     if (storeCategories == null) return null;
     if (storeCategories.msgErr != null) return storeCategories.msgErr;
     List storeCategoriesModel = <StoreCategoryModel>[];
@@ -46,12 +49,30 @@ class HomeService {
     return storeCategoriesModel;
   }
 
+  Future getBestStores() async {
+    BestStoreResponse? bestStores = await _homeManager.getBestStores();
+    if (bestStores == null) return null;
+    List bestStoresModel = <StoreModel>[];
+    bestStores.data?.forEach((element) {
+      bestStoresModel.add(StoreModel(
+          id: element.id ?? -1,
+          storeOwnerName: element.storeOwnerName ?? S.current.store,
+          image:
+              'https://www.gannett-cdn.com/media/2020/03/23/USATODAY/usatsports/247WallSt.com-247WS-657876-imageforentry9-vp7.jpg?width=660&height=371&fit=crop&format=pjpg&auto=webp'));
+    });
+    return bestStoresModel;
+  }
+
   Future getHomeData() async {
     var top = await getTopProducts();
     var storeCategories = await getStoreCategories();
-    if (top == null && storeCategories == null) return null;
+    var bestStores = await getBestStores();
+    if (top == null && storeCategories == null && bestStores == null) return null;
+    top ??= <ProductModel>[];
+    storeCategories ??= <StoreCategoryModel>[];
+    bestStores ??= <StoreModel>[];
     if (top is String) top = <ProductModel>[];
     if (storeCategories is String) storeCategories = <StoreCategoryModel>[];
-    return [top, storeCategories];
+    return [top, storeCategories,bestStores];
   }
 }

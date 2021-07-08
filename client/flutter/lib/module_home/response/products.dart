@@ -1,12 +1,12 @@
-class Products {
+class ProductsResponse {
   String? statusCode;
   String? msg;
   List<Data>? data;
   String? msgErr;
 
-  Products({this.statusCode, this.msg, this.data, this.msgErr});
+  ProductsResponse({this.statusCode, this.msg, this.data, this.msgErr});
 
-  Products.fromJson(dynamic json) {
+  ProductsResponse.fromJson(dynamic json) {
     statusCode = json['status_code'];
     msg = json['msg'];
     if (json['Data'] != null) {

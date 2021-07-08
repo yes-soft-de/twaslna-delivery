@@ -11,7 +11,7 @@ import 'package:twaslna_delivery/utils/models/product.dart';
 
 @injectable
 class HomeStateManager {
-  HomeService _homeService;
+  final HomeService _homeService;
   HomeStateManager(this._homeService);
   final PublishSubject<HomeState> _stateSubject = PublishSubject();
   Stream<HomeState> get stateStream => _stateSubject.stream;
@@ -23,7 +23,7 @@ class HomeStateManager {
         _stateSubject.add(HomeErrorState(screenState,S.current.networkError));
       }
       else {
-        _stateSubject.add(HomeLoadedState(screenState, value[0],value[1]));
+        _stateSubject.add(HomeLoadedState(screenState, value[0],value[1],value[2]));
       }
     });
   }

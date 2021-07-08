@@ -1,16 +1,16 @@
-class StoreCategories {
+class StoreCategoriesResponse {
   String? statusCode;
   String? msg;
   List<Data>? data;
   String? msgErr;
-  StoreCategories({
+  StoreCategoriesResponse({
       this.statusCode, 
       this.msg, 
       this.data,
       this.msgErr
   });
 
-  StoreCategories.fromJson(dynamic json) {
+  StoreCategoriesResponse.fromJson(dynamic json) {
     statusCode = json['status_code'];
     msg = json['msg'];
     if (json['Data'] != null) {
