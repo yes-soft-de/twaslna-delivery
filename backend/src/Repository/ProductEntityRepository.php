@@ -96,15 +96,15 @@ class ProductEntityRepository extends ServiceEntityRepository
             
             ->leftJoin(StoreProductEntity::class, 'StoreProduct', Join::WITH, 'StoreProduct.productID = :id')
 
-            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = product.id')
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = StoreProduct.storeOwnerProfileID')
 
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerProfile.storeOwnerID = storeOwnerBranch.ownerID')
 
             ->andWhere('product.id= :id')
             ->setParameter('id',$id)
             ->getQuery()
-            // ->getOneOrNullResult();
-            ->getResult();
+            ->getOneOrNullResult();
+            // ->getResult();
     }
 
     public function getProductsTopWanted()
@@ -145,13 +145,11 @@ class ProductEntityRepository extends ServiceEntityRepository
 
             ->addSelect('StoreProduct.productPrice','StoreProduct.storeOwnerProfileID')
 
-
             ->addSelect('count(orderDetailEntity.productID) as countProduct, orderDetailEntity.productID')
             ->addSelect('storeOwnerProfile.id as storeOwnerProfileID', 'storeOwnerProfile.storeOwnerName as storeOwnerName','storeOwnerProfile.storeOwnerID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone', 'storeOwnerProfile.storeOwnerID')
 
             ->addSelect('storeOwnerBranch.location','storeOwnerBranch.branchName','storeOwnerBranch.city')
 
-            
             ->leftJoin(StoreProductEntity::class, 'StoreProduct', Join::WITH, 'product.id = StoreProduct.productID')
 
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = :storeOwnerProfileId')
@@ -170,5 +168,31 @@ class ProductEntityRepository extends ServiceEntityRepository
             ->addOrderBy('countProduct','DESC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function getProductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId)
+    {
+        return $this->createQueryBuilder('product')
+        ->select('product.id', 'product.productName', 'product.productImage', 'product.productImage', 'product.ProductCategoryID')
+        ->addSelect('StoreProduct.productPrice')
+
+        ->addSelect('storeOwnerProfile.id as storeOwnerProfileID', 'storeOwnerProfile.storeOwnerName as storeOwnerName','storeOwnerProfile.storeOwnerID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone', 'storeOwnerProfile.storeOwnerID')
+
+        ->addSelect('storeOwnerBranch.location','storeOwnerBranch.branchName','storeOwnerBranch.city')
+        
+        ->leftJoin(StoreProductEntity::class, 'StoreProduct', Join::WITH, 'StoreProduct.productID = :productId')
+
+        ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = :storeOwnerProfileId')
+
+        ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerProfile.storeOwnerID = storeOwnerBranch.ownerID')
+
+        ->andWhere('StoreProduct.storeOwnerProfileID= :storeOwnerProfileId')
+        ->andWhere('product.id = :productId')
+
+        ->setParameter('productId',$productId)
+        ->setParameter('storeOwnerProfileId',$storeOwnerProfileId)
+        ->getQuery()
+        ->getOneOrNullResult();
+        // ->getResult();
     }
 }

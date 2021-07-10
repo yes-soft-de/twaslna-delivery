@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\AutoMapping;
 use App\Request\ProductCreateRequest;
+use App\Request\ProductUpdateRequest;
 use App\Service\ProductService;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -75,7 +76,6 @@ class ProductController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
-//TODO
     /**
      * @Route("/product/{id}", name="getProductById", methods={"GET"})
      * @return JsonResponse
@@ -107,5 +107,31 @@ class ProductController extends BaseController
         $result = $this->productService->productsTopWantedOfSpecificStoreOwner($storeOwnerProfileId);
 
         return $this->response($result, self::FETCH);
+    }
+    /**
+     * @Route("/productByProductIdAndStoreOwnerProfileId/{storeOwnerProfileId}/{productId}", name="getProductByProductIdAndStoreOwnerProfileId", methods={"GET"})
+     * @return JsonResponse
+     */
+    public function getProductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId)
+    {
+        $result = $this->productService->getProductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId);
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * @Route("/updateProductByAdmin", name="updateProductByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateProductByAdmin(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, ProductUpdateRequest::class, (object)$data);
+        $result = $this->productService->updateProductByAdmin($request);
+
+        return $this->response($result, self::CREATE);
     }
 }

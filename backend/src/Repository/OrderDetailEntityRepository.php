@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\OrderDetailEntity;
 use App\Entity\ProductEntity;
+use App\Entity\StoreProductEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
@@ -34,12 +35,33 @@ class OrderDetailEntityRepository extends ServiceEntityRepository
     public function getOrderIdByOrderNumber($orderNumber)
     {
         return $this->createQueryBuilder('OrderDetailEntity')
-            ->select('OrderDetailEntity.id','OrderDetailEntity.orderID', 'OrderDetailEntity.productID', 'OrderDetailEntity.countProduct')
-            ->addSelect('ProductEntity.id as productID', 'ProductEntity.productName', 'ProductEntity.productImage', 'ProductEntity.productPrice', 'ProductEntity.storeOwnerProfileID', 'ProductEntity.ProductCategoryID', 'OrderDetailEntity.orderNumber')
+            ->select('OrderDetailEntity.id','OrderDetailEntity.orderID', 'OrderDetailEntity.productID', 'OrderDetailEntity.countProduct', 'OrderDetailEntity.orderNumber')
+            ->addSelect('ProductEntity.id as productID', 'ProductEntity.productName', 'ProductEntity.productImage', 'ProductEntity.ProductCategoryID')
+            ->addSelect('StoreProductEntity.productPrice', 'StoreProductEntity.storeOwnerProfileID')
+
             ->leftJoin(ProductEntity::class, 'ProductEntity', Join::WITH, 'ProductEntity.id = OrderDetailEntity.productID')
+
+            ->leftJoin(StoreProductEntity::class, 'StoreProductEntity', Join::WITH, 'StoreProductEntity.productID = OrderDetailEntity.productID')
             
             ->andWhere('OrderDetailEntity.orderNumber = :orderNumber')
             ->setParameter('orderNumber', $orderNumber)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getOrderNumberByOrderId($orderID)
+    {
+        return $this->createQueryBuilder('OrderDetailEntity')
+            ->select('OrderDetailEntity.id','OrderDetailEntity.orderID', 'OrderDetailEntity.productID', 'OrderDetailEntity.countProduct', 'OrderDetailEntity.orderNumber')
+            ->addSelect('ProductEntity.id as productID', 'ProductEntity.productName', 'ProductEntity.productImage', 'ProductEntity.ProductCategoryID')
+            ->addSelect('StoreProductEntity.productPrice', 'StoreProductEntity.storeOwnerProfileID')
+
+            ->leftJoin(ProductEntity::class, 'ProductEntity', Join::WITH, 'ProductEntity.id = OrderDetailEntity.productID')
+
+            ->leftJoin(StoreProductEntity::class, 'StoreProductEntity', Join::WITH, 'StoreProductEntity.productID = OrderDetailEntity.productID')
+            
+            ->andWhere('OrderDetailEntity.orderID = :orderID')
+            ->setParameter('orderID', $orderID)
             ->getQuery()
             ->getResult();
     }

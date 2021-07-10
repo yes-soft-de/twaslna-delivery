@@ -48,6 +48,16 @@ class OrderDetailService
        return $response;
     }
 
+    public function getOrderNumberByOrderId($orderID)
+    {
+        $response = [];
+        $items = $this->orderDetailManager->getOrderNumberByOrderId($orderID);
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', OrderDetailResponse::class, $item);
+        }
+       return $response;
+    }
+
     public function orderDetailDelete($id)
     {
         return $this->orderDetailManager->orderDetailDelete($id);

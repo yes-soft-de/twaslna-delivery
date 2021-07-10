@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\ProductEntity;
 use App\Repository\ProductEntityRepository;
 use App\Request\ProductCreateRequest;
+use App\Request\ProductUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ProductManager
@@ -60,5 +61,24 @@ class ProductManager
     public function productsTopWantedOfSpecificStoreOwner($storeOwnerProfileId)
     {
         return $this->productEntityRepository->productsTopWantedOfSpecificStoreOwner($storeOwnerProfileId);
+    }
+
+    public function getProductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId)
+    {
+        return $this->productEntityRepository->getProductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId);
+    }
+
+    public function updateProductByAdmin(ProductUpdateRequest $request)
+    {
+        $entity = $this->productEntityRepository->find($request->getId());
+
+        if (!$entity) {
+            return null;
+        }
+        $entity = $this->autoMapping->mapToObject(ProductUpdateRequest::class, ProductEntity::class, $request, $entity);
+
+        $this->entityManager->flush();
+
+        return $entity;
     }
 }

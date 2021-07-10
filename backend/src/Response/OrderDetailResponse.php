@@ -12,7 +12,6 @@ class OrderDetailResponse
     public $countProduct;
     public $storeOwnerProfileID;
     public $ProductCategoryID;
-    public $ownerID;
     public $orderNumber;
     public $productID;
   

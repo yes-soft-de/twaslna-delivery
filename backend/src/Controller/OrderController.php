@@ -25,7 +25,6 @@ class OrderController extends BaseController
     private $validator;
     private $orderService;
    
-
     public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, OrderService $orderService)
     {
         parent::__construct($serializer);
@@ -61,19 +60,6 @@ class OrderController extends BaseController
     }
 
      /**
-      * @Route("/order/{orderId}", name="GetOrderByIDForAdmin", methods={"GET"})
-      * @IsGranted("ROLE_ADMIN")
-      * @param Request $request
-      * @return JsonResponse
-      */
-    public function getOrderById($orderId)
-    {
-        $result = $this->orderService->getOrderById($orderId);
-
-        return $this->response($result, self::FETCH);
-    }
-
-     /**
       * @Route("orders", name="GetOrdersByOwnerID", methods={"GET"})
       * @IsGranted("ROLE_OWNER")
       * @return JsonResponse
@@ -82,18 +68,6 @@ class OrderController extends BaseController
     {
         $result = $this->orderService->getOrdersByOwnerID($this->getUserId());
 
-        return $this->response($result, self::FETCH);
-    }
-
-    /**
-     * @Route("/orderStatus/{orderId}", name="orderStatus", methods={"GET"})
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function orderStatus($orderId)
-    {
-        $result = $this->orderService->orderStatus($orderId);
-       
         return $this->response($result, self::FETCH);
     }
 
@@ -120,25 +94,6 @@ class OrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
-    
-    //To accept the order AND change state
-    //state:on way to pick order or in store or picked or ongoing or cash or delivered
-    /**
-     * @Route("/orderUpdateState", name="orderUpdateStateByCaptain", methods={"PUT"})
-     * @IsGranted("ROLE_CAPTAIN")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    // public function orderUpdateStateByCaptain(Request $request)
-    // {
-    //     $data = json_decode($request->getContent(), true);
-
-    //     $request = $this->autoMapping->map(stdClass::class, OrderUpdateStateByCaptainRequest::class, (object) $data);
-    //     $request->setCaptainID($this->getUserId());
-    //     $response = $this->orderService->orderUpdateStateByCaptain($request);
-      
-    //     return $this->response($response, self::UPDATE);
-    // }
     
     //To accept the order AND change state
     //state:on way to pick order or in store or picked or ongoing or cash or delivered
