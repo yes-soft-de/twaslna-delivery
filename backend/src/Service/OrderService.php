@@ -435,10 +435,12 @@ class OrderService
         $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
       
         if ($order[0]['ownerID']) {
-            $storeOwner = $this->storeOwnerProfileService->getStoreOwnerProfileById($orderDetails[0]->storeOwnerProfileID);
-          
-            $response['orderDetails'] = $orderDetails;
-            $response['storeOwner'] = $storeOwner;
+            if($orderDetails[0]->storeOwnerProfileID){
+                $storeOwner = $this->storeOwnerProfileService->getStoreOwnerProfileById($orderDetails[0]->storeOwnerProfileID);
+            
+                $response['orderDetails'] = $orderDetails;
+                $response['storeOwner'] = $storeOwner;
+            }
         }
         $response['order'] = $order[0];
     }

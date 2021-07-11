@@ -184,7 +184,6 @@ class OrderController extends BaseController
     public function createClientOrder(Request $request)
     {  
         $data = json_decode($request->getContent(), true);
-      
         $request = $this->autoMapping->map(stdClass::class, OrderClientCreateRequest::class, (object)$data);
         $request->setClientID($this->getUserId());
         $request->setProducts($data['products']);
