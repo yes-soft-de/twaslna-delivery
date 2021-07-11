@@ -18,6 +18,8 @@ class OrderUpdateByClientRequest
     private $roomID;
     private $clientID;
     private $products;
+    private $orderCost;
+    private $deliveryCost;
 
      /**
      * Get the value of orderNumber
@@ -131,6 +133,18 @@ class OrderUpdateByClientRequest
     public function setDeliveryDate($deliveryDate)
     {
         $this->deliveryDate = $deliveryDate;
+
+        return $this;
+    }
+
+    public function getDeliveryCost()
+    {
+        return $this->deliveryCost;
+    }
+ 
+    public function setDeliveryCost($deliveryCost)
+    {
+        $this->deliveryCost = $deliveryCost;
 
         return $this;
     }

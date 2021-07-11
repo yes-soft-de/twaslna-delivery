@@ -16,4 +16,5 @@ class OrderClosestResponse
     public $branches;
     public $image;
     public $deliveryCost;
+    public $orderCost;
 }

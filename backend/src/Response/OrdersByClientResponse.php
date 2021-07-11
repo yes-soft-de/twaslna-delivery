@@ -9,4 +9,6 @@ class OrdersByClientResponse
     public $createdAt;
     public $orderNumber;
     public $amount;
+    public $deliveryCost;
+    public $orderCost;
 }

@@ -495,6 +495,7 @@ class OrderService
         $response = [];
         $orders = $this->orderManager->getOrdersByClientID($clientID);
        foreach ($orders as $order) {
+           $order['amount'] = $order['deliveryCost'] + $order['orderCost'];
             $response[] = $this->autoMapping->map('array', OrdersByClientResponse::class, $order);
        }
 
