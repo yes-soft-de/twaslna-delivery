@@ -435,10 +435,12 @@ class OrderService
         $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
       
         if ($order[0]['ownerID']) {
-            $storeOwner = $this->storeOwnerProfileService->getStoreOwnerProfileById($orderDetails[0]->storeOwnerProfileID);
-          
-            $response['orderDetails'] = $orderDetails;
-            $response['storeOwner'] = $storeOwner;
+            if($orderDetails[0]->storeOwnerProfileID){
+                $storeOwner = $this->storeOwnerProfileService->getStoreOwnerProfileById($orderDetails[0]->storeOwnerProfileID);
+            
+                $response['orderDetails'] = $orderDetails;
+                $response['storeOwner'] = $storeOwner;
+            }
         }
         $response['order'] = $order[0];
     }
@@ -447,23 +449,26 @@ class OrderService
 
     public function orderUpdateByClient(OrderUpdateByClientRequest $request)
     {
-        $response = ['Error, Not updated'];
-        $orderDetails = $this->orderDetailService->getOrderIdByOrderNumber($request->getOrderNumber());
-        $orderUpdate = $this->orderManager->orderUpdateByClient($request, $orderDetails[0]->getOrderID());
+        $response = ['Error'];
+        $orderDetails = $this->orderDetailService->getOrderIdWithOutStoreProductByOrderNumber($request->getOrderNumber());
+        if($orderDetails) {
+            $orderUpdate = $this->orderManager->orderUpdateByClient($request, $orderDetails[0]->getOrderID());
+            if($orderUpdate) {
+                foreach ($orderDetails as $orderDetail) {
+                $orderDetailDelete = $this->orderDetailService->orderDetailDelete($orderDetail->getId());
+                }
 
-        foreach ($orderDetails as $orderDetail) {
-          $orderDetailDelete = $this->orderDetailService->orderDetailDelete($orderDetail->getId());
-        }
-
-        if ($orderDetailDelete == "Deleted") {
-            $products = $request->getProducts();
-            foreach ($products as $product) {
-                $productID = $product['productID'];
-                $countProduct = $product['countProduct'];
-                $createOrderDetail = $this->orderDetailService->createOrderDetail($orderDetails[0]->getOrderID(), $productID, $countProduct, $request->getOrderNumber());
-            }
-           return $response = $this->getOrderStatusByOrderNumber($request->getOrderNumber());  
-        }         
+                if ($orderDetailDelete == "Deleted") {
+                    $products = $request->getProducts();
+                    foreach ($products as $product) {
+                        $productID = $product['productID'];
+                        $countProduct = $product['countProduct'];
+                        $createOrderDetail = $this->orderDetailService->createOrderDetail($orderDetails[0]->getOrderID(), $productID, $countProduct, $request->getOrderNumber());
+                    }
+                return $response = $this->getOrderStatusByOrderNumber($request->getOrderNumber());  
+                } 
+            }     
+        }       
         return $response;
     }
 
@@ -492,6 +497,7 @@ class OrderService
         $response = [];
         $orders = $this->orderManager->getOrdersByClientID($clientID);
        foreach ($orders as $order) {
+           $order['amount'] = $order['deliveryCost'] + $order['orderCost'];
             $response[] = $this->autoMapping->map('array', OrdersByClientResponse::class, $order);
        }
 

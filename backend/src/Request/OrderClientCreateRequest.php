@@ -13,6 +13,8 @@ class OrderClientCreateRequest
     private $roomID;
     private $clientID;
     private $products;
+    private $orderCost;
+    private $deliveryCost;
 
      /**
      * @param mixed $ownerID
@@ -86,6 +88,30 @@ class OrderClientCreateRequest
     public function setProducts($products)
     {
         $this->products = $products;
+
+        return $this;
+    }
+ 
+    public function getOrderCost()
+    {
+        return $this->orderCost;
+    }
+ 
+    public function setOrderCost($orderCost)
+    {
+        $this->orderCost = $orderCost;
+
+        return $this;
+    }
+ 
+    public function getDeliveryCost()
+    {
+        return $this->deliveryCost;
+    }
+ 
+    public function setDeliveryCost($deliveryCost)
+    {
+        $this->deliveryCost = $deliveryCost;
 
         return $this;
     }

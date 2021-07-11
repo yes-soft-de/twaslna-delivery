@@ -48,6 +48,16 @@ class OrderDetailService
        return $response;
     }
 
+    public function getOrderIdWithOutStoreProductByOrderNumber($orderNumber)
+    {
+        $response = [];
+        $items = $this->orderDetailManager->getOrderIdWithOutStoreProductByOrderNumber($orderNumber);
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', OrderDetailResponse::class, $item);
+        }
+       return $response;
+    }
+
     public function getOrderNumberByOrderId($orderID)
     {
         $response = [];

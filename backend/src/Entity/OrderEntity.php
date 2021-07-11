@@ -109,6 +109,16 @@ class OrderEntity
      */
     private $detail;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $deliveryCost;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $orderCost;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -336,5 +346,28 @@ class OrderEntity
 
         return $this;
     }
+ 
+    public function getDeliveryCost()
+    {
+        return $this->deliveryCost;
+    }
+ 
+    public function setDeliveryCost($deliveryCost)
+    {
+        $this->deliveryCost = $deliveryCost;
 
+        return $this;
+    }
+
+    public function getOrderCost()
+    {
+        return $this->orderCost;
+    }
+
+    public function setOrderCost($orderCost)
+    {
+        $this->orderCost = $orderCost;
+
+        return $this;
+    }
 }

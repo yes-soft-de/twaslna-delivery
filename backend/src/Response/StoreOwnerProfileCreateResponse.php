@@ -31,4 +31,6 @@ class StoreOwnerProfileCreateResponse
     public $baseURL;
     
     public $bank;
+
+    public $deliveryCost;
 }

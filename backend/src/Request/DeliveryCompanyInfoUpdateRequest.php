@@ -12,6 +12,7 @@ class DeliveryCompanyInfoUpdateRequest
     private $bank;
     private $stc;
     private $email;
+    private $deliveryCost;
 
     /**
      * Get the value of id

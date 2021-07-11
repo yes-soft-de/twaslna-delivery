@@ -45,6 +45,20 @@ class OrderDetailEntityRepository extends ServiceEntityRepository
             
             ->andWhere('OrderDetailEntity.orderNumber = :orderNumber')
             ->setParameter('orderNumber', $orderNumber)
+            
+            ->getQuery()
+            ->getResult();
+    }
+    public function getOrderIdWithOutStoreProductByOrderNumber($orderNumber)
+    {
+        return $this->createQueryBuilder('OrderDetailEntity')
+            ->select('OrderDetailEntity.id','OrderDetailEntity.orderID', 'OrderDetailEntity.productID', 'OrderDetailEntity.countProduct', 'OrderDetailEntity.orderNumber')
+            ->addSelect('ProductEntity.id as productID', 'ProductEntity.productName', 'ProductEntity.productImage', 'ProductEntity.ProductCategoryID')
+
+            ->leftJoin(ProductEntity::class, 'ProductEntity', Join::WITH, 'ProductEntity.id = OrderDetailEntity.productID')
+
+            ->andWhere('OrderDetailEntity.orderNumber = :orderNumber')
+            ->setParameter('orderNumber', $orderNumber)
             ->getQuery()
             ->getResult();
     }

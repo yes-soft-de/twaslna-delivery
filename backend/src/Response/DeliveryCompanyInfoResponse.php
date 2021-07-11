@@ -13,4 +13,5 @@ class DeliveryCompanyInfoResponse
     public $stc;
     public $email;
     public $roomID;
+    public $deliveryCost;
 }

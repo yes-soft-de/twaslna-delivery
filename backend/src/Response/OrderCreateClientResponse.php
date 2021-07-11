@@ -10,4 +10,6 @@ class OrderCreateClientResponse
     public $state;
     public $roomID;
     public $orderDetail;
+    public $deliveryCost;
+    public $orderCost;
 }

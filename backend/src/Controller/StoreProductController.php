@@ -36,6 +36,7 @@ class StoreProductController extends BaseController
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, StoreProductCreateRequest::class, (object)$data);
+        $request->setProducts($data['products']);
         $result = $this->storeProductService->createStoreProductByAdmin($request);
 
         return $this->response($result, self::CREATE);
@@ -54,7 +55,7 @@ class StoreProductController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, StoreProductCreateRequest::class, (object)$data);
 
         $result = $this->storeProductService->createStoreProductByStoreOwner($request, $this->getUserId());
-
+        $request->setProducts($data['products']);
         return $this->response($result, self::CREATE);
     }
 

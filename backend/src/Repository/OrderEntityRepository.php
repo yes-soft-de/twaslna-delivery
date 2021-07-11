@@ -52,7 +52,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function orderStatusByOrderId($orderId)
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->select('OrderEntity.id', 'OrderEntity.ownerID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.deliveryDate', 'OrderEntity.updatedAt', 'OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'OrderEntity.roomID', 'OrderEntity.captainID', 'OrderEntity.createdAt', 'OrderEntity.detail')
+            ->select('OrderEntity.id', 'OrderEntity.ownerID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.deliveryDate', 'OrderEntity.updatedAt', 'OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'OrderEntity.roomID', 'OrderEntity.captainID', 'OrderEntity.createdAt', 'OrderEntity.detail','OrderEntity.deliveryCost', 'OrderEntity.orderCost')
 
             ->andWhere('OrderEntity.id = :orderId')
             ->setParameter('orderId', $orderId)
@@ -63,7 +63,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function closestOrders()
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.createdAt', 'OrderEntity.ownerID', 'OrderEntity.source', 'OrderEntity.payment', 'OrderEntity.detail')
+            ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.createdAt', 'OrderEntity.ownerID', 'OrderEntity.source', 'OrderEntity.payment', 'OrderEntity.detail', 'OrderEntity.deliveryCost', 'OrderEntity.orderCost')
             ->addSelect('orderDetailEntity.id as orderDetailId', 'orderDetailEntity.orderNumber')
 
             ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
@@ -348,17 +348,17 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function getOrdersByClientID($clientID)
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.state', 'OrderEntity.createdAt')
+            ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.state', 'OrderEntity.createdAt','OrderEntity.deliveryCost', 'OrderEntity.orderCost')
             ->addSelect('orderDetailEntity.id as orderDetailId', 'orderDetailEntity.orderNumber')
-            ->addSelect('clientPaymentEntity.id as clientPaymentId', 'clientPaymentEntity.amount')
+            // ->addSelect('clientPaymentEntity.id as clientPaymentId', 'clientPaymentEntity.amount')
 
             ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
 
-            ->leftJoin(ClientPaymentEntity::class, 'clientPaymentEntity', Join::WITH, 'clientPaymentEntity.orderID = OrderEntity.id')
+            // ->leftJoin(ClientPaymentEntity::class, 'clientPaymentEntity', Join::WITH, 'clientPaymentEntity.orderID = OrderEntity.id')
 
             ->andWhere('OrderEntity.clientID = :clientID')
             ->setParameter('clientID', $clientID)
-            ->addGroupBy('clientPaymentId')
+            // ->addGroupBy('clientPaymentId')
             ->getQuery()
             ->getResult();
     }

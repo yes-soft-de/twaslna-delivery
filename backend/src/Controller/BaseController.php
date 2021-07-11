@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\AutoMapping;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -21,20 +23,19 @@ class BaseController extends AbstractController
     }
     const STATE_OK = 200;
     const CREATE = ["created ","201"];
-    const UPDATE = ["updated","204"];
-    const DELETE = ["deleted","401"];
-    const FETCH = ["fetched","200"];
-    const SUBSCRIBE_ERROR = ["subscribe_error","421"];
-    // const CAPTAIN_INACTIVE = ["captain_inactive","422"];
-    const ACCEPTED_ERROR = ["accepted_error","423"];
+    const UPDATE=["updated","204"];
+    const DELETE=["deleted","401"];
+    const FETCH=["fetched","200"];
+    //const NOTFOUND=["Not found", "404"];
 
 
     public function getUserId()
     {
         $userID = 0;
 
-        if ($this->getUser()) {
-            $userID = $this->getUser()->getUsername();
+        if ($this->getUser())
+        {
+            $userID = $this->getUser()->getuserid();
         }
 
         return $userID;
@@ -64,7 +65,6 @@ class BaseController extends AbstractController
      *
      * @return JsonResponse
      */
-
     public function respond($data, $headers = [])
     {
         return new JsonResponse($data, self::STATE_OK, $headers);
@@ -111,9 +111,11 @@ class BaseController extends AbstractController
 
         return new JsonResponse($data, $this->getStatusCode());
     }
-    public function response($result, $status): jsonResponse
+
+    public function response($result, $status) :jsonResponse
     {
-        if ($result != null) {
+        if($result!=null)
+        {
             $encoders = [new JsonEncoder()];
             $normalizers = [new ObjectNormalizer()];
             $this->serializer = new Serializer($normalizers, $encoders);
@@ -122,14 +124,20 @@ class BaseController extends AbstractController
             $response = new jsonResponse(["status_code" => $status[1],
                     "msg" => $status[0] . " " . "Successfully.",
                     "Data" => json_decode($result)
-                ], Response::HTTP_OK);
+                ]
+                , Response::HTTP_OK);
             $response->headers->set('Access-Control-Allow-Headers', 'X-Header-One,X-Header-Two');
             $response->headers->set('Access-Control-Allow-Origin', '*');
             $response->headers->set('Access-Control-Allow-Methods', 'PUT');
             return $response;
         }
-        $response = new JsonResponse(["status_code" => "404", "msg" => "Data not found!"], Response::HTTP_NOT_FOUND);
+        else
+        {
+            $response = new JsonResponse(["status_code"=>"200",
+                 "msg"=>"Data not found!"],
+             Response::HTTP_OK);
 
             return $response;
+        }
     }
 }
