@@ -2449,6 +2449,336 @@ class S {
       args: [],
     );
   }
+
+  /// `Account`
+  String get account {
+    return Intl.message(
+      'Account',
+      name: 'account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal Data`
+  String get personalData {
+    return Intl.message(
+      'Personal Data',
+      name: 'personalData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orders Log`
+  String get orderLog {
+    return Intl.message(
+      'Orders Log',
+      name: 'orderLog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `About`
+  String get about {
+    return Intl.message(
+      'About',
+      name: 'about',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Social Media`
+  String get socialMedia {
+    return Intl.message(
+      'Social Media',
+      name: 'socialMedia',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for a notification`
+  String get searchForNotifications {
+    return Intl.message(
+      'Search for a notification',
+      name: 'searchForNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `category`
+  String get category {
+    return Intl.message(
+      'category',
+      name: 'category',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `product`
+  String get product {
+    return Intl.message(
+      'product',
+      name: 'product',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is problem with your connection , please try again`
+  String get networkError {
+    return Intl.message(
+      'There is problem with your connection , please try again',
+      name: 'networkError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for`
+  String get searchF {
+    return Intl.message(
+      'Search for',
+      name: 'searchF',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Most wanted`
+  String get mostWanted {
+    return Intl.message(
+      'Most wanted',
+      name: 'mostWanted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Checkout`
+  String get checkout {
+    return Intl.message(
+      'Checkout',
+      name: 'checkout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Birth Date`
+  String get birthDate {
+    return Intl.message(
+      'Birth Date',
+      name: 'birthDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `e.g yazan`
+  String get nameHint {
+    return Intl.message(
+      'e.g yazan',
+      name: 'nameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `choose your birth data`
+  String get birthDateHint {
+    return Intl.message(
+      'choose your birth data',
+      name: 'birthDateHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gender`
+  String get gender {
+    return Intl.message(
+      'Gender',
+      name: 'gender',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Male`
+  String get male {
+    return Intl.message(
+      'Male',
+      name: 'male',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Female`
+  String get female {
+    return Intl.message(
+      'Female',
+      name: 'female',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Data`
+  String get updateYourData {
+    return Intl.message(
+      'Update Data',
+      name: 'updateYourData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Community`
+  String get community {
+    return Intl.message(
+      'Community',
+      name: 'community',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `waiting`
+  String get waiting {
+    return Intl.message(
+      'waiting',
+      name: 'waiting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order List`
+  String get orderList {
+    return Intl.message(
+      'Order List',
+      name: 'orderList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bill`
+  String get bill {
+    return Intl.message(
+      'Bill',
+      name: 'bill',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order price`
+  String get orderPrice {
+    return Intl.message(
+      'order price',
+      name: 'orderPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `total`
+  String get sum {
+    return Intl.message(
+      'total',
+      name: 'sum',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SAR`
+  String get sar {
+    return Intl.message(
+      'SAR',
+      name: 'sar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `deliver price`
+  String get deliverPrice {
+    return Intl.message(
+      'deliver price',
+      name: 'deliverPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `waiting for a captain to accept this order`
+  String get waitingDescription {
+    return Intl.message(
+      'waiting for a captain to accept this order',
+      name: 'waitingDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `captain packing your order`
+  String get captainInStoreDescription {
+    return Intl.message(
+      'captain packing your order',
+      name: 'captainInStoreDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `captain on his way to you`
+  String get deliveringDescription {
+    return Intl.message(
+      'captain on his way to you',
+      name: 'deliveringDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `captain headed to store`
+  String get captainAcceptOrderDescription {
+    return Intl.message(
+      'captain headed to store',
+      name: 'captainAcceptOrderDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `your order has delivered`
+  String get orderDeliveredDescription {
+    return Intl.message(
+      'your order has delivered',
+      name: 'orderDeliveredDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can know your order status in this interface`
+  String get orderStatusDescription {
+    return Intl.message(
+      'You can know your order status in this interface',
+      name: 'orderStatusDescription',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

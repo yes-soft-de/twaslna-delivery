@@ -24,7 +24,7 @@ class AppThemeDataService {
   }
 
   static Color get AccentColor {
-    return Color(0xFFBE1E2D);
+    return Colors.orangeAccent;
   }
 
   Future<ThemeData> getActiveTheme() async {
@@ -54,7 +54,7 @@ class AppThemeDataService {
       primarySwatch: Colors.orange,
       cardColor: Color.fromRGBO(245, 245, 245, 1),
       backgroundColor: Color.fromRGBO(235, 235, 235, 1),
-      fontFamily: GoogleFonts.tajawal().fontFamily,
+      fontFamily: GoogleFonts.almarai().fontFamily,
       fixTextFieldOutlineLabel:true,
       appBarTheme: AppBarTheme(centerTitle: true, color: Colors.white),
     );

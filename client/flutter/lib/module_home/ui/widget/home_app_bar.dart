@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/utils/components/costom_search.dart';
+import 'package:twaslna_delivery/utils/images/images.dart';
 class CustomHomeAppBar extends StatelessWidget {
   const CustomHomeAppBar({Key? key}) : super(key: key);
 
@@ -18,7 +20,7 @@ class CustomHomeAppBar extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(0, 0, 0, 75),
             child: Center(
               child: Image.asset(
-                'assets/images/logo.png',
+                ImageAsset.LOGO,
                 width: 225,
                 height: 225,
               ),
@@ -29,25 +31,8 @@ class CustomHomeAppBar extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(
                   top: 16.0, bottom: 16, left: 25, right: 25),
-              child: Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? Colors.grey[900]
-                      : Theme.of(context).scaffoldBackgroundColor,
-                ),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText:S.of(context).searchFor,
-                    prefixIcon: Icon(Icons.search),
-                    suffixIcon: Icon(Icons.filter_list),
-                    enabledBorder: InputBorder.none,
-                    contentPadding: EdgeInsets.fromLTRB(0, 13.5, 0, 0),
-                    focusedBorder: InputBorder.none,
-                  ),
-                ),
+              child:CustomDeliverySearch(
+                hintText: S.of(context).searchFor,
               ),
             ),
           ),
