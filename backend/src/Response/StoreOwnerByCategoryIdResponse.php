@@ -13,4 +13,6 @@ class StoreOwnerByCategoryIdResponse
     public $phone;
     
     public $location;
+
+    public $deliveryCost;
 }

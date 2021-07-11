@@ -6,6 +6,7 @@ use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainProfileEntity;
+use App\Entity\DeliveryCompanyProfileEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
@@ -28,6 +29,10 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('profile')
 
             ->select('profile.id', 'profile.storeOwnerName','profile.storeOwnerID', 'profile.image', 'profile.story', 'profile.free', 'profile.status', 'profile.city', 'profile.phone', 'profile.image')
+            ->addSelect('deliveryCompanyProfileEntity.deliveryCost')
+
+            ->join(DeliveryCompanyProfileEntity::class, 'deliveryCompanyProfileEntity')
+
             ->andWhere('profile.storeOwnerID=:storeOwnerID')
             ->setParameter('storeOwnerID', $storeOwnerID)
 
@@ -39,6 +44,9 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('profile')
             ->select('profile.id', 'profile.storeOwnerName','profile.storeOwnerID', 'profile.image', 'profile.story', 'profile.free', 'profile.status', 'profile.phone')
+            ->addSelect('deliveryCompanyProfileEntity.deliveryCost')
+
+            ->join(DeliveryCompanyProfileEntity::class, 'deliveryCompanyProfileEntity')
 
             ->andWhere('profile.id = :id')
 
@@ -53,7 +61,9 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('profile')
             ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone')
             ->addSelect('StoreOwnerBranchEntity.location')
+            ->addSelect('deliveryCompanyProfileEntity.deliveryCost')
 
+            ->join(DeliveryCompanyProfileEntity::class, 'deliveryCompanyProfileEntity')
             ->leftJoin(StoreOwnerBranchEntity::class, 'StoreOwnerBranchEntity', Join::WITH, 'StoreOwnerBranchEntity.id = profile.branch ')
 
             ->andWhere('profile.storeCategoryId = :storeCategoryId')

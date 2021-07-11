@@ -52,6 +52,11 @@ class DeliveryCompanyProfileEntity
      */
     private $email;
 
+    /**
+     * @ORM\Column(type="float", length=255, nullable=true)
+     */
+    private $deliveryCost;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -137,6 +142,18 @@ class DeliveryCompanyProfileEntity
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+ 
+    public function getDeliveryCost()
+    {
+        return $this->deliveryCost;
+    }
+
+    public function setDeliveryCost($deliveryCost)
+    {
+        $this->deliveryCost = $deliveryCost;
 
         return $this;
     }
