@@ -79,7 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainStartedDelivery":
             MessageLookupByLibrary.simpleMessage("بدأ الكابتن التوصيل"),
         "car": MessageLookupByLibrary.simpleMessage("سيارة "),
-        "cash": MessageLookupByLibrary.simpleMessage("الدفع عند الاستلام"),
+        "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
+        "cash": MessageLookupByLibrary.simpleMessage("نقدا"),
         "categories": MessageLookupByLibrary.simpleMessage("التصنيفات"),
         "category": MessageLookupByLibrary.simpleMessage("تصنيف"),
         "changeLanguage": MessageLookupByLibrary.simpleMessage("غير لغة"),
@@ -88,6 +89,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("التحدث مع صاحب المحل"),
         "checkOrders": MessageLookupByLibrary.simpleMessage("تاكد من الطلبات"),
         "checkout": MessageLookupByLibrary.simpleMessage("تأكيد الطلب"),
+        "chooseAddressNote": MessageLookupByLibrary.simpleMessage(
+            "يمكنك تعديل مكان التسليم الحالي على الخارطة"),
         "chooseYourCity":
             MessageLookupByLibrary.simpleMessage("اختر مدينة تواجدك"),
         "chooseYourSize":
@@ -121,6 +124,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverTo": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إليك"),
+        "destinationAddress":
+            MessageLookupByLibrary.simpleMessage("التوصيل إلى"),
+        "destinationAddressHint":
+            MessageLookupByLibrary.simpleMessage("اكتب عنوان وجهة الطلب"),
         "directSupport": MessageLookupByLibrary.simpleMessage("دعم مباشر"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("رخصة القيادة"),
         "earnCash": MessageLookupByLibrary.simpleMessage("اكسب المال"),
@@ -193,6 +200,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "mostWanted": MessageLookupByLibrary.simpleMessage("الأكثر طلبا"),
         "moveToOrders":
             MessageLookupByLibrary.simpleMessage("الانتقال للطلبات"),
+        "myAddress": MessageLookupByLibrary.simpleMessage("نقطة الاستلام"),
+        "myAddressHint": MessageLookupByLibrary.simpleMessage("اكتب عنوانك"),
         "myBalance": MessageLookupByLibrary.simpleMessage("رصيدي"),
         "myOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "myPlan": MessageLookupByLibrary.simpleMessage("باقتي"),
@@ -228,6 +237,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderDate": MessageLookupByLibrary.simpleMessage("تاريخ الطلب"),
         "orderDeliveredDescription":
             MessageLookupByLibrary.simpleMessage("تم توصيل الطلب"),
+        "orderDetailHint": MessageLookupByLibrary.simpleMessage(
+            "اكتب تفاصيل الطلب الذي تريد إرساله"),
         "orderDetails": MessageLookupByLibrary.simpleMessage("تفاصيل الطلب"),
         "orderIsCreated": MessageLookupByLibrary.simpleMessage("تم الانشاء"),
         "orderIsDone": MessageLookupByLibrary.simpleMessage("انتهى الطلب!"),
@@ -242,6 +253,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderStatus": MessageLookupByLibrary.simpleMessage("حالة الطلب"),
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية"),
+        "orderTime": MessageLookupByLibrary.simpleMessage("زمن التوصيل"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("طلب في الشهر"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("طلب / الشهر"),
@@ -261,6 +273,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paySubscription": MessageLookupByLibrary.simpleMessage("دفع الاشتراك"),
         "paymentHistory": MessageLookupByLibrary.simpleMessage("تاريخ الدفعات"),
         "paymentMethod": MessageLookupByLibrary.simpleMessage("طريقة الدفع"),
+        "paymentMethodHint": MessageLookupByLibrary.simpleMessage("اختر"),
         "personalData":
             MessageLookupByLibrary.simpleMessage("البيانات الشخصية"),
         "phoneIsRequired":

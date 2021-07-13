@@ -98,7 +98,7 @@
   "next": "التالي",
   "fromWhatsapp": "من واتساب",
   "defaultBranch": "الفرع الافتراضي",
-  "cash": "الدفع عند الاستلام",
+  "cash": "نقدا",
   "online": "مدفوع",
   "to": "الى",
   "info": "حول الطلب",
@@ -241,7 +241,6 @@
   "searchForOrder": "ابحث عن طلب بإدخال رقم الطلب",
   "highestRate": "الأعلى تقييما",
   "account": "الحساب",
-  "personalData": "المعلومات الشخصية",
   "orderLog": "سجل الطلبات",
   "about": "حول",
   "socialMedia": "مواقع التواصل الاجتماعي",
@@ -273,9 +272,14 @@
   "deliveringDescription": "الكابتن في طريقه إليك",
   "captainAcceptOrderDescription": "الكابتن في طريقه إلى المتجر",
   "orderDeliveredDescription": "تم توصيل الطلب",
-  "orderStatusDescription": "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية"
-
-
-
-
+  "orderStatusDescription": "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية",
+  "destinationAddress": "التوصيل إلى",
+  "myAddress": "نقطة الاستلام",
+  "orderDetailHint": "اكتب تفاصيل الطلب الذي تريد إرساله",
+  "destinationAddressHint": "اكتب عنوان وجهة الطلب",
+  "myAddressHint": "اكتب عنوانك",
+  "card" : "بطاقة",
+  "chooseAddressNote":"يمكنك تعديل مكان التسليم الحالي على الخارطة",
+  "orderTime":"زمن التوصيل",
+  "paymentMethodHint":"اختر"
 }

@@ -274,7 +274,19 @@
   "deliveringDescription": "captain on his way to you",
   "captainAcceptOrderDescription": "captain headed to store",
   "orderDeliveredDescription": "your order has delivered",
-  "orderStatusDescription": "You can know your order status in this interface"
+  "orderStatusDescription": "You can know your order status in this interface",
+  "destinationAddress": "Destination Address",
+  "myAddress": "My address",
+  "orderDetailHint": "Please place your order details here",
+  "destinationAddressHint": "Please place your destination address",
+  "myAddressHint": "Please place your address",
+  "card": "Card",
+  "chooseAddressNote":"Please update your current location if you want to",
+  "orderTime":"Order Time",
+  "paymentMethodHint":"Choose"
+
+
+
 
 
 

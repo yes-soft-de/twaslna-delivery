@@ -79,6 +79,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainStartedDelivery":
             MessageLookupByLibrary.simpleMessage("Captain Started Delivery"),
         "car": MessageLookupByLibrary.simpleMessage("Car"),
+        "card": MessageLookupByLibrary.simpleMessage("Card"),
         "cash": MessageLookupByLibrary.simpleMessage("Cash"),
         "categories": MessageLookupByLibrary.simpleMessage("Categories"),
         "category": MessageLookupByLibrary.simpleMessage("category"),
@@ -89,6 +90,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Chat with Store Owner"),
         "checkOrders": MessageLookupByLibrary.simpleMessage("Check Orders"),
         "checkout": MessageLookupByLibrary.simpleMessage("Checkout"),
+        "chooseAddressNote": MessageLookupByLibrary.simpleMessage(
+            "Please update your current location if you want to"),
         "chooseYourCity":
             MessageLookupByLibrary.simpleMessage("Choose Your City"),
         "chooseYourSize":
@@ -121,6 +124,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverTo": MessageLookupByLibrary.simpleMessage("Deliver To"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("captain on his way to you"),
+        "destinationAddress":
+            MessageLookupByLibrary.simpleMessage("Destination Address"),
+        "destinationAddressHint": MessageLookupByLibrary.simpleMessage(
+            "Please place your destination address"),
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),
         "earnCash": MessageLookupByLibrary.simpleMessage("Earn Cash"),
@@ -196,6 +203,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Most Sold Product"),
         "mostWanted": MessageLookupByLibrary.simpleMessage("Most wanted"),
         "moveToOrders": MessageLookupByLibrary.simpleMessage("Move to Orders"),
+        "myAddress": MessageLookupByLibrary.simpleMessage("My address"),
+        "myAddressHint":
+            MessageLookupByLibrary.simpleMessage("Please place your address"),
         "myBalance": MessageLookupByLibrary.simpleMessage("My Balance"),
         "myOrders": MessageLookupByLibrary.simpleMessage("My Orders"),
         "myPlan": MessageLookupByLibrary.simpleMessage("My Plan"),
@@ -229,6 +239,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderDate": MessageLookupByLibrary.simpleMessage("order date"),
         "orderDeliveredDescription":
             MessageLookupByLibrary.simpleMessage("your order has delivered"),
+        "orderDetailHint": MessageLookupByLibrary.simpleMessage(
+            "Please place your order details here"),
         "orderDetails": MessageLookupByLibrary.simpleMessage("Order Details"),
         "orderIsCreated":
             MessageLookupByLibrary.simpleMessage("Order is created"),
@@ -244,6 +256,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderStatus": MessageLookupByLibrary.simpleMessage("order status"),
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "You can know your order status in this interface"),
+        "orderTime": MessageLookupByLibrary.simpleMessage("Order Time"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),
@@ -265,6 +278,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentHistory":
             MessageLookupByLibrary.simpleMessage("Payment History"),
         "paymentMethod": MessageLookupByLibrary.simpleMessage("Payment Method"),
+        "paymentMethodHint": MessageLookupByLibrary.simpleMessage("Choose"),
         "personalData": MessageLookupByLibrary.simpleMessage("Personal Data"),
         "phoneIsRequired":
             MessageLookupByLibrary.simpleMessage("Phone is required"),

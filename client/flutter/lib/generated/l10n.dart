@@ -2779,6 +2779,96 @@ class S {
       args: [],
     );
   }
+
+  /// `Destination Address`
+  String get destinationAddress {
+    return Intl.message(
+      'Destination Address',
+      name: 'destinationAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My address`
+  String get myAddress {
+    return Intl.message(
+      'My address',
+      name: 'myAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please place your order details here`
+  String get orderDetailHint {
+    return Intl.message(
+      'Please place your order details here',
+      name: 'orderDetailHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please place your destination address`
+  String get destinationAddressHint {
+    return Intl.message(
+      'Please place your destination address',
+      name: 'destinationAddressHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please place your address`
+  String get myAddressHint {
+    return Intl.message(
+      'Please place your address',
+      name: 'myAddressHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Card`
+  String get card {
+    return Intl.message(
+      'Card',
+      name: 'card',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please update your current location if you want to`
+  String get chooseAddressNote {
+    return Intl.message(
+      'Please update your current location if you want to',
+      name: 'chooseAddressNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Time`
+  String get orderTime {
+    return Intl.message(
+      'Order Time',
+      name: 'orderTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose`
+  String get paymentMethodHint {
+    return Intl.message(
+      'Choose',
+      name: 'paymentMethodHint',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
