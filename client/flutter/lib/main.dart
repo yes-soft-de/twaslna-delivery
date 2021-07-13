@@ -10,6 +10,7 @@ import 'package:twaslna_delivery/module_localization/service/localization_servic
 import 'package:twaslna_delivery/module_main/main_module.dart';
 import 'package:twaslna_delivery/module_notifications/service/fire_notification_service/fire_notification_service.dart';
 import 'package:twaslna_delivery/module_orders/orders_module.dart';
+import 'package:twaslna_delivery/module_our_services/services_module.dart';
 import 'package:twaslna_delivery/module_settings/settings_module.dart';
 import 'package:twaslna_delivery/module_splash/splash_module.dart';
 import 'package:twaslna_delivery/module_stores/store_module.dart';
@@ -72,6 +73,7 @@ class MyApp extends StatefulWidget {
   final MyNotificationsModule myNotificationsModule;
   final AccountModule _accountModule;
   final OrdersModule _ordersModule;
+  final ServicesModule _servicesModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -86,7 +88,8 @@ class MyApp extends StatefulWidget {
       this._storeModule,
       this.myNotificationsModule,
       this._accountModule,
-      this._ordersModule
+      this._ordersModule,
+      this._servicesModule
       );
 
   @override
