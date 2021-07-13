@@ -17,9 +17,6 @@ class RegisterScreen extends StatefulWidget {
 
 class RegisterScreenState extends State<RegisterScreen> {
   late RegisterState _currentState;
-  UserRole? currentUserRole;
-  UserRole? initRole;
-  UserRole? get getInitRole => this.initRole;
   @override
   void initState() {
     super.initState();
@@ -36,9 +33,17 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: _currentState.getUI(context),
+    return GestureDetector(
+      onTap: () {
+        var focus = FocusScope.of(context);
+        if (focus.canRequestFocus) {
+          focus.unfocus();
+        }
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: _currentState.getUI(context),
+        ),
       ),
     );
   }
@@ -48,29 +53,22 @@ class RegisterScreenState extends State<RegisterScreen> {
   }
 
   void registerCaptain(String phoneNumber) {
-    currentUserRole = UserRole.ROLE_CAPTAIN;
     widget._stateManager.registerCaptain(phoneNumber, this);
   }
 
   void registerOwner(String email, String username, String password) {
-    currentUserRole = UserRole.ROLE_OWNER;
-    widget._stateManager.registerOwner(email, username, password, this);
+        widget._stateManager.registerOwner(email, username, password, this);
   }
 
   void confirmCaptainSMS(String smsCode) {
-    currentUserRole = UserRole.ROLE_CAPTAIN;
     widget._stateManager.confirmCaptainCode(smsCode);
   }
 
   void retryPhone() {
-    currentUserRole = UserRole.ROLE_CAPTAIN;
     _currentState = RegisterStateInit(this);
   }
 
   void moveToNext() {
    //move to init screen
-  }
-  void setRole(UserRole userType) {
-    initRole = userType;
   }
 }

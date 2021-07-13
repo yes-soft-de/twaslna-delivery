@@ -1,91 +1,111 @@
-import 'package:twaslna_delivery/module_auth/enums/user_type.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_account/ui/widget/custom_field.dart';
+import 'package:twaslna_delivery/module_auth/authorization_routes.dart';
 import 'package:twaslna_delivery/module_auth/ui/screen/login_screen/login_screen.dart';
 import 'package:twaslna_delivery/module_auth/ui/states/login_states/login_state.dart';
-import 'package:twaslna_delivery/module_auth/ui/widget/email_password_login/email_password_login.dart';
-import 'package:twaslna_delivery/module_auth/ui/widget/phone_login/phone_login.dart';
-import 'package:twaslna_delivery/module_auth/ui/widget/user_type_selector/user_type_selector.dart';
 import 'package:flutter/material.dart';
-
-import '../../../authorization_routes.dart';
+import 'package:twaslna_delivery/module_auth/ui/widget/login_widgets/custom_field.dart';
+import 'package:twaslna_delivery/module_auth/ui/widget/login_widgets/login_app_bar.dart';
+import 'package:twaslna_delivery/utils/images/images.dart';
+import 'package:twaslna_delivery/utils/text_style/text_style.dart';
 
 class LoginStateInit extends LoginState {
-  UserRole userType = UserRole.ROLE_OWNER;
-  var loginTypeController =
-      PageController(initialPage: UserRole.ROLE_OWNER.index);
-  bool flag = true;
   LoginStateInit(LoginScreenState screen) : super(screen);
 
   @override
   Widget getUI(BuildContext context) {
-    UserRole? userRole =ModalRoute.of(context)?.settings.arguments as UserRole?;
-    if (flag && userRole != null) {
-      loginTypeController = PageController(initialPage: userRole.index);
-      userType = userRole;
-      flag = false;
-    }
-    return SafeArea(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Form(
+      child: ListView(
+        physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         children: [
+          CustomLoginAppBar(),
+         MediaQuery.of(context).viewInsets.bottom == 0 ? SvgPicture.asset(ImageAsset.AUTH_SVG,width: 150,):Container(),
           Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              height: 36,
-              child: UserTypeSelector(
-                currentUserType: userType,
-                onUserChange: (newType) {
-                  userType = newType;
-                  screen.refresh();
-                  loginTypeController.animateToPage(
-                    userType.index,
-                    duration: Duration(seconds: 1),
-                    curve: Curves.linear,
-                  );
-                },
+            padding: const EdgeInsets.only(bottom: 8.0,left: 85,right: 85,top: 8),
+            child: Text(S.of(context).email,style: TextStyle(
+              fontWeight: FontWeight.bold
+            ),),
+          ),
+          ListTile(
+            leading: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Theme.of(context).backgroundColor,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(Icons.email),
               ),
             ),
+            title: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomLoginFormField(),
+            ),
           ),
-          Expanded(
-              child: PageView(
-            controller: loginTypeController,
-            onPageChanged: (pos) {
-              userType = UserRole.values[pos];
-              screen.refresh();
-            },
-            children: [
-              PhoneLoginWidget(
-                codeSent: false,
-                onLoginRequested: (phone) {
-                  screen.setRole(userType);
-                  screen.refresh();
-                  screen.loginCaptain(phone);
-                },
-                onAlterRequest: () {
-                  Navigator.of(context).pushNamed(
-                      AuthorizationRoutes.REGISTER_SCREEN,
-                      arguments: userType);
-                },
-                isRegister: false,
-                onRetry: () {
-                  screen.retryPhone();
-                },
-                onConfirm: (confirmCode) {
-                  screen.refresh();
-                  screen.confirmCaptainSMS(confirmCode);
-                },
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0,left: 85,right: 85,top: 8),
+            child: Text(S.of(context).password,style: TextStyle(
+                fontWeight: FontWeight.bold
+            ),),
+          ),
+          ListTile(
+            leading: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Theme.of(context).backgroundColor,
               ),
-              EmailPasswordForm(
-                onLoginRequest: (email, password) {
-                  screen.setRole(userType);
-                  screen.refresh();
-                  screen.loginOwner(
-                    email,
-                    password,
-                  );
-                },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(Icons.lock),
               ),
-            ],
-          )),
+            ),
+            title: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomFormField(),
+            ),
+          ),
+          Container(height: 75,),
+          Padding(
+            padding: const EdgeInsets.only(right:16.0,left: 16,bottom: 8.0),
+            child: Container(
+              width: double.maxFinite,
+              height: 50,
+              child: ElevatedButton(onPressed:(){},
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child:Center(
+                    child: Text(S.of(context).login,style: TextStyle(
+                      color: Colors.white,
+                    ),),
+                  )),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right:16.0,left: 16,bottom: 8.0,top: 8.0),
+            child: Container(
+              width: double.maxFinite,
+              height: 50,
+              child: ElevatedButton(onPressed:(){
+                Navigator.of(context).pushNamed(AuthorizationRoutes.REGISTER_SCREEN);
+              },
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    primary: Theme.of(context).backgroundColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child:Center(
+                    child: Text(S.of(context).register,style: TextStyle(
+                    ),),
+                  )),
+            ),
+          ),
         ],
       ),
     );
