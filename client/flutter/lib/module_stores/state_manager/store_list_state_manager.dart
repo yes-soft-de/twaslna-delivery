@@ -10,7 +10,7 @@ import 'package:twaslna_delivery/module_stores/ui/state/store_list/store_list_st
 
 @injectable
 class StoreListStateManager {
-  StoreListService _storeListService;
+  final StoreListService _storeListService;
   final PublishSubject<StoreListState> _stateSubject = PublishSubject();
   Stream<StoreListState> get stateStream => _stateSubject.stream;
   StoreListStateManager(this._storeListService);
