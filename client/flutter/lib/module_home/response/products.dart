@@ -26,7 +26,7 @@ class Data {
   int? id;
   String? productName;
   String? productImage;
-  int? productPrice;
+  double? productPrice;
   int? storeOwnerProfileID;
   int? productCategoryID;
   String? storeOwnerName;
@@ -56,7 +56,7 @@ class Data {
     id = json['id'];
     productName = json['productName'];
     productImage = json['productImage'];
-    productPrice = json['productPrice'];
+    productPrice = json['productPrice']?.toDouble();
     storeOwnerProfileID = json['storeOwnerProfileID'];
     productCategoryID = json['ProductCategoryID'];
     storeOwnerName = json['storeOwnerName'];
