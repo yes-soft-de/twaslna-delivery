@@ -5,7 +5,7 @@ import 'package:twaslna_delivery/generated/l10n.dart';
 
 class StatusHelper {
   static OrderStatus getStatusEnum(String? status) {
-    if (status == null) {
+    if (status == 'pending') {
       return OrderStatus.WAITING;
     } else if (status == 'on way to pick order') {
       return OrderStatus.GOT_CAPTAIN;
