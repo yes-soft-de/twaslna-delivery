@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:twaslna_delivery/module_orders/ui/screen/my_orders_screen.dart';
-import 'package:twaslna_delivery/module_orders/ui/state/my_orders/my_orders_state.dart';
-class MyOrdersErrorState extends MyOrdersState {
+import 'package:twaslna_delivery/module_orders/ui/screen/order_status_screen.dart';
+import 'package:twaslna_delivery/module_orders/ui/state/order_status/order_status_state.dart';
+class OrderStatusErrorState extends OrderStatusState {
   final String error;
-  MyOrdersScreenState screenState;
+  OrderStatusScreenState screenState;
 
-  MyOrdersErrorState(this.screenState, this.error) : super(screenState);
+  OrderStatusErrorState(this.screenState, this.error) : super(screenState);
 
   @override
   Widget getUI(BuildContext context) {

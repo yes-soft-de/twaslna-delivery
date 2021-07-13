@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:twaslna_delivery/consts/order_status.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_orders/orders_routes.dart';
+import 'package:twaslna_delivery/utils/helpers/order_status_helper.dart';
 
 class OrderCard extends StatelessWidget {
-  final orderId;
-  OrderCard({required this.orderId});
+  final String orderId;
+  final OrderStatus orderStatus;
+  final String orderDate;
+  final String orderCost;
+  OrderCard({required this.orderId,required this.orderStatus,required this.orderDate,required this.orderCost});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +56,7 @@ class OrderCard extends StatelessWidget {
                         Text(S.of(context).orderDate,
                             style: TextStyle(fontSize: 14)),
                         Text(
-                          '2021-6-23',
+                          orderDate,
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -79,7 +84,7 @@ class OrderCard extends StatelessWidget {
                       flex: 2,
                     ),
                     Text(
-                      'في الانتظار',
+                      StatusHelper.getOrderStatusMessages(orderStatus),
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).disabledColor),
@@ -101,7 +106,7 @@ class OrderCard extends StatelessWidget {
                       children: [
                         Text(S.of(context).cost, style: TextStyle(fontSize: 14)),
                         Text(
-                          '100 ر.س',
+                          '${orderCost} ${S.of(context).sar}',
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,

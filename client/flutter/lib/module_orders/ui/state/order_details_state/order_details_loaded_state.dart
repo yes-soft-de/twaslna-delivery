@@ -1,7 +1,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:twaslna_delivery/consts/order_status.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
-import 'package:twaslna_delivery/module_home/ui/widget/show_all.dart';
+import 'package:twaslna_delivery/module_orders/model/order_details_model.dart';
 import 'package:twaslna_delivery/module_orders/orders_routes.dart';
 import 'package:twaslna_delivery/module_orders/ui/screen/order_details_screen.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/order_details_state.dart';
@@ -10,18 +10,14 @@ import 'package:twaslna_delivery/module_orders/ui/widget/order_details/bill.dart
 import 'package:twaslna_delivery/module_orders/ui/widget/order_details/order_chip.dart';
 import 'package:twaslna_delivery/module_orders/ui/widget/order_details/order_details_app_bar.dart';
 import 'package:twaslna_delivery/module_orders/ui/widget/order_details/order_details_title_bar.dart';
-import 'package:twaslna_delivery/module_stores/ui/widget/store_products/custom_stores_products_app_bar.dart';
-import 'package:twaslna_delivery/module_stores/ui/widget/store_products/store_products_title_bar.dart';
-import 'package:twaslna_delivery/utils/components/costom_search.dart';
-import 'package:twaslna_delivery/utils/components/custom_list_tile.dart';
-import 'package:twaslna_delivery/utils/customIcon/custom_icons.dart';
 import 'package:twaslna_delivery/utils/helpers/order_status_helper.dart';
-import 'package:twaslna_delivery/utils/text_style/text_style.dart';
 
 class OrderDetailsLoadedState extends OrderDetailsState {
   OrderDetailsScreenState screenState;
+  OrderDetailsModel orderDetails;
 
-  OrderDetailsLoadedState(this.screenState) : super(screenState);
+  OrderDetailsLoadedState(this.screenState, this.orderDetails)
+      : super(screenState);
 
   @override
   Widget getUI(BuildContext context) {
@@ -46,7 +42,7 @@ class OrderDetailsLoadedState extends OrderDetailsState {
                 padding:
                     const EdgeInsets.only(right: 28.0, left: 28, bottom: 16),
                 child: OrderDetailsTitleBar(
-                  title: 'store',
+                  title: orderDetails.storeInfo.storeOwnerName,
                   rate: 4.7,
                 ),
               ),
@@ -71,7 +67,7 @@ class OrderDetailsLoadedState extends OrderDetailsState {
                                 bottom: 25.0,
                                 top: 25.0),
                             child: Text(
-                              '${S.of(context).orderDetails} #1',
+                              '${S.of(context).orderDetails} #${orderDetails.order.id}',
                               style: TextStyle(
                                   fontSize: 25, fontWeight: FontWeight.bold),
                             ),
@@ -80,69 +76,61 @@ class OrderDetailsLoadedState extends OrderDetailsState {
                             padding: const EdgeInsets.all(12.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Theme.of(context).primaryColor
-                              ),
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Theme.of(context).primaryColor),
                               child: ListTile(
-                                onTap: (){
-                                  Navigator.of(context).pushNamed(OrdersRoutes.ORDER_STATUS);
+                                onTap: () {
+                                  Navigator.of(context)
+                                      .pushNamed(OrdersRoutes.ORDER_STATUS,arguments:orderDetails.order.id.toString());
                                 },
-                                title:Text(
+                                title: Text(
                                   S.of(context).orderStatus,
-                                  style:TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
-                                ),
-                                subtitle:Text(
-                                  StatusHelper.getOrderStatusMessages(OrderStatus.WAITING),
                                   style: TextStyle(
-                                    color: Colors.white
-                                  ),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
                                 ),
-                                leading:Icon(
-                                  StatusHelper.getOrderStatusIcon(OrderStatus.WAITING),color: Colors.white,
+                                subtitle: Text(
+                                  StatusHelper.getOrderStatusMessages(
+                                      orderDetails.order.state),
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                leading: Icon(
+                                  StatusHelper.getOrderStatusIcon(
+                                      orderDetails.order.state),
+                                  color: Colors.white,
                                   size: 35,
                                 ),
-                                trailing: Icon(Icons.arrow_forward,color: Colors.white,),
+                                trailing: Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 16,right: 16),
-                            child: ListTile(leading: Icon(Icons.shopping_cart_rounded,color: Theme.of(context).disabledColor,size: 25,),
-                              title: Text(S.of(context).orderList,style:TextStyle(
-                               fontWeight: FontWeight.bold,
-                                fontSize: 18
-                              ),),
+                         orderDetails.carts.isNotEmpty?Padding(
+                            padding: const EdgeInsets.only(left: 16, right: 16),
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.shopping_cart_rounded,
+                                color: Theme.of(context).disabledColor,
+                                size: 25,
+                              ),
+                              title: Text(
+                                S.of(context).orderList,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
                             ),
-                          ),
-                          ListView.builder(
-                              physics: ScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: 10,
-                              itemBuilder: (context, index) {
-                                if (index % 2 != 0) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 8.0, left: 8.0),
-                                    child: DottedLine(
-                                      dashColor:
-                                          Theme.of(context).backgroundColor,
-                                      lineThickness: 2.5,
-                                      dashLength: 6,
-                                    ),
-                                  );
-                                }
-                                return OrderChip(
-                                  title: 'title',
-                                  image:
-                                      'https://assets.bonappetit.com/photos/5952b45c76350d51feba80c4/master/pass/Classic%20Burger.JPG',
-                                  price: 150,
-                                  quantity: (q) {},
-                                  editable: true,
-                                );
-                              }),
+                          ):Container(),
+                          orderDetails.carts.isNotEmpty? ListView(
+                            physics: ScrollPhysics(),
+                            shrinkWrap: true,
+                            children: getOrdersList(orderDetails.carts),
+                          ):Container(),
                           Padding(
                             padding: const EdgeInsets.all(16.0),
-                            child: BillCard(),
+                            child: BillCard(id: orderDetails.order.id,deliveryCost: orderDetails.order.deliveryCost,orderCost: orderDetails.order.orderCost,),
                           ),
                           SizedBox(
                             height: 35,
@@ -158,5 +146,29 @@ class OrderDetailsLoadedState extends OrderDetailsState {
         ),
       ],
     );
+  }
+
+  List<Widget> getOrdersList(List<Item> carts) {
+    List<Widget> orderChips = [];
+    carts.forEach((element) {
+      orderChips.add(OrderChip(
+        title: element.productName,
+        image: element.productImage,
+        price: element.productPrice,
+        currency: S.current.sar,
+        quantity: (q) {},
+        editable: false,
+        defaultQuantity: element.countProduct,
+      ));
+      orderChips.add(Padding(
+        padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+        child: DottedLine(
+          dashColor: Theme.of(screenState.context).backgroundColor,
+          lineThickness: 2.5,
+          dashLength: 6,
+        ),
+      ));
+    });
+    return orderChips;
   }
 }
