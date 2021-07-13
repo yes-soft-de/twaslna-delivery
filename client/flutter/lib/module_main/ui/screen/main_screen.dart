@@ -5,6 +5,7 @@ import 'package:twaslna_delivery/di/di_config.dart';
 import 'package:twaslna_delivery/module_account/ui/screen/account_screen.dart';
 import 'package:twaslna_delivery/module_home/ui/screen/home_screen.dart';
 import 'package:twaslna_delivery/module_my_notifications/ui/screen/my_notifications_screen.dart';
+import 'package:twaslna_delivery/module_orders/orders_routes.dart';
 import 'package:twaslna_delivery/module_orders/ui/screen/my_orders_screen.dart';
 import 'package:twaslna_delivery/utils/customIcon/custom_icons.dart';
 
@@ -59,7 +60,9 @@ class _MainScreenState extends State<MainScreen> {
                         size: 30,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(OrdersRoutes.CLIENT_ORDER);
+                    },
                   ),
                   floatingActionButtonLocation:
                       FloatingActionButtonLocation.centerDocked,
