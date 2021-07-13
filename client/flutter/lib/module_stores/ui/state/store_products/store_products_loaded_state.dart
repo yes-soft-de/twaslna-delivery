@@ -222,7 +222,7 @@ class StoreProductsLoadedState extends StoreProductsState {
 }
 
 dynamic getTotal(List<CartModel> carts) {
-  var total = 0;
+  var total = 0.0;
   for (int i = 0; i < carts.length; i++) {
     total += carts[i].price * carts[i].quantity;
   }
