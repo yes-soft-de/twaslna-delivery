@@ -1,5 +1,5 @@
 class Urls {
-  static const String DOMAIN = 'http://167.99.255.30';
+  static const String DOMAIN = 'http://167.172.175.77';
   static const String BASE_API = DOMAIN + '';
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
   static const UPLOAD_API = BASE_API + '/uploadfile';
@@ -18,5 +18,7 @@ class Urls {
   static const GET_PRODUCTS_CATEGORY_API = BASE_API + '/storeProductsCategory';
   static const GET_PRODUCTS_BY_CATEGORY_API = BASE_API + '/productsbycategoryidandstoreownerprofileid';
   static const GET_BEST_STORES_API = BASE_API + '/storeOwnerBest';
+  static const GET_MY_ORDERS = BASE_API + '/ordersbyclientid';
+  static const GET_ORDER_DETAILS = BASE_API + '/orderstatusbyordernumber';
 
 }
