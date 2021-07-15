@@ -48,14 +48,14 @@ class StoreOwnerBranchManager
         return $entity;
     }
 
-    public function getBranchesByUserId($userId)
+    public function getBranchesByStoreOwnerProfileID($storeOwnerProfileID)
     {
-        return $this->storeOwnerBranchEntityRepository->getBranchesByUserId($userId);
+        return $this->storeOwnerBranchEntityRepository->getBranchesByStoreOwnerProfileID($storeOwnerProfileID);
     }
 
-    public function branchesByUserId($userId)
+    public function branchesByStoreOwnerProfileID($storeOwnerProfileID)
     {
-        return $this->storeOwnerBranchEntityRepository->branchesByUserId($userId);
+        return $this->storeOwnerBranchEntityRepository->branchesByStoreOwnerProfileID($storeOwnerProfileID);
     }
 
     public function getBrancheById($Id)

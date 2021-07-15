@@ -4,7 +4,7 @@ namespace App\Request;
 
 class OrderClientCreateRequest
 {
-    private $ownerID;
+    private $storeOwnerProfileID;
     private $destination;
     private $deliveryDate;
     private $note;
@@ -17,19 +17,19 @@ class OrderClientCreateRequest
     private $deliveryCost;
 
      /**
-     * @param mixed $ownerID
+     * @param mixed $storeOwnerProfileID
      */
-    public function setOwnerID($ownerID): void
+    public function setStoreOwnerProfileID($storeOwnerProfileID): void
     {
-        $this->ownerID = $ownerID;
+        $this->storeOwnerProfileID = $storeOwnerProfileID;
     }
 
      /**
      * @return mixed
      */
-    public function getOwnerID()
+    public function getStoreOwnerProfileID()
     {
-        return $this->ownerID;
+        return $this->storeOwnerProfileID;
     }
 
     public function getState(): ?string

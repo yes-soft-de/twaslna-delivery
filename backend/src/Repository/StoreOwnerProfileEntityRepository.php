@@ -24,30 +24,13 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, StoreOwnerProfileEntity::class);
     }
 
-    public function getStoreOwnerProfileByStoreOwnerID($storeOwnerID)
+     public function getStoreOwnerProfileByID($id)
     {
         return $this->createQueryBuilder('profile')
-
-            ->select('profile.id', 'profile.storeOwnerName','profile.storeOwnerID', 'profile.image', 'profile.story', 'profile.free', 'profile.status', 'profile.city', 'profile.phone', 'profile.image')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.story', 'profile.free', 'profile.status', 'profile.phone')
             ->addSelect('deliveryCompanyProfileEntity.deliveryCost')
 
-            ->join(DeliveryCompanyProfileEntity::class, 'deliveryCompanyProfileEntity')
-
-            ->andWhere('profile.storeOwnerID=:storeOwnerID')
-            ->setParameter('storeOwnerID', $storeOwnerID)
-
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
-    public function getStoreOwnerProfileByID($id)
-    {
-        return $this->createQueryBuilder('profile')
-            ->select('profile.id', 'profile.storeOwnerName','profile.storeOwnerID', 'profile.image', 'profile.story', 'profile.free', 'profile.status', 'profile.phone')
-            ->addSelect('deliveryCompanyProfileEntity.deliveryCost')
-
-            ->join(DeliveryCompanyProfileEntity::class, 'deliveryCompanyProfileEntity')
-
+            ->leftJoin(DeliveryCompanyProfileEntity::class, 'deliveryCompanyProfileEntity', Join::WITH, 'profile.id = profile.id')
             ->andWhere('profile.id = :id')
 
             ->setParameter('id', $id)
@@ -63,8 +46,9 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
             ->addSelect('StoreOwnerBranchEntity.location')
             ->addSelect('deliveryCompanyProfileEntity.deliveryCost')
 
-            ->join(DeliveryCompanyProfileEntity::class, 'deliveryCompanyProfileEntity')
-            ->leftJoin(StoreOwnerBranchEntity::class, 'StoreOwnerBranchEntity', Join::WITH, 'StoreOwnerBranchEntity.id = profile.branch ')
+            ->leftJoin(DeliveryCompanyProfileEntity::class, 'deliveryCompanyProfileEntity', Join::WITH, 'profile.id = profile.id')
+
+            ->leftJoin(StoreOwnerBranchEntity::class, 'StoreOwnerBranchEntity', Join::WITH, 'StoreOwnerBranchEntity.storeOwnerProfileID = profile.id ')
 
             ->andWhere('profile.storeCategoryId = :storeCategoryId')
 
@@ -78,6 +62,9 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('profile')
             ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone')
+            ->addSelect('StoreOwnerBranchEntity.location')
+            ->leftJoin(StoreOwnerBranchEntity::class, 'StoreOwnerBranchEntity', Join::WITH, 'StoreOwnerBranchEntity.storeOwnerProfileID = profile.id ')
+
             ->andWhere('profile.is_best = 1')
             ->getQuery()
             ->getResult();

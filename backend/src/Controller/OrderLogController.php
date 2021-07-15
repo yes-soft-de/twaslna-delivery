@@ -10,34 +10,35 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class OrderLogController extends BaseController
 {
-    private $orderlogService;
+    private $orderLogService;
 
-    public function __construct(SerializerInterface $serializer, OrderLogService $orderlogService)
+    public function __construct(SerializerInterface $serializer, OrderLogService $orderLogService)
     {
         parent::__construct($serializer);
-        $this->orderlogService = $orderlogService;
+        $this->orderLogService = $orderLogService;
     } 
     
     /**
-      * @Route("/orderlog/{orderId}", name="GetRecordByOrderId", methods={"GET"})
+      * @Route("/orderlog/{orderNumber}", name="GetLogByOrderNumber", methods={"GET"})
       * @param Request $request
       * @return JsonResponse
       */
-      public function getOrderLogByOrderId($orderId)
+      //getOrderLogByOrderId
+      public function getOrderLogByOrderNumber($orderNumber)
       {
-          $result = $this->orderlogService->getOrderLogByOrderId($orderId);
+          $result = $this->orderLogService->getOrderLogByOrderNumber($orderNumber);
   
           return $this->response($result, self::FETCH);
       }
       
     /**
-      * @Route("/orderlogs/{orderId}", name="GetRecordsByOrderId", methods={"GET"})
+      * @Route("/orderLogs/{orderNumber}", name="GetLogsByOrderNumber", methods={"GET"})
       * @param Request $request
       * @return JsonResponse
       */
-      public function getOrderLogsByOrderId($orderId)
+      public function getOrderLogsByOrderNumber($orderNumber)
       {
-          $result = $this->orderlogService->getOrderLogsWithcompletionTime($orderId);
+          $result = $this->orderLogService->getOrderLogsWithCompletionTime($orderNumber);
   
           return $this->response($result, self::FETCH);
       }
@@ -50,11 +51,11 @@ class OrderLogController extends BaseController
     public function getOrderLogsByUserID()
     {    
         if( $this->isGranted('ROLE_OWNER') ) {
-         $result = $this->orderlogService->getOrderLogsByStoreOwner($this->getUserId());
+         $result = $this->orderLogService->getOrderLogsByStoreOwner($this->getUserId());
         }
 
         if( $this->isGranted('ROLE_CAPTAIN') ) {
-         $result = $this->orderlogService->getOrderLogsByCaptain($this->getUserId());
+         $result = $this->orderLogService->getOrderLogsByCaptain($this->getUserId());
         }
         
         return $this->response($result, self::FETCH);

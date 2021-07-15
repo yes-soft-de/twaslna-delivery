@@ -11,7 +11,7 @@ class OrderClosestResponse
     // public $storeOwner;
     public $orderNumber;
     public $detail;
-    public $storeOwnerID;
+    public $storeOwnerProfileID;
     public $storeOwnerName;
     public $branches;
     public $image;

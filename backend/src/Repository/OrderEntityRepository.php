@@ -29,7 +29,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function orderById($orderId)
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->addSelect('OrderEntity.id', 'OrderEntity.ownerID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.deliveryDate', 'OrderEntity.updatedAt','OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'OrderEntity.branchId', 'OrderEntity.roomID','OrderEntity.captainID', 'OrderEntity.createdAt','OrderEntity.productID')
+            ->addSelect('OrderEntity.id', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.deliveryDate', 'OrderEntity.updatedAt','OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'OrderEntity.branchId', 'OrderEntity.roomID','OrderEntity.captainID', 'OrderEntity.createdAt','OrderEntity.productID')
             ->andWhere('OrderEntity.id = :id')
             ->setParameter('id', $orderId)
             ->getQuery()
@@ -39,9 +39,9 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function getOrdersByOwnerID($storeOwnerID)
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->addselect('OrderEntity.id', 'OrderEntity.ownerID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.deliveryDate', 'OrderEntity.updatedAt', 'OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'OrderEntity.branchId', 'OrderEntity.captainID', 'OrderEntity.createdAt')
+            ->addselect('OrderEntity.id', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.deliveryDate', 'OrderEntity.updatedAt', 'OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'OrderEntity.branchId', 'OrderEntity.captainID', 'OrderEntity.createdAt')
 
-            ->andWhere('OrderEntity.ownerID = :storeOwnerID')
+            ->andWhere('OrderEntity.storeOwnerProfileID = :storeOwnerID')
             ->andWhere("OrderEntity.state != 'cancelled'")
             ->setParameter('storeOwnerID', $storeOwnerID)
 
@@ -52,7 +52,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function orderStatusByOrderId($orderId)
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->select('OrderEntity.id', 'OrderEntity.ownerID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.deliveryDate', 'OrderEntity.updatedAt', 'OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'OrderEntity.roomID', 'OrderEntity.captainID', 'OrderEntity.createdAt', 'OrderEntity.detail','OrderEntity.deliveryCost', 'OrderEntity.orderCost')
+            ->select('OrderEntity.id', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.deliveryDate', 'OrderEntity.updatedAt', 'OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'OrderEntity.roomID', 'OrderEntity.captainID', 'OrderEntity.createdAt', 'OrderEntity.detail','OrderEntity.deliveryCost', 'OrderEntity.orderCost')
 
             ->andWhere('OrderEntity.id = :orderId')
             ->setParameter('orderId', $orderId)
@@ -63,7 +63,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function closestOrders()
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.createdAt', 'OrderEntity.ownerID', 'OrderEntity.source', 'OrderEntity.payment', 'OrderEntity.detail', 'OrderEntity.deliveryCost', 'OrderEntity.orderCost')
+            ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.createdAt', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.payment', 'OrderEntity.detail', 'OrderEntity.deliveryCost', 'OrderEntity.orderCost')
             ->addSelect('orderDetailEntity.id as orderDetailId', 'orderDetailEntity.orderNumber')
 
             ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
@@ -76,7 +76,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function getPendingOrders()
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->select('OrderEntity.id', 'OrderEntity.ownerID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.deliveryDate', 'OrderEntity.updatedAt', 'OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'OrderEntity.branchId', 'OrderEntity.createdAt', 'OrderEntity.productID')
+            ->select('OrderEntity.id', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.deliveryDate', 'OrderEntity.updatedAt', 'OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'OrderEntity.branchId', 'OrderEntity.createdAt', 'OrderEntity.productID')
 
             ->andWhere("OrderEntity.state = 'pending'")
 
@@ -141,8 +141,8 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function getAcceptedOrderByCaptainId($captainID)
     {
         return $this->createQueryBuilder('orderEntity')
-            ->addSelect('orderEntity.id', 'orderEntity.ownerID', 'orderEntity.source', 'orderEntity.destination', 'orderEntity.deliveryDate', 'orderEntity.updatedAt', 'orderEntity.note', 'orderEntity.payment', 'orderEntity.recipientName', 'orderEntity.recipientPhone', 'orderEntity.state', 'userProfileEntity.storeOwnerName', 'orderEntity.branchId', 'orderEntity.createdAt') 
-            ->leftJoin(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.storeOwnerID = orderEntity.ownerID')
+            ->addSelect('orderEntity.id', 'orderEntity.storeOwnerProfileID', 'orderEntity.source', 'orderEntity.destination', 'orderEntity.deliveryDate', 'orderEntity.updatedAt', 'orderEntity.note', 'orderEntity.payment', 'orderEntity.recipientName', 'orderEntity.recipientPhone', 'orderEntity.state', 'userProfileEntity.storeOwnerName', 'orderEntity.branchId', 'orderEntity.createdAt', 'orderEntity.deliveryCost', 'orderEntity.orderCost', 'orderEntity.detail') 
+            ->leftJoin(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.id = orderEntity.storeOwnerProfileID')
             ->andWhere('orderEntity.captainID = :captainID')
             ->andWhere("orderEntity.state != 'delivered'")
             ->setParameter('captainID', $captainID) 

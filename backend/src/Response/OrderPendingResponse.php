@@ -5,7 +5,7 @@ namespace App\Response;
 class OrderPendingResponse
 {
     public $id;
-    public $ownerID;
+    public $storeOwnerProfileID;
     public $source = [];
     public $destination;
     public $deliveryDate;

@@ -5,7 +5,7 @@ namespace App\Response;
 class StoreOwnerBranchResponse
 {
     public $id;
-    public $ownerID;
+    public $storeOwnerProfileID;
     public $location = [];
     public $city;
     public $branchName;

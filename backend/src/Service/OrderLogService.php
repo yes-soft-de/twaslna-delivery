@@ -7,49 +7,51 @@ use App\Entity\OrderLogEntity;
 use App\Manager\OrderLogManager;
 use App\Response\OrderLogResponse;
 use App\Service\DateFactoryService;
+
+
 class OrderLogService
 {
     private $autoMapping;
-    private $orderlogManager;
+    private $orderLogManager;
     private $dateFactoryService;
 
-    public function __construct(AutoMapping $autoMapping, OrderLogManager $orderlogManager, DateFactoryService $dateFactoryService)
+    public function __construct(AutoMapping $autoMapping, OrderLogManager $orderLogManager, DateFactoryService $dateFactoryService)
     {
         $this->autoMapping = $autoMapping;
-        $this->orderlogManager = $orderlogManager;
+        $this->orderLogManager = $orderLogManager;
         $this->dateFactoryService = $dateFactoryService;
     }
 
-    public function createOrderLog($orderID, $state, $userID)
+    public function createOrderLog($orderNumber, $state, $userID)
     {
-        $item['orderID'] = $orderID;
+        $item['orderNumber'] = $orderNumber;
         $item['state'] = $state;
         $item['userID'] = $userID;
         
-        $result = $this->orderlogManager->createOrderLog($item);
+        $result = $this->orderLogManager->createOrderLog($item);
 
         return $this->autoMapping->map(OrderLogEntity::class, OrderLogResponse::class, $result);
     }
     
-    public function getOrderLogByOrderId($orderId)
+    public function getOrderLogByOrderNumber($orderNumber)
     {
-        return $this->orderlogManager->getOrderLogByOrderId($orderId);
+        return $this->orderLogManager->getOrderLogByOrderNumber($orderNumber);
     }
 
-    public function getLogsByOrderId($orderId)
+    public function getOrderLogsByOrderNumber($orderNumber)
     {
-        return $this->orderlogManager->getLogsByOrderId($orderId);
+        return $this->orderLogManager->getOrderLogsByOrderNumber($orderNumber);
     }
 
-    public function getOrderLogsWithcompletionTime($orderId)
+    public function getOrderLogsWithCompletionTime($orderNumber)
     {
         $response=[];
-        $items = $this->getLogsByOrderId($orderId);
+        $items = $this->getOrderLogsByOrderNumber($orderNumber);
      
         foreach ($items as $item) {
          
-            $firstDate = $this->getFirstDate($item['orderID']); 
-            $lastDate = $this->getLastDate($item['orderID']);
+            $firstDate = $this->getFirstDate($item['OrderNumber']); 
+            $lastDate = $this->getLastDate($item['OrderNumber']);
            
             if($firstDate[0]['date'] && $lastDate[0]['date']) {
                 $state['completionTime'] = $this->dateFactoryService->subtractTwoDates($firstDate[0]['date'], $lastDate[0]['date']);
@@ -65,27 +67,27 @@ class OrderLogService
         return  $response;
     }
 
-    public function getFirstDate($orderId)
+    public function getFirstDate($orderNumber)
     {
-        return $this->orderlogManager->getFirstDate($orderId);
+        return $this->orderLogManager->getFirstDate($orderNumber);
     }
 
-    public function getLastDate($orderId)
+    public function getLastDate($orderNumber)
     {
-        return $this->orderlogManager->getLastDate($orderId);
+        return $this->orderLogManager->getLastDate($orderNumber);
     } 
 
     public function getOrderLogsByStoreOwner($ownerID):array
     {
         $response = [];
       
-        $items = $this->orderlogManager->getOrderIdByOwnerId($ownerID);
+        $items = $this->orderLogManager->getOrderNumberByOwnerId($ownerID);
      
             foreach ($items as $item) {
-                $item['log'] = $this->getLogsByOrderId($item['orderID']);
+                $item['log'] = $this->getOrderLogsByOrderNumber($item['OrderNumber']);
                
-                $firstDate = $this->getFirstDate($item['orderID']); 
-                $lastDate = $this->getLastDate($item['orderID']);
+                $firstDate = $this->getFirstDate($item['OrderNumber']); 
+                $lastDate = $this->getLastDate($item['OrderNumber']);
                
                 $item['currentStage'] =  $lastDate;
                 if($firstDate[0]['date'] && $lastDate[0]['date']) {
@@ -100,13 +102,13 @@ class OrderLogService
     {
          $response = [];
       
-        $items = $this->orderlogManager->getOrderIdByCaptainId($captainID);
+        $items = $this->orderLogManager->getOrderNumberByCaptainId($captainID);
    
             foreach ($items as $item) {
-                $item['log'] = $this->getLogsByOrderId($item['orderID']);
+                $item['log'] = $this->getOrderLogsByOrderNumber($item['OrderNumber']);
                
-                $firstDate = $this->getFirstDate($item['orderID']); 
-                $lastDate = $this->getLastDate($item['orderID']);
+                $firstDate = $this->getFirstDate($item['OrderNumber']); 
+                $lastDate = $this->getLastDate($item['OrderNumber']);
                
                 $item['currentStage'] =  $lastDate;
                 if($firstDate[0]['date'] && $lastDate[0]['date']) {

@@ -73,13 +73,13 @@ class ProductEntityRepository extends ServiceEntityRepository
            
             ->addSelect('storeOwnerProfile.storeOwnerName','storeOwnerProfile.storeOwnerID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone')
 
-            ->addSelect('storeOwnerBranch.location','storeOwnerBranch.branchName','storeOwnerBranch.city')
+            ->addSelect('StoreOwnerBranchEntity.location','StoreOwnerBranchEntity.branchName','StoreOwnerBranchEntity.city')
 
             ->leftJoin(StoreProductEntity::class, 'StoreProduct', Join::WITH, 'product.id = StoreProduct.productID')
 
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = StoreProduct.storeOwnerProfileID')
 
-            ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerProfile.id = storeOwnerBranch.ownerID')
+            ->leftJoin(StoreOwnerBranchEntity::class, 'StoreOwnerBranchEntity', Join::WITH, 'StoreOwnerBranchEntity.storeOwnerProfileID = storeOwnerProfile.id ')
             ->getQuery()
             ->getResult();
     }
@@ -98,8 +98,8 @@ class ProductEntityRepository extends ServiceEntityRepository
 
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = StoreProduct.storeOwnerProfileID')
 
-            ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerProfile.storeOwnerID = storeOwnerBranch.ownerID')
-
+            ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerBranch.storeOwnerProfileID = storeOwnerProfile.id ')
+            
             ->andWhere('product.id= :id')
             ->setParameter('id',$id)
             ->getQuery()
@@ -116,7 +116,7 @@ class ProductEntityRepository extends ServiceEntityRepository
 
             ->addSelect('count(orderDetailEntity.productID) as countProduct, orderDetailEntity.productID')
 
-            ->addSelect('storeOwnerProfile.storeOwnerName','storeOwnerProfile.storeOwnerID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone', 'storeOwnerProfile.storeOwnerID')
+            ->addSelect('storeOwnerProfile.id as storeOwnerProfileID', 'storeOwnerProfile.storeOwnerName', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone')
 
             ->addSelect('storeOwnerBranch.location','storeOwnerBranch.branchName','storeOwnerBranch.city')
 
@@ -124,7 +124,7 @@ class ProductEntityRepository extends ServiceEntityRepository
             
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = StoreProduct.storeOwnerProfileID')
 
-            ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerProfile.storeOwnerID = storeOwnerBranch.ownerID')
+            ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerProfile.id = storeOwnerBranch.storeOwnerProfileID')
 
             ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.productID = product.id')
 
@@ -154,7 +154,7 @@ class ProductEntityRepository extends ServiceEntityRepository
 
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = :storeOwnerProfileId')
 
-            ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerProfile.storeOwnerID = storeOwnerBranch.ownerID')
+            ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerProfile.id = storeOwnerBranch.storeOwnerProfileID')
 
             ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.productID = product.id')
 
@@ -184,8 +184,7 @@ class ProductEntityRepository extends ServiceEntityRepository
 
         ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = :storeOwnerProfileId')
 
-        ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerProfile.storeOwnerID = storeOwnerBranch.ownerID')
-
+        ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerProfile.id = storeOwnerBranch.storeOwnerProfileID')
         ->andWhere('StoreProduct.storeOwnerProfileID= :storeOwnerProfileId')
         ->andWhere('product.id = :productId')
 

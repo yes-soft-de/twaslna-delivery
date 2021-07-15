@@ -21,28 +21,28 @@ class StoreOwnerBranchEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, StoreOwnerBranchEntity::class);
     }
 
-    public function getBranchesByUserId($userId)
+    public function getBranchesByStoreOwnerProfileID($storeOwnerProfileID)
     {
         return $this->createQueryBuilder('BranchesEntity')
-            ->select('BranchesEntity.id', 'BranchesEntity.ownerID', 'BranchesEntity.location', 'BranchesEntity.city', 'BranchesEntity.branchName','userProfileEntity.free','userProfileEntity.storeOwnerName','userProfileEntity.status','BranchesEntity.isActive') 
+            ->select('BranchesEntity.id', 'BranchesEntity.storeOwnerProfileID', 'BranchesEntity.location', 'BranchesEntity.city', 'BranchesEntity.branchName','userProfileEntity.free','userProfileEntity.storeOwnerName','userProfileEntity.status','BranchesEntity.isActive') 
 
-            ->leftJoin(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.userID = BranchesEntity.ownerID')
+            ->leftJoin(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.id = BranchesEntity.storeOwnerProfileID')
 
-            ->andWhere("BranchesEntity.ownerID = :userId ")
+            ->andWhere("BranchesEntity.storeOwnerProfileID = :storeOwnerProfileID ")
 
-            ->setParameter('userId',$userId)
+            ->setParameter('storeOwnerProfileID',$storeOwnerProfileID)
             ->getQuery()
             ->getResult();
     }
 
-    public function branchesByUserId($userId)
+    public function branchesByStoreOwnerProfileID($storeOwnerProfileID)
     {
         return $this->createQueryBuilder('BranchesEntity')
-            ->select('BranchesEntity.id', 'BranchesEntity.ownerID', 'BranchesEntity.location', 'BranchesEntity.city', 'BranchesEntity.branchName') 
+            ->select('BranchesEntity.id', 'BranchesEntity.storeOwnerProfileID', 'BranchesEntity.location', 'BranchesEntity.city', 'BranchesEntity.branchName') 
 
-            ->andWhere("BranchesEntity.ownerID = :userId ")
+            ->andWhere("BranchesEntity.storeOwnerProfileID = :storeOwnerProfileID ")
 
-            ->setParameter('userId',$userId)
+            ->setParameter('storeOwnerProfileID',$storeOwnerProfileID)
             ->getQuery()
             ->getResult();
     }

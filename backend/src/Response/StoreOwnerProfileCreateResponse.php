@@ -8,7 +8,7 @@ class StoreOwnerProfileCreateResponse
     
     public $storeOwnerName;
 
-    public $storeOwnerID;
+    // public $storeOwnerID;
 
     // public $story;
 

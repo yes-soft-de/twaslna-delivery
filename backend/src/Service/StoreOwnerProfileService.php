@@ -7,6 +7,7 @@ use App\Entity\UserEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\UserManager;
 use App\Request\StoreOwnerProfileCreateRequest;
+use App\Request\StoreOwnerProfileCreateByAdminRequest;
 use App\Request\StoreOwnerProfileUpdateRequest;
 use App\Request\StoreOwnerUpdateByAdminRequest;
 use App\Request\UserRegisterRequest;
@@ -86,27 +87,11 @@ class StoreOwnerProfileService
     public function getStoreOwnerProfileById($id)
     {
         $item = $this->userManager->getStoreOwnerProfileByID($id);
-        $item['branches'] = $this->storeOwnerBranchService->branchesByUserId($item['storeOwnerID']);
-        return $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $item);
-    }
-
-    public function getStoreOwnerProfileByStoreOwnerID($storeOwnerID)
-    {
-        $item = $this->userManager->getStoreOwnerProfileByStoreOwnerID($storeOwnerID);
-        $item['branches'] = $this->storeOwnerBranchService->branchesByUserId($storeOwnerID);
-
-        try {
-            if ($item['image'])
-            {
-                $item['imageURL'] = $item['image'];
-                $item['image'] = $this->params.$item['image'];
-            }
-            $item['baseURL'] = $this->params;
-        }
-        catch(\Exception $e) {
-
-        }
-        
+      
+        $item['imageURL'] = $item['image'];
+        $item['image'] = $this->params.$item['image'];
+        $item['baseURL'] = $this->params;
+        $item['branches'] = $this->storeOwnerBranchService->getBranchesByStoreOwnerProfileID($item['id']);
         return $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $item);
     }
 
@@ -140,17 +125,13 @@ class StoreOwnerProfileService
         return $response;
     }
 
-    public function createStoreOwnerProfileByAdmin(StoreOwnerProfileCreateRequest $request)
+    public function createStoreOwnerProfileByAdmin(StoreOwnerProfileCreateByAdminRequest $request)
     {
         $userProfile = $this->userManager->createStoreOwnerProfileByAdmin($request);
 
         if ($userProfile instanceof StoreOwnerProfileEntity) {
 
             return $this->autoMapping->map(StoreOwnerProfileEntity::class,StoreOwnerProfileCreateResponse::class, $userProfile);
-       }
-        if ($userProfile == true) {
-          
-           return $this->getStoreOwnerProfileByID($request->getStoreOwnerID());
        }
     }
 }

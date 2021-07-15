@@ -235,12 +235,12 @@ class OrderController extends BaseController
     }
     /**
      * @Route("/ordercancel/{orderNumber}", name="orderCancel", methods={"PUT"})
-     * @param Request $request
+     * @IsGranted("ROLE_CLIENT")
      * @return JsonResponse
      */
     public function orderCancel($orderNumber)
     {
-        $response = $this->orderService->orderCancel($orderNumber);
+        $response = $this->orderService->orderCancel($orderNumber, $this->getUserId());
       
         return $this->response($response, self::UPDATE);
     }   

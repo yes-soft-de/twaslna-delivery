@@ -16,8 +16,9 @@ class OrderUpdateStateByCaptainRequest
 
     private $captainID;
 
-    
+    private $deliveryCost;
 
+    
     /**
      * @return mixed
      */
@@ -98,6 +99,18 @@ class OrderUpdateStateByCaptainRequest
     public function setOrderNumber($orderNumber)
     {
         $this->orderNumber = $orderNumber;
+
+        return $this;
+    }
+
+    public function getDeliveryCost()
+    {
+        return $this->deliveryCost;
+    }
+ 
+    public function setDeliveryCost($deliveryCost)
+    {
+        $this->deliveryCost = $deliveryCost;
 
         return $this;
     }

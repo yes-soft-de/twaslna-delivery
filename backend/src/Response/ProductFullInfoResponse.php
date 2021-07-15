@@ -11,10 +11,8 @@ class ProductFullInfoResponse
     public $storeOwnerProfileID;
     public $ProductCategoryID;
     public $storeOwnerName;
-    public $storeOwnerID;
     public $image;
     public $phone;
     public $location;
     public $branchName;
-    public $city;
 }

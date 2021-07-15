@@ -19,9 +19,9 @@ class OrderLogEntity
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer", length=255)
      */
-    private $orderID;
+    private $orderNumber;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -37,12 +37,13 @@ class OrderLogEntity
      * @ORM\Column(type="time")
      * @Gedmo\Timestampable(on="create")
      */
-    private $startTime;
+    private $startTime;//remove
 
-     /**
-     * @ORM\Column(type="datetime", nullable=true)
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
      */
-    private $date;
+    private $createdAt;
 
 
     public function getId(): ?int
@@ -50,14 +51,14 @@ class OrderLogEntity
         return $this->id;
     }
 
-    public function getOrderID(): ?string
+    public function getOrderNumber(): ?int
     {
-        return $this->orderID;
+        return $this->orderNumber;
     }
 
-    public function setOrderID(string $orderID): self
+    public function setOrderNumber(int $orderNumber): self
     {
-        $this->orderID = $orderID;
+        $this->orderNumber = $orderNumber;
 
         return $this;
     }
@@ -98,14 +99,14 @@ class OrderLogEntity
         return $this;
     }
 
-    public function getDate()
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->createdAt;
     }
 
-    public function setDate($date): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->date = new \DateTime($date);
+        $this->createdAt = $createdAt;
 
         return $this;
     }
