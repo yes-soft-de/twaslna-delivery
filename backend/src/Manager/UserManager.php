@@ -12,6 +12,7 @@ use App\Repository\StoreOwnerProfileEntityRepository;
 use App\Repository\CaptainProfileEntityRepository;
 use App\Repository\ClientProfileEntityRepository;
 use App\Request\StoreOwnerProfileCreateRequest;
+use App\Request\StoreOwnerProfileCreateByAdminRequest;
 use App\Request\StoreOwnerUpdateByAdminRequest;
 use App\Request\CaptainProfileCreateRequest;
 use App\Request\CaptainVacationCreateRequest;
@@ -181,11 +182,6 @@ class UserManager
     public function getStoreOwnerProfileByID($id)
     {
         return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByID($id);
-    }
-
-    public function getStoreOwnerProfileByStoreOwnerID($storeOwnerID)
-    {
-        return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByStoreOwnerID($storeOwnerID);
     }
 
     public function getremainingOrders($userID)
@@ -423,11 +419,9 @@ class UserManager
         return $this->storeOwnerProfileEntityRepository->getStoreOwnerBest();
     }
 
-    public function createStoreOwnerProfileByAdmin(StoreOwnerProfileCreateRequest $request)
+    public function createStoreOwnerProfileByAdmin(StoreOwnerProfileCreateByAdminRequest $request)
     {
-        $userProfile = $this->getStoreOwnerProfileByID($request->getStoreOwnerID());
-        if ($userProfile == null) {
-            $userProfile = $this->autoMapping->map(StoreOwnerProfileCreateRequest::class, StoreOwnerProfileEntity::class, $request);
+            $userProfile = $this->autoMapping->map(StoreOwnerProfileCreateByAdminRequest::class, StoreOwnerProfileEntity::class, $request);
 
             $userProfile->setStatus('inactive');
             $userProfile->setFree(false);
@@ -438,9 +432,5 @@ class UserManager
             $this->entityManager->clear();
 
             return $userProfile;
-        }
-        else {
-            return true;
-        }
     }
 }

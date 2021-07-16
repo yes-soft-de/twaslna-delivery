@@ -35,7 +35,8 @@ class BaseController extends AbstractController
 
         if ($this->getUser())
         {
-            $userID = $this->getUser()->getuserid();
+            // $userID = $this->getUser()->getuserid();
+            $userID = $this->getUser()->getId();
         }
 
         return $userID;

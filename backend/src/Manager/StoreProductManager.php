@@ -43,11 +43,6 @@ class StoreProductManager
         return $entity;
     }
 
-    public function getStoreOwnerProfileByStoreOwnerID($userID)
-    {
-        return $this->storeProductEntityRepository->getStoreOwnerProfileByStoreOwnerID($userID);
-    }
-
     public function storeProductsByStoreOwnerProfileId($storeOwnerProfileID)
     {
         return $this->storeProductEntityRepository->storeProductsByStoreOwnerProfileId($storeOwnerProfileID);

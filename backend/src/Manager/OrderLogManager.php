@@ -22,43 +22,43 @@ class OrderLogManager
 
     public function createOrderLog($log)
     {
-        $orderlogEntity = $this->autoMapping->map('array', OrderLogEntity::class, $log);
-        $orderlogEntity->setDate($orderlogEntity->getDate());
+        $orderLogEntity = $this->autoMapping->map('array', OrderLogEntity::class, $log);
+        // $orderLogEntity->setCreatedAt($orderLogEntity->getCreatedAt());
         
-        $this->entityManager->persist($orderlogEntity);
+        $this->entityManager->persist($orderLogEntity);
         $this->entityManager->flush();
         $this->entityManager->clear();
 
-        return $orderlogEntity;
+        return $orderLogEntity;
     }
 
-    public function getOrderLogByOrderId($orderId)
+    public function getOrderLogByOrderNumber($orderNumber)
     {
-        return $this->orderLogEntityRepository->getOrderLogByOrderId($orderId);
+        return $this->orderLogEntityRepository->getOrderLogByOrderNumber($orderNumber);
     }
 
-    public function getLogsByOrderId($orderId)
+    public function getOrderLogsByOrderNumber($orderNumber)
     {
-        return $this->orderLogEntityRepository->getLogsByOrderId($orderId);
+        return $this->orderLogEntityRepository->getOrderLogsByOrderNumber($orderNumber);
     }
 
-    public function getFirstDate($orderId)
+    public function getFirstDate($orderNumber)
     {
-        return $this->orderLogEntityRepository->getFirstDate($orderId);
+        return $this->orderLogEntityRepository->getFirstDate($orderNumber);
     }
     
-    public function getLastDate($orderId)
+    public function getLastDate($orderNumber)
     {
-        return $this->orderLogEntityRepository->getLastDate($orderId);
+        return $this->orderLogEntityRepository->getLastDate($orderNumber);
     }
 
-    public function getOrderIdByOwnerId($ownerID)
+    public function getOrderNumberByOwnerId($ownerID)
     {
-        return $this->orderLogEntityRepository->getOrderIdByOwnerId($ownerID);
+        return $this->orderLogEntityRepository->getOrderNumberByOwnerId($ownerID);
     }
 
-    public function getOrderIdByCaptainId($captainID)
+    public function getOrderNumberByCaptainId($captainID)
     {
-        return $this->orderLogEntityRepository->getOrderIdByCaptainId($captainID);
+        return $this->orderLogEntityRepository->getOrderNumberByCaptainId($captainID);
     }
 }

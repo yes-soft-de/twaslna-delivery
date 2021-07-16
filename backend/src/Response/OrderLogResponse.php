@@ -6,13 +6,13 @@ class OrderLogResponse
 {
     public $id;
 
-    public $orderID;
+    public $orderNumber;
 
     public $state;
 
     public $startTime;
 
-    public $date;
+    public $createdAt;
 
     public $completionTime;
 

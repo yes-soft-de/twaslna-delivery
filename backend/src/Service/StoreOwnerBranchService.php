@@ -33,19 +33,19 @@ class StoreOwnerBranchService
         return $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $result);
     }
 
-    public function getBranchesByUserId($userId):array
+    public function getBranchesByStoreOwnerProfileID($storeOwnerProfileID):array
     {
         $response = [];
-        $items = $this->storeOwnerBranchManager->getBranchesByUserId($userId);
+        $items = $this->storeOwnerBranchManager->getBranchesByStoreOwnerProfileID($storeOwnerProfileID);
         foreach ($items as $item) {
         $response[] =  $this->autoMapping->map('array', StoreOwnerBranchResponse::class, $item);
         }
         return $response;
     }
 
-    public function branchesByUserId($userId)
+    public function branchesByStoreOwnerProfileID($storeOwnerProfileID)
     {
-        return $this->storeOwnerBranchManager->branchesByUserId($userId);
+        return $this->storeOwnerBranchManager->branchesByStoreOwnerProfileID($storeOwnerProfileID);
     }
 
     public function getBrancheById($Id)

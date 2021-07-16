@@ -19,9 +19,9 @@ class OrderEntity
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer", length=255, nullable=true)
      */
-    private $ownerID;
+    private $storeOwnerProfileID;
 
     /**
      * @ORM\Column(type="json", nullable=true)
@@ -131,14 +131,14 @@ class OrderEntity
         return $this;
     }
 
-    public function getOwnerID(): ?string
+    public function getStoreOwnerProfileID(): ?int
     {
-        return $this->ownerID;
+        return $this->storeOwnerProfileID;
     }
 
-    public function setOwnerID(string $ownerID): self
+    public function setStoreOwnerProfileID(int $storeOwnerProfileID): self
     {
-        $this->ownerID = $ownerID;
+        $this->storeOwnerProfileID = $storeOwnerProfileID;
 
         return $this;
     }

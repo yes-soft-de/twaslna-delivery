@@ -21,20 +21,6 @@ class StoreProductEntityRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, StoreProductEntity::class);
     }
-
-    public function getStoreOwnerProfileByStoreOwnerID($storeOwnerID)
-    {
-        return $this->createQueryBuilder('StoreProduct')
-            ->select('storeOwnerProfile.id')
-
-            ->join(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.storeOwnerID = :storeOwnerID')
-            ->andWhere('storeOwnerProfile.storeOwnerID = :storeOwnerID')
-            ->setParameter('storeOwnerID',$storeOwnerID)
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
     
     public function storeProductsByStoreOwnerProfileId($storeOwnerProfileID)
     {

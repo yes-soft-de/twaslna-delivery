@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\AutoMapping;
 use App\Request\StoreOwnerProfileCreateRequest;
+use App\Request\StoreOwnerProfileCreateByAdminRequest;
 use App\Request\StoreOwnerProfileUpdateRequest;
 use App\Request\StoreOwnerUpdateByAdminRequest;
 use App\Request\UserRegisterRequest;
@@ -131,18 +132,6 @@ class StoreOwnerProfileController extends BaseController
     }
 
     /**
-     * @Route("/storeownerprofile", name="getStoreOwnerProfileByStoreOwnerID",methods={"GET"})
-     * @IsGranted("ROLE_OWNER")
-     * @return JsonResponse
-     */
-    public function getStoreOwnerProfileByStoreOwnerID()
-    {
-        $response = $this->storeOwnerProfileService->getStoreOwnerProfileByStoreOwnerID($this->getUserId());
-
-        return $this->response($response, self::FETCH);
-    }
-
-    /**
      * @Route("/storeowners", name="getAllStoreOwners",methods={"GET"})
      * @return JsonResponse
      */
@@ -185,7 +174,7 @@ class StoreOwnerProfileController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, StoreOwnerProfileCreateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, StoreOwnerProfileCreateByAdminRequest::class, (object)$data);
 
         $violations = $this->validator->validate($request);
         if (\count($violations) > 0) {

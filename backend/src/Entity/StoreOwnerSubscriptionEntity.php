@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass=StoreOwner::class)
+ * @ORM\Entity(repositoryClass=StoreOwnerSubscriptionEntityRepository::class)
  */
 class StoreOwnerSubscriptionEntity
 {

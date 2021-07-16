@@ -11,13 +11,13 @@ class CaptainService
 {
     private $autoMapping;
     private $orderManager;
-    private $orderlogService;
+    private $orderLogService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, OrderLogService $orderlogService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, OrderLogService $orderLogService)
     {
         $this->autoMapping = $autoMapping;
         $this->orderManager = $orderManager;
-        $this->orderlogService = $orderlogService;
+        $this->orderLogService = $orderLogService;
     }
 
     public function countCaptainOrdersDelivered($captainId)
