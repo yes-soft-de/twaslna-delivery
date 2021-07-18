@@ -15,4 +15,5 @@ class ProductFullInfoResponse
     public $phone;
     public $location;
     public $branchName;
+    public $deliveryCost;
 }

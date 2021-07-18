@@ -8,6 +8,7 @@ use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\OrderDetailEntity;
 use App\Entity\ProductCategoryEntity;
+use App\Entity\DeliveryCompanyFinancialEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
@@ -119,6 +120,7 @@ class ProductEntityRepository extends ServiceEntityRepository
             ->addSelect('storeOwnerProfile.id as storeOwnerProfileID', 'storeOwnerProfile.storeOwnerName', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone')
 
             ->addSelect('storeOwnerBranch.location','storeOwnerBranch.branchName','storeOwnerBranch.city')
+            ->addSelect('DeliveryCompanyFinancialEntity.deliveryCost')
 
             ->leftJoin(StoreProductEntity::class, 'StoreProduct', Join::WITH, 'product.id = StoreProduct.productID')
             
@@ -127,6 +129,10 @@ class ProductEntityRepository extends ServiceEntityRepository
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerProfile.id = storeOwnerBranch.storeOwnerProfileID')
 
             ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.productID = product.id')
+
+            ->addSelect('DeliveryCompanyFinancialEntity.deliveryCost')
+
+            ->leftJoin(DeliveryCompanyFinancialEntity::class, 'DeliveryCompanyFinancialEntity', Join::WITH, 'storeOwnerProfile.id = storeOwnerProfile.id')
 
             ->andWhere('orderDetailEntity.productID = product.id')
 

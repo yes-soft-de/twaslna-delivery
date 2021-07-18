@@ -26,6 +26,7 @@ class BaseController extends AbstractController
     const UPDATE=["updated","204"];
     const DELETE=["deleted","401"];
     const FETCH=["fetched","200"];
+    const ERROR=["error","425"];
     //const NOTFOUND=["Not found", "404"];
 
 

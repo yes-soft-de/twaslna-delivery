@@ -7,6 +7,7 @@ use App\Service\OrderService;
 use App\Request\OrderCreateRequest;
 use App\Request\OrderClientCreateRequest ;
 use App\Request\OrderClientSendCreateRequest ;
+use App\Request\OrderClientSpecialCreateRequest ;
 use App\Request\OrderUpdateStateByCaptainRequest;
 use App\Request\OrderUpdateByClientRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -207,6 +208,21 @@ class OrderController extends BaseController
         return $this->response($response, self::CREATE);
     }
 
+     /**
+     * @Route("clientSpecialOrder", name="createClientSpecialOrder", methods={"POST"})
+     * @IsGranted("ROLE_CLIENT")
+     */
+    public function createClientSpecialOrder(Request $request)
+    {  
+        $data = json_decode($request->getContent(), true);
+      
+        $request = $this->autoMapping->map(stdClass::class, OrderClientSpecialCreateRequest::class, (object)$data);
+        $request->setClientID($this->getUserId());
+        $response = $this->orderService->createClientSpecialOrder($request);
+
+        return $this->response($response, self::CREATE);
+    }
+
     /**
       * @Route("orderstatusbyordernumber/{orderNumber}", name="getOrderStatusByOrderNumber", methods={"GET"})
       * @return JsonResponse
@@ -230,7 +246,9 @@ class OrderController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, OrderUpdateByClientRequest::class, (object) $data);
         $request->setProducts($data['products']);
         $response = $this->orderService->orderUpdateByClient($request);
-      
+        if(is_string($response)){
+            return $this->response($response, self::ERROR);  
+          }
         return $this->response($response, self::UPDATE);
     }
     /**
@@ -241,7 +259,9 @@ class OrderController extends BaseController
     public function orderCancel($orderNumber)
     {
         $response = $this->orderService->orderCancel($orderNumber, $this->getUserId());
-      
+        if(is_string($response)){
+        return $this->response($response, self::ERROR);  
+      }
         return $this->response($response, self::UPDATE);
     }   
     

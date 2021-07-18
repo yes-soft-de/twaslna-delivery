@@ -11,5 +11,4 @@ class DeliveryCompanyInfoRequest
     private $bank;
     private $stc;
     private $email;
-    private $deliveryCost;
 }

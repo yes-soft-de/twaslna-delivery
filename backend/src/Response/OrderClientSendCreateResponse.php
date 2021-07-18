@@ -13,5 +13,5 @@ class OrderClientSendCreateResponse
     public $state;
     public $roomID;
     public $detail;
-    public $orderDetail=[];
+    public $orderDetail;
 }
