@@ -43,13 +43,16 @@ class Data {
   String? image;
   dynamic phone;
   dynamic location;
+  double? deliveryCost;
 
   Data({
       this.id, 
       this.storeOwnerName, 
       this.image, 
       this.phone, 
-      this.location});
+      this.location,
+      this.deliveryCost
+  });
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -57,6 +60,7 @@ class Data {
     image = json['image'];
     phone = json['phone'];
     location = json['location'];
+    deliveryCost = json['deliveryCost']?.toDouble();
   }
 
   Map<String, dynamic> toJson() {
