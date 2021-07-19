@@ -30,7 +30,7 @@ class Data {
   int? storeOwnerProfileID;
   int? productCategoryID;
   String? storeOwnerName;
-  String? storeOwnerID;
+  int? storeOwnerID;
   String? image;
   dynamic phone;
   dynamic location;
