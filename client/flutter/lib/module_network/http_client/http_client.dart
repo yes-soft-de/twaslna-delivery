@@ -181,10 +181,10 @@ class ApiClient {
   }
 
   Map<String, dynamic>? _processResponse(Response response) {
-    if (response.statusCode! >= 200 && response.statusCode! < 400) {
+    if (response.statusCode! >= 200 && response.statusCode! < 405) {
       _logger.info(tag, response.data.toString());
       return response.data;
-    } else if (response.statusCode! <= 400 && response.statusCode!< 500) {
+    } else if (response.statusCode!< 500) {
       return null;
     } else {
       _logger.error(tag,
