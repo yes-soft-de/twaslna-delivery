@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 class MakeOrderButton extends StatelessWidget {
   final VoidCallback onPressed;
-  MakeOrderButton({required this.onPressed});
+  final String text;
+  MakeOrderButton({required this.onPressed,required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class MakeOrderButton extends StatelessWidget {
                   )
               ),
               onPressed:onPressed,
-              child: Text('${S.of(context).createNewOrder}',style: TextStyle(
+              child: Text(text,style: TextStyle(
                   color: Colors.white,
                   fontSize: 16
               ),),
