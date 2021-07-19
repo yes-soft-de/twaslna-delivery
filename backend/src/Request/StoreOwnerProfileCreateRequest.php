@@ -22,6 +22,10 @@ class StoreOwnerProfileCreateRequest
 
     private $storeCategoryId;
 
+    private $privateOrders;
+
+    private $hasProducts;
+
     /**
      * @return mixed
      */
@@ -151,6 +155,30 @@ class StoreOwnerProfileCreateRequest
     public function setIs_best($is_best)
     {
         $this->is_best = $is_best;
+
+        return $this;
+    }
+
+    public function getPrivateOrders()
+    {
+        return $this->privateOrders;
+    }
+ 
+    public function setPrivateOrders($privateOrders)
+    {
+        $this->privateOrders = $privateOrders;
+
+        return $this;
+    }
+ 
+    public function getHasProducts()
+    {
+        return $this->hasProducts;
+    }
+ 
+    public function setHasProducts($hasProducts)
+    {
+        $this->hasProducts = $hasProducts;
 
         return $this;
     }

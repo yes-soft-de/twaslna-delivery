@@ -8,6 +8,7 @@ use App\Manager\OrderManager;
 use App\Request\OrderCreateRequest;
 use App\Request\OrderClientCreateRequest;
 use App\Request\OrderClientSendCreateRequest;
+use App\Request\OrderClientSpecialCreateRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
 use App\Request\OrderUpdateByClientRequest;
 use App\Request\SendNotificationRequest;
@@ -424,6 +425,26 @@ class OrderService
         return $response;
     }
 
+    public function createClientSpecialOrder(OrderClientSpecialCreateRequest $request):?object
+    {  
+        $orderNumber = 1;
+        $lastOrderNumber = $this->orderDetailService->getLastOrderNumber();
+        if ($lastOrderNumber) {
+            $orderNumber = $lastOrderNumber['orderNumber'] + 1;
+       }
+        $roomID = $this->roomIdHelperService->roomIdGenerate();
+        $item = $this->orderManager->createClientSpecialOrder($request, $roomID);
+        if ($item) {
+            $orderDetail = $this->orderDetailService->createOrderDetail($item->getId(), null, null, $orderNumber);  
+            $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID());
+          }
+          
+        $response = $this->autoMapping->map(OrderEntity::class, OrderClientSendCreateResponse::class, $item);
+        $response->orderDetail['orderNumber'] = $orderDetail->orderNumber;
+        $response->orderDetail['orderDetailId'] = $orderDetail->id;
+        return $response;
+    }
+
     public function getOrderStatusByOrderNumber($orderNumber) 
     {
         $response = [];
@@ -446,7 +467,7 @@ class OrderService
 
     public function orderUpdateByClient(OrderUpdateByClientRequest $request)
     {
-        $response = ['Error'];
+        $response = "Not updated!!";
         $orderDetails = $this->orderDetailService->getOrderIdWithOutStoreProductByOrderNumber($request->getOrderNumber());
         if($orderDetails) {
             $orderUpdate = $this->orderManager->orderUpdateByClient($request, $orderDetails[0]->getOrderID());
@@ -471,20 +492,24 @@ class OrderService
 
     public function orderCancel($orderNumber, $userID)
     {
+        $response="order Number not found!!";
         $orderDetails = $this->orderDetailService->getOrderIdByOrderNumber($orderNumber);
-        $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
+        if($orderDetails) {
+            $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
       
-        $halfHourLaterTime = date_modify($order[0]['createdAt'],'+30 minutes');
-        $nowDate = new DateTime('now');
-        if ( $halfHourLaterTime < $nowDate) {
-            $response=(object)"can not remove it";
-        }
-        else {
-            $item = $this->orderManager->orderCancel($orderDetails[0]->orderID);
-            if($item) {
-                $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $userID);
+            $halfHourLaterTime = date_modify($order[0]['createdAt'],'+30 minutes');
+            $nowDate = new DateTime('now');
+            
+            if ( $halfHourLaterTime < $nowDate) {
+                $response="can not remove it, Exceeded time allowed";
             }
-            $response = $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $item);
+            else {
+                $item = $this->orderManager->orderCancel($orderDetails[0]->orderID);
+                if($item) {
+                    $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $userID);
+                }
+                $response = $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $item);
+            }
         }
         return $response;
     }

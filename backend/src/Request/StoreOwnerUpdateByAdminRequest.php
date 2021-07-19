@@ -16,6 +16,10 @@ class StoreOwnerUpdateByAdminRequest
 
     private $storeCategoryId;
 
+    private $privateOrders;
+
+    private $hasProducts;
+    
     /**
      * Get the value of id
      */ 

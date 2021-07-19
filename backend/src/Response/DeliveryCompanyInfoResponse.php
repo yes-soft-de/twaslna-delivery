@@ -7,11 +7,10 @@ class DeliveryCompanyInfoResponse
     public $id;
     public $phone;
     public $phone2;
-    public $whatsapp;
+    public $whatspp;
     public $fax;
     public $bank;
     public $stc;
     public $email;
     public $roomID;
-    public $deliveryCost;
 }

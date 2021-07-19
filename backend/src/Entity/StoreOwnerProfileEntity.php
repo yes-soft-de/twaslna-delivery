@@ -77,6 +77,16 @@ class StoreOwnerProfileEntity
      */
     private $is_best;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $privateOrders;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $hasProducts;
+
     public function getStoreOwnerID(): ?string
     {
         return $this->storeOwnerID;
@@ -209,7 +219,6 @@ class StoreOwnerProfileEntity
         return $this;
     }
 
-    
     public function getIs_best(): ?bool
     {
         return $this->is_best;
@@ -218,6 +227,30 @@ class StoreOwnerProfileEntity
     public function setIs_best(?bool $is_best): self
     {
         $this->is_best = $is_best;
+
+        return $this;
+    }
+
+    public function getPrivateOrders(): ?bool
+    {
+        return $this->privateOrders;
+    }
+
+    public function setPrivateOrders(?bool $privateOrders): self
+    {
+        $this->privateOrders = $privateOrders;
+
+        return $this;
+    }
+
+    public function getHasProducts(): ?bool
+    {
+        return $this->hasProducts;
+    }
+
+    public function setHasProducts(?bool $hasProducts): self
+    {
+        $this->hasProducts = $hasProducts;
 
         return $this;
     }

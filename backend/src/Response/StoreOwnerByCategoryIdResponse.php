@@ -15,4 +15,8 @@ class StoreOwnerByCategoryIdResponse
     public $location;
 
     public $deliveryCost;
+    
+    public $privateOrders;
+
+    public $hasProducts;
 }

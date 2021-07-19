@@ -33,4 +33,8 @@ class StoreOwnerProfileCreateResponse
     public $bank;
 
     public $deliveryCost;
+
+    public $privateOrders;
+
+    public $hasProducts;
 }
