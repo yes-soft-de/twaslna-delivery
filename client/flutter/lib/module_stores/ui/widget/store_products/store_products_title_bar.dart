@@ -4,8 +4,8 @@ class StoreProductsTitleBar extends StatelessWidget {
  final String title;
  final double rate;
  final int views;
-
- StoreProductsTitleBar({required this.title,required this.rate,required this.views});
+ final double deliveryCost;
+ StoreProductsTitleBar({required this.title,required this.rate,required this.views,required this.deliveryCost});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class StoreProductsTitleBar extends StatelessWidget {
                       '${S.of(context).views} $views',
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          fontSize: 18),
+                          fontSize: 16),
                     ),
                   ),
                   Icon(Icons.circle, size: 8),
@@ -58,7 +58,7 @@ class StoreProductsTitleBar extends StatelessWidget {
                     child: Text(
                       rate.toString(),
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -68,12 +68,22 @@ class StoreProductsTitleBar extends StatelessWidget {
                         top: 8.0, bottom: 8.0),
                     child: Icon(
                       Icons.star,
-                      size: 18,
+                      size: 16,
                       color: Colors.blue[700],
                     ),
                   ),
                   Container(
-                    width: 4,
+                    width: 8,
+                  ),
+                  Icon(Icons.circle, size: 8),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      '${S.of(context).deliverPrice} $deliveryCost ${S.of(context).sar}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16),
+                    ),
                   ),
                 ],
               ),
