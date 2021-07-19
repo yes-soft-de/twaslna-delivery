@@ -18,7 +18,7 @@ class OrderDetailsStateManager {
     _stateSubject.add(OrderDetailsLoadingState(screenState));
     _OrdersService.getOrdersDetails(id).then((value){
       if (value != null){
-        if (value is int) {
+        if (value is String) {
           _stateSubject.add(OrderDetailsErrorState(screenState,S.current.networkError));
         }
         else {

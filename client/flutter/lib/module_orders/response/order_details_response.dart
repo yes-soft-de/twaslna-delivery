@@ -3,20 +3,12 @@ class OrderDetailsResponse {
   String? msg;
   Data? data;
 
-  OrderDetailsResponse({
-      this.statusCode, 
-      this.msg, 
-      this.data});
+  OrderDetailsResponse({this.statusCode, this.msg, this.data});
 
   OrderDetailsResponse.fromJson(dynamic json) {
     statusCode = json['status_code'];
     msg = json['msg'];
-    try {
-      data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
-    }
-    catch (e) {
-      print(e);
-    }
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -28,7 +20,6 @@ class OrderDetailsResponse {
     }
     return map;
   }
-
 }
 
 class Data {
@@ -36,10 +27,7 @@ class Data {
   StoreOwner? storeOwner;
   Order? order;
 
-  Data({
-      this.orderDetails, 
-      this.storeOwner, 
-      this.order});
+  Data({this.orderDetails, this.storeOwner, this.order});
 
   Data.fromJson(dynamic json) {
     if (json['orderDetails'] != null) {
@@ -48,7 +36,9 @@ class Data {
         orderDetails?.add(OrderDetails.fromJson(v));
       });
     }
-    storeOwner = json['storeOwner'] != null ? StoreOwner.fromJson(json['storeOwner']) : null;
+    storeOwner = json['storeOwner'] != null
+        ? StoreOwner.fromJson(json['storeOwner'])
+        : null;
     order = json['order'] != null ? Order.fromJson(json['order']) : null;
   }
 
@@ -65,14 +55,28 @@ class Data {
     }
     return map;
   }
-
 }
+class GeoJson {
+  double? long;
+  double? lat;
 
+  GeoJson({this.long, this.lat});
+  GeoJson.fromJson(dynamic json) { 
+    long = json['long'];
+    lat = json['lat'];
+  }
+  Map<String, dynamic> toJson() {
+    var map = <String, dynamic>{};
+    map['long'] = long;
+    map['lat'] = lat;
+    return map;
+  }
+}
 class Order {
   int? id;
   String? ownerID;
   List<dynamic>? source;
-  String? destination;
+  dynamic destination;
   DeliveryDate? deliveryDate;
   dynamic updatedAt;
   String? note;
@@ -87,25 +91,24 @@ class Order {
   double? deliveryCost;
   double? orderCost;
 
-  Order({
-      this.id, 
-      this.ownerID, 
-      this.source, 
-      this.destination, 
-      this.deliveryDate, 
-      this.updatedAt, 
-      this.note, 
-      this.payment, 
-      this.recipientName, 
-      this.recipientPhone, 
-      this.state, 
-      this.roomID, 
-      this.captainID, 
-      this.createdAt, 
+  Order(
+      {this.id,
+      this.ownerID,
+      this.source,
+      this.destination,
+      this.deliveryDate,
+      this.updatedAt,
+      this.note,
+      this.payment,
+      this.recipientName,
+      this.recipientPhone,
+      this.state,
+      this.roomID,
+      this.captainID,
+      this.createdAt,
       this.detail,
       this.orderCost,
-      this.deliveryCost
-  });
+      this.deliveryCost});
 
   Order.fromJson(dynamic json) {
     id = json['id'];
@@ -116,8 +119,10 @@ class Order {
       //   source?.add(dynamic.fromJson(v));
       // });
     }
-    destination = json['destination'];
-    deliveryDate = json['deliveryDate'] != null ? DeliveryDate.fromJson(json['deliveryDate']) : null;
+    destination = json['destination'] is String ? json['destination'] : GeoJson.fromJson(json['destination']);
+    deliveryDate = json['deliveryDate'] != null
+        ? DeliveryDate.fromJson(json['deliveryDate'])
+        : null;
     updatedAt = json['updatedAt'];
     note = json['note'];
     payment = json['payment'];
@@ -126,7 +131,9 @@ class Order {
     state = json['state'];
     roomID = json['roomID'];
     captainID = json['captainID'];
-    createdAt = json['createdAt'] != null ? CreatedAt.fromJson(json['createdAt']) : null;
+    createdAt = json['createdAt'] != null
+        ? CreatedAt.fromJson(json['createdAt'])
+        : null;
     detail = json['detail'];
     deliveryCost = json['deliveryCost']?.toDouble();
     orderCost = json['orderCost']?.toDouble();
@@ -157,7 +164,6 @@ class Order {
     map['detail'] = detail;
     return map;
   }
-
 }
 
 class CreatedAt {
@@ -165,13 +171,11 @@ class CreatedAt {
   int? offset;
   int? timestamp;
 
-  CreatedAt({
-      this.timezone, 
-      this.offset, 
-      this.timestamp});
+  CreatedAt({this.timezone, this.offset, this.timestamp});
 
   CreatedAt.fromJson(dynamic json) {
-    timezone = json['timezone'] != null ? Timezone.fromJson(json['timezone']) : null;
+    timezone =
+        json['timezone'] != null ? Timezone.fromJson(json['timezone']) : null;
     offset = json['offset'];
     timestamp = json['timestamp'];
   }
@@ -185,7 +189,6 @@ class CreatedAt {
     map['timestamp'] = timestamp;
     return map;
   }
-
 }
 
 class Timezone {
@@ -193,10 +196,7 @@ class Timezone {
   List<Transitions>? transitions;
   Location? location;
 
-  Timezone({
-      this.name, 
-      this.transitions, 
-      this.location});
+  Timezone({this.name, this.transitions, this.location});
 
   Timezone.fromJson(dynamic json) {
     name = json['name'];
@@ -206,7 +206,8 @@ class Timezone {
         transitions?.add(Transitions.fromJson(v));
       });
     }
-    location = json['location'] != null ? Location.fromJson(json['location']) : null;
+    location =
+        json['location'] != null ? Location.fromJson(json['location']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -220,7 +221,6 @@ class Timezone {
     }
     return map;
   }
-
 }
 
 class Location {
@@ -229,11 +229,7 @@ class Location {
   int? longitude;
   String? comments;
 
-  Location({
-      this.countryCode, 
-      this.latitude, 
-      this.longitude, 
-      this.comments});
+  Location({this.countryCode, this.latitude, this.longitude, this.comments});
 
   Location.fromJson(dynamic json) {
     countryCode = json['country_code'];
@@ -250,7 +246,6 @@ class Location {
     map['comments'] = comments;
     return map;
   }
-
 }
 
 class Transitions {
@@ -260,12 +255,7 @@ class Transitions {
   bool? isdst;
   String? abbr;
 
-  Transitions({
-      this.ts, 
-      this.time, 
-      this.offset, 
-      this.isdst, 
-      this.abbr});
+  Transitions({this.ts, this.time, this.offset, this.isdst, this.abbr});
 
   Transitions.fromJson(dynamic json) {
     ts = json['ts'];
@@ -284,7 +274,6 @@ class Transitions {
     map['abbr'] = abbr;
     return map;
   }
-
 }
 
 class DeliveryDate {
@@ -292,13 +281,11 @@ class DeliveryDate {
   int? offset;
   int? timestamp;
 
-  DeliveryDate({
-      this.timezone, 
-      this.offset, 
-      this.timestamp});
+  DeliveryDate({this.timezone, this.offset, this.timestamp});
 
   DeliveryDate.fromJson(dynamic json) {
-    timezone = json['timezone'] != null ? Timezone.fromJson(json['timezone']) : null;
+    timezone =
+        json['timezone'] != null ? Timezone.fromJson(json['timezone']) : null;
     offset = json['offset'];
     timestamp = json['timestamp'];
   }
@@ -312,7 +299,6 @@ class DeliveryDate {
     map['timestamp'] = timestamp;
     return map;
   }
-
 }
 
 class StoreOwner {
@@ -329,18 +315,18 @@ class StoreOwner {
   dynamic baseURL;
   dynamic bank;
 
-  StoreOwner({
-      this.id, 
-      this.storeOwnerName, 
-      this.storeOwnerID, 
-      this.image, 
-      this.branch, 
-      this.free, 
-      this.branches, 
-      this.city, 
-      this.phone, 
-      this.imageURL, 
-      this.baseURL, 
+  StoreOwner(
+      {this.id,
+      this.storeOwnerName,
+      this.storeOwnerID,
+      this.image,
+      this.branch,
+      this.free,
+      this.branches,
+      this.city,
+      this.phone,
+      this.imageURL,
+      this.baseURL,
       this.bank});
 
   StoreOwner.fromJson(dynamic json) {
@@ -381,7 +367,6 @@ class StoreOwner {
     map['bank'] = bank;
     return map;
   }
-
 }
 
 class Branches {
@@ -391,17 +376,13 @@ class Branches {
   dynamic? city;
   dynamic? branchName;
 
-  Branches({
-      this.id, 
-      this.ownerID, 
-      this.location, 
-      this.city, 
-      this.branchName});
+  Branches({this.id, this.ownerID, this.location, this.city, this.branchName});
 
   Branches.fromJson(dynamic json) {
     id = json['id'];
     ownerID = json['ownerID'];
-    location = json['location'] != null ? Location.fromJson(json['location']) : null;
+    location =
+        json['location'] != null ? Location.fromJson(json['location']) : null;
     city = json['city'];
     branchName = json['branchName'];
   }
@@ -417,7 +398,6 @@ class Branches {
     map['branchName'] = branchName;
     return map;
   }
-
 }
 
 class OrderDetails {
@@ -432,16 +412,16 @@ class OrderDetails {
   int? productCategoryID;
   String? orderNumber;
 
-  OrderDetails({
-      this.id, 
-      this.productID, 
-      this.orderID, 
-      this.productName, 
-      this.productImage, 
-      this.productPrice, 
-      this.countProduct, 
-      this.storeOwnerProfileID, 
-      this.productCategoryID, 
+  OrderDetails(
+      {this.id,
+      this.productID,
+      this.orderID,
+      this.productName,
+      this.productImage,
+      this.productPrice,
+      this.countProduct,
+      this.storeOwnerProfileID,
+      this.productCategoryID,
       this.orderNumber});
 
   OrderDetails.fromJson(dynamic json) {
@@ -471,5 +451,4 @@ class OrderDetails {
     map['orderNumber'] = orderNumber;
     return map;
   }
-
 }

@@ -1,13 +1,22 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
+import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_main/main_routes.dart';
+import 'package:twaslna_delivery/module_orders/request/client_order_request.dart';
+import 'package:twaslna_delivery/module_orders/state_manager/client_order_state_manager.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/client_order/client_order_loaded_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/client_order/client_order_state.dart';
+import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 
 @injectable
 class ClientOrderScreen extends StatefulWidget {
+  final ClientOrderStateManager _clientOrderStateManager;
+
+  ClientOrderScreen(this._clientOrderStateManager);
+
   @override
   ClientOrderScreenState createState() => ClientOrderScreenState();
 }
@@ -15,9 +24,30 @@ class ClientOrderScreen extends StatefulWidget {
 class ClientOrderScreenState extends State<ClientOrderScreen> {
   late ClientOrderState currentState;
   LatLng? myPos;
+
   void refresh() {
     if (mounted) {
       setState(() {});
+    }
+  }
+
+  void postClientOrder(ClientOrderRequest request) {
+    widget._clientOrderStateManager.postClientOrder(request, this);
+  }
+
+  void moveDecision(bool success, [String err = '']) {
+    if (success) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
+      CustomFlushBarHelper.createSuccess(
+        title: S.of(context).warnning,
+        message: S.of(context).successCreateOrder,
+      )..show(context);
+    } else {
+      Navigator.of(context).pop();
+      CustomFlushBarHelper.createError(
+          title: S.of(context).warnning, message: err)
+        ..show(context);
     }
   }
 
@@ -25,14 +55,18 @@ class ClientOrderScreenState extends State<ClientOrderScreen> {
   void initState() {
     super.initState();
     currentState = ClientOrderLoadedState(this);
-    defaultLocation().then((value){
-      if (value == null) {
+    widget._clientOrderStateManager.stateStream.listen((event) {
+      currentState = event;
+      if (mounted) {
+        setState(() {});
       }
-      else {
+    });
+    defaultLocation().then((value) {
+      if (value == null) {
+      } else {
         myPos = value;
-        if (mounted){
-          setState(() {
-          });
+        if (mounted) {
+          setState(() {});
         }
       }
     });
@@ -49,10 +83,10 @@ class ClientOrderScreenState extends State<ClientOrderScreen> {
         },
         child: Scaffold(
           body: currentState.getUI(context),
-        )
-    );
+        ));
   }
-  Future<LatLng?> defaultLocation() async{
+
+  Future<LatLng?> defaultLocation() async {
     Location location = new Location();
 
     bool _serviceEnabled = await location.serviceEnabled();
@@ -60,15 +94,13 @@ class ClientOrderScreenState extends State<ClientOrderScreen> {
       _serviceEnabled = await location.requestService();
     }
 
-    var _permissionGranted =
-    await location.requestPermission();
+    var _permissionGranted = await location.requestPermission();
     if (_permissionGranted == PermissionStatus.denied) {
       return null;
     }
 
     var myLocation = await Location.instance.getLocation();
-    LatLng myPos =
-    LatLng(myLocation.latitude??0, myLocation.longitude??0);
+    LatLng myPos = LatLng(myLocation.latitude ?? 0, myLocation.longitude ?? 0);
     return myPos;
   }
 }

@@ -73,7 +73,8 @@ List<Item> toCartList(List<OrderDetails> ordersItems) {
     items.add(Item(
         productID: element.productID ?? -1,
         productName: element.productName ?? S.current.product,
-        productImage: element.productImage ??
+        //element.productImage ??
+        productImage:
             'https://cdn.vox-cdn.com/thumbor/R9xKyUPdU1ZVmGa6EQeh7FcPa_o=/0x0:4047x3035/1200x900/filters:focal(1700x1194:2346x1840):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/62343549/20150915-_Upland_Burger_3.0.0.0.0.jpg',
         productPrice: element.productPrice ?? 0,
         countProduct: element.countProduct ?? 1,
