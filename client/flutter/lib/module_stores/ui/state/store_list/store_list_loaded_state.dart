@@ -129,7 +129,7 @@ class StoreListLoadedState extends StoreListState {
     stores.forEach((element) {
       storeCardList.add(StoreCard(title:element.storeOwnerName,onTap: (){
         Navigator.of(screenState.context).pushNamed(StoreRoutes.STORE_PRODUCTS,arguments: element);
-      },));
+      },image:element.image,));
     });
     return storeCardList;
  }

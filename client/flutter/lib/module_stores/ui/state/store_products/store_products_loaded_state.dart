@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
-import 'package:twaslna_delivery/module_home/response/products.dart';
+import 'package:twaslna_delivery/module_orders/orders_routes.dart';
+import 'package:twaslna_delivery/module_orders/request/client_order_request.dart';
 import 'package:twaslna_delivery/module_stores/model/cart_model.dart';
 import 'package:twaslna_delivery/module_stores/model/category_model.dart';
-import 'package:twaslna_delivery/module_stores/response/store_products.dart';
+import 'package:twaslna_delivery/module_stores/model/checkout_model.dart';
 import 'package:twaslna_delivery/module_stores/ui/screen/store_products_screen.dart';
 import 'package:twaslna_delivery/module_stores/ui/state/store_products/store_products_state.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/checkout_button.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/custom_stores_products_app_bar.dart';
-import 'package:twaslna_delivery/module_stores/ui/widget/store_card.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/products_card.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/products_chip.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/store_products_title_bar.dart';
 import 'package:twaslna_delivery/utils/components/costom_search.dart';
+import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 import 'package:twaslna_delivery/utils/models/product.dart';
 import 'package:twaslna_delivery/utils/models/store.dart';
-import 'package:twaslna_delivery/utils/models/store_category.dart';
-import 'package:twaslna_delivery/utils/text_style/text_style.dart';
 
 class StoreProductsLoadedState extends StoreProductsState {
   StoreProductsScreenState screenState;
@@ -33,7 +31,7 @@ class StoreProductsLoadedState extends StoreProductsState {
   List<CartModel> carts = [];
   late int storeId;
   int categoryId = -1;
-
+  late double deliveryCost;
   @override
   Widget getUI(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -43,6 +41,7 @@ class StoreProductsLoadedState extends StoreProductsState {
       title = args.storeOwnerName;
       backgroundImage = args.image;
       storeId = args.id;
+      deliveryCost = args.deliveryCost;
     }
     return Stack(
       children: [
@@ -66,6 +65,7 @@ class StoreProductsLoadedState extends StoreProductsState {
                   title: title,
                   rate: 4.7,
                   views: 40,
+                  deliveryCost:deliveryCost
                 ),
               ),
               Container(
@@ -128,8 +128,18 @@ class StoreProductsLoadedState extends StoreProductsState {
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: CheckoutButton(
-                        onPressed: () {},
+                        onPressed:carts.isNotEmpty ? () {
+                          List<Products> items = [];
+                          carts.forEach((element) {
+                            items.add(Products(productID: element.id,countProduct: element.quantity));
+                          });
+                          CheckoutModel checkoutModel = CheckoutModel(ownerId:storeId.toString(),cart: items,orderCost:double.parse(getTotal(carts)),deliveryCost:deliveryCost);
+                          Navigator.of(context).pushNamed(OrdersRoutes.CLIENT_ORDER,arguments:checkoutModel);
+                        }:(){
+                          CustomFlushBarHelper.createError(title:S.of(context).warnning, message:S.of(context).yourCartEmpty)..show(context);
+                        },
                         total: getTotal(carts),
+                        currency: S.of(context).sar,
                       ),
                     ),
                   ],
