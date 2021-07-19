@@ -2790,10 +2790,10 @@ class S {
     );
   }
 
-  /// `My address`
+  /// `Receipt point`
   String get myAddress {
     return Intl.message(
-      'My address',
+      'Receipt point',
       name: 'myAddress',
       desc: '',
       args: [],
@@ -2865,6 +2865,156 @@ class S {
     return Intl.message(
       'Choose',
       name: 'paymentMethodHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data fetched succesfuly`
+  String get statusCodeOk {
+    return Intl.message(
+      'Data fetched succesfuly',
+      name: 'statusCodeOk',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The request has succeeded and a new resource has been created as a result`
+  String get statusCodeCreated {
+    return Intl.message(
+      'The request has succeeded and a new resource has been created as a result',
+      name: 'statusCodeCreated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The server could not understand the request due to invalid syntax`
+  String get statusCodeBadRequest {
+    return Intl.message(
+      'The server could not understand the request due to invalid syntax',
+      name: 'statusCodeBadRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unauthorized`
+  String get statusCodeUnauthorized {
+    return Intl.message(
+      'Unauthorized',
+      name: 'statusCodeUnauthorized',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data not found`
+  String get StatusCodeNotFound {
+    return Intl.message(
+      'Data not found',
+      name: 'StatusCodeNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notes`
+  String get note {
+    return Intl.message(
+      'Notes',
+      name: 'note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order created successfully`
+  String get successCreateOrder {
+    return Intl.message(
+      'Order created successfully',
+      name: 'successCreateOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please choose payment method`
+  String get pleaseProvidePaymentMethode {
+    return Intl.message(
+      'Please choose payment method',
+      name: 'pleaseProvidePaymentMethode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please provide your address on our map`
+  String get pleaseProvideYourAddress {
+    return Intl.message(
+      'Please provide your address on our map',
+      name: 'pleaseProvideYourAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your cart is empty please choose items to add`
+  String get yourCartEmpty {
+    return Intl.message(
+      'Your cart is empty please choose items to add',
+      name: 'yourCartEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please place your order notes`
+  String get noteOfOrder {
+    return Intl.message(
+      'Please place your order notes',
+      name: 'noteOfOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `choose location`
+  String get chooseLocation {
+    return Intl.message(
+      'choose location',
+      name: 'chooseLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose Receipt Location`
+  String get chooseReceiptPoint {
+    return Intl.message(
+      'Choose Receipt Location',
+      name: 'chooseReceiptPoint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose Destination Location`
+  String get chooseDestinationPoint {
+    return Intl.message(
+      'Choose Destination Location',
+      name: 'chooseDestinationPoint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finish Order`
+  String get finishedOrdering {
+    return Intl.message(
+      'Finish Order',
+      name: 'finishedOrdering',
       desc: '',
       args: [],
     );

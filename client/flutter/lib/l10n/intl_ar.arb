@@ -281,5 +281,20 @@
   "card" : "بطاقة",
   "chooseAddressNote":"يمكنك تعديل مكان التسليم الحالي على الخارطة",
   "orderTime":"زمن التوصيل",
-  "paymentMethodHint":"اختر"
+  "paymentMethodHint":"اختر",
+  "statusCodeOk": "تم جلب المعلومات بنجاح",
+  "statusCodeCreated": "نجح الطلب وتم إنشاء تغيير جديد نتيجة لذلك ",
+  "statusCodeBadRequest":"تعذر على الخادم فهم الطلب بسبب بناء جملة غير صالحة",
+  "statusCodeUnauthorized":"أنت غير مخول بالقيام بهذا الطلب",
+  "StatusCodeNotFound":"لا يمكن للخادم العثور على طلبك المطلوب",
+  "note": "ملاحظات",
+  "successCreateOrder": "تم إنشاء الطلب بنجاح",
+  "pleaseProvideYourAddress": "من فضلك قم بتزويدنا بموقع التسليم على الخارطة",
+  "pleaseProvidePaymentMethode": "من فضلك اختر طريقة للدفع",
+  "yourCartEmpty": "قائمة طلباتك فارغة من فضلك اختر ما تريد طلبه",
+  "noteOfOrder": "دون ملاحظاتك حول الطلب",
+  "chooseLocation": "اختر موقع",
+  "chooseReceiptPoint": "اختر موقع الاستلام",
+  "chooseDestinationPoint": "اختر موقع التسليم",
+  "finishedOrdering": "إنهاء الطلب"
 }

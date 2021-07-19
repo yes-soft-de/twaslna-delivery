@@ -276,17 +276,29 @@
   "orderDeliveredDescription": "your order has delivered",
   "orderStatusDescription": "You can know your order status in this interface",
   "destinationAddress": "Destination Address",
-  "myAddress": "My address",
+  "myAddress": "Receipt point",
   "orderDetailHint": "Please place your order details here",
   "destinationAddressHint": "Please place your destination address",
   "myAddressHint": "Please place your address",
   "card": "Card",
   "chooseAddressNote":"Please update your current location if you want to",
   "orderTime":"Order Time",
-  "paymentMethodHint":"Choose"
-
-
-
+  "paymentMethodHint":"Choose",
+  "statusCodeOk": "Data fetched succesfuly",
+  "statusCodeCreated": "The request has succeeded and a new resource has been created as a result",
+  "statusCodeBadRequest":"The server could not understand the request due to invalid syntax",
+  "statusCodeUnauthorized":"Unauthorized",
+  "StatusCodeNotFound":"Data not found",
+  "note": "Notes",
+  "successCreateOrder": "Order created successfully",
+  "pleaseProvidePaymentMethode": "Please choose payment method",
+  "pleaseProvideYourAddress": "Please provide your address on our map",
+  "yourCartEmpty": "Your cart is empty please choose items to add",
+  "noteOfOrder": "Please place your order notes",
+  "chooseLocation": "choose location",
+  "chooseReceiptPoint": "Choose Receipt Location",
+  "chooseDestinationPoint": "Choose Destination Location",
+  "finishedOrdering": "Finish Order"
 
 
 
