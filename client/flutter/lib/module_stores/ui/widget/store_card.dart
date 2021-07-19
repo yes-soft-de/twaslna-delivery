@@ -4,7 +4,8 @@ import 'package:twaslna_delivery/module_stores/store_routes.dart';
 class StoreCard extends StatelessWidget {
   final String title;
   final GestureTapCallback? onTap;
-  StoreCard({required this.title,this.onTap});
+  final String image;
+  StoreCard({required this.title,this.onTap,required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -20,49 +21,62 @@ class StoreCard extends StatelessWidget {
             color: Theme.of(context).backgroundColor,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Flex(
-            direction: Axis.vertical,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          child:Stack(
             children: [
-              Text(
-                title,
-                style: TextStyle(fontWeight: FontWeight.bold),
-                overflow: TextOverflow.ellipsis,
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(image,fit: BoxFit.cover,height: double.maxFinite,)),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black.withOpacity(0.3),
+                ),
               ),
               Flex(
-                direction: Axis.horizontal,
-                mainAxisAlignment:
-                MainAxisAlignment.spaceAround,
+                direction: Axis.vertical,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color:Theme.of(context).scaffoldBackgroundColor,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceAround,
-                        children: [
-                          Icon(Icons.star,size: 12.5,color: Colors.blue[700]),
-                          Container(width: 2,),
-                          Text('4.7',style: TextStyle(
-                              fontSize: 14
-                          ),),
-                        ],
-                      ),
-                    ),
+                  Text(
+                    title,
+                    style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color:Theme.of(context).scaffoldBackgroundColor,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Text('${S.of(context).views} 400'),
-                    ),
+                  Flex(
+                    direction: Axis.horizontal,
+                    mainAxisAlignment:
+                    MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color:Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(Icons.star,size: 12.5,color: Colors.blue[700]),
+                              Container(width: 2,),
+                              Text('4.7',style: TextStyle(
+                                  fontSize: 14
+                              ),),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color:Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text('${S.of(context).views} 400'),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
