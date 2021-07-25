@@ -29,11 +29,11 @@ class HomeService {
               'https://www.erdeundleben.com/wp-content/uploads/2021/02/folgendes-macht-unser-food-personal-wenn-es-fast-zu-mude-ist-um-zu-kochen-0-Yywyr8ju.jpg',
           price: element.productPrice ?? 0,
           id: element.id ?? -1,
-        ownerId: element.storeOwnerID ?? -1,
+        ownerId: element.storeOwnerProfileID ?? -1,
         storeImage: 'https://www.gannett-cdn.com/media/2020/03/23/USATODAY/usatsports/247WallSt.com-247WS-657876-imageforentry9-vp7.jpg?width=660&height=371&fit=crop&format=pjpg&auto=webp',
         storeName: element.storeOwnerName ?? S.current.storeOwner,
         phone: element.phone ?? '0',
-        deliveryCost: 0
+        deliveryCost: element.deliveryCost??0
       ));
     });
     return topProductsModel;
@@ -65,6 +65,8 @@ class HomeService {
           id: element.id ?? -1,
           storeOwnerName: element.storeOwnerName ?? S.current.store,
           deliveryCost: element.deliveryCost ?? 0,
+          hasProducts: element.hasProducts??false,
+          privateOrders: element.privateOrders??false,
           image:
               'https://www.gannett-cdn.com/media/2020/03/23/USATODAY/usatsports/247WallSt.com-247WS-657876-imageforentry9-vp7.jpg?width=660&height=371&fit=crop&format=pjpg&auto=webp'));
     });

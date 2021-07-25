@@ -36,7 +36,7 @@ class Data {
   dynamic location;
   dynamic branchName;
   dynamic city;
-
+  double? deliveryCost;
   Data(
       {this.id,
       this.productName,
@@ -50,7 +50,9 @@ class Data {
       this.phone,
       this.location,
       this.branchName,
-      this.city});
+      this.city,
+      this.deliveryCost
+      });
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -66,5 +68,6 @@ class Data {
     location = json['location'];
     branchName = json['branchName'];
     city = json['city'];
+    deliveryCost = json['deliveryCost']?.toDouble();
   }
 }

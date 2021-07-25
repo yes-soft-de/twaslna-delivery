@@ -24,6 +24,9 @@ class HomeScreenState extends State<HomeScreen> {
       setState(() {});
     }
   }
+  Future<void> getHomeData() async {
+    widget._homeStateManager.getHomeData(this);
+  }
   @override
   void initState() {
     super.initState();

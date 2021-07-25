@@ -41,7 +41,8 @@ class Data {
   dynamic? phone;
   dynamic? location;
   double? deliveryCost;
-
+  bool? privateOrders;
+  bool? hasProducts;
   Data({
     this.id,
     this.storeOwnerName,
@@ -49,6 +50,8 @@ class Data {
     this.phone,
     this.location,
     this.deliveryCost,
+    this.hasProducts,
+    this.privateOrders
   });
 
   Data.fromJson(dynamic json) {
@@ -58,6 +61,8 @@ class Data {
     phone = json['phone'];
     location = json['location'];
     deliveryCost = json['deliveryCost'];
+    privateOrders = json['privateOrders'];
+    hasProducts = json['hasProducts'];
   }
 
   Map<String, dynamic> toJson() {
