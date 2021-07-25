@@ -7,7 +7,7 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import '../main.dart' as _i90;
+import '../main.dart' as _i92;
 import '../module_account/account_module.dart' as _i19;
 import '../module_account/manager/account_manager.dart' as _i18;
 import '../module_account/repository/account_repository.dart' as _i3;
@@ -27,13 +27,13 @@ import '../module_auth/state_manager/login_state_manager/login_state_manager.dar
 import '../module_auth/state_manager/register_state_manager/register_state_manager.dart'
     as _i48;
 import '../module_auth/ui/screen/login_screen/login_screen.dart' as _i65;
-import '../module_auth/ui/screen/register_screen/register_screen.dart' as _i69;
+import '../module_auth/ui/screen/register_screen/register_screen.dart' as _i70;
 import '../module_chat/bloc/chat_page/chat_page.bloc.dart' as _i79;
-import '../module_chat/chat_module.dart' as _i89;
+import '../module_chat/chat_module.dart' as _i91;
 import '../module_chat/manager/chat/chat_manager.dart' as _i60;
 import '../module_chat/repository/chat/chat_repository.dart' as _i39;
 import '../module_chat/service/chat/char_service.dart' as _i61;
-import '../module_chat/ui/screens/chat_page/chat_page.dart' as _i88;
+import '../module_chat/ui/screens/chat_page/chat_page.dart' as _i90;
 import '../module_home/home_module.dart' as _i81;
 import '../module_home/manager/home_manager.dart' as _i40;
 import '../module_home/repository/home_repository.dart' as _i25;
@@ -81,15 +81,18 @@ import '../module_orders/ui/screen/order_status_screen.dart' as _i84;
 import '../module_our_services/manager/manager.dart' as _i50;
 import '../module_our_services/repository/services_repository.dart' as _i32;
 import '../module_our_services/service/services_service.dart' as _i51;
-import '../module_our_services/services_module.dart' as _i73;
+import '../module_our_services/services_module.dart' as _i87;
+import '../module_our_services/state_manager/private_order_state_manager.dart'
+    as _i69;
 import '../module_our_services/state_manager/services_state_manager.dart'
     as _i52;
-import '../module_our_services/ui/screen/send_it_screen.dart' as _i72;
-import '../module_report/manager/report_manager.dart' as _i70;
+import '../module_our_services/ui/screen/private_order_screen.dart' as _i86;
+import '../module_our_services/ui/screen/send_it_screen.dart' as _i73;
+import '../module_report/manager/report_manager.dart' as _i71;
 import '../module_report/presistance/report_prefs_helper.dart' as _i15;
 import '../module_report/repository/report_repository.dart' as _i49;
-import '../module_report/service/report_service.dart' as _i71;
-import '../module_settings/settings_module.dart' as _i86;
+import '../module_report/service/report_service.dart' as _i72;
+import '../module_settings/settings_module.dart' as _i88;
 import '../module_settings/ui/settings_page/settings_page.dart' as _i74;
 import '../module_splash/splash_module.dart' as _i75;
 import '../module_splash/ui/screen/splash_screen.dart' as _i53;
@@ -102,7 +105,7 @@ import '../module_stores/service/store_products_service.dart' as _i58;
 import '../module_stores/state_manager/store_list_state_manager.dart' as _i56;
 import '../module_stores/state_manager/store_products_state_manager.dart'
     as _i59;
-import '../module_stores/store_module.dart' as _i87;
+import '../module_stores/store_module.dart' as _i89;
 import '../module_stores/ui/screen/store_list_screen.dart' as _i76;
 import '../module_stores/ui/screen/store_products_screen.dart' as _i77;
 import '../module_theme/pressistance/theme_preferences_helper.dart' as _i16;
@@ -240,16 +243,16 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i67.OrderDetailsStateManager(get<_i47.OrdersService>()));
   gh.factory<_i68.OrderStatusStateManager>(
       () => _i68.OrderStatusStateManager(get<_i47.OrdersService>()));
-  gh.factory<_i69.RegisterScreen>(
-      () => _i69.RegisterScreen(get<_i48.RegisterStateManager>()));
-  gh.factory<_i70.ReportManager>(
-      () => _i70.ReportManager(get<_i49.ReportRepository>()));
-  gh.factory<_i71.ReportService>(
-      () => _i71.ReportService(get<_i70.ReportManager>()));
-  gh.factory<_i72.SendItScreen>(
-      () => _i72.SendItScreen(get<_i52.ServicesStateManager>()));
-  gh.factory<_i73.ServicesModule>(
-      () => _i73.ServicesModule(get<_i72.SendItScreen>()));
+  gh.factory<_i69.PrivateOrderStateManager>(
+      () => _i69.PrivateOrderStateManager(get<_i51.ServicesService>()));
+  gh.factory<_i70.RegisterScreen>(
+      () => _i70.RegisterScreen(get<_i48.RegisterStateManager>()));
+  gh.factory<_i71.ReportManager>(
+      () => _i71.ReportManager(get<_i49.ReportRepository>()));
+  gh.factory<_i72.ReportService>(
+      () => _i72.ReportService(get<_i71.ReportManager>()));
+  gh.factory<_i73.SendItScreen>(
+      () => _i73.SendItScreen(get<_i52.ServicesStateManager>()));
   gh.factory<_i74.SettingsScreen>(() => _i74.SettingsScreen(
       get<_i37.AuthService>(),
       get<_i8.LocalizationService>(),
@@ -262,7 +265,7 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.factory<_i77.StoreProductsScreen>(
       () => _i77.StoreProductsScreen(get<_i59.StoreProductsStateManager>()));
   gh.factory<_i78.AuthorizationModule>(() => _i78.AuthorizationModule(
-      get<_i65.LoginScreen>(), get<_i69.RegisterScreen>()));
+      get<_i65.LoginScreen>(), get<_i70.RegisterScreen>()));
   gh.factory<_i79.ChatPageBloc>(
       () => _i79.ChatPageBloc(get<_i61.ChatService>()));
   gh.factory<_i80.ClientOrderScreen>(
@@ -279,29 +282,33 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i83.OrderDetailsScreen>(),
       get<_i84.OrderStatusScreen>(),
       get<_i80.ClientOrderScreen>()));
-  gh.factory<_i86.SettingsModule>(
-      () => _i86.SettingsModule(get<_i74.SettingsScreen>()));
-  gh.factory<_i87.StoreModule>(() => _i87.StoreModule(
+  gh.factory<_i86.PrivateOrderScreen>(
+      () => _i86.PrivateOrderScreen(get<_i69.PrivateOrderStateManager>()));
+  gh.factory<_i87.ServicesModule>(() => _i87.ServicesModule(
+      get<_i73.SendItScreen>(), get<_i86.PrivateOrderScreen>()));
+  gh.factory<_i88.SettingsModule>(
+      () => _i88.SettingsModule(get<_i74.SettingsScreen>()));
+  gh.factory<_i89.StoreModule>(() => _i89.StoreModule(
       get<_i76.StoreListScreen>(), get<_i77.StoreProductsScreen>()));
-  gh.factory<_i88.ChatPage>(() =>
-      _i88.ChatPage(get<_i79.ChatPageBloc>(), get<_i43.ImageUploadService>()));
-  gh.factory<_i89.ChatModule>(
-      () => _i89.ChatModule(get<_i88.ChatPage>(), get<_i37.AuthService>()));
-  gh.factory<_i90.MyApp>(() => _i90.MyApp(
+  gh.factory<_i90.ChatPage>(() =>
+      _i90.ChatPage(get<_i79.ChatPageBloc>(), get<_i43.ImageUploadService>()));
+  gh.factory<_i91.ChatModule>(
+      () => _i91.ChatModule(get<_i90.ChatPage>(), get<_i37.AuthService>()));
+  gh.factory<_i92.MyApp>(() => _i92.MyApp(
       get<_i23.AppThemeDataService>(),
       get<_i8.LocalizationService>(),
       get<_i63.FireNotificationService>(),
       get<_i6.LocalNotificationService>(),
       get<_i75.SplashModule>(),
       get<_i78.AuthorizationModule>(),
-      get<_i89.ChatModule>(),
-      get<_i86.SettingsModule>(),
+      get<_i91.ChatModule>(),
+      get<_i88.SettingsModule>(),
       get<_i81.HomeModule>(),
       get<_i26.MainModule>(),
-      get<_i87.StoreModule>(),
+      get<_i89.StoreModule>(),
       get<_i28.MyNotificationsModule>(),
       get<_i19.AccountModule>(),
       get<_i85.OrdersModule>(),
-      get<_i73.ServicesModule>()));
+      get<_i87.ServicesModule>()));
   return get;
 }
