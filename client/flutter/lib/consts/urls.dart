@@ -22,5 +22,10 @@ class Urls {
   static const GET_ORDER_DETAILS = BASE_API + '/orderstatusbyordernumber';
   static const POST_CLIENT_ORDER_API = BASE_API + '/clientorder';
   static const POST_CLIENT_SEND_IT_ORDER_API = BASE_API + '/clientsendorder';
+  static const POST_CLIENT_PRIVATE_ORDER_API = BASE_API + '/clientSpecialOrder';
+  static const DELETE_CLIENT_ORDER_API = BASE_API + '/ordercancel';
+  static const UPDATE_CLIENT_ORDER_API = BASE_API + '/orderUpdatebyclient';
+
+
 
 }
