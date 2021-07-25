@@ -86,10 +86,10 @@ class ApiClient {
       if (e is DioError) {
         DioError err = e;
           if (err.response != null) {
-            if (err.response!.statusCode != 404) {
+            if (err.response!.statusCode! < 500) {
               _logger.error(
                   tag, err.message + ', POST: ' + url, StackTrace.current);
-              return null;
+              return {'status_code':'${err.response?.statusCode ?? 500}'};
             }
           }
       } else {
@@ -132,8 +132,12 @@ class ApiClient {
     } catch (e) {
       if (e is DioError) {
         DioError err = e;
-        if (err.response!.statusCode != 404) {
-          _logger.error(tag, err.message + ', PUT: ' + url, StackTrace.current);
+        if (err.response != null) {
+          if (err.response!.statusCode! < 500) {
+            _logger.error(
+                tag, err.message + ', POST: ' + url, StackTrace.current);
+            return {'status_code':'${err.response?.statusCode ?? 500}'};
+          }
         }
       } else {
         _logger.error(tag, e.toString() + ', PUT: ' + url, StackTrace.current);
@@ -184,7 +188,7 @@ class ApiClient {
     if (response.statusCode! >= 200 && response.statusCode! < 405) {
       _logger.info(tag, response.data.toString());
       return response.data;
-    } else if (response.statusCode!< 500) {
+    } else if (response.statusCode! < 500) {
       return null;
     } else {
       _logger.error(tag,
