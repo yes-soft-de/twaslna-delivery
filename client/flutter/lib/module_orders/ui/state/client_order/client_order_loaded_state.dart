@@ -10,7 +10,7 @@ import 'package:twaslna_delivery/module_orders/request/client_order_request.dart
 import 'package:twaslna_delivery/module_orders/ui/screen/client_order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/client_order/client_order_state.dart';
-import 'package:twaslna_delivery/module_orders/ui/widget/client_order/animation_alert.dart';
+import 'package:twaslna_delivery/utils/components/animation_alert.dart';
 import 'package:twaslna_delivery/module_orders/ui/widget/client_order/map_client_order.dart';
 import 'package:twaslna_delivery/module_orders/ui/widget/client_order/pop_up_button.dart';
 import 'package:twaslna_delivery/module_stores/model/checkout_model.dart';

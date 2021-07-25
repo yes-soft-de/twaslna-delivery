@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_main/main_routes.dart';
 import 'package:twaslna_delivery/module_orders/state_manager/order_details_state_manager.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/order_details_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/orders_details_loading_state.dart';
+import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 @injectable
 class OrderDetailsScreen extends StatefulWidget {
   final OrderDetailsStateManager _stateManager;
@@ -16,12 +19,30 @@ class OrderDetailsScreen extends StatefulWidget {
 class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   late OrderDetailsState currentState;
   bool flagOrderId = true;
+  int? orderNumber;
   void refresh() {
     if (mounted) {
       setState(() {});
     }
   }
-
+  void deleteMessage(bool success, [String err = '']) {
+    if (success) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false,arguments: 1);
+      CustomFlushBarHelper.createSuccess(
+        title: S.of(context).warnning,
+        message: S.of(context).deleteSuccess,
+      )..show(context);
+    } else {
+      Navigator.of(context).pop();
+      CustomFlushBarHelper.createError(
+          title: S.of(context).warnning, message: err)
+        ..show(context);
+    }
+  }
+  void deleteOrder(int id){
+    widget._stateManager.deleteOrderDetails(id, this);
+  }
   @override
   void initState() {
     super.initState();
@@ -40,6 +61,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     var args = ModalRoute.of(context)?.settings.arguments;
     if (flagOrderId && args is String) {
       widget._stateManager.getOrderDetails(int.parse(args), this);
+      orderNumber = int.parse(args);
       flagOrderId = false;
     }
     return GestureDetector(

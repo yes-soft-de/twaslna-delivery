@@ -22,7 +22,9 @@ class MyOrdersScreenState extends State<MyOrdersScreen> {
       setState(() {});
     }
   }
-
+ Future <void> getOrders() async {
+   widget._stateManager.getOrders(this);
+ }
   @override
   void initState() {
     super.initState();

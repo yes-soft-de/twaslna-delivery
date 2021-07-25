@@ -4,6 +4,7 @@ import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_orders/model/order_details_model.dart';
 import 'package:twaslna_delivery/module_orders/orders_routes.dart';
 import 'package:twaslna_delivery/module_orders/ui/screen/order_details_screen.dart';
+import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/order_details_edit_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/order_details_state.dart';
 import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/module_orders/ui/widget/order_details/bill.dart';
@@ -26,12 +27,20 @@ class OrderDetailsLoadedState extends OrderDetailsState {
     return Stack(
       children: [
         Image.network(
-          'https://www.gannett-cdn.com/media/2020/03/23/USATODAY/usatsports/247WallSt.com-247WS-657876-imageforentry9-vp7.jpg?width=660&height=371&fit=crop&format=pjpg&auto=webp',
+          orderDetails.storeInfo.image,
           height: height,
           width: width,
           fit: BoxFit.cover,
         ),
-        CustomOrderDetailsAppBar(),
+        CustomOrderDetailsAppBar(
+          editTap: () {
+            screenState.currentState = OrderDetailsEditState(screenState,orderDetails);
+            screenState.refresh();
+          },
+          deleteTap: () {
+            screenState.deleteOrder(screenState.orderNumber??-1);
+          },
+        ),
         Align(
           alignment: Alignment.bottomCenter,
           child: Flex(
@@ -67,7 +76,7 @@ class OrderDetailsLoadedState extends OrderDetailsState {
                                 bottom: 25.0,
                                 top: 25.0),
                             child: Text(
-                              '${S.of(context).orderDetails} #${orderDetails.order.id}',
+                              '${S.of(context).orderDetails} #${screenState.orderNumber}',
                               style: TextStyle(
                                   fontSize: 25, fontWeight: FontWeight.bold),
                             ),
@@ -80,8 +89,10 @@ class OrderDetailsLoadedState extends OrderDetailsState {
                                   color: Theme.of(context).primaryColor),
                               child: ListTile(
                                 onTap: () {
-                                  Navigator.of(context)
-                                      .pushNamed(OrdersRoutes.ORDER_STATUS,arguments:orderDetails.order.id.toString());
+                                  Navigator.of(context).pushNamed(
+                                      OrdersRoutes.ORDER_STATUS,
+                                      arguments:
+                                          screenState.orderNumber.toString());
                                 },
                                 title: Text(
                                   S.of(context).orderStatus,
@@ -108,29 +119,39 @@ class OrderDetailsLoadedState extends OrderDetailsState {
                               ),
                             ),
                           ),
-                         orderDetails.carts.isNotEmpty?Padding(
-                            padding: const EdgeInsets.only(left: 16, right: 16),
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.shopping_cart_rounded,
-                                color: Theme.of(context).disabledColor,
-                                size: 25,
-                              ),
-                              title: Text(
-                                S.of(context).orderList,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 18),
-                              ),
-                            ),
-                          ):Container(),
-                          orderDetails.carts.isNotEmpty? ListView(
-                            physics: ScrollPhysics(),
-                            shrinkWrap: true,
-                            children: getOrdersList(orderDetails.carts),
-                          ):Container(),
+                          orderDetails.carts.isNotEmpty
+                              ? Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 16, right: 16),
+                                  child: ListTile(
+                                    leading: Icon(
+                                      Icons.shopping_cart_rounded,
+                                      color: Theme.of(context).disabledColor,
+                                      size: 25,
+                                    ),
+                                    title: Text(
+                                      S.of(context).orderList,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18),
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          orderDetails.carts.isNotEmpty
+                              ? ListView(
+                                  physics: ScrollPhysics(),
+                                  shrinkWrap: true,
+                                  children: getOrdersList(orderDetails.carts),
+                                )
+                              : Container(),
                           Padding(
                             padding: const EdgeInsets.all(16.0),
-                            child: BillCard(id: orderDetails.order.id,deliveryCost: orderDetails.order.deliveryCost,orderCost: orderDetails.order.orderCost,),
+                            child: BillCard(
+                              id: screenState.orderNumber!,
+                              deliveryCost: orderDetails.order.deliveryCost,
+                              orderCost: orderDetails.order.orderCost,
+                            ),
                           ),
                           SizedBox(
                             height: 35,

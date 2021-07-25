@@ -30,33 +30,38 @@ class MyOrdersLoadedState extends MyOrdersState {
                 ))),
         Container(
           color: Theme.of(context).cardColor.withOpacity(0.90),
-          child: ListView(
-            physics:
-                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-            children: [
-              MyOrdersAppBar(),
-              Padding(
-                padding: const EdgeInsets.only(right:10.0,left:10,),
-                child: ListTile(
-                  leading: FaIcon(FontAwesomeIcons.sortAmountDown,color: Theme.of(context).primaryColor,size: 18,),
-                  title: Text(
-                    S.of(context).sortByEarlier,
-                    style: StyleText.categoryStyle,
+          child: RefreshIndicator(
+            onRefresh: (){
+              return screenState.getOrders();
+            },
+            child: ListView(
+              physics:
+                  BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              children: [
+                MyOrdersAppBar(),
+                Padding(
+                  padding: const EdgeInsets.only(right:10.0,left:10,),
+                  child: ListTile(
+                    leading: FaIcon(FontAwesomeIcons.sortAmountDown,color: Theme.of(context).primaryColor,size: 18,),
+                    title: Text(
+                      S.of(context).sortByEarlier,
+                      style: StyleText.categoryStyle,
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                child: ListView(
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                children:getOrders(orders),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: ListView(
+                      shrinkWrap: true,
+                      physics: ScrollPhysics(),
+                  children:getOrders(orders),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 75,
-              ),
-            ],
+                SizedBox(
+                  height: 75,
+                ),
+              ],
+            ),
           ),
         ),
       ],

@@ -13,7 +13,7 @@ class MyOrdersRepository {
   MyOrdersRepository(this._apiClient);
 
   var fakeToken =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MjYzNDU3NDIsImV4cCI6MTYyNjM1Mjk0Miwicm9sZXMiOlsiUk9MRV9DTElFTlQiLCJ1c2VyIl0sInVzZXJuYW1lIjoiY2xpZW50In0.T3ZV2FI5oIt3Q2uwehiDW6ODP94f_3K0JLtPLJsfeerWCo3zIWgu-TREuXv14QbP-raAXpz5czDhPPkAlRPt01cEumNQ9k0tTJ_2uPAbb6Xd5sONR_H76QcyDNn6o9dc3VFLuujaHOTl7JfJb18x1zNeR-Raa9Q31uea7CSVGvdP2YeypuDsr5gzGupPyT78OQDKhaWAggXiIjRF4kjt1U4QS5VB3hPMQ7voQc75BYQ5D6V7FfcChpo77Aaz-zXsgtM6W5Yjfh3Sg3QT4di30MJ3OZUvNSWMKKKlsn8MgcZ7rscT7Uwp8XzG1XBKesEJSlj49Oa3uL_2SWlVcvqlow';
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MjcyMzQ0OTcsImV4cCI6MTYyNzI0MTY5Nywicm9sZXMiOlsiUk9MRV9DTElFTlQiLCJ1c2VyIl0sInVzZXJuYW1lIjoiY2xpZW50In0.K1-PZCdtL6j70jdeQUHyY_1y3Bh-AnRKyKGHsV5538UL_ujVJnj3UVpyUkvCxqULlvOtxu9BXahSABlIFD_OOvH4KaDoqO0NyanCVFzl4G0tBifLvG2giSpn8b2GZbS83IcPWEFbRDNoV25hAlbkTIVYlXjtwJGfot7Dr3-FWNcDL5qeincSLDzfuxWvTGhIBbkwVfNJyznU4WDkZLBqpg7tT-_xUQz1NJgfV-ZHSdMLeIpKltRhIo2j_khLcclVHg4qBsUkBJJuipLkmT00NCxY5jx9fEP4Y2EImHjgaFX2fR5Yz49YfMwkkp-eheJ0yhSUq4_YJbI5YaOneknYgQ';
 
   Future<MyOrdersResponse?> getOrders() async {
     var token = fakeToken;
@@ -38,5 +38,21 @@ class MyOrdersRepository {
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return int.parse(ClientOrderResponse.fromJson(response).statusCode??'500');
+  }
+  Future<ClientOrderResponse?> deleteClientOrder(int id) async {
+    var token = fakeToken;
+    dynamic response = await _apiClient.put(
+        Urls.DELETE_CLIENT_ORDER_API + '/$id',{},
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ClientOrderResponse.fromJson(response);
+  }
+  Future<ClientOrderResponse?> updateClientOrder(request) async {
+    var token = fakeToken;
+    dynamic response = await _apiClient.put(
+        Urls.UPDATE_CLIENT_ORDER_API,request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ClientOrderResponse.fromJson(response);
   }
 }
