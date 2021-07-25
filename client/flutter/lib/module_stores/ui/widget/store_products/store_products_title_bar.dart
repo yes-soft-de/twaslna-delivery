@@ -48,8 +48,7 @@ class StoreProductsTitleBar extends StatelessWidget {
                     child: Text(
                       '${S.of(context).views} $views',
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16),
+                          fontWeight: FontWeight.w500,),
                     ),
                   ),
                   Icon(Icons.circle, size: 8),
@@ -58,7 +57,6 @@ class StoreProductsTitleBar extends StatelessWidget {
                     child: Text(
                       rate.toString(),
                       style: TextStyle(
-                        fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -68,7 +66,7 @@ class StoreProductsTitleBar extends StatelessWidget {
                         top: 8.0, bottom: 8.0),
                     child: Icon(
                       Icons.star,
-                      size: 16,
+                      size: 14,
                       color: Colors.blue[700],
                     ),
                   ),
@@ -81,8 +79,7 @@ class StoreProductsTitleBar extends StatelessWidget {
                     child: Text(
                       '${S.of(context).deliverPrice} $deliveryCost ${S.of(context).sar}',
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16),
+                          fontWeight: FontWeight.w500,),
                     ),
                   ),
                 ],

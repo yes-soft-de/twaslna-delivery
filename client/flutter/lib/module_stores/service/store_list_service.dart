@@ -23,7 +23,9 @@ class StoreListService {
           image:'https://www.gannett-cdn.com/media/2020/03/23/USATODAY/usatsports/247WallSt.com-247WS-657876-imageforentry9-vp7.jpg?width=660&height=371&fit=crop&format=pjpg&auto=webp',
           location: element.location,
           phone: element.phone,
-          deliveryCost: element.deliveryCost ?? 0
+          deliveryCost: element.deliveryCost ?? 0,
+          hasProducts: element.hasProducts ?? false,
+          privateOrders: element.privateOrders ?? false
       ));
     });
     return stores;

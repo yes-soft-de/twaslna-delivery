@@ -3,12 +3,8 @@ class StoreCategoryList {
   String? msg;
   List<Data>? data;
   String? msgErr;
-  StoreCategoryList({
-      this.statusCode, 
-      this.msg, 
-      this.data,
-      this.msgErr
-  });
+
+  StoreCategoryList({this.statusCode, this.msg, this.data, this.msgErr});
 
   StoreCategoryList.fromJson(dynamic json) {
     statusCode = json['status_code'];
@@ -25,16 +21,6 @@ class StoreCategoryList {
     }
   }
 
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['status_code'] = statusCode;
-    map['msg'] = msg;
-    if (data != null) {
-      map['Data'] = data?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-
 }
 
 class Data {
@@ -44,15 +30,18 @@ class Data {
   dynamic phone;
   dynamic location;
   double? deliveryCost;
+  bool? privateOrders;
+  bool? hasProducts;
 
-  Data({
-      this.id, 
-      this.storeOwnerName, 
-      this.image, 
-      this.phone, 
+  Data(
+      {this.id,
+      this.storeOwnerName,
+      this.image,
+      this.phone,
       this.location,
-      this.deliveryCost
-  });
+      this.deliveryCost,
+      this.privateOrders,
+      this.hasProducts});
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -61,16 +50,7 @@ class Data {
     phone = json['phone'];
     location = json['location'];
     deliveryCost = json['deliveryCost']?.toDouble();
+    privateOrders = json['privateOrders'];
+    hasProducts = json['hasProducts'];
   }
-
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['id'] = id;
-    map['storeOwnerName'] = storeOwnerName;
-    map['image'] = image;
-    map['phone'] = phone;
-    map['location'] = location;
-    return map;
-  }
-
 }

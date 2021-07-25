@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_our_services/services_routes.dart';
 import 'package:twaslna_delivery/module_stores/store_routes.dart';
 import 'package:twaslna_delivery/module_stores/ui/screen/store_list_screen.dart';
 import 'package:twaslna_delivery/module_stores/ui/state/store_list/store_list_state.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_card.dart';
+import 'package:twaslna_delivery/module_stores/ui/widget/store_list/order_type.dart';
 import 'package:twaslna_delivery/utils/components/costom_search.dart';
 import 'package:twaslna_delivery/utils/images/images.dart';
 import 'package:twaslna_delivery/utils/models/store.dart';
@@ -128,7 +130,23 @@ class StoreListLoadedState extends StoreListState {
     List<StoreCard> storeCardList = [] ;
     stores.forEach((element) {
       storeCardList.add(StoreCard(title:element.storeOwnerName,onTap: (){
-        Navigator.of(screenState.context).pushNamed(StoreRoutes.STORE_PRODUCTS,arguments: element);
+        if (element.hasProducts && element.privateOrders){
+         // Navigator.of(screenState.context).pushNamed(StoreRoutes.STORE_PRODUCTS,arguments: element);
+          showModalBottomSheet(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(10))),
+              context: screenState.context,
+              builder: (context) {
+                return OrderType(element);
+              });
+
+        } else if (element.hasProducts){
+          Navigator.of(screenState.context).pushNamed(StoreRoutes.STORE_PRODUCTS,arguments: element);
+        }
+        else {
+          Navigator.of(screenState.context).pushNamed(ServicesRoutes.PRIVATE_ORDER,arguments: element);
+        }
       },image:element.image,));
     });
     return storeCardList;
