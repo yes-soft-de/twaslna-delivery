@@ -7,6 +7,7 @@ import 'package:twaslna_delivery/module_home/ui/screen/home_screen.dart';
 import 'package:twaslna_delivery/module_my_notifications/ui/screen/my_notifications_screen.dart';
 import 'package:twaslna_delivery/module_orders/orders_routes.dart';
 import 'package:twaslna_delivery/module_orders/ui/screen/my_orders_screen.dart';
+import 'package:twaslna_delivery/module_our_services/services_routes.dart';
 import 'package:twaslna_delivery/utils/customIcon/custom_icons.dart';
 
 @injectable
@@ -18,9 +19,14 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int selectedPage = 0;
   PageController homeController = PageController(initialPage: 0);
-
+  bool flagPageIndex = true;
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute.of(context)?.settings.arguments;
+    if (args is int && flagPageIndex) {
+      selectedPage = args;
+      flagPageIndex = false;
+    }
     return Scaffold(
       body: SafeArea(
         top: true,
