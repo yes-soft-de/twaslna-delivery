@@ -5,8 +5,8 @@ import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_main/main_routes.dart';
 import 'package:twaslna_delivery/module_our_services/request/send_it_request.dart';
 import 'package:twaslna_delivery/module_our_services/state_manager/services_state_manager.dart';
-import 'package:twaslna_delivery/module_our_services/ui/state/send_it_Loaded_state.dart';
-import 'package:twaslna_delivery/module_our_services/ui/state/send_it_state.dart';
+import 'package:twaslna_delivery/module_our_services/ui/state/send_it_states/send_it_Loaded_state.dart';
+import 'package:twaslna_delivery/module_our_services/ui/state/send_it_states/send_it_state.dart';
 import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 @injectable
 class SendItScreen extends StatefulWidget {

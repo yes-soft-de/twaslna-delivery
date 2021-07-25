@@ -1,32 +1,29 @@
-class SendItRequest {
+class PrivateOrderRequest {
   dynamic destination;
   String? note;
   String? payment;
-  dynamic source;
-  String? deliveryDate;
-  String? recipientName;
-  String? recipientPhone;
+  String? ownerID;
   String? detail;
+  String? deliveryDate;
+  int? storeOwnerProfileID;
 
-  SendItRequest({
+  PrivateOrderRequest({
       this.destination, 
       this.note, 
       this.payment, 
-      this.source, 
+      this.ownerID, 
+      this.detail, 
       this.deliveryDate, 
-      this.recipientName, 
-      this.recipientPhone, 
-      this.detail});
+      this.storeOwnerProfileID});
 
-  SendItRequest.fromJson(dynamic json) {
+  PrivateOrderRequest.fromJson(dynamic json) {
     destination = json['destination'];
     note = json['note'];
     payment = json['payment'];
-    source = json['source'];
-    deliveryDate = json['deliveryDate'];
-    recipientName = json['recipientName'];
-    recipientPhone = json['recipientPhone'];
+    ownerID = json['ownerID'];
     detail = json['detail'];
+    deliveryDate = json['deliveryDate'];
+    storeOwnerProfileID = json['storeOwnerProfileID'];
   }
 
   Map<String, dynamic> toJson() {
@@ -34,11 +31,10 @@ class SendItRequest {
     map['destination'] = destination is String ? destination : destination.toJson();
     map['note'] = note;
     map['payment'] = payment;
-    map['source'] = source;
-    map['deliveryDate'] = deliveryDate;
-    map['recipientName'] = recipientName;
-    map['recipientPhone'] = recipientPhone;
+    map['ownerID'] = ownerID;
     map['detail'] = detail;
+    map['deliveryDate'] = deliveryDate;
+    map['storeOwnerProfileID'] = storeOwnerProfileID;
     return map;
   }
 
