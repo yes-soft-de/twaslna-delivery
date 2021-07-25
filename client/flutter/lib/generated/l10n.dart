@@ -3019,6 +3019,96 @@ class S {
       args: [],
     );
   }
+
+  /// `Private Order`
+  String get privateOrder {
+    return Intl.message(
+      'Private Order',
+      name: 'privateOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Products`
+  String get storeProducts {
+    return Intl.message(
+      'Store Products',
+      name: 'storeProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Type`
+  String get orderType {
+    return Intl.message(
+      'Order Type',
+      name: 'orderType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order number not found!!`
+  String get orderNumberNotFound {
+    return Intl.message(
+      'Order number not found!!',
+      name: 'orderNumberNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Can not remove it, Exceeded time allowed`
+  String get exceededAllowedTime {
+    return Intl.message(
+      'Can not remove it, Exceeded time allowed',
+      name: 'exceededAllowedTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Can not remove it, The captain received the order`
+  String get notAllowedCaptainReceived {
+    return Intl.message(
+      'Can not remove it, The captain received the order',
+      name: 'notAllowedCaptainReceived',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orders Details`
+  String get updateOrders {
+    return Intl.message(
+      'Orders Details',
+      name: 'updateOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can update your order item from this interface`
+  String get updateOrderNote {
+    return Intl.message(
+      'You can update your order item from this interface',
+      name: 'updateOrderNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `WELCOME TO TWASLNA APP`
+  String get welcomeToOurApp {
+    return Intl.message(
+      'WELCOME TO TWASLNA APP',
+      name: 'welcomeToOurApp',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
