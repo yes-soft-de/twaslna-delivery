@@ -296,5 +296,14 @@
   "chooseLocation": "اختر موقع",
   "chooseReceiptPoint": "اختر موقع الاستلام",
   "chooseDestinationPoint": "اختر موقع التسليم",
-  "finishedOrdering": "إنهاء الطلب"
+  "finishedOrdering": "إنهاء الطلب",
+  "privateOrder": "طلب خاص",
+  "storeProducts": "المنتجات المتاحة",
+  "orderType": "نوع الطلب",
+  "orderNumberNotFound": "الطلب غير موجود",
+  "exceededAllowedTime": "لقد تجاوزت الوقت المسموح لإزالة الطلب",
+  "notAllowedCaptainReceived": "لايمكن إزالة الطلب لاستلام الكابتن للطلب",
+  "updateOrders": "تعديل الطلبات",
+  "updateOrderNote": "يمكنك تعديل حالة الطلب من خلال النافذة الحالية",
+  "welcomeToOurApp": "أهلا بك في تطبيق تواصلنا"
 }

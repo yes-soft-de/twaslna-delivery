@@ -153,6 +153,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Error logging in, firebase account not found"),
         "errorUploadingImages":
             MessageLookupByLibrary.simpleMessage("حدث خطأ عند رفع الصور!!"),
+        "exceededAllowedTime": MessageLookupByLibrary.simpleMessage(
+            "لقد تجاوزت الوقت المسموح لإزالة الطلب"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("طلبية خارجية"),
         "female": MessageLookupByLibrary.simpleMessage("أنثى"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
@@ -230,6 +232,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("تاريخ الدفعة القادمة:"),
         "noImage": MessageLookupByLibrary.simpleMessage("لا يوجد صورة"),
+        "notAllowedCaptainReceived": MessageLookupByLibrary.simpleMessage(
+            "لايمكن إزالة الطلب لاستلام الكابتن للطلب"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
             "لم تشترك بباقة بعد الرجاء الاشتراك من الإعدادات"),
         "notVerified":
@@ -260,11 +264,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderList": MessageLookupByLibrary.simpleMessage("قائمة الطلبات"),
         "orderLog": MessageLookupByLibrary.simpleMessage("سجل الطلبات"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("رقم الطلب"),
+        "orderNumberNotFound":
+            MessageLookupByLibrary.simpleMessage("الطلب غير موجود"),
         "orderPrice": MessageLookupByLibrary.simpleMessage("سعر الطلب"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("حالة الطلب"),
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية"),
         "orderTime": MessageLookupByLibrary.simpleMessage("زمن التوصيل"),
+        "orderType": MessageLookupByLibrary.simpleMessage("نوع الطلب"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("طلب في الشهر"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("طلب / الشهر"),
@@ -317,6 +324,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseSelectABranch":
             MessageLookupByLibrary.simpleMessage("الرجاء اختيار فرع تجاري"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("شروط الخصوصية"),
+        "privateOrder": MessageLookupByLibrary.simpleMessage("طلب خاص"),
         "product": MessageLookupByLibrary.simpleMessage("منتج"),
         "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
         "reasonIsRequired":
@@ -387,6 +395,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeName": MessageLookupByLibrary.simpleMessage("اسم المحل التجاري"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("محل تجاري"),
         "storePhone": MessageLookupByLibrary.simpleMessage("رقم هاتف المحل"),
+        "storeProducts":
+            MessageLookupByLibrary.simpleMessage("المنتجات المتاحة"),
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("جار حفظ الملف"),
         "subscribe": MessageLookupByLibrary.simpleMessage("اشترك"),
@@ -418,6 +428,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تم تعديل الفرع بنجاح"),
         "updateBranches": MessageLookupByLibrary.simpleMessage("تعديل الأفرع"),
+        "updateOrderNote": MessageLookupByLibrary.simpleMessage(
+            "يمكنك تعديل حالة الطلب من خلال النافذة الحالية"),
+        "updateOrders": MessageLookupByLibrary.simpleMessage("تعديل الطلبات"),
         "updateYourData":
             MessageLookupByLibrary.simpleMessage("تحديث البيانات"),
         "uploadAndSubmit":
@@ -444,6 +457,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "تم تسجيل الطلب، سنتواصل معك بأقرب وقت ممكن"),
         "welcomeToOrdersScreen":
             MessageLookupByLibrary.simpleMessage("اهلا في قسم الطلبات"),
+        "welcomeToOurApp":
+            MessageLookupByLibrary.simpleMessage("أهلا بك في تطبيق تواصلنا"),
         "welcomeTotwaslna_delivery":
             MessageLookupByLibrary.simpleMessage("اهلا بك في twaslna_delivery"),
         "whatsappWithCaptain": MessageLookupByLibrary.simpleMessage("الكابتن"),

@@ -154,6 +154,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Error logging in, firebase account not found"),
         "errorUploadingImages":
             MessageLookupByLibrary.simpleMessage("Error Uploading Images!!"),
+        "exceededAllowedTime": MessageLookupByLibrary.simpleMessage(
+            "Can not remove it, Exceeded time allowed"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("External Order"),
         "failureRenew": MessageLookupByLibrary.simpleMessage(
             "Your renew has been failed please try again"),
@@ -235,6 +237,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("Next Payment Date:"),
         "noImage": MessageLookupByLibrary.simpleMessage("No Image"),
+        "notAllowedCaptainReceived": MessageLookupByLibrary.simpleMessage(
+            "Can not remove it, The captain received the order"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
             "You dont have a subscription yet"),
         "notVerified": MessageLookupByLibrary.simpleMessage(
@@ -265,11 +269,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderList": MessageLookupByLibrary.simpleMessage("Order List"),
         "orderLog": MessageLookupByLibrary.simpleMessage("Orders Log"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("order id"),
+        "orderNumberNotFound":
+            MessageLookupByLibrary.simpleMessage("Order number not found!!"),
         "orderPrice": MessageLookupByLibrary.simpleMessage("order price"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("order status"),
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "You can know your order status in this interface"),
         "orderTime": MessageLookupByLibrary.simpleMessage("Order Time"),
+        "orderType": MessageLookupByLibrary.simpleMessage("Order Type"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),
@@ -324,6 +331,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseSelectABranch":
             MessageLookupByLibrary.simpleMessage("Please Select a Branch"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
+        "privateOrder": MessageLookupByLibrary.simpleMessage("Private Order"),
         "product": MessageLookupByLibrary.simpleMessage("product"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "reasonIsRequired":
@@ -392,6 +400,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeName": MessageLookupByLibrary.simpleMessage("Store Name"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("Store Owner"),
         "storePhone": MessageLookupByLibrary.simpleMessage("Store Phone"),
+        "storeProducts": MessageLookupByLibrary.simpleMessage("Store Products"),
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("Submitting Profile"),
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),
@@ -424,6 +433,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "Branch has been updated successfully"),
         "updateBranches":
             MessageLookupByLibrary.simpleMessage("Update Branches"),
+        "updateOrderNote": MessageLookupByLibrary.simpleMessage(
+            "You can update your order item from this interface"),
+        "updateOrders": MessageLookupByLibrary.simpleMessage("Orders Details"),
         "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),
         "uploadAndSubmit":
             MessageLookupByLibrary.simpleMessage("Upload and submit"),
@@ -448,6 +460,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("We will contact you soon"),
         "welcomeToOrdersScreen":
             MessageLookupByLibrary.simpleMessage("Welcome to Orders Screen"),
+        "welcomeToOurApp":
+            MessageLookupByLibrary.simpleMessage("WELCOME TO TWASLNA APP"),
         "welcomeTotwaslna_delivery":
             MessageLookupByLibrary.simpleMessage("Welcome to twaslna_delivery"),
         "whatsappWithCaptain": MessageLookupByLibrary.simpleMessage("Captain"),

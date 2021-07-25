@@ -298,7 +298,20 @@
   "chooseLocation": "choose location",
   "chooseReceiptPoint": "Choose Receipt Location",
   "chooseDestinationPoint": "Choose Destination Location",
-  "finishedOrdering": "Finish Order"
+  "finishedOrdering": "Finish Order",
+  "privateOrder": "Private Order",
+  "storeProducts": "Store Products",
+  "orderType": "Order Type",
+  "orderNumberNotFound": "Order number not found!!",
+  "exceededAllowedTime": "Can not remove it, Exceeded time allowed",
+  "notAllowedCaptainReceived": "Can not remove it, The captain received the order",
+  "updateOrders": "Orders Details",
+  "updateOrderNote": "You can update your order item from this interface",
+  "welcomeToOurApp": "WELCOME TO TWASLNA APP"
+
+
+
+
 
 
 
