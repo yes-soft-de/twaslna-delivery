@@ -40,6 +40,7 @@ use App\Service\CaptainProfileService;
 use App\Service\StoreOwnerBranchService;
 use App\Service\ProductService;
 use App\Service\OrderDetailService;
+use App\Service\DeliveryCompanyFinancialService;
 use App\Constant\ResponseConstant;
 use App\Constant\SubscribeStatusConstant;
 use DateTime;
@@ -61,10 +62,11 @@ class OrderService
     private $captainProfileService;
     private $productService;
     private $orderDetailService;
+    private $deliveryCompanyFinancialService;
 
     public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, OrderLogService $orderLogService, StoreOwnerBranchService $storeOwnerBranchService, StoreOwnerSubscriptionService $storeOwnerSubscriptionService, StoreOwnerProfileService $storeOwnerProfileService, ParameterBagInterface $params,  RatingService $ratingService
                                 // , NotificationService $notificationService
-                               , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, CaptainService $captainService, CaptainProfileService $captainProfileService, ProductService $productService, OrderDetailService $orderDetailService
+                               , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, CaptainService $captainService, CaptainProfileService $captainProfileService, ProductService $productService, OrderDetailService $orderDetailService, DeliveryCompanyFinancialService $deliveryCompanyFinancialService
                                 )
     {
         $this->autoMapping = $autoMapping;
@@ -82,6 +84,7 @@ class OrderService
         $this->captainProfileService = $captainProfileService;
         $this->productService = $productService;
         $this->orderDetailService = $orderDetailService;
+        $this->deliveryCompanyFinancialService = $deliveryCompanyFinancialService;
     }
 
     public function createOrder(OrderCreateRequest $request)
@@ -166,7 +169,7 @@ class OrderService
             $orders = $this->orderManager->closestOrders();
 
             foreach ($orders as $order) {
-                if ($order['storeOwnerProfileID'] == true) {   
+                if ($order['storeOwnerProfileID'] == true) {  
                     $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($order['storeOwnerProfileID']);
                     $order['storeOwnerName']=$order['storeOwner']->storeOwnerName;
                     $order['image']=$order['storeOwner']->image;
@@ -202,7 +205,7 @@ class OrderService
     
     public function orderUpdateStateByCaptain(OrderUpdateStateByCaptainRequest $request)
     {
-        $response ="";
+        $response = "Not updated!!";
         $orderDetails = $this->orderDetailService->getOrderIdByOrderNumber($request->getOrderNumber());
         if($orderDetails){
             $request->setId($orderDetails[0]->orderID);
@@ -381,8 +384,9 @@ class OrderService
         return $response;
     }
 
-    public function createClientOrder(OrderClientCreateRequest $request):?object
+    public function createClientOrder(OrderClientCreateRequest $request)
     {  
+        $response = "Not created!!";
         $orderNumber = 1;
         $lastOrderNumber = $this->orderDetailService->getLastOrderNumber();
         if ($lastOrderNumber) {
@@ -397,16 +401,16 @@ class OrderService
                $countProduct = $product['countProduct'];
                $orderDetail = $this->orderDetailService->createOrderDetail($item->getId(), $productID, $countProduct, $orderNumber);
             }
-            $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID());   
+            $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID());  
+            $response = $this->autoMapping->map(OrderEntity::class, OrderCreateClientResponse::class, $item);
+            $response->orderDetail = $orderDetail; 
           }            
-
-        $response = $this->autoMapping->map(OrderEntity::class, OrderCreateClientResponse::class, $item);
-        $response->orderDetail = $orderDetail;
         return $response;
     }
 
-    public function createClientSendOrder(OrderClientSendCreateRequest $request):?object
+    public function createClientSendOrder(OrderClientSendCreateRequest $request)
     {  
+        $response = "Not created!!";
         $orderNumber = 1;
         $lastOrderNumber = $this->orderDetailService->getLastOrderNumber();
         if ($lastOrderNumber) {
@@ -417,16 +421,16 @@ class OrderService
         if ($item) {
             $orderDetail = $this->orderDetailService->createOrderDetail($item->getId(), null, null, $orderNumber);  
             $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID());
+            $response = $this->autoMapping->map(OrderEntity::class, OrderClientSendCreateResponse::class, $item);
+            $response->orderDetail['orderNumber'] = $orderDetail->orderNumber;
+            $response->orderDetail['orderDetailId'] = $orderDetail->id;
           }
-          
-        $response = $this->autoMapping->map(OrderEntity::class, OrderClientSendCreateResponse::class, $item);
-        $response->orderDetail['orderNumber'] = $orderDetail->orderNumber;
-        $response->orderDetail['orderDetailId'] = $orderDetail->id;
         return $response;
     }
 
-    public function createClientSpecialOrder(OrderClientSpecialCreateRequest $request):?object
+    public function createClientSpecialOrder(OrderClientSpecialCreateRequest $request)
     {  
+        $response = "Not created!!";
         $orderNumber = 1;
         $lastOrderNumber = $this->orderDetailService->getLastOrderNumber();
         if ($lastOrderNumber) {
@@ -436,12 +440,12 @@ class OrderService
         $item = $this->orderManager->createClientSpecialOrder($request, $roomID);
         if ($item) {
             $orderDetail = $this->orderDetailService->createOrderDetail($item->getId(), null, null, $orderNumber);  
-            $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID());
+            $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID());  
+            $response = $this->autoMapping->map(OrderEntity::class, OrderClientSendCreateResponse::class, $item);
+            $response->orderDetail['orderNumber'] = $orderDetail->orderNumber;
+            $response->orderDetail['orderDetailId'] = $orderDetail->id;
           }
           
-        $response = $this->autoMapping->map(OrderEntity::class, OrderClientSendCreateResponse::class, $item);
-        $response->orderDetail['orderNumber'] = $orderDetail->orderNumber;
-        $response->orderDetail['orderDetailId'] = $orderDetail->id;
         return $response;
     }
 
@@ -449,17 +453,39 @@ class OrderService
     {
         $response = [];
         $orderDetails = $this->orderDetailService->getOrderIdByOrderNumber($orderNumber);
+        
         if($orderDetails) {
         $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
-        
         if ($order[0]['storeOwnerProfileID']) {
             if($orderDetails[0]->storeOwnerProfileID){
                 $storeOwner = $this->storeOwnerProfileService->getStoreOwnerProfileById($orderDetails[0]->storeOwnerProfileID);
-            
+           
                 $response['orderDetails'] = $orderDetails;
                 $response['storeOwner'] = $storeOwner;
             }
         }
+        $response['order'] = $order[0];
+    }
+        return $response;
+    }
+
+    public function getOrderDetailsByOrderNumber($orderNumber) 
+    {
+        $response = [];
+        $orderDetails = $this->orderDetailService->getOrderIdByOrderNumber($orderNumber);
+        $deliveryCost = $this->deliveryCompanyFinancialService->getDeliveryCost();
+        
+        if($orderDetails) {
+        $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
+        if ($order[0]['storeOwnerProfileID']) {
+            if($orderDetails[0]->storeOwnerProfileID){
+                $storeOwner = $this->storeOwnerProfileService->getStoreOwnerProfileById($orderDetails[0]->storeOwnerProfileID);
+           
+                $response['orderDetails'] = $orderDetails;
+                $response['storeOwner'] = $storeOwner;
+            }
+        }
+        $response['deliveryCost'] = $deliveryCost;
         $response['order'] = $order[0];
     }
         return $response;
@@ -492,17 +518,20 @@ class OrderService
 
     public function orderCancel($orderNumber, $userID)
     {
-        $response="order Number not found!!";
+        $response= "order Number not found!!";
         $orderDetails = $this->orderDetailService->getOrderIdByOrderNumber($orderNumber);
         if($orderDetails) {
             $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
-      
+     
             $halfHourLaterTime = date_modify($order[0]['createdAt'],'+30 minutes');
             $nowDate = new DateTime('now');
             
             if ( $halfHourLaterTime < $nowDate) {
                 $response="can not remove it, Exceeded time allowed";
             }
+            elseif ($order[0]['state'] == 'on way to pick order') {
+                $response = "can not remove it, The captain received the order";
+            }            
             else {
                 $item = $this->orderManager->orderCancel($orderDetails[0]->orderID);
                 if($item) {

@@ -74,7 +74,7 @@ class OrderController extends BaseController
 
     /**
      * @Route("/closestOrders",   name="GetPendingOrdersForCaptain", methods={"GET"})
-     * @IsGranted("ROLE_CAPTAIN")
+     * @IsGranted("ROLE_CAPTAIN") 
      * @return JsonResponse
      */
     public function closestOrders()
@@ -97,7 +97,7 @@ class OrderController extends BaseController
     }
     
     //To accept the order AND change state
-    //state:on way to pick order or in store or picked or ongoing or cash or delivered
+    //state:on way to pick order or in store or picked or ongoing or delivered
     /**
      * @Route("/orderUpdateState", name="orderUpdateState", methods={"PUT"})
      * @IsGranted("ROLE_CAPTAIN")
@@ -111,7 +111,9 @@ class OrderController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, OrderUpdateStateByCaptainRequest::class, (object) $data);
         $request->setCaptainID($this->getUserId());
         $response = $this->orderService->orderUpdateStateByCaptain($request);
-      
+        if(is_string($response)){
+            return $this->response($response, self::ERROR);  
+          }
         return $this->response($response, self::UPDATE);
     }
 
@@ -189,7 +191,9 @@ class OrderController extends BaseController
         $request->setClientID($this->getUserId());
         $request->setProducts($data['products']);
         $response = $this->orderService->createClientOrder($request);
-
+        if(is_string($response)){
+            return $this->response($response, self::ERROR);  
+          }
         return $this->response($response, self::CREATE);
     }
 
@@ -204,7 +208,9 @@ class OrderController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, OrderClientSendCreateRequest::class, (object)$data);
         $request->setClientID($this->getUserId());
         $response = $this->orderService->createClientSendOrder($request);
-
+        if(is_string($response)){
+            return $this->response($response, self::ERROR);  
+          }
         return $this->response($response, self::CREATE);
     }
 
@@ -219,7 +225,9 @@ class OrderController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, OrderClientSpecialCreateRequest::class, (object)$data);
         $request->setClientID($this->getUserId());
         $response = $this->orderService->createClientSpecialOrder($request);
-
+        if(is_string($response)){
+            return $this->response($response, self::ERROR);  
+          }
         return $this->response($response, self::CREATE);
     }
 
@@ -230,6 +238,18 @@ class OrderController extends BaseController
     public function getOrderStatusByOrderNumber($orderNumber)
       {
         $result = $this->orderService->getOrderStatusByOrderNumber($orderNumber);
+  
+        return $this->response($result, self::FETCH);
+      }
+
+    /**
+      * @Route("orderDetails/{orderNumber}", name="getOrderDetailsByOrderNumber", methods={"GET"})
+      * @IsGranted("ROLE_CAPTAIN")
+      * @return JsonResponse
+      */
+    public function getOrderDetailsByOrderNumber($orderNumber)
+      {
+        $result = $this->orderService->getOrderDetailsByOrderNumber($orderNumber);
   
         return $this->response($result, self::FETCH);
       }
@@ -260,8 +280,8 @@ class OrderController extends BaseController
     {
         $response = $this->orderService->orderCancel($orderNumber, $this->getUserId());
         if(is_string($response)){
-        return $this->response($response, self::ERROR);  
-      }
+            return $this->response($response, self::ERROR);  
+        }
         return $this->response($response, self::UPDATE);
     }   
     

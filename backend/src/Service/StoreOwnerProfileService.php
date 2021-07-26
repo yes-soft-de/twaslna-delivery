@@ -87,7 +87,6 @@ class StoreOwnerProfileService
     public function getStoreOwnerProfileById($id)
     {
         $item = $this->userManager->getStoreOwnerProfileByID($id);
-      
         $item['imageURL'] = $item['image'];
         $item['image'] = $this->params.$item['image'];
         $item['baseURL'] = $this->params;

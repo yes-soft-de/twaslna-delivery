@@ -15,4 +15,5 @@ class AcceptedOrderResponse
     public $recipientPhone;
     public $state;
     public $orderDetail;
+    public $deliveryCost;
 }
