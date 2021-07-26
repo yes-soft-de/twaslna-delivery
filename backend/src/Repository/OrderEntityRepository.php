@@ -350,15 +350,12 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('OrderEntity')
             ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.state', 'OrderEntity.createdAt','OrderEntity.deliveryCost', 'OrderEntity.orderCost')
             ->addSelect('orderDetailEntity.id as orderDetailId', 'orderDetailEntity.orderNumber')
-            // ->addSelect('clientPaymentEntity.id as clientPaymentId', 'clientPaymentEntity.amount')
 
             ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
 
-            // ->leftJoin(ClientPaymentEntity::class, 'clientPaymentEntity', Join::WITH, 'clientPaymentEntity.orderID = OrderEntity.id')
-
             ->andWhere('OrderEntity.clientID = :clientID')
             ->setParameter('clientID', $clientID)
-            // ->addGroupBy('clientPaymentId')
+            ->addGroupBy('OrderEntity.id')
             ->getQuery()
             ->getResult();
     }
