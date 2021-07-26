@@ -28,9 +28,9 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('profile')
             ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.story', 'profile.free', 'profile.status', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts')
-            ->addSelect('DeliveryCompanyFinancialEntity.deliveryCost')
+            // ->addSelect('DeliveryCompanyFinancialEntity.deliveryCost')
 
-            ->leftJoin(DeliveryCompanyFinancialEntity::class, 'DeliveryCompanyFinancialEntity', Join::WITH, 'profile.id = profile.id')
+            // ->leftJoin(DeliveryCompanyFinancialEntity::class, 'DeliveryCompanyFinancialEntity', Join::WITH, 'profile.id = profile.id')
             ->andWhere('profile.id = :id')
 
             ->setParameter('id', $id)
@@ -53,7 +53,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
             ->andWhere('profile.storeCategoryId = :storeCategoryId')
 
             ->setParameter('storeCategoryId', $storeCategoryId)
-
+            ->groupBy('profile.id')
             ->getQuery()
             ->getResult();
     }
@@ -61,11 +61,16 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     public function getStoreOwnerBest()
     {
         return $this->createQueryBuilder('profile')
-            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts')
             ->addSelect('StoreOwnerBranchEntity.location')
+            ->addSelect('DeliveryCompanyFinancialEntity.deliveryCost')
+
+            ->leftJoin(DeliveryCompanyFinancialEntity::class, 'DeliveryCompanyFinancialEntity', Join::WITH, 'profile.id = profile.id')
+
             ->leftJoin(StoreOwnerBranchEntity::class, 'StoreOwnerBranchEntity', Join::WITH, 'StoreOwnerBranchEntity.storeOwnerProfileID = profile.id ')
 
             ->andWhere('profile.is_best = 1')
+            ->groupBy('profile.id')
             ->getQuery()
             ->getResult();
     }

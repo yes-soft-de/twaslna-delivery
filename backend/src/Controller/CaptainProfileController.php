@@ -171,18 +171,6 @@ class CaptainProfileController extends BaseController
 
         return $this->response($response, self::FETCH);
     }
-//هذا غير مستخدم ولكن يجب أن تتأكد
-    // /**
-    //  * @Route("/getCaptainsState/{state}", name="getCaptainsState",methods={"GET"})
-    //  * @IsGranted("ROLE_ADMIN")
-    //  *  @return JsonResponse
-    //  */
-    // public function getCaptainsState($state)
-    // {
-    //     $response = $this->userService->getCaptainsState($state);
-
-    //     return $this->response($response, self::FETCH);
-    // }
 
     /**
      * @Route("/dashboardcaptains", name="dashboardCaptains",methods={"GET"})
@@ -236,7 +224,7 @@ class CaptainProfileController extends BaseController
     }
 
     /**
-     * @Route("/captainFinancialaccount", name="getCaptainMyBalance",methods={"GET"})
+     * @Route("/captainFinancialAccount", name="getCaptainMyBalance",methods={"GET"})
      * @IsGranted("ROLE_CAPTAIN")
      *  @return JsonResponse
      */

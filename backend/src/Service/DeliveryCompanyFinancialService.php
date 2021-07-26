@@ -7,6 +7,7 @@ use App\Entity\DeliveryCompanyFinancialEntity;
 use App\Manager\DeliveryCompanyFinancialManager;
 use App\Request\DeliveryCompanyFinancialRequest;
 use App\Response\DeliveryCompanyFinancialResponse;
+use App\Response\DeliveryCompanyDeliveryCostResponse;
 
 class DeliveryCompanyFinancialService
 {
@@ -47,6 +48,18 @@ class DeliveryCompanyFinancialService
        
         foreach ($results as  $result) {
            $response[] = $this->autoMapping->map('array', DeliveryCompanyFinancialResponse::class, $result);
+        }
+        return $response;
+       
+    }
+
+    public function  getDeliveryCost()
+    {
+        $response = [];
+        $results = $this->deliveryCompanyFinancialManager->getDeliveryCompanyFinancialAll();
+       
+        foreach ($results as  $result) {
+           $response[] = $this->autoMapping->map('array', DeliveryCompanyDeliveryCostResponse::class, $result);
         }
         return $response;
        
