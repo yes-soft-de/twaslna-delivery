@@ -5,21 +5,15 @@ namespace App\Request;
 class OrderUpdateByClientRequest
 {
     private $orderNumber;
-    private $ownerID;
-    private $source = [];
+    private $storeOwnerProfileID;
     private $destination = [];
     private $deliveryDate;
     private $note;
     private $payment;
     private $recipientName;
     private $recipientPhone;
-    private $state;
-    private $branchId;
-    private $roomID;
-    private $clientID;
     private $products;
     private $orderCost;
-    private $deliveryCost;
 
      /**
      * Get the value of orderNumber
@@ -42,59 +36,19 @@ class OrderUpdateByClientRequest
     }
     
      /**
-     * @param mixed $ownerID
+     * @param mixed $storeOwnerProfileID
      */
-    public function setOwnerID($ownerID): void
+    public function setStoreOwnerProfileID($storeOwnerProfileID): void
     {
-        $this->ownerID = $ownerID;
+        $this->storeOwnerProfileID = $storeOwnerProfileID;
     }
 
      /**
      * @return mixed
      */
-    public function getOwnerID()
+    public function getStoreOwnerProfileID()
     {
-        return $this->ownerID;
-    }
-
-    public function getState(): ?string
-    {
-        return $this->state;
-    }
-
-    public function setState(?string $state): self
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
-    public function getRoomID(): ?string
-    {
-        return $this->roomID;
-    }
-
-    public function setRoomID(?string $roomID): self
-    {
-        $this->roomID = $roomID;
-
-        return $this;
-    }
-
-     /**
-     * @param mixed $clientID
-     */
-    public function setClientID($clientID): void
-    {
-        $this->clientID = $clientID;
-    }
-
-     /**
-     * @return mixed
-     */
-    public function getClientID()
-    {
-        return $this->clientID;
+        return $this->storeOwnerProfileID;
     }
 
     /**
@@ -137,14 +91,110 @@ class OrderUpdateByClientRequest
         return $this;
     }
 
-    public function getDeliveryCost()
+    /**
+     * Get the value of note
+     */ 
+    public function getNote()
     {
-        return $this->deliveryCost;
+        return $this->note;
     }
- 
-    public function setDeliveryCost($deliveryCost)
+
+    /**
+     * Get the value of payment
+     */ 
+    public function getPayment()
     {
-        $this->deliveryCost = $deliveryCost;
+        return $this->payment;
+    }
+
+    /**
+     * Set the value of payment
+     *
+     * @return  self
+     */ 
+    public function setPayment($payment)
+    {
+        $this->payment = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of recipientName
+     */ 
+    public function getRecipientName()
+    {
+        return $this->recipientName;
+    }
+
+    /**
+     * Set the value of recipientName
+     *
+     * @return  self
+     */ 
+    public function setRecipientName($recipientName)
+    {
+        $this->recipientName = $recipientName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of recipientPhone
+     */ 
+    public function getRecipientPhone()
+    {
+        return $this->recipientPhone;
+    }
+
+    /**
+     * Set the value of recipientPhone
+     *
+     * @return  self
+     */ 
+    public function setRecipientPhone($recipientPhone)
+    {
+        $this->recipientPhone = $recipientPhone;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of orderCost
+     */ 
+    public function getOrderCost()
+    {
+        return $this->orderCost;
+    }
+
+    /**
+     * Set the value of orderCost
+     *
+     * @return  self
+     */ 
+    public function setOrderCost($orderCost)
+    {
+        $this->orderCost = $orderCost;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of destination
+     */ 
+    public function getDestination()
+    {
+        return $this->destination;
+    }
+
+    /**
+     * Set the value of destination
+     *
+     * @return  self
+     */ 
+    public function setDestination($destination)
+    {
+        $this->destination = $destination;
 
         return $this;
     }

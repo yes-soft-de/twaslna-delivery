@@ -11,4 +11,5 @@ class OrdersByClientResponse
     public $amount;
     public $deliveryCost;
     public $orderCost;
+    public $orderType;
 }
