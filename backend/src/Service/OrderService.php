@@ -11,6 +11,8 @@ use App\Request\OrderClientSendCreateRequest;
 use App\Request\OrderClientSpecialCreateRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
 use App\Request\OrderUpdateByClientRequest;
+use App\Request\OrderUpdateSpecialByClientRequest;
+use App\Request\OrderUpdateSendByClientRequest;
 use App\Request\SendNotificationRequest;
 use App\Request\OrderDetailUpdateByClientRequest;
 use App\Response\OrderCreateResponse;
@@ -514,6 +516,54 @@ class OrderService
                             $createOrderDetail = $this->orderDetailService->createOrderDetail($orderDetails[0]->getOrderID(), $productID, $countProduct, $request->getOrderNumber());
                         }
                     return $response = $this->getOrderStatusByOrderNumber($request->getOrderNumber());  
+                    } 
+                }     
+        }       
+        return $response;
+    }
+
+    public function orderSpecialUpdateByClient(OrderUpdateSpecialByClientRequest $request)
+    {
+        $response = "Not updated!!";
+        $orderDetails = $this->orderDetailService->getOrderIdWithOutStoreProductByOrderNumber($request->getOrderNumber());
+        if($orderDetails) {
+            $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->getOrderID());
+            if($order[0]['state'] == 'in store') {
+                return $response = "you can't edit, captain in the store.";
+            }
+                $orderUpdate = $this->orderManager->orderSpecialUpdateByClient($request, $orderDetails[0]->getOrderID());
+                if($orderUpdate) {
+                    foreach ($orderDetails as $orderDetail) {
+                    $orderDetailDelete = $this->orderDetailService->orderDetailDelete($orderDetail->getId());
+                    }
+
+                    if ($orderDetailDelete == "Deleted") {
+                        $createOrderDetail = $this->orderDetailService->createOrderDetail($orderDetails[0]->getOrderID(), null, null, $request->getOrderNumber());
+                        return $response = $this->getOrderStatusByOrderNumber($request->getOrderNumber());  
+                    } 
+                }     
+        }       
+        return $response;
+    }
+
+    public function orderSendUpdateByClient(OrderUpdateSendByClientRequest $request)
+    {
+        $response = "Not updated!!";
+        $orderDetails = $this->orderDetailService->getOrderIdWithOutStoreProductByOrderNumber($request->getOrderNumber());
+        if($orderDetails) {
+            $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->getOrderID());
+            if($order[0]['state'] == 'in store') {
+                return $response = "you can't edit, captain in the store.";
+            }
+                $orderUpdate = $this->orderManager->orderSendUpdateByClient($request, $orderDetails[0]->getOrderID());
+                if($orderUpdate) {
+                    foreach ($orderDetails as $orderDetail) {
+                    $orderDetailDelete = $this->orderDetailService->orderDetailDelete($orderDetail->getId());
+                    }
+
+                    if ($orderDetailDelete == "Deleted") {
+                        $createOrderDetail = $this->orderDetailService->createOrderDetail($orderDetails[0]->getOrderID(), null, null, $request->getOrderNumber());
+                        return $response = $this->getOrderStatusByOrderNumber($request->getOrderNumber());  
                     } 
                 }     
         }       

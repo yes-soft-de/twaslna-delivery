@@ -11,6 +11,8 @@ use App\Request\OrderClientSendCreateRequest;
 use App\Request\OrderClientSpecialCreateRequest;
 use App\Request\OrderUpdateByClientRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
+use App\Request\OrderUpdateSpecialByClientRequest;
+use App\Request\OrderUpdateSendByClientRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class OrderManager
@@ -170,6 +172,7 @@ class OrderManager
 
         $item->setDeliveryDate($item->getDeliveryDate());
         $item->setState('pending');
+        $item->setOrderType(1);
         
         $this->entityManager->persist($item);
         $this->entityManager->flush();
@@ -185,7 +188,8 @@ class OrderManager
 
         $item->setDeliveryDate($item->getDeliveryDate());
         $item->setState('pending');
-        
+        $item->setOrderType(3);
+
         $this->entityManager->persist($item);
         $this->entityManager->flush();
         $this->entityManager->clear();
@@ -200,7 +204,8 @@ class OrderManager
 
         $item->setDeliveryDate($item->getDeliveryDate());
         $item->setState('pending');
-        
+        $item->setOrderType(2);
+
         $this->entityManager->persist($item);
         $this->entityManager->flush();
         $this->entityManager->clear();
@@ -214,6 +219,36 @@ class OrderManager
         
         if ($item) {
             $item = $this->autoMapping->mapToObject(OrderUpdateByClientRequest::class, OrderEntity::class, $request, $item);
+           
+            $item->setDeliveryDate($request->getDeliveryDate());
+            
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+        }
+        return $item;
+    }
+
+    public function orderSpecialUpdateByClient(OrderUpdateSpecialByClientRequest $request, $id)
+    {
+        $item = $this->orderEntityRepository->find($id);
+        
+        if ($item) {
+            $item = $this->autoMapping->mapToObject(OrderUpdateSpecialByClientRequest::class, OrderEntity::class, $request, $item);
+           
+            $item->setDeliveryDate($request->getDeliveryDate());
+            
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+        }
+        return $item;
+    }
+
+    public function orderSendUpdateByClient(OrderUpdateSendByClientRequest $request, $id)
+    {
+        $item = $this->orderEntityRepository->find($id);
+        
+        if ($item) {
+            $item = $this->autoMapping->mapToObject(OrderUpdateSendByClientRequest::class, OrderEntity::class, $request, $item);
            
             $item->setDeliveryDate($request->getDeliveryDate());
             

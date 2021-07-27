@@ -10,6 +10,8 @@ use App\Request\OrderClientSendCreateRequest ;
 use App\Request\OrderClientSpecialCreateRequest ;
 use App\Request\OrderUpdateStateByCaptainRequest;
 use App\Request\OrderUpdateByClientRequest;
+use App\Request\OrderUpdateSpecialByClientRequest;
+use App\Request\OrderUpdateSendByClientRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -271,6 +273,41 @@ class OrderController extends BaseController
           }
         return $this->response($response, self::UPDATE);
     }
+    
+    /**
+     * @Route("/orderSpecialUpdateByClient", name="orderSpecialUpdateByClient", methods={"PUT"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function orderSpecialUpdateByClient(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderUpdateSpecialByClientRequest::class, (object) $data);
+        $response = $this->orderService->orderSpecialUpdateByClient($request);
+        if(is_string($response)){
+            return $this->response($response, self::ERROR);  
+          }
+        return $this->response($response, self::UPDATE);
+    }
+    
+    /**
+     * @Route("/orderSendUpdateByClient", name="orderSendUpdateByClient", methods={"PUT"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function orderSendUpdateByClient(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderUpdateSendByClientRequest::class, (object) $data);
+        $response = $this->orderService->orderSendUpdateByClient($request);
+        if(is_string($response)){
+            return $this->response($response, self::ERROR);  
+          }
+        return $this->response($response, self::UPDATE);
+    }
+
     /**
      * @Route("/ordercancel/{orderNumber}", name="orderCancel", methods={"PUT"})
      * @IsGranted("ROLE_CLIENT")

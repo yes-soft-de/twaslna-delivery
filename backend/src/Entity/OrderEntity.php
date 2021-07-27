@@ -119,6 +119,11 @@ class OrderEntity
      */
     private $orderCost;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $orderType;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -367,6 +372,18 @@ class OrderEntity
     public function setOrderCost($orderCost)
     {
         $this->orderCost = $orderCost;
+
+        return $this;
+    }
+
+    public function getOrderType(): ?int
+    {
+        return $this->orderType;
+    }
+
+    public function setOrderType(?int $orderType): self
+    {
+        $this->orderType = $orderType;
 
         return $this;
     }
