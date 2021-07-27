@@ -211,7 +211,7 @@ class OrderManager
     public function orderUpdateByClient(OrderUpdateByClientRequest $request, $id)
     {
         $item = $this->orderEntityRepository->find($id);
-        $request->setRoomID($item->getRoomID());
+        
         if ($item) {
             $item = $this->autoMapping->mapToObject(OrderUpdateByClientRequest::class, OrderEntity::class, $request, $item);
            
