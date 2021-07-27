@@ -8,7 +8,6 @@ class OrderClosestResponse
     public $source;
     public $deliveryDate;
     public $payment;
-    // public $storeOwner;
     public $orderNumber;
     public $detail;
     public $storeOwnerProfileID;
@@ -17,4 +16,5 @@ class OrderClosestResponse
     public $image;
     public $deliveryCost;
     public $orderCost;
+    public $orderType;
 }
