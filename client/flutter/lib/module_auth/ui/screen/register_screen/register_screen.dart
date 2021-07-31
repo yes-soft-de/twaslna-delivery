@@ -1,9 +1,17 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
+import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_auth/enums/user_type.dart';
+import 'package:twaslna_delivery/module_auth/request/register_request/register_request.dart';
 import 'package:twaslna_delivery/module_auth/state_manager/register_state_manager/register_state_manager.dart';
 import 'package:twaslna_delivery/module_auth/ui/states/register_states/register_state.dart';
 import 'package:twaslna_delivery/module_auth/ui/states/register_states/register_state_init.dart';
 import 'package:flutter/material.dart';
+import 'package:twaslna_delivery/module_main/main_routes.dart';
+import 'package:twaslna_delivery/utils/components/custom_app_bar.dart';
+import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 
 @injectable
 class RegisterScreen extends StatefulWidget {
@@ -17,15 +25,26 @@ class RegisterScreen extends StatefulWidget {
 
 class RegisterScreenState extends State<RegisterScreen> {
   late RegisterState _currentState;
+  late AsyncSnapshot loadingSnapshot;
+  late StreamSubscription _stateSubscription;
+  int? returnToMainScreen;
+  bool? returnToPreviousScreen;
   @override
   void initState() {
     super.initState();
-
+     loadingSnapshot = AsyncSnapshot.nothing();
     _currentState = RegisterStateInit(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateSubscription = widget._stateManager.stateStream.listen((event) {
       if (this.mounted) {
         setState(() {
           _currentState = event;
+        });
+      }
+    });
+    widget._stateManager.loadingStream.listen((event) {
+      if (this.mounted) {
+        setState(() {
+          loadingSnapshot = event;
         });
       }
     });
@@ -33,6 +52,11 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    dynamic args = ModalRoute.of(context)?.settings.arguments;
+    if (args != null) {
+      if (args is bool) returnToPreviousScreen = args;
+      if (args is int) returnToMainScreen = args;
+    }
     return GestureDetector(
       onTap: () {
         var focus = FocusScope.of(context);
@@ -41,8 +65,15 @@ class RegisterScreenState extends State<RegisterScreen> {
         }
       },
       child: Scaffold(
-        body: SafeArea(
-          child: _currentState.getUI(context),
+        appBar: CustomTwaslnaAppBar.appBar(context, title:S.of(context).register),
+        body:loadingSnapshot.connectionState != ConnectionState.waiting ? _currentState.getUI(context) : Stack(
+          children: [
+            _currentState.getUI(context),
+            Container(
+              width: double.maxFinite,
+              color: Colors.transparent.withOpacity(0.0),
+            ),
+          ],
         ),
       ),
     );
@@ -52,23 +83,29 @@ class RegisterScreenState extends State<RegisterScreen> {
     if (mounted) setState(() {});
   }
 
-  void registerCaptain(String phoneNumber) {
-    widget._stateManager.registerCaptain(phoneNumber, this);
-  }
-
-  void registerOwner(String email, String username, String password) {
-        widget._stateManager.registerOwner(email, username, password, this);
-  }
-
-  void confirmCaptainSMS(String smsCode) {
-    widget._stateManager.confirmCaptainCode(smsCode);
-  }
-
-  void retryPhone() {
-    _currentState = RegisterStateInit(this);
+  void registerClient(RegisterRequest request) {
+        widget._stateManager.registerClient(request, this);
   }
 
   void moveToNext() {
-   //move to init screen
+    if (returnToMainScreen != null) {
+      Navigator.of(context).pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false,arguments: returnToMainScreen);
+    }
+    else if (returnToPreviousScreen != null ){
+      Navigator.of(context).pop();
+    }
+    else {
+      Navigator.of(context).pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
+    }
+    CustomFlushBarHelper.createSuccess(title:S.current.warnning, message: S.current.loginSuccess).show(context);
+  }
+  void userRegistered(){
+    CustomFlushBarHelper.createSuccess(title: S.current.warnning, message:S.current.registerSuccess,timeout: 2).show(context);
+  }
+
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    super.dispose();
   }
 }

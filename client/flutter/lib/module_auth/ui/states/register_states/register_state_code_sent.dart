@@ -41,7 +41,7 @@ class RegisterStatePhoneCodeSent extends RegisterState {
           OutlinedButton(
             onPressed: retryEnabled
                 ? () {
-                    screen.retryPhone();
+                    //screen.retryPhone();
                   }
                 : null,
             child: Text(S.of(context).resendCode),
@@ -55,7 +55,7 @@ class RegisterStatePhoneCodeSent extends RegisterState {
                   loading = false;
                 });
                 screen.refresh();
-                screen.confirmCaptainSMS(_confirmationController.text);
+                //screen.confirmCaptainSMS(_confirmationController.text);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'package:injectable/injectable.dart';
+import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_auth/state_manager/login_state_manager/login_state_manager.dart';
 import 'package:twaslna_delivery/module_auth/ui/states/login_states/login_state.dart';
 import 'package:twaslna_delivery/module_auth/ui/states/login_states/login_state_init.dart';
 import 'package:flutter/material.dart';
+import 'package:twaslna_delivery/module_main/main_routes.dart';
+import 'package:twaslna_delivery/utils/components/custom_app_bar.dart';
+import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 
 @injectable
 class LoginScreen extends StatefulWidget {
@@ -18,16 +22,18 @@ class LoginScreen extends StatefulWidget {
 class LoginScreenState extends State<LoginScreen> {
 
   late LoginState _currentStates;
-
+  late AsyncSnapshot loadingSnapshot;
   late StreamSubscription _stateSubscription;
   bool deepLinkChecked = false;
   void refresh() {
     if (mounted) setState(() {});
   }
-
+  int? returnToMainScreen;
+  bool? returnToPreviousScreen;
   @override
   void initState() {
     super.initState();
+    loadingSnapshot = AsyncSnapshot.nothing();
     _currentStates = LoginStateInit(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       if (mounted) {
@@ -36,10 +42,22 @@ class LoginScreenState extends State<LoginScreen> {
         });
       }
     });
+    widget._stateManager.loadingStream.listen((event) {
+      if (this.mounted) {
+        setState(() {
+          loadingSnapshot = event;
+        });
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    dynamic args = ModalRoute.of(context)?.settings.arguments;
+    if (args != null) {
+      if (args is bool) returnToPreviousScreen = args;
+      if (args is int) returnToMainScreen = args;
+    }
     return GestureDetector(
       onTap: () {
         var focus = FocusScope.of(context);
@@ -48,8 +66,15 @@ class LoginScreenState extends State<LoginScreen> {
         }
       },
       child: Scaffold(
-        body: SafeArea(
-          child: _currentStates.getUI(context),
+        appBar: CustomTwaslnaAppBar.appBar(context, title:S.of(context).login),
+        body: loadingSnapshot.connectionState != ConnectionState.waiting ? _currentStates.getUI(context) : Stack(
+          children: [
+            _currentStates.getUI(context),
+            Container(
+              width: double.maxFinite,
+              color: Colors.transparent.withOpacity(0.0),
+            ),
+          ],
         ),
       ),
     );
@@ -60,21 +85,20 @@ class LoginScreenState extends State<LoginScreen> {
     _stateSubscription.cancel();
     super.dispose();
   }
-
-  void loginCaptain(String phoneNumber) {
-    widget._stateManager.loginCaptain(phoneNumber, this);
+  void loginClient(String email, String password) {
+    widget._stateManager.loginClient(email, password, this);
   }
 
-  void loginOwner(String email, String password) {
-    widget._stateManager.loginOwner(email, password, this);
-  }
-
-  void confirmCaptainSMS(String smsCode) {
-    widget._stateManager.confirmCaptainCode(smsCode, this);
-  }
-
-  void retryPhone() {
-    _currentStates = LoginStateInit(this);
-    if (mounted) setState(() {});
+  void moveToNext() {
+    if (returnToMainScreen != null) {
+      Navigator.of(context).pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false,arguments: returnToMainScreen);
+    }
+    else if (returnToPreviousScreen != null ){
+    Navigator.of(context).pop();
+    }
+    else {
+      Navigator.of(context).pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
+    }
+    CustomFlushBarHelper.createSuccess(title:S.current.warnning, message: S.current.loginSuccess).show(context);
   }
 }
