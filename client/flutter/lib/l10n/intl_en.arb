@@ -307,7 +307,26 @@
   "notAllowedCaptainReceived": "Can not remove it, The captain received the order",
   "updateOrders": "Orders Details",
   "updateOrderNote": "You can update your order item from this interface",
-  "welcomeToOurApp": "WELCOME TO TWASLNA APP"
+  "welcomeToOurApp": "WELCOME TO TWASLNA APP",
+  "updateOrderSuccess":"Your update has been updated",
+  "username": "Username",
+  "registerHint": "username or phone number",
+  "registerSuccess": "Your account has been registered successfully",
+  "loginSuccess": "Your account has been logged successfully",
+  "homeDataEmpty":"There is no data to show you yet",
+  "refresh": "refresh",
+  "errOc":"The next problem occurred",
+  "pleaseLoginToMakeOrder": "Please login to resuming order sending",
+  "pleaseCompleteField": "Please fill the field",
+  "internalServerError": "Internal server error",
+  "thisErrorHappened": "This Error happened"
+
+
+
+
+
+
+
 
 
 

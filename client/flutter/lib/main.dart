@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/abstracts/module/yes_module.dart';
 import 'package:twaslna_delivery/di/di_config.dart';
+import 'package:twaslna_delivery/hive/hive_init.dart';
 import 'package:twaslna_delivery/module_account/account_module.dart';
 import 'package:twaslna_delivery/module_auth/authoriazation_module.dart';
 import 'package:twaslna_delivery/module_chat/chat_module.dart';
@@ -34,6 +35,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   timeago.setLocaleMessages('ar', timeago.ArMessages());
   timeago.setLocaleMessages('en', timeago.EnMessages());
+  await HiveSetUp.init();
   await Firebase.initializeApp();
   await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
   FlutterError.onError = (FlutterErrorDetails details) {
@@ -161,7 +163,7 @@ class _MyAppState extends State<MyApp> {
       ],
       theme: theme,
       supportedLocales: S.delegate.supportedLocales,
-      title: 'pasco-shipping',
+      title: 'Twaslna',
       routes: fullRoutesList,
       initialRoute: SplashRoutes.SPLASH_SCREEN,
     );

@@ -25,7 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("المسافة المقطوعة بالكيلومتر"),
         "StatusCodeNotFound": MessageLookupByLibrary.simpleMessage(
-            "لا يمكن للخادم العثور على طلبك المطلوب"),
+            "لم يتمكن الخادم من العثور على طلبك"),
         "about": MessageLookupByLibrary.simpleMessage("حول"),
         "accept": MessageLookupByLibrary.simpleMessage("اقبل"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("قبول الطلب"),
@@ -143,6 +143,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("البريد الالكتروني"),
         "emailAddressIsRequired": MessageLookupByLibrary.simpleMessage(
             "يرجى توفير البريد الالكتروني"),
+        "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
         "errorHappened": MessageLookupByLibrary.simpleMessage("حدث خطأ ما"),
         "errorLoadingBranches":
             MessageLookupByLibrary.simpleMessage("حدث خطأ أثناء تحميل الفروع"),
@@ -171,6 +172,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "helpMeMore": MessageLookupByLibrary.simpleMessage("تواصلوا معي"),
         "highestRate": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
+        "homeDataEmpty":
+            MessageLookupByLibrary.simpleMessage("لايوجد بيانات حاليا لعرضها"),
         "hours": MessageLookupByLibrary.simpleMessage("ساعة"),
         "howWeWork": MessageLookupByLibrary.simpleMessage("كيف يعمل التطبيق"),
         "iAgreeToTheTermsOfServicePrivacyPolicy":
@@ -190,6 +193,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "اشتراكك غير مفعل بعد الرجاء انتظار التفعيل من قبل الإدارة"),
         "info": MessageLookupByLibrary.simpleMessage("حول الطلب"),
         "initData": MessageLookupByLibrary.simpleMessage("تعيين البيانات"),
+        "internalServerError":
+            MessageLookupByLibrary.simpleMessage("هناك مشكلة ما في الخادم"),
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 موظف"),
@@ -199,6 +204,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "locationOfCustomer":
             MessageLookupByLibrary.simpleMessage("(التسليم) موقع الزبون"),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
+        "loginSuccess":
+            MessageLookupByLibrary.simpleMessage("تم تسجيل الدخول بنجاح"),
         "male": MessageLookupByLibrary.simpleMessage("ذكر"),
         "me": MessageLookupByLibrary.simpleMessage("مهنتي"),
         "mediumMoreThan20EmployeesLessThan100":
@@ -301,6 +308,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("رقم الهاتف المدخل قصير"),
         "pickAJob": MessageLookupByLibrary.simpleMessage("اختار عملي"),
         "pickALanguage": MessageLookupByLibrary.simpleMessage("اختار لغتي"),
+        "pleaseCompleteField":
+            MessageLookupByLibrary.simpleMessage("من فضلك أملئ الحقل"),
         "pleaseCompleteTheForm":
             MessageLookupByLibrary.simpleMessage("الرجاء أكمال الفورم"),
         "pleaseDownloadtwaslna_delivery": MessageLookupByLibrary.simpleMessage(
@@ -309,6 +318,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "الرجاء ادخال البريد الالكتروني"),
         "pleaseInputPhoneNumber":
             MessageLookupByLibrary.simpleMessage("الرجاء ادخال رقم الهاتف"),
+        "pleaseLoginToMakeOrder": MessageLookupByLibrary.simpleMessage(
+            "من فضلك قم بتسجيل الدخول لاستكمال طلبك"),
         "pleaseProvidePaymentMethode":
             MessageLookupByLibrary.simpleMessage("من فضلك اختر طريقة للدفع"),
         "pleaseProvideTheDistance": MessageLookupByLibrary.simpleMessage(
@@ -334,7 +345,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "recipientName": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
         "recipientPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم هاتف المستلم"),
+        "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
         "register": MessageLookupByLibrary.simpleMessage("انشاء حساب جديد"),
+        "registerHint":
+            MessageLookupByLibrary.simpleMessage("اسم مستخدم أو رقم هاتف"),
+        "registerSuccess":
+            MessageLookupByLibrary.simpleMessage("تم تسجيل حسابك بنجاح"),
         "registerSuccessSetupMyProfile": MessageLookupByLibrary.simpleMessage(
             "تم تأكيد الحساب، اتجه للاشتراك"),
         "renewNewPlan":
@@ -382,8 +398,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("من الأحدث للأقدم"),
         "sortByRate": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),
         "startWriting": MessageLookupByLibrary.simpleMessage("ابدأ الكتابة"),
-        "statusCodeBadRequest": MessageLookupByLibrary.simpleMessage(
-            "تعذر على الخادم فهم الطلب بسبب بناء جملة غير صالحة"),
+        "statusCodeBadRequest":
+            MessageLookupByLibrary.simpleMessage("تعذر على الخادم فهم الطلب"),
         "statusCodeCreated": MessageLookupByLibrary.simpleMessage(
             "نجح الطلب وتم إنشاء تغيير جديد نتيجة لذلك "),
         "statusCodeOk":
@@ -410,6 +426,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "syria": MessageLookupByLibrary.simpleMessage("سوريا"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
+        "thisErrorHappened":
+            MessageLookupByLibrary.simpleMessage("حصلت المشكلة التالية"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(
             "سوف يستغرق الامر دقيقة واحدة الرجاء الانتظار"),
         "to": MessageLookupByLibrary.simpleMessage("الى"),
@@ -430,6 +448,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateBranches": MessageLookupByLibrary.simpleMessage("تعديل الأفرع"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
             "يمكنك تعديل حالة الطلب من خلال النافذة الحالية"),
+        "updateOrderSuccess":
+            MessageLookupByLibrary.simpleMessage("نم تعديل طلبك بنجاح"),
         "updateOrders": MessageLookupByLibrary.simpleMessage("تعديل الطلبات"),
         "updateYourData":
             MessageLookupByLibrary.simpleMessage("تحديث البيانات"),
@@ -441,6 +461,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("جار رفع الصور"),
         "uploadingImagesPleaseWait":
             MessageLookupByLibrary.simpleMessage("يتم رفع الصور"),
+        "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "views": MessageLookupByLibrary.simpleMessage("مشاهدة"),
         "waiting": MessageLookupByLibrary.simpleMessage("في الانتظار"),
         "waitingDescription":

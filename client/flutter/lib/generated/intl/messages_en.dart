@@ -144,6 +144,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "emailAddressIsRequired":
             MessageLookupByLibrary.simpleMessage("Email Address is Required"),
+        "errOc":
+            MessageLookupByLibrary.simpleMessage("The next problem occurred"),
         "errorHappened": MessageLookupByLibrary.simpleMessage("Error Happened"),
         "errorLoadingBranches":
             MessageLookupByLibrary.simpleMessage("Error Loading Branches"),
@@ -174,6 +176,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "helpMeMore": MessageLookupByLibrary.simpleMessage("Help me more"),
         "highestRate": MessageLookupByLibrary.simpleMessage("Highest Rate"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "homeDataEmpty": MessageLookupByLibrary.simpleMessage(
+            "There is no data to show you yet"),
         "hours": MessageLookupByLibrary.simpleMessage("hour"),
         "howWeWork": MessageLookupByLibrary.simpleMessage("How we work"),
         "iAgreeToTheTermsOfServicePrivacyPolicy":
@@ -196,6 +200,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your subscription not activate yet please wait"),
         "info": MessageLookupByLibrary.simpleMessage("Info"),
         "initData": MessageLookupByLibrary.simpleMessage("Init Data"),
+        "internalServerError":
+            MessageLookupByLibrary.simpleMessage("Internal server error"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 Employees"),
@@ -205,6 +211,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "locationOfCustomer":
             MessageLookupByLibrary.simpleMessage("Location of customer"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
+        "loginSuccess": MessageLookupByLibrary.simpleMessage(
+            "Your account has been logged successfully"),
         "male": MessageLookupByLibrary.simpleMessage("Male"),
         "me": MessageLookupByLibrary.simpleMessage("ME"),
         "mediumMoreThan20EmployeesLessThan100":
@@ -308,6 +316,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pickAJob": MessageLookupByLibrary.simpleMessage("Pick a Job"),
         "pickALanguage":
             MessageLookupByLibrary.simpleMessage("Pick a Language"),
+        "pleaseCompleteField":
+            MessageLookupByLibrary.simpleMessage("Please fill the field"),
         "pleaseCompleteTheForm":
             MessageLookupByLibrary.simpleMessage("Please Complete the Form"),
         "pleaseDownloadtwaslna_delivery": MessageLookupByLibrary.simpleMessage(
@@ -316,6 +326,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please Enter Your Email"),
         "pleaseInputPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Please input phone number"),
+        "pleaseLoginToMakeOrder": MessageLookupByLibrary.simpleMessage(
+            "Please login to resuming order sending"),
         "pleaseProvidePaymentMethode": MessageLookupByLibrary.simpleMessage(
             "Please choose payment method"),
         "pleaseProvideTheDistance":
@@ -341,7 +353,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "recipientName": MessageLookupByLibrary.simpleMessage("Recipient Name"),
         "recipientPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Recipient Phone Number"),
+        "refresh": MessageLookupByLibrary.simpleMessage("refresh"),
         "register": MessageLookupByLibrary.simpleMessage("Register"),
+        "registerHint":
+            MessageLookupByLibrary.simpleMessage("username or phone number"),
+        "registerSuccess": MessageLookupByLibrary.simpleMessage(
+            "Your account has been registered successfully"),
         "registerSuccessSetupMyProfile": MessageLookupByLibrary.simpleMessage(
             "Register Success, Setup my profile"),
         "renewNewPlan": MessageLookupByLibrary.simpleMessage(
@@ -414,6 +431,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "syria": MessageLookupByLibrary.simpleMessage("Syria"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
+        "thisErrorHappened":
+            MessageLookupByLibrary.simpleMessage("This Error happened"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(
             "This Might Take a while, please wait"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
@@ -435,6 +454,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Update Branches"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
             "You can update your order item from this interface"),
+        "updateOrderSuccess": MessageLookupByLibrary.simpleMessage(
+            "Your update has been updated"),
         "updateOrders": MessageLookupByLibrary.simpleMessage("Orders Details"),
         "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),
         "uploadAndSubmit":
@@ -445,6 +466,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Uploading Images"),
         "uploadingImagesPleaseWait": MessageLookupByLibrary.simpleMessage(
             "Uploading Images, Please Wait"),
+        "username": MessageLookupByLibrary.simpleMessage("Username"),
         "views": MessageLookupByLibrary.simpleMessage("views"),
         "waiting": MessageLookupByLibrary.simpleMessage("waiting"),
         "waitingDescription": MessageLookupByLibrary.simpleMessage(

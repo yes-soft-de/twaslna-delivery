@@ -48,6 +48,8 @@ dependencies:
   shared_preferences: ^2.0.6
   # NoSQL Database
   hive: ^2.0.4
+  hive_flutter: ^1.1.0
+  hive_generator: ^1.1.0
   # Open Url On Browser
   url_launcher: ^6.0.6
   share: ^2.0.4
@@ -111,6 +113,11 @@ dev_dependencies:
   flutter_launcher_icons: ^0.9.0
   # Flutter Native Splash Screen
   flutter_native_splash: ^1.1.8+4
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.jpg"
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -151,8 +158,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-  #  flutter_native_splash:
-  #    color: "#e1f5fe"
-  #    image: assets/images/logo.jpg
-  #    color_dark: "#042a49"
-  #    image_dark: assets/images/logo.jpg
+flutter_native_splash:
+  color: "#e1f5fe"
+  image: assets/images/logo.jpg
+  color_dark: "#042a49"
+  image_dark: assets/images/logo.jpg

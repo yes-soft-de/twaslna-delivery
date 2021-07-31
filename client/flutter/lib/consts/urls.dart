@@ -3,7 +3,7 @@ class Urls {
   static const String BASE_API = DOMAIN + '';
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
   static const UPLOAD_API = BASE_API + '/uploadfile';
-  static const SIGN_UP_API = BASE_API + '/user';
+  static const SIGN_UP_API = BASE_API + '/clientregister';
   static const OWNER_PROFILE_API = BASE_API + '/userprofile';
   static const CREATE_TOKEN_API = BASE_API + '/login_check';
   static const REPORT_API = BASE_API + '/report';

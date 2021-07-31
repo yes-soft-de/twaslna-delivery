@@ -3109,6 +3109,126 @@ class S {
       args: [],
     );
   }
+
+  /// `Your update has been updated`
+  String get updateOrderSuccess {
+    return Intl.message(
+      'Your update has been updated',
+      name: 'updateOrderSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username`
+  String get username {
+    return Intl.message(
+      'Username',
+      name: 'username',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `username or phone number`
+  String get registerHint {
+    return Intl.message(
+      'username or phone number',
+      name: 'registerHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your account has been registered successfully`
+  String get registerSuccess {
+    return Intl.message(
+      'Your account has been registered successfully',
+      name: 'registerSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your account has been logged successfully`
+  String get loginSuccess {
+    return Intl.message(
+      'Your account has been logged successfully',
+      name: 'loginSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is no data to show you yet`
+  String get homeDataEmpty {
+    return Intl.message(
+      'There is no data to show you yet',
+      name: 'homeDataEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `refresh`
+  String get refresh {
+    return Intl.message(
+      'refresh',
+      name: 'refresh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The next problem occurred`
+  String get errOc {
+    return Intl.message(
+      'The next problem occurred',
+      name: 'errOc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please login to resuming order sending`
+  String get pleaseLoginToMakeOrder {
+    return Intl.message(
+      'Please login to resuming order sending',
+      name: 'pleaseLoginToMakeOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please fill the field`
+  String get pleaseCompleteField {
+    return Intl.message(
+      'Please fill the field',
+      name: 'pleaseCompleteField',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Internal server error`
+  String get internalServerError {
+    return Intl.message(
+      'Internal server error',
+      name: 'internalServerError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This Error happened`
+  String get thisErrorHappened {
+    return Intl.message(
+      'This Error happened',
+      name: 'thisErrorHappened',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
