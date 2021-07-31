@@ -21,8 +21,8 @@ class HomeLoadedState extends HomeState {
   List<StoreCategoryModel> categories;
   List<StoreModel> bestStores;
 
-  HomeLoadedState(this.screenState, this.topProducts, this.categories,
-      this.bestStores)
+  HomeLoadedState(this.screenState,{required this.topProducts,required this.categories,
+      required this.bestStores})
       : super(screenState);
 
   @override

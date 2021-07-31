@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_auth/authorization_routes.dart';
 import 'package:twaslna_delivery/module_main/main_routes.dart';
 import 'package:twaslna_delivery/module_our_services/request/send_it_request.dart';
 import 'package:twaslna_delivery/module_our_services/state_manager/services_state_manager.dart';
@@ -52,6 +53,10 @@ class SendItScreenState extends State<SendItScreen> {
   void postClientOrder(){
     widget._stateManager.SendItClientOrder(request, this);
   }
+ void goToLogin(){
+    Navigator.of(context).pushNamed(AuthorizationRoutes.LOGIN_SCREEN,arguments:true);
+    CustomFlushBarHelper.createError(title:S.current.warnning, message:S.current.pleaseLoginToMakeOrder).show(context);
+ }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

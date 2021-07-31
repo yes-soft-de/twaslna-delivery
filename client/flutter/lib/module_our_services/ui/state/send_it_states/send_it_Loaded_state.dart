@@ -41,16 +41,16 @@ class SendItLoadedState extends SendItState {
               SizedBox(height: 16,),
               ListTile(
                 title: LabelText(S.of(context).recipientName),
-                subtitle: CustomSendItFormField(maxLines: 1,hintText: S.of(context).nameHint,onTap: (){
+                subtitle: CustomSendItFormField(hintText: S.of(context).nameHint,onTap: (){
                   scrollController.animateTo(388,duration: Duration(milliseconds: 400),curve: Curves.linear);
                 },controller: receiptNameController,),
               ),
               SizedBox(height: 16,),
               ListTile(
                 title: LabelText(S.of(context).recipientPhoneNumber),
-                subtitle: CustomSendItFormField(maxLines: 1,hintText: S.of(context).pleaseInputPhoneNumber,numbers:true,onTap: (){
+                subtitle: CustomSendItFormField(hintText: S.of(context).pleaseInputPhoneNumber,numbers:true,onTap: (){
                   scrollController.animateTo(450,duration: Duration(milliseconds: 500),curve: Curves.linear,);
-                },controller: phoneNumberController,),
+                },controller: phoneNumberController,maxLines: 1,),
               ),
               SizedBox(height: 16,),
               ListTile(
@@ -71,6 +71,9 @@ class SendItLoadedState extends SendItState {
                           color: Theme.of(context).backgroundColor,
                         ),
                         child: RadioListTile(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)
+                          ),
                           title: Text(S.of(context).card),
                           value:'card',
                           groupValue:payments,
@@ -90,6 +93,9 @@ class SendItLoadedState extends SendItState {
                         ),
                         child: RadioListTile(
                           title: Text(S.of(context).cash),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)
+                          ),
                           value:'cash',
                           groupValue:payments,
                           onChanged: (String? value){

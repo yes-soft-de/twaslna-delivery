@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:twaslna_delivery/module_auth/service/auth_service/auth_service.dart';
 import 'package:twaslna_delivery/module_deep_links/service/deep_links_service.dart';
 import 'package:twaslna_delivery/module_our_services/request/private_order_request.dart';
 import 'package:twaslna_delivery/module_our_services/service/services_service.dart';
@@ -15,8 +16,9 @@ import 'package:twaslna_delivery/utils/helpers/status_code_helper.dart';
 @injectable
 class PrivateOrderStateManager{
   final ServicesService _servicesService;
-  PrivateOrderStateManager(this._servicesService);
-  final PublishSubject<PrivateOrderState> _stateSubject = PublishSubject();
+  final AuthService _authService ;
+  PrivateOrderStateManager(this._servicesService,this._authService);
+  final PublishSubject<PrivateOrderState> _stateSubject = PublishSubject<PrivateOrderState>();
   Stream<PrivateOrderState> get stateStream => _stateSubject.stream;
 
   void getLocation(PrivateOrderScreenState screenState) {
@@ -33,19 +35,17 @@ class PrivateOrderStateManager{
 
   void postPrivateOrder(PrivateOrderRequest request,PrivateOrderScreenState screenState){
     _stateSubject.add(PrivateOrderLoadingState(screenState));
-    _servicesService.postPrivateOrder(request).then((value){
-      if (value != null){
-        if (value == 201) {
+    if (_authService.isLoggedIn) {
+      _servicesService.postPrivateOrder(request).then((value){
+        if (value.hasError) {
+          screenState.moveDecision(false, value.getError);
+        } else {
           screenState.moveDecision(true);
         }
-        else {
-          _stateSubject.add(PrivateOrderLoadedState(screenState));
-          screenState.moveDecision(false,StatusCodeHelper.getStatusCodeMessages(value));
-        }
-      }
-      else {
-        screenState.moveDecision(false,StatusCodeHelper.getStatusCodeMessages(500));
-      }
-    });
+      });
+    }
+    else {
+      screenState.goToLogin();
+    }
   }
 }

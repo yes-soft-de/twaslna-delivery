@@ -1,4 +1,5 @@
 import 'package:twaslna_delivery/utils/logger/logger.dart';
+import 'package:validators/sanitizers.dart';
 
 class BestStoreResponse {
   String? statusCode;
@@ -60,7 +61,7 @@ class Data {
     image = json['image'];
     phone = json['phone'];
     location = json['location'];
-    deliveryCost = json['deliveryCost'];
+    deliveryCost = json['deliveryCost']?.toDouble();
     privateOrders = json['privateOrders'];
     hasProducts = json['hasProducts'];
   }

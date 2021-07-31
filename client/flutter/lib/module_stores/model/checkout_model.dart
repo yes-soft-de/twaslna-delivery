@@ -1,7 +1,7 @@
 import 'package:twaslna_delivery/module_stores/model/cart_model.dart';
 import 'package:twaslna_delivery/module_orders/request/client_order_request.dart';
 class CheckoutModel {
-  String? ownerId;
+  int? ownerId;
   List<Products>? cart;
   double? orderCost;
   double? deliveryCost;

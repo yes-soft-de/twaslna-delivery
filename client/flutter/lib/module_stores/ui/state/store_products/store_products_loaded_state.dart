@@ -133,7 +133,7 @@ class StoreProductsLoadedState extends StoreProductsState {
                           carts.forEach((element) {
                             items.add(Products(productID: element.id,countProduct: element.quantity));
                           });
-                          CheckoutModel checkoutModel = CheckoutModel(ownerId:storeId.toString(),cart: items,orderCost:double.parse(getTotal(carts)),deliveryCost:deliveryCost);
+                          CheckoutModel checkoutModel = CheckoutModel(ownerId:storeId,cart: items,orderCost:double.parse(getTotal(carts)),deliveryCost:deliveryCost);
                           Navigator.of(context).pushNamed(OrdersRoutes.CLIENT_ORDER,arguments:checkoutModel);
                         }:(){
                           CustomFlushBarHelper.createError(title:S.of(context).warnning, message:S.of(context).yourCartEmpty)..show(context);

@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_auth/authorization_routes.dart';
 import 'package:twaslna_delivery/module_main/main_routes.dart';
 import 'package:twaslna_delivery/module_our_services/request/private_order_request.dart';
 import 'package:twaslna_delivery/module_our_services/state_manager/private_order_state_manager.dart';
@@ -66,7 +67,10 @@ class PrivateOrderScreenState extends State<PrivateOrderScreen> {
         ..show(context);
     }
   }
-
+  void goToLogin(){
+    Navigator.of(context).pushNamed(AuthorizationRoutes.LOGIN_SCREEN,arguments:true);
+    CustomFlushBarHelper.createError(title:S.current.warnning, message:S.current.pleaseLoginToMakeOrder).show(context);
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

@@ -51,14 +51,6 @@ class SendItChooseDestinationState extends SendItState {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
                         color: Theme.of(context).primaryColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Theme.of(context).primaryColor,
-                            spreadRadius: 1.5,
-                            blurRadius: 10,
-                            offset: Offset(1, 1), // changes position of shadow
-                          ),
-                        ]
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),

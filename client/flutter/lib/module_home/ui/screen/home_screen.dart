@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  late HomeState currentState;
+   HomeState? currentState;
 
   void refresh() {
     if (mounted) {
@@ -29,7 +29,6 @@ class HomeScreenState extends State<HomeScreen> {
   }
   @override
   void initState() {
-    super.initState();
     currentState = HomeLoadingState(this);
     widget._homeStateManager.getHomeData(this);
     widget._homeStateManager.stateStream.listen((event) {
@@ -39,6 +38,7 @@ class HomeScreenState extends State<HomeScreen> {
         });
       }
     });
+    super.initState();
   }
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class HomeScreenState extends State<HomeScreen> {
         }
       },
       child: Scaffold(
-        body: currentState.getUI(context),
+        body: currentState?.getUI(context),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:twaslna_delivery/module_home/response/best_store.dart';
 import 'package:twaslna_delivery/module_home/response/products.dart';
 import 'package:twaslna_delivery/module_home/response/store_categories.dart';
 import 'package:twaslna_delivery/module_network/http_client/http_client.dart';
+import 'package:twaslna_delivery/module_stores/response/store_category_list.dart';
 @injectable
 class HomeRepository{
   final ApiClient _apiClient;
@@ -18,9 +19,9 @@ class HomeRepository{
     if (response == null) return null;
     return StoreCategoriesResponse.fromJson(response);
   }
-  Future <BestStoreResponse?> getBestStores() async {
+  Future <StoreCategoryList?> getBestStores() async {
     dynamic response = await _apiClient.get(Urls.GET_BEST_STORES_API);
     if (response == null) return null;
-    return BestStoreResponse.fromJson(response);
+    return StoreCategoryList.fromJson(response);
   }
 }

@@ -27,6 +27,9 @@ class StoreListScreenState extends State<StoreListScreen> {
       setState(() {});
     }
   }
+  void getStoreList(int id){
+    widget._storeListManager.getStoresCategoryList(id, this);
+  }
 
   @override
   void initState() {

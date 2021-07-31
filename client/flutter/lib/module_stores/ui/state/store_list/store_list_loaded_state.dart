@@ -50,7 +50,7 @@ class StoreListLoadedState extends StoreListState {
                     padding: const EdgeInsets.all(8.0),
                     child: Icon(
                       Icons.arrow_back,
-                      color: Colors.black38,
+                      color: Colors.white.withOpacity(0.85),
                     ),
                   ),
                 ),
