@@ -13,7 +13,7 @@ import 'package:twaslna_delivery/utils/text_style/text_style.dart';
 class AccountLoadedState extends AccountState {
   AccountScreenState screenState;
   bool signIn;
-  AccountLoadedState(this.screenState,{this.signIn = true}) : super(screenState);
+  AccountLoadedState(this.screenState,{required this.signIn}) : super(screenState);
 
   @override
   Widget getUI(BuildContext context) {
