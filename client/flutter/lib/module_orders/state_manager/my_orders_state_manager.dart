@@ -18,7 +18,7 @@ class MyOrdersStateManager {
      _stateSubject.add(MyOrdersLoadingState(screenState));
      _myOrdersService.getOrders().then((value){
        if (value != null){
-        if (value is int) {
+        if (value is String) {
           _stateSubject.add(MyOrdersErrorState(screenState,S.current.networkError));
         }
         else {

@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:twaslna_delivery/module_orders/model/deleted_order_status.dart';
+import 'package:twaslna_delivery/module_orders/request/client_order_request.dart';
 import 'package:twaslna_delivery/module_orders/service/orders_service.dart';
 import 'package:twaslna_delivery/module_orders/ui/screen/order_details_screen.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
@@ -44,14 +45,15 @@ class OrderDetailsStateManager {
       }
     });
   }
-  void updateOrderDetails(request,OrderDetailsScreenState screenState){
+  void updateOrderDetails(ClientOrderRequest request,OrderDetailsScreenState screenState){
     _stateSubject.add(OrderDetailsLoadingState(screenState));
-    _OrdersService.deleteClientOrder(request).then((DeletedOrderStatus value){
+    _OrdersService.updateClientOrder(request).then((DeletedOrderStatus value){
       if (value.hasError){
-        screenState.deleteMessage(false,value.error??S.current.errorHappened);
+        screenState.updateMessage(false,value.error??S.current.errorHappened);
       }
       else {
-        getOrderDetails(request.id, screenState);
+        getOrderDetails(request.orderNumber!, screenState);
+        screenState.updateMessage(true);
       }
     });
   }

@@ -36,34 +36,42 @@ class Item {
 
 class StoreOwnerInfo {
   String storeOwnerName;
-  String storeOwnerID;
+  int storeOwnerID;
   String image;
   String imageURL;
 
-  StoreOwnerInfo(
-      {required this.storeOwnerName,
-      required this.storeOwnerID,
-      required this.image,
-      required this.imageURL});
+  StoreOwnerInfo({
+    required this.storeOwnerName,
+    required this.storeOwnerID,
+    required this.image,
+    required this.imageURL,
+  });
 }
 
 class OrderInfo {
   int id;
   OrderStatus state;
   String roomID;
-  String ownerID;
+  int ownerID;
   String deliveryDate;
   double deliveryCost;
   double orderCost;
+  String payment;
+  String? note;
+  GeoJson? destination;
 
-  OrderInfo(
-      {required this.id,
-      required this.state,
-      required this.roomID,
-      required this.ownerID,
-      required this.deliveryDate,
-      required this.orderCost,
-      required this.deliveryCost});
+  OrderInfo({
+    required this.id,
+    required this.state,
+    required this.roomID,
+    required this.ownerID,
+    required this.deliveryDate,
+    required this.orderCost,
+    required this.deliveryCost,
+    required this.payment,
+    this.note,
+    this.destination
+  });
 }
 
 List<Item> toCartList(List<OrderDetails> ordersItems) {
@@ -87,24 +95,29 @@ List<Item> toCartList(List<OrderDetails> ordersItems) {
 
 OrderInfo toOrder(Order? order) {
   if (order != null) {
+    print(order.ownerID);
     return OrderInfo(
         id: order.id ?? -1,
         state: StatusHelper.getStatusEnum(order.state),
         roomID: order.roomID ?? 'roomID',
-        ownerID: order.ownerID ?? '-1',
-        deliveryDate: DateFormat('dd-MM-yyyy').format(
-            DateTime.fromMillisecondsSinceEpoch(order.deliveryDate?.timestamp ??
-                DateTime.now().millisecondsSinceEpoch * 1000)),
-        orderCost: order.orderCost??0,
-        deliveryCost: order.deliveryCost??0);
+        ownerID: order.ownerID ?? -1,
+        orderCost: order.orderCost ?? 0,
+        deliveryDate: DateTime.fromMillisecondsSinceEpoch((order.deliveryDate?.timestamp ??
+                DateTime.now().millisecondsSinceEpoch) * 1000).toUtc().toIso8601String(),
+        deliveryCost: order.deliveryCost ?? 0,
+        payment: order.payment!,
+        note: order.note,
+        destination: order.destination
+    );
   } else {
     return OrderInfo(
         id: -1,
         state: OrderStatus.WAITING,
         roomID: 'roomID',
-        ownerID: '-1',
+        ownerID: -1,
         deliveryDate: DateFormat('dd-MM-yyyy').format(DateTime.now()),
         orderCost: 0,
-        deliveryCost: 0);
+        deliveryCost: 0,
+        payment: 'cash');
   }
 }

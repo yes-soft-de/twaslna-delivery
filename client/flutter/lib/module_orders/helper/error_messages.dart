@@ -1,7 +1,7 @@
 import 'package:twaslna_delivery/generated/l10n.dart';
 
 class ErrorMessages {
-  static String getMessage(String err){
+  static String getDeleteMessage(String err){
     if (err == 'order Number not found!!'){
       return S.current.orderNumberNotFound;
     }

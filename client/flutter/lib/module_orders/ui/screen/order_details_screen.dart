@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_main/main_routes.dart';
+import 'package:twaslna_delivery/module_orders/request/client_order_request.dart';
 import 'package:twaslna_delivery/module_orders/state_manager/order_details_state_manager.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/order_details_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/orders_details_loading_state.dart';
@@ -18,6 +19,7 @@ class OrderDetailsScreen extends StatefulWidget {
 
 class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   late OrderDetailsState currentState;
+  ClientOrderRequest? clientOrderRequest;
   bool flagOrderId = true;
   int? orderNumber;
   void refresh() {
@@ -40,9 +42,27 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
         ..show(context);
     }
   }
+  void updateMessage(bool success, [String err = '']) {
+    if (success) {
+      CustomFlushBarHelper.createSuccess(
+        title: S.of(context).warnning,
+        message: S.of(context).updateOrderSuccess,
+      )..show(context);
+    } else {
+      Navigator.of(context).pop();
+      CustomFlushBarHelper.createError(
+          title: S.of(context).warnning, message: err)
+        ..show(context);
+    }
+  }
+
+  // methods
   void deleteOrder(int id){
     widget._stateManager.deleteOrderDetails(id, this);
   }
+ void updateClientOrder() {
+    widget._stateManager.updateOrderDetails(clientOrderRequest!, this);
+ }
   @override
   void initState() {
     super.initState();

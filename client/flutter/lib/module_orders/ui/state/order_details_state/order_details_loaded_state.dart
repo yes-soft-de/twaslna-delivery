@@ -177,7 +177,7 @@ class OrderDetailsLoadedState extends OrderDetailsState {
         image: element.productImage,
         price: element.productPrice,
         currency: S.current.sar,
-        quantity: (q) {},
+        quantity: (q,p) {},
         editable: false,
         defaultQuantity: element.countProduct,
       ));

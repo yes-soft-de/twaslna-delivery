@@ -74,9 +74,9 @@ class GeoJson {
 }
 class Order {
   int? id;
-  String? ownerID;
+  int? ownerID;
   List<dynamic>? source;
-  dynamic destination;
+  GeoJson? destination;
   DeliveryDate? deliveryDate;
   dynamic updatedAt;
   String? note;
@@ -112,14 +112,20 @@ class Order {
 
   Order.fromJson(dynamic json) {
     id = json['id'];
-    ownerID = json['ownerID'];
+    ownerID = json['storeOwnerProfileID'];
     if (json['source'] != null) {
       source = [];
       // json['source'].forEach((v) {
       //   source?.add(dynamic.fromJson(v));
       // });
     }
-    destination = json['destination'] is String ? json['destination'] : GeoJson.fromJson(json['destination']);
+    if (json['destination'] != null){
+      if (json['destination'] is String) {
+      }
+      else {
+        destination = GeoJson.fromJson(json['destination']);
+      }
+    }
     deliveryDate = json['deliveryDate'] != null
         ? DeliveryDate.fromJson(json['deliveryDate'])
         : null;
@@ -304,7 +310,7 @@ class DeliveryDate {
 class StoreOwner {
   int? id;
   String? storeOwnerName;
-  String? storeOwnerID;
+  int? storeOwnerID;
   String? image;
   dynamic? branch;
   bool? free;
@@ -332,7 +338,7 @@ class StoreOwner {
   StoreOwner.fromJson(dynamic json) {
     id = json['id'];
     storeOwnerName = json['storeOwnerName'];
-    storeOwnerID = json['storeOwnerID'];
+    storeOwnerID = json['storeOwnerProfileID'];
     image = json['image'];
     branch = json['branch'];
     free = json['free'];

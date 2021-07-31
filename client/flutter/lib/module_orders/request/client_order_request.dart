@@ -1,8 +1,9 @@
 class ClientOrderRequest {
+  int? orderNumber;
   GeoJson? destination;
   String? note;
   String? payment;
-  String? ownerID;
+  int? ownerID;
   List<Products>? products;
   String? deliveryDate;
   double? orderCost;
@@ -16,13 +17,15 @@ class ClientOrderRequest {
       this.products, 
       this.deliveryDate, 
       this.orderCost, 
-      this.deliveryCost});
+      this.deliveryCost,
+      this.orderNumber
+  });
 
   ClientOrderRequest.fromJson(dynamic json) {
     destination = json['destination'];
     note = json['note'];
     payment = json['payment'];
-    ownerID = json['ownerID'];
+    ownerID = json['storeOwnerProfileID'];
     if (json['products'] != null) {
       products = [];
       json['products'].forEach((v) {
@@ -36,10 +39,13 @@ class ClientOrderRequest {
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
-    map['destination'] = destination;
+    if (this.orderNumber != null){
+      map['orderNumber'] = orderNumber;
+    }
+    map['destination'] = destination?.toJson();
     map['note'] = note;
     map['payment'] = payment;
-    map['ownerID'] = ownerID;
+    map['storeOwnerProfileID'] = ownerID;
     if (products != null) {
       map['products'] = products?.map((v) => v.toJson()).toList();
     }
@@ -66,10 +72,12 @@ class GeoJson {
 class Products {
   int? productID;
   int? countProduct;
-
+  double? price;
   Products({
       this.productID, 
-      this.countProduct});
+      this.countProduct,
+      this.price
+  });
 
   Products.fromJson(dynamic json) {
     productID = json['productID'];

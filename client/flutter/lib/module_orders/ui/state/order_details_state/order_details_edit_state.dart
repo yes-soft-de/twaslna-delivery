@@ -2,6 +2,7 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_orders/model/order_details_model.dart';
+import 'package:twaslna_delivery/module_orders/request/client_order_request.dart';
 import 'package:twaslna_delivery/module_orders/ui/screen/order_details_screen.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/order_details_loaded_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/order_details_state.dart';
@@ -14,7 +15,20 @@ class OrderDetailsEditState extends OrderDetailsState {
   OrderDetailsModel orderDetails;
 
   OrderDetailsEditState(this.screenState, this.orderDetails)
-      : super(screenState);
+      : super(screenState) {
+   screenState.clientOrderRequest = ClientOrderRequest(
+     ownerID: orderDetails.order.ownerID,
+     payment: orderDetails.order.payment,
+     note: orderDetails.order.note,
+     orderNumber: screenState.orderNumber,
+     destination:GeoJson(long: orderDetails.order.destination?.long,lat: orderDetails.order.destination?.lat),
+     deliveryDate: orderDetails.order.deliveryDate,
+     deliveryCost:  orderDetails.order.deliveryCost,
+     orderCost:  orderDetails.order.orderCost,
+     products: toProducts(orderDetails.carts),
+   );
+   total = orderDetails.order.orderCost;
+  }
   double total = 0;
 
   @override
@@ -41,7 +55,9 @@ class OrderDetailsEditState extends OrderDetailsState {
                   OrderDetailsLoadedState(screenState, orderDetails);
               screenState.refresh();
             },
-            onSave: () {},
+            onSave: () {
+              screenState.updateClientOrder();
+            },
           ),
           Align(
             alignment: Alignment.bottomCenter,
@@ -120,16 +136,21 @@ class OrderDetailsEditState extends OrderDetailsState {
   List<Widget> getOrdersList(List<Item> carts) {
     List<Widget> orderChips = [];
     carts.forEach((element) {
-      total = (element.productPrice * element.countProduct) + total;
       orderChips.add(OrderChip(
         title: element.productName,
         image: element.productImage,
         price: element.productPrice,
         currency: S.current.sar,
-        quantity: (q) {
-          total = total - (element.productPrice * element.countProduct);
-          total.abs();
-          total = (element.productPrice * q) + total;
+        quantity: (q,price) {
+          if (q == 0) {
+            screenState.clientOrderRequest?.products?.removeWhere((item) => item.productID == element.productID);
+          }
+          else {
+            screenState.clientOrderRequest?.products?.removeWhere((item) => item.productID == element.productID);
+            screenState.clientOrderRequest?.products?.add(Products(productID: element.productID,countProduct: q,price: price));
+          }
+          updateTotal();
+          screenState.refresh();
         },
         editable: true,
         defaultQuantity: element.countProduct,
@@ -145,4 +166,26 @@ class OrderDetailsEditState extends OrderDetailsState {
     });
     return orderChips;
   }
+
+ List<Products> toProducts(List<Item> carts) {
+   List<Products> products = [];
+    carts.forEach((element) {
+     products.add(Products(
+       productID: element.productID,
+       countProduct: element.countProduct,
+       price: element.productPrice
+     ));
+    });
+    return products;
+  }
+
+  void updateTotal() {
+    double currentTotal = 0;
+    screenState.clientOrderRequest?.products?.forEach((element) {
+      currentTotal = (element.countProduct!.toDouble() * element.price!) + currentTotal ;
+    });
+    total = currentTotal;
+    screenState.clientOrderRequest?.orderCost = total;
+  }
+
 }

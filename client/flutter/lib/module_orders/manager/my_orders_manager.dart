@@ -15,6 +15,6 @@ class MyOrdersManager {
   Future <OrderDetailsResponse?> getOrderDetails(int id) => _myOrdersRepository.getOrdersDetails(id);
   Future <int?> postClintOrder(ClientOrderRequest request) => _myOrdersRepository.postClientOrder(request);
   Future <ClientOrderResponse?> deleteClientOrder(int id) => _myOrdersRepository.deleteClientOrder(id);
-  Future <ClientOrderResponse?> updateClientOrder(request) => _myOrdersRepository.updateClientOrder(request);
+  Future <ClientOrderResponse?> updateClientOrder(ClientOrderRequest request) => _myOrdersRepository.updateClientOrder(request);
 
 }

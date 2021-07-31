@@ -49,10 +49,10 @@ class OrdersService {
         carts: toCartList(_ordersResponse.data?.orderDetails??<OrderDetails>[]),
         order: toOrder(_ordersResponse.data?.order),
         storeInfo:StoreOwnerInfo(
-          storeOwnerID: _ordersResponse.data?.storeOwner?.id.toString() ?? '-1',
+          storeOwnerID: _ordersResponse.data?.storeOwner?.storeOwnerID ?? -1,
           storeOwnerName: _ordersResponse.data?.storeOwner?.storeOwnerName ?? S.current.storeOwner,
           image: 'https://static.parade.com/wp-content/uploads/2020/03/target-senior-hours-ftr.jpg',
-          imageURL: 'https://static.parade.com/wp-content/uploads/2020/03/target-senior-hours-ftr.jpg'
+          imageURL: 'https://static.parade.com/wp-content/uploads/2020/03/target-senior-hours-ftr.jpg',
         )
       );
     return orderDetails;
@@ -76,14 +76,14 @@ class OrdersService {
       return DeletedOrderStatus.empty();
       }
       else if (clientOrderResponse.statusCode == '425') {
-        return DeletedOrderStatus.error(ErrorMessages.getMessage(clientOrderResponse.data));
+        return DeletedOrderStatus.error(ErrorMessages.getDeleteMessage(clientOrderResponse.data));
       }
       else {
         return DeletedOrderStatus.error(StatusCodeHelper.getStatusCodeMessages(int.parse(clientOrderResponse.statusCode??'500')));
       }
     }
   }
-  Future <DeletedOrderStatus> updateClientOrder(request) async {
+  Future <DeletedOrderStatus> updateClientOrder(ClientOrderRequest request) async {
     ClientOrderResponse? clientOrderResponse = await _myOrdersManager.updateClientOrder(request);
     if (clientOrderResponse == null) {
       return DeletedOrderStatus.error(S.current.networkError);
@@ -92,7 +92,7 @@ class OrdersService {
         return DeletedOrderStatus.empty();
       }
       else if (clientOrderResponse.statusCode == '425') {
-        return DeletedOrderStatus.error(ErrorMessages.getMessage(clientOrderResponse.data));
+        return DeletedOrderStatus.error(ErrorMessages.getDeleteMessage(clientOrderResponse.data));
       }
       else {
         return DeletedOrderStatus.error(StatusCodeHelper.getStatusCodeMessages(int.parse(clientOrderResponse.statusCode??'500')));
