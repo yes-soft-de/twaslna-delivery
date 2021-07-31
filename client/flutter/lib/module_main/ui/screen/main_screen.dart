@@ -25,6 +25,7 @@ class _MainScreenState extends State<MainScreen> {
     var args = ModalRoute.of(context)?.settings.arguments;
     if (args is int && flagPageIndex) {
       selectedPage = args;
+      homeController = PageController(initialPage: args);
       flagPageIndex = false;
     }
     return Scaffold(
