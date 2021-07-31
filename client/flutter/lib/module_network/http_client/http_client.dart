@@ -43,9 +43,10 @@ class ApiClient {
       if (e is DioError) {
         DioError err = e;
         if (err.response != null) {
-          if (err.response?.statusCode != 404) {
+          if (err.response!.statusCode! < 501) {
             _logger.error(
                 tag, err.message + ', GET: ' + url, StackTrace.current);
+            return {'status_code':'${err.response?.statusCode?.toString() ?? '0'}'};
           }
         }
       } else {
@@ -86,10 +87,10 @@ class ApiClient {
       if (e is DioError) {
         DioError err = e;
           if (err.response != null) {
-            if (err.response!.statusCode! < 500) {
+            if (err.response!.statusCode! < 501) {
               _logger.error(
                   tag, err.message + ', POST: ' + url, StackTrace.current);
-              return {'status_code':'${err.response?.statusCode ?? 500}'};
+              return {'status_code':'${err.response?.statusCode?.toString() ?? '0'}'};
             }
           }
       } else {
@@ -101,13 +102,13 @@ class ApiClient {
 
   Future<Map<String, dynamic>?> put(String url,
       Map<String, dynamic> payLoad, {
-        Map<String, String> ?queryParams,
-        Map<String, String> ?headers,
+        Map<String, String>? queryParams,
+        Map<String, String>? headers,
       }) async {
     try {
       _logger.info(tag, 'Requesting PUT to: ' + url);
       _logger.info(tag, 'PUT: ' + jsonEncode(payLoad));
-
+      _logger.info(tag, 'Headers: ' + jsonEncode(headers));
       Dio client = Dio(BaseOptions(
         sendTimeout: 60000,
         receiveTimeout: 60000,
@@ -133,10 +134,10 @@ class ApiClient {
       if (e is DioError) {
         DioError err = e;
         if (err.response != null) {
-          if (err.response!.statusCode! < 500) {
+          if (err.response!.statusCode! < 501) {
             _logger.error(
-                tag, err.message + ', POST: ' + url, StackTrace.current);
-            return {'status_code':'${err.response?.statusCode ?? 500}'};
+                tag, err.message + ', PUT: ' + url, StackTrace.current);
+            return {'status_code':'${err.response?.statusCode?.toString() ?? '0'}'};
           }
         }
       } else {
@@ -185,11 +186,9 @@ class ApiClient {
   }
 
   Map<String, dynamic>? _processResponse(Response response) {
-    if (response.statusCode! >= 200 && response.statusCode! < 405) {
+    if (response.statusCode! < 500) {
       _logger.info(tag, response.data.toString());
       return response.data;
-    } else if (response.statusCode! < 500) {
-      return null;
     } else {
       _logger.error(tag,
           response.statusCode.toString() + '\n\n' + response.data.toString(),
