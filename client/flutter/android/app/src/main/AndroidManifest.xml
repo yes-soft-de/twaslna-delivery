@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.yes_soft.c4d">
+    package="de.yes_soft.twaslna">
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="c4d"
+        android:label="Twaslna"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
