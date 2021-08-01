@@ -20,7 +20,7 @@ class AppThemeDataService {
   }
 
   static Color get PrimaryDarker {
-    return Color(0xFF665EFF);
+    return Colors.orange;
   }
 
   static Color get AccentColor {
@@ -35,29 +35,35 @@ class AppThemeDataService {
         primaryColor: PrimaryColor,
         primaryColorDark: PrimaryDarker,
         accentColor: AccentColor,
+        primarySwatch: Colors.orange,
         cardColor: Colors.grey[150],
-        appBarTheme: AppBarTheme(
-          centerTitle: true,
-          textTheme: TextTheme(),
-          brightness: Brightness.dark,
-          color: Colors.black,
-          iconTheme: IconThemeData(color: Colors.white),
-        ),
+        // appBarTheme: AppBarTheme(
+        //   centerTitle: true,
+        //   textTheme: TextTheme(),
+        //   brightness: Brightness.dark,
+        //   color: Colors.black,
+        //   iconTheme: IconThemeData(color: Colors.white),
+        // ),
       );
     }
     return ThemeData(
-      brightness: Brightness.light,
-      primaryColor: PrimaryColor,
-      primaryColorDark: PrimaryDarker,
-      accentColor: AccentColor,
-      focusColor: PrimaryColor,
-      primarySwatch: Colors.orange,
-      cardColor: Color.fromRGBO(245, 245, 245, 1),
-      backgroundColor: Color.fromRGBO(235, 235, 235, 1),
-      fontFamily: GoogleFonts.almarai().fontFamily,
-      fixTextFieldOutlineLabel:true,
-      appBarTheme: AppBarTheme(centerTitle: true, color: Colors.white),
-    );
+        brightness: Brightness.light,
+        primaryColor: PrimaryColor,
+        primaryColorDark: PrimaryDarker,
+        accentColor: AccentColor,
+        focusColor: PrimaryColor,
+        primarySwatch: Colors.orange,
+        cardColor: Color.fromRGBO(245, 245, 245, 1),
+        backgroundColor: Color.fromRGBO(235, 235, 235, 1),
+        fontFamily: GoogleFonts.almarai().fontFamily,
+        fixTextFieldOutlineLabel: true,
+        timePickerTheme: TimePickerThemeData(
+          dialBackgroundColor: Color.fromRGBO(235, 235, 235, 1),
+          dayPeriodBorderSide:
+              BorderSide(color: Color.fromRGBO(235, 235, 235, 1)),
+        )
+        //appBarTheme: AppBarTheme(centerTitle: true, color: Colors.white),
+        );
   }
 
   Future<void> switchDarkMode(bool darkMode) async {

@@ -3,29 +3,52 @@ import 'package:rxdart/rxdart.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_home/service/home_service.dart';
 import 'package:twaslna_delivery/module_home/ui/screen/home_screen.dart';
+import 'package:twaslna_delivery/module_home/ui/state/home_empty_state.dart';
 import 'package:twaslna_delivery/module_home/ui/state/home_error_state.dart';
 import 'package:twaslna_delivery/module_home/ui/state/home_loaded_state.dart';
 import 'package:twaslna_delivery/module_home/ui/state/home_loading_state.dart';
 import 'package:twaslna_delivery/module_home/ui/state/home_state.dart';
+import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 import 'package:twaslna_delivery/utils/models/product.dart';
 
 @injectable
 class HomeStateManager {
   final HomeService _homeService;
+
   HomeStateManager(this._homeService);
-  final PublishSubject<HomeState> _stateSubject = PublishSubject();
-  Stream<HomeState> get stateStream => _stateSubject.stream;
+
+  PublishSubject<HomeState> stateSubject = PublishSubject<HomeState>();
+
+  Stream<HomeState> get stateStream => stateSubject.stream;
 
   void getHomeData(HomeScreenState screenState) {
-    _stateSubject.add(HomeLoadingState(screenState));
+    stateSubject.add(HomeLoadingState(screenState));
     _homeService.getHomeData().then((value) {
-      if (value == null) {
-        _stateSubject.add(HomeErrorState(screenState,S.current.networkError));
-      }
-      else {
-        _stateSubject.add(HomeLoadedState(screenState, value[0],value[1],value[2]));
+      if (value.isEmpty) {
+        stateSubject.add(HomeEmptyState(screenState, S.current.homeDataEmpty));
+      } else if (value.hasData) {
+        var data = value.data;
+        stateSubject.add(HomeLoadedState(screenState,
+            topProducts: data.topWanted,
+            categories: data.storeCategory,
+            bestStores: data.storeModel));
+        if (value.hasErrors) {
+          CustomFlushBarHelper.createError(
+                  title: S.current.warnning, message: value.errors[0])
+              .show(screenState.context)
+              .whenComplete(() {
+            if (value.errors.length == 2) {
+              CustomFlushBarHelper.createError(
+                      title: S.current.warnning,
+                      message: value.errors[1],
+                      timeout: 3)
+                  .show(screenState.context);
+            }
+          });
+        }
+      } else {
+        stateSubject.add(HomeErrorState(screenState, value.errors));
       }
     });
   }
-
 }

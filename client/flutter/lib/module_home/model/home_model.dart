@@ -1,0 +1,42 @@
+import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_home/model/top_wanted_products_model.dart';
+import 'package:twaslna_delivery/utils/models/store.dart';
+import 'package:twaslna_delivery/utils/models/store_category.dart';
+
+class HomeModel {
+  bool _empty = false;
+  List<String> errors = [];
+
+  late List<TopWantedProductsModel> topWanted;
+  late List<StoreCategoryModel> storeCategory;
+  late List<StoreModel> storeModel;
+  late HomeModel homeData;
+
+  HomeModel(
+      {required this.topWanted,
+      required this.storeCategory,
+      required this.storeModel});
+
+  HomeModel.Empty() {
+    _empty = true;
+  }
+
+  HomeModel.Error(List<String> error) {
+    errors = error;
+  }
+
+  bool get hasErrors => errors.isNotEmpty;
+
+  HomeModel.Data(
+      List<TopWantedProductsModel> topWantedProductsModel,
+      List<StoreModel> storeModel,
+      List<StoreCategoryModel> storeCategoryModel,
+      List<String> homeErrors) {
+      homeData = HomeModel(topWanted: topWantedProductsModel, storeCategory: storeCategoryModel, storeModel: storeModel);
+      errors = homeErrors;
+  }
+
+  bool get isEmpty => _empty;
+  bool get hasData => !_empty;
+  HomeModel get data => homeData;
+}

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 class CustomOrderStatusAppBar extends StatelessWidget {
-  const CustomOrderStatusAppBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +8,7 @@ class CustomOrderStatusAppBar extends StatelessWidget {
       height: 100,
       width: double.maxFinite,
       child: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16, top: 25,bottom: 25),
+        padding:  EdgeInsets.only(left: 16.0, right: 16, top: MediaQuery.of(context).size.height * 0.01,),
         child: Align(
           alignment: AlignmentDirectional.centerStart,
           child:Flex(

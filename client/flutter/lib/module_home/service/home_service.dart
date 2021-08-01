@@ -1,10 +1,13 @@
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_home/manager/home_manager.dart';
+import 'package:twaslna_delivery/module_home/model/home_model.dart';
+import 'package:twaslna_delivery/module_home/model/top_wanted_products_model.dart';
 import 'package:twaslna_delivery/module_home/response/best_store.dart';
 import 'package:twaslna_delivery/module_home/response/products.dart';
 import 'package:twaslna_delivery/module_home/response/store_categories.dart';
-import 'package:twaslna_delivery/utils/models/product.dart';
+import 'package:twaslna_delivery/module_stores/response/store_category_list.dart';
+import 'package:twaslna_delivery/utils/helpers/status_code_helper.dart';
 import 'package:twaslna_delivery/utils/models/store.dart';
 import 'package:twaslna_delivery/utils/models/store_category.dart';
 
@@ -14,65 +17,70 @@ class HomeService {
 
   HomeService(this._homeManager);
 
-  Future getTopProducts() async {
+  Future<TopWantedProductsModel> getTopProducts() async {
     ProductsResponse? topProducts = await _homeManager.getTopProducts();
-    if (topProducts == null) return null;
-    if (topProducts.msgErr != null) {
-      return topProducts.msgErr;
+    if (topProducts == null) {
+      return TopWantedProductsModel.Error(S.current.networkError);
     }
-    List topProductsModel = <ProductModel>[];
-    topProducts.data?.forEach((element) {
-      topProductsModel.add(ProductModel(
-          title: element.productName ?? S.current.product,
-          image:
-              'https://www.erdeundleben.com/wp-content/uploads/2021/02/folgendes-macht-unser-food-personal-wenn-es-fast-zu-mude-ist-um-zu-kochen-0-Yywyr8ju.jpg',
-          price: element.productPrice ?? 0,
-          id: element.id ?? -1));
-    });
-    return topProductsModel;
+    if (topProducts.statusCode != '200') {
+      return TopWantedProductsModel.Error(
+          StatusCodeHelper.getStatusCodeMessages(
+              topProducts.statusCode ?? '0'));
+    }
+    if (topProducts.data == null) return TopWantedProductsModel.Empty();
+
+    return TopWantedProductsModel.Data(topProducts);
   }
 
-  Future getStoreCategories() async {
+  Future<StoreCategoryModel> getStoreCategories() async {
     StoreCategoriesResponse? storeCategories =
         await _homeManager.getStoreCategories();
-    if (storeCategories == null) return null;
-    if (storeCategories.msgErr != null) return storeCategories.msgErr;
-    List storeCategoriesModel = <StoreCategoryModel>[];
-    storeCategories.data?.forEach((element) {
-      storeCategoriesModel.add(StoreCategoryModel(
-          id: element.id ?? -1,
-          storeCategoryName: element.storeCategoryName ?? S.current.category,
-          description: element.description ?? '',
-          image:
-              'https://www.gannett-cdn.com/media/2020/03/23/USATODAY/usatsports/247WallSt.com-247WS-657876-imageforentry9-vp7.jpg?width=660&height=371&fit=crop&format=pjpg&auto=webp'));
-    });
-    return storeCategoriesModel;
+
+    if (storeCategories == null) {
+      return StoreCategoryModel.Error(S.current.networkError);
+    }
+    if (storeCategories.statusCode != '200') {
+      return StoreCategoryModel.Error(StatusCodeHelper.getStatusCodeMessages(
+          storeCategories.statusCode ?? '0'));
+    }
+    if (storeCategories.data == null) return StoreCategoryModel.Empty();
+
+    return StoreCategoryModel.Data(storeCategories);
   }
 
-  Future getBestStores() async {
-    BestStoreResponse? bestStores = await _homeManager.getBestStores();
-    if (bestStores == null) return null;
-    List bestStoresModel = <StoreModel>[];
-    bestStores.data?.forEach((element) {
-      bestStoresModel.add(StoreModel(
-          id: element.id ?? -1,
-          storeOwnerName: element.storeOwnerName ?? S.current.store,
-          image:
-              'https://www.gannett-cdn.com/media/2020/03/23/USATODAY/usatsports/247WallSt.com-247WS-657876-imageforentry9-vp7.jpg?width=660&height=371&fit=crop&format=pjpg&auto=webp'));
-    });
-    return bestStoresModel;
+  Future<StoreModel> getBestStores() async {
+    StoreCategoryList? bestStores = await _homeManager.getBestStores();
+    if (bestStores == null) return StoreModel.Error(S.current.networkError);
+    if (bestStores.statusCode != '200') {
+      return StoreModel.Error(
+          StatusCodeHelper.getStatusCodeMessages(bestStores.statusCode ?? '0'));
+    }
+    if (bestStores.data == null) return StoreModel.Empty();
+
+    return StoreModel.Data(bestStores);
   }
 
-  Future getHomeData() async {
+  Future<HomeModel> getHomeData() async {
     var top = await getTopProducts();
     var storeCategories = await getStoreCategories();
     var bestStores = await getBestStores();
-    if (top == null && storeCategories == null && bestStores == null) return null;
-    top ??= <ProductModel>[];
-    storeCategories ??= <StoreCategoryModel>[];
-    bestStores ??= <StoreModel>[];
-    if (top is String) top = <ProductModel>[];
-    if (storeCategories is String) storeCategories = <StoreCategoryModel>[];
-    return [top, storeCategories,bestStores];
+    List<String> errors = [];
+    if (top.hasError) {
+      errors.add(top.error!);
+    }
+    if (storeCategories.hasError) {
+      errors.add(storeCategories.error!);
+    }
+    if (bestStores.hasError) {
+      errors.add(bestStores.error!);
+    }
+    if (errors.isNotEmpty && errors.length == 3) {
+      return HomeModel.Error(errors);
+    }
+    if (top.isEmpty && storeCategories.isEmpty && bestStores.isEmpty) {
+      return HomeModel.Empty();
+    }
+    return HomeModel.Data(
+        top.data, bestStores.data, storeCategories.data, errors);
   }
 }

@@ -1,91 +1,107 @@
-import 'package:twaslna_delivery/module_auth/enums/user_type.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_auth/authorization_routes.dart';
 import 'package:twaslna_delivery/module_auth/ui/screen/login_screen/login_screen.dart';
 import 'package:twaslna_delivery/module_auth/ui/states/login_states/login_state.dart';
-import 'package:twaslna_delivery/module_auth/ui/widget/email_password_login/email_password_login.dart';
-import 'package:twaslna_delivery/module_auth/ui/widget/phone_login/phone_login.dart';
-import 'package:twaslna_delivery/module_auth/ui/widget/user_type_selector/user_type_selector.dart';
 import 'package:flutter/material.dart';
+import 'package:twaslna_delivery/module_auth/ui/widget/login_widgets/custom_field.dart';
+import 'package:twaslna_delivery/utils/components/auth_buttons.dart';
+import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
+import 'package:twaslna_delivery/utils/images/images.dart';
 
-import '../../../authorization_routes.dart';
 
 class LoginStateInit extends LoginState {
-  UserRole userType = UserRole.ROLE_OWNER;
-  var loginTypeController =
-      PageController(initialPage: UserRole.ROLE_OWNER.index);
-  bool flag = true;
-  LoginStateInit(LoginScreenState screen) : super(screen);
-
+  LoginStateInit(LoginScreenState screen,{String? error}) : super(screen) {
+    if (error != null) {
+      CustomFlushBarHelper.createError(title:S.current.warnning, message:error)..show(screen.context);
+    }
+  }
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  final GlobalKey<FormState> _loginKey = GlobalKey<FormState>();
   @override
   Widget getUI(BuildContext context) {
-    UserRole? userRole =ModalRoute.of(context)?.settings.arguments as UserRole?;
-    if (flag && userRole != null) {
-      loginTypeController = PageController(initialPage: userRole.index);
-      userType = userRole;
-      flag = false;
-    }
-    return SafeArea(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Form(
+      key: _loginKey,
+      child: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              height: 36,
-              child: UserTypeSelector(
-                currentUserType: userType,
-                onUserChange: (newType) {
-                  userType = newType;
-                  screen.refresh();
-                  loginTypeController.animateToPage(
-                    userType.index,
-                    duration: Duration(seconds: 1),
-                    curve: Curves.linear,
-                  );
-                },
+          ListView(
+            physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            children: [
+              MediaQuery.of(context).viewInsets.bottom == 0 ? SvgPicture.asset(ImageAsset.AUTH_SVG,width: 150,):Container(),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0,left: 85,right: 85,top: 8),
+                child: Text(S.of(context).email,style: TextStyle(
+                    fontWeight: FontWeight.bold
+                ),),
               ),
+              ListTile(
+                leading: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Theme.of(context).backgroundColor,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(Icons.email),
+                  ),
+                ),
+                title: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomLoginFormField(
+                    controller: usernameController,
+                    hintText: S.of(context).registerHint,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0,left: 85,right: 85,top: 8),
+                child: Text(S.of(context).password,style: TextStyle(
+                    fontWeight: FontWeight.bold
+                ),),
+              ),
+              ListTile(
+                leading: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Theme.of(context).backgroundColor,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(Icons.lock),
+                  ),
+                ),
+                title: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomLoginFormField(
+                    last: true,
+                    controller: passwordController,
+                    password: true,
+                    contentPadding: EdgeInsets.fromLTRB(16, 13, 16, 0),
+                    hintText: S.of(context).password,
+                  ),
+                ),
+              ),
+              Container(height: 75,),
+            ],
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: AuthButtons(
+                firstButtonTitle: S.of(context).login,
+                secondButtonTitle: S.of(context).register,
+                loading: screen.loadingSnapshot.connectionState ==
+                    ConnectionState.waiting,
+                secondButtonTab: () => Navigator.of(context)
+                    .pushReplacementNamed(AuthorizationRoutes.REGISTER_SCREEN),
+                firstButtonTab: () {
+                  if (_loginKey.currentState!.validate()) {
+                    screen.loginClient(
+                        usernameController.text, passwordController.text);
+                  }
+                }
             ),
           ),
-          Expanded(
-              child: PageView(
-            controller: loginTypeController,
-            onPageChanged: (pos) {
-              userType = UserRole.values[pos];
-              screen.refresh();
-            },
-            children: [
-              PhoneLoginWidget(
-                codeSent: false,
-                onLoginRequested: (phone) {
-                  screen.setRole(userType);
-                  screen.refresh();
-                  screen.loginCaptain(phone);
-                },
-                onAlterRequest: () {
-                  Navigator.of(context).pushNamed(
-                      AuthorizationRoutes.REGISTER_SCREEN,
-                      arguments: userType);
-                },
-                isRegister: false,
-                onRetry: () {
-                  screen.retryPhone();
-                },
-                onConfirm: (confirmCode) {
-                  screen.refresh();
-                  screen.confirmCaptainSMS(confirmCode);
-                },
-              ),
-              EmailPasswordForm(
-                onLoginRequest: (email, password) {
-                  screen.setRole(userType);
-                  screen.refresh();
-                  screen.loginOwner(
-                    email,
-                    password,
-                  );
-                },
-              ),
-            ],
-          )),
         ],
       ),
     );

@@ -1,11 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/module_auth/enums/auth_status.dart';
 import 'package:twaslna_delivery/module_auth/enums/user_type.dart';
+import 'package:twaslna_delivery/module_auth/request/register_request/register_request.dart';
 import 'package:twaslna_delivery/module_auth/service/auth_service/auth_service.dart';
 import 'package:twaslna_delivery/module_auth/ui/screen/register_screen/register_screen.dart';
 import 'package:twaslna_delivery/module_auth/ui/states/register_states/register_state.dart';
 import 'package:twaslna_delivery/module_auth/ui/states/register_states/register_state_code_sent.dart';
-import 'package:twaslna_delivery/module_auth/ui/states/register_states/register_state_error.dart';
 import 'package:twaslna_delivery/module_auth/ui/states/register_states/register_state_init.dart';
 import 'package:twaslna_delivery/module_auth/ui/states/register_states/register_state_success.dart';
 import 'package:rxdart/rxdart.dart';
@@ -14,56 +15,37 @@ import 'package:rxdart/rxdart.dart';
 class RegisterStateManager {
   final AuthService _authService;
   final _registerStateSubject = PublishSubject<RegisterState>();
-
+  final _loadingStateSubject = PublishSubject<AsyncSnapshot>();
   late RegisterScreenState _registerScreen;
 
   RegisterStateManager(this._authService) {
     _authService.authListener.listen((event) {
+      _loadingStateSubject.add(AsyncSnapshot.nothing());
       switch (event) {
         case AuthStatus.AUTHORIZED:
-        //to set init state in data
-          // _aboutService.setInited().then((value) {
-            
-          // });
-          _registerStateSubject.add(RegisterStateSuccess(_registerScreen));
+          _registerScreen.moveToNext();
           break;
-        case AuthStatus.CODE_SENT:
-          _registerStateSubject
-              .add(RegisterStatePhoneCodeSent(_registerScreen));
-          break;
-        case AuthStatus.CODE_TIMEOUT:
-          _registerStateSubject
-              .add(RegisterStateError(_registerScreen, 'Code Timeout'));
+        case AuthStatus.REGISTERED:
+          _registerScreen.userRegistered();
           break;
         default:
           _registerStateSubject.add(RegisterStateInit(_registerScreen));
           break;
       }
     }).onError((err) {
+      _loadingStateSubject.add(AsyncSnapshot.nothing());
       _registerStateSubject
-          .add(RegisterStateError(_registerScreen, err.toString()));
+          .add(RegisterStateInit(_registerScreen,error: err));
     });
   }
 
   Stream<RegisterState> get stateStream => _registerStateSubject.stream;
+  Stream<AsyncSnapshot> get loadingStream => _loadingStateSubject.stream;
 
-  void registerCaptain(
-    String phoneNumber,
-    RegisterScreenState _registerScreenState,
-  ) {
-    _registerScreen = _registerScreenState;
-    _authService.verifyWithPhone(true, phoneNumber, UserRole.ROLE_CAPTAIN);
-  }
-
-  void registerOwner(String email, String name, String password,
+  void registerClient(RegisterRequest request,
       RegisterScreenState _registerScreenState) {
+    _loadingStateSubject.add(AsyncSnapshot.waiting());
     _registerScreen = _registerScreenState;
-
-    _authService.registerWithEmailAndPassword(
-        email, password, name, UserRole.ROLE_OWNER);
-  }
-
-  void confirmCaptainCode(String smsCode) {
-    _authService.confirmWithCode(smsCode, UserRole.ROLE_CAPTAIN, true);
+    _authService.registerApi(request).whenComplete(() =>  _loadingStateSubject.add(AsyncSnapshot.nothing()));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_auth/authorization_routes.dart';
 import 'package:twaslna_delivery/module_auth/enums/user_type.dart';
 import 'package:twaslna_delivery/module_auth/service/auth_service/auth_service.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/module_home/home_module.dart';
 import 'package:twaslna_delivery/module_home/home_routes.dart';
 import 'package:twaslna_delivery/module_main/main_routes.dart';
+import 'package:twaslna_delivery/utils/images/images.dart';
 
   @injectable
   class SplashScreen extends StatefulWidget {
@@ -29,38 +31,31 @@ import 'package:twaslna_delivery/module_main/main_routes.dart';
   }
     @override
     Widget build(BuildContext context) {
+      var paddingOfImage = MediaQuery.of(context).size.height * 0.08;
     return Scaffold(
-      body: Center(
-        child: Image.asset('assets/images/logo.jpg'),
+      body: Flex(
+        direction: Axis.vertical,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top:paddingOfImage,left: paddingOfImage,right: paddingOfImage,bottom: 24),
+            child: Image.asset(ImageAsset.LOGO),
+          ),
+          Center(
+            child: Text(S.of(context).welcomeToOurApp,style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold
+            ),),
+          ),
+          Expanded(child:Image.asset(ImageAsset.DELIVERY_MOTOR,fit: BoxFit.cover,
+            alignment: Alignment.bottomRight,)),
+        ],
       ),
     );
     }
     
   Future<String> _getNextRoute() async {
-    try {
-      //var isInited = await _aboutService.isInited();
-
-      // if (!isInited) {
-      //   return AboutRoutes.ROUTE_ABOUT;
-      // }
-      return MainRoutes.MAIN_SCREEN;
-      var role = await widget._authService.userRole;
-      await widget._authService.isLoggedIn.then((value) {
-        if (value) {
-          if (role == UserRole.ROLE_OWNER) {
-            return AuthorizationRoutes.LOGIN_SCREEN;
-          } else if (role == UserRole.ROLE_CAPTAIN) {
-            return AuthorizationRoutes.LOGIN_SCREEN;
-          } else {
-            return AuthorizationRoutes.LOGIN_SCREEN;
-          }
-        } else {
-          return AuthorizationRoutes.LOGIN_SCREEN;
-        }
-      });
-    } catch (e) {
-      return AuthorizationRoutes.LOGIN_SCREEN;
-    }
-    return AuthorizationRoutes.LOGIN_SCREEN;
+      await Future.delayed(Duration(seconds: 2));
+    return MainRoutes.MAIN_SCREEN;
   }
+
   }

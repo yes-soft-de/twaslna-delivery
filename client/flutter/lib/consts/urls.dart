@@ -1,9 +1,9 @@
 class Urls {
-  static const String DOMAIN = 'http://167.99.255.30';
+  static const String DOMAIN = 'http://167.172.175.77';
   static const String BASE_API = DOMAIN + '';
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
   static const UPLOAD_API = BASE_API + '/uploadfile';
-  static const SIGN_UP_API = BASE_API + '/user';
+  static const SIGN_UP_API = BASE_API + '/clientregister';
   static const OWNER_PROFILE_API = BASE_API + '/userprofile';
   static const CREATE_TOKEN_API = BASE_API + '/login_check';
   static const REPORT_API = BASE_API + '/report';
@@ -18,5 +18,14 @@ class Urls {
   static const GET_PRODUCTS_CATEGORY_API = BASE_API + '/storeProductsCategory';
   static const GET_PRODUCTS_BY_CATEGORY_API = BASE_API + '/productsbycategoryidandstoreownerprofileid';
   static const GET_BEST_STORES_API = BASE_API + '/storeOwnerBest';
+  static const GET_MY_ORDERS = BASE_API + '/ordersbyclientid';
+  static const GET_ORDER_DETAILS = BASE_API + '/orderstatusbyordernumber';
+  static const POST_CLIENT_ORDER_API = BASE_API + '/clientorder';
+  static const POST_CLIENT_SEND_IT_ORDER_API = BASE_API + '/clientsendorder';
+  static const POST_CLIENT_PRIVATE_ORDER_API = BASE_API + '/clientSpecialOrder';
+  static const DELETE_CLIENT_ORDER_API = BASE_API + '/ordercancel';
+  static const UPDATE_CLIENT_ORDER_API = BASE_API + '/orderUpdatebyclient';
+
+
 
 }

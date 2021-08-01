@@ -1,20 +1,17 @@
-import 'package:dotted_line/dotted_line.dart';
 import 'package:twaslna_delivery/consts/order_status.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_orders/model/order_details_model.dart';
 import 'package:twaslna_delivery/module_orders/ui/screen/order_status_screen.dart';
-import 'package:twaslna_delivery/module_orders/ui/state/order_status/custom_step.dart';
+import 'package:twaslna_delivery/module_orders/ui/widget/order_status/custom_step.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_status/order_status_state.dart';
 import 'package:flutter/material.dart';
-import 'package:twaslna_delivery/module_orders/ui/widget/order_details/bill.dart';
-import 'package:twaslna_delivery/module_orders/ui/widget/order_details/order_chip.dart';
-import 'package:twaslna_delivery/module_orders/ui/widget/order_details/order_details_app_bar.dart';
 import 'package:twaslna_delivery/module_orders/ui/widget/order_status/custom_order_status_app_bar.dart';
 import 'package:twaslna_delivery/utils/helpers/order_status_helper.dart';
 
 class OrderStatusLoadedState extends OrderStatusState {
   OrderStatusScreenState screenState;
-
-  OrderStatusLoadedState(this.screenState) : super(screenState);
+  OrderDetailsModel orderDetails;
+  OrderStatusLoadedState(this.screenState,this.orderDetails) : super(screenState);
 
   @override
   Widget getUI(BuildContext context) {
@@ -31,34 +28,32 @@ class OrderStatusLoadedState extends OrderStatusState {
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            height: height * 0.9,
+            height: height * 0.89,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
               color: Theme.of(context).cardColor,
             ),
             child: Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 4.0),
-                  child: ListView(
-                    physics: BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    children: [
-                      ListTile(leading: Icon(Icons.info),title:Text(S.of(context).orderStatusDescription),),
-                      Padding(
-                        padding: const EdgeInsets.only(right:16.0,left: 16.0),
-                        child: Divider(color: Theme.of(context).backgroundColor,thickness: 2.5,),
-                      ),
-                      Flex(
-                        direction: Axis.vertical,
-                        children: getStepper(StatusHelper.getOrderStatusIndex(
-                            OrderStatus.WAITING)),
-                      ),
-                      SizedBox(
-                        height: 75,
-                      ),
-                    ],
-                  ),
+                ListView(
+                  padding: EdgeInsets.all(8),
+                  physics: BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  children: [
+                    ListTile(leading: Icon(Icons.info),title:Text(S.of(context).orderStatusDescription),),
+                    Padding(
+                      padding: const EdgeInsets.only(right:16.0,left: 16.0),
+                      child: Divider(color: Theme.of(context).backgroundColor,thickness: 2.5,),
+                    ),
+                    Flex(
+                      direction: Axis.vertical,
+                      children: getStepper(StatusHelper.getOrderStatusIndex(
+                          orderDetails.order.state)),
+                    ),
+                    SizedBox(
+                      height: 75,
+                    ),
+                  ],
                 ),
               ],
             ),

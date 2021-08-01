@@ -1,14 +1,12 @@
 import 'package:twaslna_delivery/utils/logger/logger.dart';
+import 'package:validators/sanitizers.dart';
 
 class BestStoreResponse {
   String? statusCode;
   String? msg;
   List<Data>? data;
 
-  BestStoreResponse({
-      this.statusCode, 
-      this.msg, 
-      this.data});
+  BestStoreResponse({this.statusCode, this.msg, this.data});
 
   BestStoreResponse.fromJson(dynamic json) {
     statusCode = json['status_code'];
@@ -19,9 +17,9 @@ class BestStoreResponse {
         json['Data'].forEach((v) {
           data?.add(Data.fromJson(v));
         });
-      }
-      catch (e) {
-        Logger().error('best store response','${e.toString()}', StackTrace.current);
+      } catch (e) {
+        Logger().error(
+            'best store response', '${e.toString()}', StackTrace.current);
       }
     }
   }
@@ -35,7 +33,6 @@ class BestStoreResponse {
     }
     return map;
   }
-
 }
 
 class Data {
@@ -44,13 +41,19 @@ class Data {
   String? image;
   dynamic? phone;
   dynamic? location;
-
+  double? deliveryCost;
+  bool? privateOrders;
+  bool? hasProducts;
   Data({
-      this.id, 
-      this.storeOwnerName, 
-      this.image, 
-      this.phone, 
-      this.location});
+    this.id,
+    this.storeOwnerName,
+    this.image,
+    this.phone,
+    this.location,
+    this.deliveryCost,
+    this.hasProducts,
+    this.privateOrders
+  });
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -58,6 +61,9 @@ class Data {
     image = json['image'];
     phone = json['phone'];
     location = json['location'];
+    deliveryCost = json['deliveryCost']?.toDouble();
+    privateOrders = json['privateOrders'];
+    hasProducts = json['hasProducts'];
   }
 
   Map<String, dynamic> toJson() {
@@ -69,5 +75,4 @@ class Data {
     map['location'] = location;
     return map;
   }
-
 }

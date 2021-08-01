@@ -19,7 +19,7 @@ class LoginStateSuccess extends LoginState {
           textColor: Colors.white,
           padding: EdgeInsets.all(16),
           onPressed: () {
-            screen.moveToNext(inited);
+            //screen.moveToNext(inited);
           },
           child: Text(S.of(context).welcomeTotwaslna_delivery),
         )

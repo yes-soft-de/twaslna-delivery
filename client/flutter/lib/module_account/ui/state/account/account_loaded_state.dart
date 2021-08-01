@@ -6,13 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/module_account/ui/state/account/account_state.dart';
 import 'package:twaslna_delivery/module_account/ui/widget/account_app_bar.dart';
 import 'package:twaslna_delivery/module_account/ui/widget/account_tile.dart';
+import 'package:twaslna_delivery/module_account/ui/widget/account_unsigned_app_bar.dart';
 import 'package:twaslna_delivery/module_settings/setting_routes.dart';
 import 'package:twaslna_delivery/utils/text_style/text_style.dart';
 
 class AccountLoadedState extends AccountState {
   AccountScreenState screenState;
-
-  AccountLoadedState(this.screenState) : super(screenState);
+  bool signIn;
+  AccountLoadedState(this.screenState,{required this.signIn}) : super(screenState);
 
   @override
   Widget getUI(BuildContext context) {
@@ -21,7 +22,7 @@ class AccountLoadedState extends AccountState {
       child: ListView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         children: [
-          AccountAppBar(),
+          signIn?AccountAppBar():AccountUnsignedAppBar(),
           Padding(
             padding: const EdgeInsets.only(right: 25.0, left: 25),
             child: Divider(
@@ -29,9 +30,9 @@ class AccountLoadedState extends AccountState {
               thickness: 2,
             ),
           ),
-          AccountTile(text:S.of(context).personalData,icon:Icons.person,onTap: (){
+          signIn?AccountTile(text:S.of(context).personalData,icon:Icons.person,onTap: (){
             Navigator.of(context).pushNamed(AccountRoutes.PERSONAL_DATA);
-          },),
+          },):Container(),
           AccountTile(text:S.of(context).settings,icon:Icons.settings,onTap: (){
             Navigator.of(context).pushNamed(SettingRoutes.ROUTE_SETTINGS);
           },),

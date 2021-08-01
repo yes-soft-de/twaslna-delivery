@@ -274,7 +274,63 @@
   "deliveringDescription": "captain on his way to you",
   "captainAcceptOrderDescription": "captain headed to store",
   "orderDeliveredDescription": "your order has delivered",
-  "orderStatusDescription": "You can know your order status in this interface"
+  "orderStatusDescription": "You can know your order status in this interface",
+  "destinationAddress": "Destination Address",
+  "myAddress": "Receipt point",
+  "orderDetailHint": "Please place your order details here",
+  "destinationAddressHint": "Please place your destination address",
+  "myAddressHint": "Please place your address",
+  "card": "Card",
+  "chooseAddressNote":"Please update your current location if you want to",
+  "orderTime":"Order Time",
+  "paymentMethodHint":"Choose",
+  "statusCodeOk": "Data fetched succesfuly",
+  "statusCodeCreated": "The request has succeeded and a new resource has been created as a result",
+  "statusCodeBadRequest":"The server could not understand the request due to invalid syntax",
+  "statusCodeUnauthorized":"Unauthorized",
+  "StatusCodeNotFound":"Data not found",
+  "note": "Notes",
+  "successCreateOrder": "Order created successfully",
+  "pleaseProvidePaymentMethode": "Please choose payment method",
+  "pleaseProvideYourAddress": "Please provide your address on our map",
+  "yourCartEmpty": "Your cart is empty please choose items to add",
+  "noteOfOrder": "Please place your order notes",
+  "chooseLocation": "choose location",
+  "chooseReceiptPoint": "Choose Receipt Location",
+  "chooseDestinationPoint": "Choose Destination Location",
+  "finishedOrdering": "Finish Order",
+  "privateOrder": "Private Order",
+  "storeProducts": "Store Products",
+  "orderType": "Order Type",
+  "orderNumberNotFound": "Order number not found!!",
+  "exceededAllowedTime": "Can not remove it, Exceeded time allowed",
+  "notAllowedCaptainReceived": "Can not remove it, The captain received the order",
+  "updateOrders": "Orders Details",
+  "updateOrderNote": "You can update your order item from this interface",
+  "welcomeToOurApp": "WELCOME TO TWASLNA APP",
+  "updateOrderSuccess":"Your update has been updated",
+  "username": "Username",
+  "registerHint": "username or phone number",
+  "registerSuccess": "Your account has been registered successfully",
+  "loginSuccess": "Your account has been logged successfully",
+  "homeDataEmpty":"There is no data to show you yet",
+  "refresh": "refresh",
+  "errOc":"The next problem occurred",
+  "pleaseLoginToMakeOrder": "Please login to resuming order sending",
+  "pleaseCompleteField": "Please fill the field",
+  "internalServerError": "Internal server error",
+  "thisErrorHappened": "This Error happened"
+
+
+
+
+
+
+
+
+
+
+
 
 
 

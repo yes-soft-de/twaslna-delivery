@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/abstracts/module/yes_module.dart';
 import 'package:twaslna_delivery/di/di_config.dart';
+import 'package:twaslna_delivery/hive/hive_init.dart';
 import 'package:twaslna_delivery/module_account/account_module.dart';
 import 'package:twaslna_delivery/module_auth/authoriazation_module.dart';
 import 'package:twaslna_delivery/module_chat/chat_module.dart';
@@ -10,6 +11,7 @@ import 'package:twaslna_delivery/module_localization/service/localization_servic
 import 'package:twaslna_delivery/module_main/main_module.dart';
 import 'package:twaslna_delivery/module_notifications/service/fire_notification_service/fire_notification_service.dart';
 import 'package:twaslna_delivery/module_orders/orders_module.dart';
+import 'package:twaslna_delivery/module_our_services/services_module.dart';
 import 'package:twaslna_delivery/module_settings/settings_module.dart';
 import 'package:twaslna_delivery/module_splash/splash_module.dart';
 import 'package:twaslna_delivery/module_stores/store_module.dart';
@@ -33,6 +35,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   timeago.setLocaleMessages('ar', timeago.ArMessages());
   timeago.setLocaleMessages('en', timeago.EnMessages());
+  await HiveSetUp.init();
   await Firebase.initializeApp();
   await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
   FlutterError.onError = (FlutterErrorDetails details) {
@@ -72,6 +75,7 @@ class MyApp extends StatefulWidget {
   final MyNotificationsModule myNotificationsModule;
   final AccountModule _accountModule;
   final OrdersModule _ordersModule;
+  final ServicesModule _servicesModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -86,7 +90,8 @@ class MyApp extends StatefulWidget {
       this._storeModule,
       this.myNotificationsModule,
       this._accountModule,
-      this._ordersModule
+      this._ordersModule,
+      this._servicesModule
       );
 
   @override
@@ -158,7 +163,7 @@ class _MyAppState extends State<MyApp> {
       ],
       theme: theme,
       supportedLocales: S.delegate.supportedLocales,
-      title: 'pasco-shipping',
+      title: 'Twaslna',
       routes: fullRoutesList,
       initialRoute: SplashRoutes.SPLASH_SCREEN,
     );

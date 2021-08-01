@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
-import 'package:twaslna_delivery/module_orders/ui/state/my_orders/my_orders_loaded_state.dart';
+import 'package:twaslna_delivery/module_orders/state_manager/my_orders_state_manager.dart';
+import 'package:twaslna_delivery/module_orders/ui/state/my_orders/my_orders_loading_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/my_orders/my_orders_state.dart';
 
 @injectable
 class MyOrdersScreen extends StatefulWidget {
+  final MyOrdersStateManager _stateManager;
 
-  MyOrdersScreen();
+  MyOrdersScreen(this._stateManager);
 
   @override
   MyOrdersScreenState createState() => MyOrdersScreenState();
@@ -21,18 +22,28 @@ class MyOrdersScreenState extends State<MyOrdersScreen> {
       setState(() {});
     }
   }
-
+ Future <void> getOrders() async {
+   widget._stateManager.getOrders(this);
+ }
   @override
   void initState() {
     super.initState();
-    currentState = MyOrdersLoadedState(this);
+    currentState = MyOrdersLoadingState(this);
+    widget._stateManager.getOrders(this);
+    widget._stateManager.stateStream.listen((event) {
+      currentState = event;
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         var focus = FocusScope.of(context);
-        if (focus.canRequestFocus){
+        if (focus.canRequestFocus) {
           focus.unfocus();
         }
       },

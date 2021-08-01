@@ -7,26 +7,25 @@ import 'package:twaslna_delivery/module_stores/ui/state/store_list/store_list_er
 import 'package:twaslna_delivery/module_stores/ui/state/store_list/store_list_loaded_state.dart';
 import 'package:twaslna_delivery/module_stores/ui/state/store_list/store_list_loading_state.dart';
 import 'package:twaslna_delivery/module_stores/ui/state/store_list/store_list_state.dart';
+import 'package:twaslna_delivery/module_stores/ui/state/store_list/store_lit_empty_state.dart';
 
 @injectable
 class StoreListStateManager {
-  StoreListService _storeListService;
+  final StoreListService _storeListService;
   final PublishSubject<StoreListState> _stateSubject = PublishSubject();
   Stream<StoreListState> get stateStream => _stateSubject.stream;
   StoreListStateManager(this._storeListService);
   void getStoresCategoryList(int id,StoreListScreenState screenState) {
     _stateSubject.add(StoreListLoadingState(screenState));
     _storeListService.getStoresList(id).then((value){
-      if (value!=null){
-        if (value is String) {
-          _stateSubject.add(StoreListErrorState(screenState,value));
-        }
-        else {
-          _stateSubject.add(StoreListLoadedState(screenState,value));
-        }
+      if (value.empty) {
+        _stateSubject.add(StoreListEmptyState(screenState,S.current.homeDataEmpty,id));
+      }
+      else if (!value.hasError) {
+        _stateSubject.add(StoreListErrorState(screenState,value.error??S.current.networkError,id));
       }
       else {
-        _stateSubject.add(StoreListErrorState(screenState,S.current.networkError));
+        _stateSubject.add(StoreListLoadedState(screenState,value.data));
       }
     });
   }

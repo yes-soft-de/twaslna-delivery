@@ -3,7 +3,6 @@ import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/utils/text_style/text_style.dart';
 
 class AccountAppBar extends StatelessWidget {
-  const AccountAppBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

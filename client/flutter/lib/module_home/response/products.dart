@@ -26,17 +26,17 @@ class Data {
   int? id;
   String? productName;
   String? productImage;
-  int? productPrice;
+  double? productPrice;
   int? storeOwnerProfileID;
   int? productCategoryID;
   String? storeOwnerName;
-  String? storeOwnerID;
+  int? storeOwnerID;
   String? image;
   dynamic phone;
   dynamic location;
   dynamic branchName;
   dynamic city;
-
+  double? deliveryCost;
   Data(
       {this.id,
       this.productName,
@@ -50,13 +50,15 @@ class Data {
       this.phone,
       this.location,
       this.branchName,
-      this.city});
+      this.city,
+      this.deliveryCost
+      });
 
   Data.fromJson(dynamic json) {
     id = json['id'];
     productName = json['productName'];
     productImage = json['productImage'];
-    productPrice = json['productPrice'];
+    productPrice = json['productPrice']?.toDouble();
     storeOwnerProfileID = json['storeOwnerProfileID'];
     productCategoryID = json['ProductCategoryID'];
     storeOwnerName = json['storeOwnerName'];
@@ -66,5 +68,6 @@ class Data {
     location = json['location'];
     branchName = json['branchName'];
     city = json['city'];
+    deliveryCost = json['deliveryCost']?.toDouble();
   }
 }

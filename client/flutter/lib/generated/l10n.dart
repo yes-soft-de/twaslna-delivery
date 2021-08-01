@@ -2779,6 +2779,456 @@ class S {
       args: [],
     );
   }
+
+  /// `Destination Address`
+  String get destinationAddress {
+    return Intl.message(
+      'Destination Address',
+      name: 'destinationAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Receipt point`
+  String get myAddress {
+    return Intl.message(
+      'Receipt point',
+      name: 'myAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please place your order details here`
+  String get orderDetailHint {
+    return Intl.message(
+      'Please place your order details here',
+      name: 'orderDetailHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please place your destination address`
+  String get destinationAddressHint {
+    return Intl.message(
+      'Please place your destination address',
+      name: 'destinationAddressHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please place your address`
+  String get myAddressHint {
+    return Intl.message(
+      'Please place your address',
+      name: 'myAddressHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Card`
+  String get card {
+    return Intl.message(
+      'Card',
+      name: 'card',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please update your current location if you want to`
+  String get chooseAddressNote {
+    return Intl.message(
+      'Please update your current location if you want to',
+      name: 'chooseAddressNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Time`
+  String get orderTime {
+    return Intl.message(
+      'Order Time',
+      name: 'orderTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose`
+  String get paymentMethodHint {
+    return Intl.message(
+      'Choose',
+      name: 'paymentMethodHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data fetched succesfuly`
+  String get statusCodeOk {
+    return Intl.message(
+      'Data fetched succesfuly',
+      name: 'statusCodeOk',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The request has succeeded and a new resource has been created as a result`
+  String get statusCodeCreated {
+    return Intl.message(
+      'The request has succeeded and a new resource has been created as a result',
+      name: 'statusCodeCreated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The server could not understand the request due to invalid syntax`
+  String get statusCodeBadRequest {
+    return Intl.message(
+      'The server could not understand the request due to invalid syntax',
+      name: 'statusCodeBadRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unauthorized`
+  String get statusCodeUnauthorized {
+    return Intl.message(
+      'Unauthorized',
+      name: 'statusCodeUnauthorized',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data not found`
+  String get StatusCodeNotFound {
+    return Intl.message(
+      'Data not found',
+      name: 'StatusCodeNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notes`
+  String get note {
+    return Intl.message(
+      'Notes',
+      name: 'note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order created successfully`
+  String get successCreateOrder {
+    return Intl.message(
+      'Order created successfully',
+      name: 'successCreateOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please choose payment method`
+  String get pleaseProvidePaymentMethode {
+    return Intl.message(
+      'Please choose payment method',
+      name: 'pleaseProvidePaymentMethode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please provide your address on our map`
+  String get pleaseProvideYourAddress {
+    return Intl.message(
+      'Please provide your address on our map',
+      name: 'pleaseProvideYourAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your cart is empty please choose items to add`
+  String get yourCartEmpty {
+    return Intl.message(
+      'Your cart is empty please choose items to add',
+      name: 'yourCartEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please place your order notes`
+  String get noteOfOrder {
+    return Intl.message(
+      'Please place your order notes',
+      name: 'noteOfOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `choose location`
+  String get chooseLocation {
+    return Intl.message(
+      'choose location',
+      name: 'chooseLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose Receipt Location`
+  String get chooseReceiptPoint {
+    return Intl.message(
+      'Choose Receipt Location',
+      name: 'chooseReceiptPoint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose Destination Location`
+  String get chooseDestinationPoint {
+    return Intl.message(
+      'Choose Destination Location',
+      name: 'chooseDestinationPoint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finish Order`
+  String get finishedOrdering {
+    return Intl.message(
+      'Finish Order',
+      name: 'finishedOrdering',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Private Order`
+  String get privateOrder {
+    return Intl.message(
+      'Private Order',
+      name: 'privateOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Products`
+  String get storeProducts {
+    return Intl.message(
+      'Store Products',
+      name: 'storeProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Type`
+  String get orderType {
+    return Intl.message(
+      'Order Type',
+      name: 'orderType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order number not found!!`
+  String get orderNumberNotFound {
+    return Intl.message(
+      'Order number not found!!',
+      name: 'orderNumberNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Can not remove it, Exceeded time allowed`
+  String get exceededAllowedTime {
+    return Intl.message(
+      'Can not remove it, Exceeded time allowed',
+      name: 'exceededAllowedTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Can not remove it, The captain received the order`
+  String get notAllowedCaptainReceived {
+    return Intl.message(
+      'Can not remove it, The captain received the order',
+      name: 'notAllowedCaptainReceived',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orders Details`
+  String get updateOrders {
+    return Intl.message(
+      'Orders Details',
+      name: 'updateOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can update your order item from this interface`
+  String get updateOrderNote {
+    return Intl.message(
+      'You can update your order item from this interface',
+      name: 'updateOrderNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `WELCOME TO TWASLNA APP`
+  String get welcomeToOurApp {
+    return Intl.message(
+      'WELCOME TO TWASLNA APP',
+      name: 'welcomeToOurApp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your update has been updated`
+  String get updateOrderSuccess {
+    return Intl.message(
+      'Your update has been updated',
+      name: 'updateOrderSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username`
+  String get username {
+    return Intl.message(
+      'Username',
+      name: 'username',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `username or phone number`
+  String get registerHint {
+    return Intl.message(
+      'username or phone number',
+      name: 'registerHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your account has been registered successfully`
+  String get registerSuccess {
+    return Intl.message(
+      'Your account has been registered successfully',
+      name: 'registerSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your account has been logged successfully`
+  String get loginSuccess {
+    return Intl.message(
+      'Your account has been logged successfully',
+      name: 'loginSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is no data to show you yet`
+  String get homeDataEmpty {
+    return Intl.message(
+      'There is no data to show you yet',
+      name: 'homeDataEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `refresh`
+  String get refresh {
+    return Intl.message(
+      'refresh',
+      name: 'refresh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The next problem occurred`
+  String get errOc {
+    return Intl.message(
+      'The next problem occurred',
+      name: 'errOc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please login to resuming order sending`
+  String get pleaseLoginToMakeOrder {
+    return Intl.message(
+      'Please login to resuming order sending',
+      name: 'pleaseLoginToMakeOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please fill the field`
+  String get pleaseCompleteField {
+    return Intl.message(
+      'Please fill the field',
+      name: 'pleaseCompleteField',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Internal server error`
+  String get internalServerError {
+    return Intl.message(
+      'Internal server error',
+      name: 'internalServerError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This Error happened`
+  String get thisErrorHappened {
+    return Intl.message(
+      'This Error happened',
+      name: 'thisErrorHappened',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
