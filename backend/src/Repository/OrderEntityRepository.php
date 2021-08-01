@@ -273,7 +273,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function countCaptainOrdersDelivered($captainId)
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->select('count(OrderEntity.id) as countOrdersDeliverd')
+            ->select('count(OrderEntity.id) as countOrdersDelivered')
 
             ->andWhere('OrderEntity.captainID = :captainId')
             ->andWhere("OrderEntity.state = 'delivered'")
@@ -354,6 +354,8 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
 
             ->andWhere('OrderEntity.clientID = :clientID')
+            ->andWhere("OrderEntity.state != 'delivered'")
+            ->andWhere("OrderEntity.state != 'cancelled'")
             ->setParameter('clientID', $clientID)
             ->addGroupBy('OrderEntity.id')
             ->getQuery()
