@@ -65,37 +65,96 @@ class UserManager
         $this->entityManager->flush();
         $this->entityManager->clear();
 
-        return $userRegister;
-    }
-    else {
-        return true;
-    }
+            // Second, create the storeOwner's profile
+            $storeOwnerProfile = $this->getStoreOwnerProfileByID($request->getUserID());
+            
+            if ($storeOwnerProfile == null) {
+                $storeOwnerProfile = $this->autoMapping->map(UserRegisterRequest::class, StoreOwnerProfileEntity::class, $request);
+
+                $storeOwnerProfile->setStoreOwnerID($userRegister->getId());
+                $storeOwnerProfile->setStoreOwnerName($request->getUserName());
+                
+                $storeOwnerProfile->setStatus('inactive');
+                $storeOwnerProfile->setFree(false);
+                $storeOwnerProfile->setIs_best(false);
+
+                $this->entityManager->persist($storeOwnerProfile);
+                $this->entityManager->flush();
+                $this->entityManager->clear();
+            }
+            return $userRegister;
+        }
+        else
+        {
+            $storeOwnerProfile = $this->getClientProfileByClientID($user['id']);
+
+            if ($storeOwnerProfile == null)
+            {
+                $storeOwnerProfile = $this->autoMapping->map(UserRegisterRequest::class, StoreOwnerProfileEntity::class, $request);
+                $storeOwnerProfile->setStoreOwnerID($user['id']);
+                $storeOwnerProfile->setStoreOwnerName($request->getUserName());
+                
+                $this->entityManager->persist($storeOwnerProfile);
+                $this->entityManager->flush();
+                $this->entityManager->clear();
+            }
+
+            return true;
+        }
     }
 
     public function clientRegister(UserRegisterRequest $request)
     {
         $user = $this->getUserByUserID($request->getUserID());
+
         if ($user == null) {
 
-        $userRegister = $this->autoMapping->map(UserRegisterRequest::class, UserEntity::class, $request);
+            $userRegister = $this->autoMapping->map(UserRegisterRequest::class, UserEntity::class, $request);
 
-        $user = new UserEntity($request->getUserID());
+            $user = new UserEntity($request->getUserID());
 
-        if ($request->getPassword()) {
-            $userRegister->setPassword($this->encoder->encodePassword($user, $request->getPassword()));
+            if ($request->getPassword()) {
+                $userRegister->setPassword($this->encoder->encodePassword($user, $request->getPassword()));
+            }
+
+            $userRegister->setRoles(["ROLE_CLIENT"]);
+
+            $this->entityManager->persist($userRegister);
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+
+            // Second, create the client's profile
+            $clientProfile = $this->getClientProfileByClientID($request->getUserID());
+            
+            if ($clientProfile == null) {
+                $clientProfile = $this->autoMapping->map(UserRegisterRequest::class, ClientProfileEntity::class, $request);
+
+                $clientProfile->setClientID($userRegister->getId());
+                $clientProfile->setClientName($request->getUserName());
+                
+                $this->entityManager->persist($clientProfile);
+                $this->entityManager->flush();
+                $this->entityManager->clear();
+            }
+            return $userRegister;
         }
+        else
+        {
+            $clientProfile = $this->getClientProfileByClientID($user['id']);
 
-        $userRegister->setRoles(["ROLE_CLIENT"]);
+            if ($clientProfile == null)
+            {
+                $clientProfile = $this->autoMapping->map(UserRegisterRequest::class, ClientProfileEntity::class, $request);
+                $clientProfile->setClientID($user['id']);
+                $clientProfile->setClientName($request->getUserName());
+                
+                $this->entityManager->persist($clientProfile);
+                $this->entityManager->flush();
+                $this->entityManager->clear();
+            }
 
-        $this->entityManager->persist($userRegister);
-        $this->entityManager->flush();
-        $this->entityManager->clear();
-
-        return $userRegister;
-    }
-    else {
-        return true;
-    }
+            return true;
+        }
     }
 
     public function captainRegister(UserRegisterRequest $request)
@@ -117,11 +176,38 @@ class UserManager
         $this->entityManager->flush();
         $this->entityManager->clear();
 
+        // Second, create the captain's profile
+        $captainProfile = $this->getCaptainProfileByCaptainID($request->getUserID());
+            
+        if ($captainProfile == null) {
+            $captainProfile = $this->autoMapping->map(UserRegisterRequest::class, CaptainProfileEntity::class, $request);
+            $captainProfile->setStatus('inactive');
+            $captainProfile->setCaptainID($userRegister->getId());
+            $captainProfile->setCaptainName($request->getUserName());
+            
+            $this->entityManager->persist($captainProfile);
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+        }
         return $userRegister;
     }
-    else {
+    else
+    {
+        $captainProfile = $this->getCaptainProfileByCaptainID($user['id']);
+
+        if ($captainProfile == null)
+        {
+            $captainProfile = $this->autoMapping->map(UserRegisterRequest::class, CaptainProfileEntity::class, $request);
+            $captainProfile->setCaptainID($user['id']);
+            $captainProfile->setCaptainName($request->getUserName());
+            
+            $this->entityManager->persist($captainProfile);
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+        }
         return true;
     }
+    
     }
 
     public function getUserByUserID($userID)
