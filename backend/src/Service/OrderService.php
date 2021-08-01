@@ -608,4 +608,16 @@ class OrderService
 
         return $response;
     }
+
+    public function getOrdersDeliveredAndCancelledByClientId($clientID)
+    {
+        $response = [];
+        $orders = $this->orderManager->getOrdersDeliveredAndCancelledByClientId($clientID);
+       foreach ($orders as $order) {
+           $order['amount'] = $order['deliveryCost'] + $order['orderCost'];
+            $response[] = $this->autoMapping->map('array', OrdersByClientResponse::class, $order);
+       }
+
+        return $response;
+    }
 }
