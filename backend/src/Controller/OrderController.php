@@ -333,5 +333,17 @@ class OrderController extends BaseController
   
           return $this->response($result, self::FETCH);
       }
+
+    /**
+      * @Route("ordersDeliveredAndCancelledByClientId", name="ordersDeliveredAndCancelledByClientId", methods={"GET"})
+      * @IsGranted("ROLE_CLIENT")
+      * @return JsonResponse
+      */
+      public function getOrdersDeliveredAndCancelledByClientId()
+      {
+          $result = $this->orderService->getOrdersDeliveredAndCancelledByClientId($this->getUserId());
+  
+          return $this->response($result, self::FETCH);
+      }
 }
 

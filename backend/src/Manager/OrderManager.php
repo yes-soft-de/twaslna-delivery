@@ -277,4 +277,9 @@ class OrderManager
     {
         return $this->orderEntityRepository->getOrdersByClientID($clientID);
     }
+
+    public function getOrdersDeliveredAndCancelledByClientId($clientID)
+    {
+        return $this->orderEntityRepository->getOrdersDeliveredAndCancelledByClientId($clientID);
+    }
 }

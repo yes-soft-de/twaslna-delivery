@@ -273,7 +273,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function countCaptainOrdersDelivered($captainId)
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->select('count(OrderEntity.id) as countOrdersDeliverd')
+            ->select('count(OrderEntity.id) as countOrdersDelivered')
 
             ->andWhere('OrderEntity.captainID = :captainId')
             ->andWhere("OrderEntity.state = 'delivered'")
@@ -344,7 +344,6 @@ class OrderEntityRepository extends ServiceEntityRepository
           ->getResult(); 
     }
 
-    
     public function getOrdersByClientID($clientID)
     {
         return $this->createQueryBuilder('OrderEntity')
@@ -354,6 +353,24 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
 
             ->andWhere('OrderEntity.clientID = :clientID')
+            ->andWhere("OrderEntity.state != 'delivered'")
+            ->andWhere("OrderEntity.state != 'cancelled'")
+            ->setParameter('clientID', $clientID)
+            ->addGroupBy('OrderEntity.id')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getOrdersDeliveredAndCancelledByClientId($clientID)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+            ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.state', 'OrderEntity.createdAt','OrderEntity.deliveryCost', 'OrderEntity.orderCost','OrderEntity.orderType')
+            ->addSelect('orderDetailEntity.id as orderDetailId', 'orderDetailEntity.orderNumber')
+
+            ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
+
+            ->Where('OrderEntity.clientID = :clientID')
+            ->andWhere("OrderEntity.state = 'delivered' or OrderEntity.state = 'cancelled'")
             ->setParameter('clientID', $clientID)
             ->addGroupBy('OrderEntity.id')
             ->getQuery()

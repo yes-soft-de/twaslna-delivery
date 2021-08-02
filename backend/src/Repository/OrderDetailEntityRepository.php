@@ -25,9 +25,9 @@ class OrderDetailEntityRepository extends ServiceEntityRepository
     public function getLastOrderNumber()
     {
         return $this->createQueryBuilder('OrderDetailEntity')
-            ->select('OrderDetailEntity.orderNumber')
+            ->select('OrderDetailEntity.orderNumber','OrderDetailEntity.orderID')
             ->setMaxResults(1)
-            ->addOrderBy('OrderDetailEntity.id','DESC')
+            ->addOrderBy('OrderDetailEntity.orderID','DESC')
             ->getQuery()
             ->getOneOrNullResult();
     }
