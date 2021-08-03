@@ -20,8 +20,12 @@ class AccountStateManager {
   void getProfile(AccountScreenState screenState){
     _stateSubject.add(AccountLoadingState(screenState));
        bool signIn = _authService.isLoggedIn;
-      _stateSubject.add(AccountLoadedState(screenState,signIn:signIn));
-      screenState.refresh();
+       if (signIn){
+         _stateSubject.add(AccountLoadedState(screenState,signIn:signIn));
+       }
+       else {
+         _stateSubject.add(AccountLoadedState(screenState,signIn:signIn));
+       }
   }
 
 }

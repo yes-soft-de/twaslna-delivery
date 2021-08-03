@@ -50,31 +50,39 @@ class LoginScreenState extends State<LoginScreen> {
       }
     });
   }
-
+  dynamic args;
   @override
   Widget build(BuildContext context) {
-    dynamic args = ModalRoute.of(context)?.settings.arguments;
+    args = ModalRoute.of(context)?.settings.arguments;
     if (args != null) {
       if (args is bool) returnToPreviousScreen = args;
       if (args is int) returnToMainScreen = args;
     }
-    return GestureDetector(
-      onTap: () {
-        var focus = FocusScope.of(context);
-        if (focus.canRequestFocus) {
-          focus.unfocus();
-        }
+    return WillPopScope(
+      onWillPop: () async {
+        await Navigator.of(context).pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
+        return returnToMainScreen == null;
       },
-      child: Scaffold(
-        appBar: CustomTwaslnaAppBar.appBar(context, title:S.of(context).login),
-        body: loadingSnapshot.connectionState != ConnectionState.waiting ? _currentStates.getUI(context) : Stack(
-          children: [
-            _currentStates.getUI(context),
-            Container(
-              width: double.maxFinite,
-              color: Colors.transparent.withOpacity(0.0),
-            ),
-          ],
+      child: GestureDetector(
+        onTap: () {
+          var focus = FocusScope.of(context);
+          if (focus.canRequestFocus) {
+            focus.unfocus();
+          }
+        },
+        child: Scaffold(
+          appBar: CustomTwaslnaAppBar.appBar(context, title:S.of(context).login,onTap:returnToMainScreen != null ? (){
+            Navigator.of(context).pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
+          } : null),
+          body: loadingSnapshot.connectionState != ConnectionState.waiting ? _currentStates.getUI(context) : Stack(
+            children: [
+              _currentStates.getUI(context),
+              Container(
+                width: double.maxFinite,
+                color: Colors.transparent.withOpacity(0.0),
+              ),
+            ],
+          ),
         ),
       ),
     );

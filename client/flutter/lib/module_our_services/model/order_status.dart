@@ -1,9 +1,9 @@
-class OrderStatus {
+class OrderStateModel {
   String? _error;
 
-  OrderStatus.None();
+  OrderStateModel.None();
 
-  OrderStatus.Error(this._error);
+  OrderStateModel.Error(this._error);
 
   bool get hasError => _error != null;
 

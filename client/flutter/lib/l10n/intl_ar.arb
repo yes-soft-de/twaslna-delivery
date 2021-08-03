@@ -188,7 +188,7 @@
   "go":"انطلق",
   "errorLoggingInFirebaseAccountNotFound": "Error logging in, firebase account not found",
   "locationOfCustomer": "(التسليم) موقع الزبون",
-  "sureForDelete":"هل أنت متأكد من قيامك بحذف هذا الطلب",
+  "sureForDelete":"هل أنت متأكد من قيامك بحذف هذاالطلب",
   "deleteSuccess":"تمت عملية حذف الطلب بنجاح",
   "ProvideDistanceInKm":"المسافة المقطوعة بالكيلومتر",
   "notVerified":"لم يتم تفعيل الباقة بعد",
@@ -304,7 +304,7 @@
   "exceededAllowedTime": "لقد تجاوزت الوقت المسموح لإزالة الطلب",
   "notAllowedCaptainReceived": "لايمكن إزالة الطلب لاستلام الكابتن للطلب",
   "updateOrders": "تعديل الطلبات",
-  "updateOrderNote": "يمكنك تعديل حالة الطلب من خلال النافذة الحالية",
+  "updateOrderNote": "يمكنك تعديل الطلب من خلال النافذة الحالية",
   "welcomeToOurApp": "أهلا بك في تطبيق تواصلنا",
   "updateOrderSuccess":"نم تعديل طلبك بنجاح",
   "username": "اسم المستخدم",
@@ -317,5 +317,9 @@
   "pleaseLoginToMakeOrder": "من فضلك قم بتسجيل الدخول لاستكمال طلبك",
   "pleaseCompleteField": "من فضلك أملئ الحقل",
   "internalServerError": "هناك مشكلة ما في الخادم",
-  "thisErrorHappened": "حصلت المشكلة التالية"
+  "thisErrorHappened": "حصلت المشكلة التالية",
+  "pleaseLoginToContinue": "من فضلك قم بتسجيل الدخول للمتابعة",
+  "notAllowedCaptainInStore": "لا يمكنك تعديل الطلب لأن الكابتن في المتجر",
+  "invalidCredentials": "هناك خطأ في كلمة السر أو اسم المستخدم",
+  "dataDecodeError": "هناك مشكلة في تفسير البيانات"
 }

@@ -11,6 +11,7 @@ import 'package:twaslna_delivery/module_stores/ui/widget/store_products/checkout
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/custom_stores_products_app_bar.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/products_card.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/products_chip.dart';
+import 'package:twaslna_delivery/module_stores/ui/widget/store_products/products_zone.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/store_products_title_bar.dart';
 import 'package:twaslna_delivery/utils/components/costom_search.dart';
 import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
@@ -22,8 +23,8 @@ class StoreProductsLoadedState extends StoreProductsState {
   List<ProductModel> topWantedProducts;
   List<CategoryModel> productsCategory;
 
-  StoreProductsLoadedState(
-      this.screenState, this.topWantedProducts, this.productsCategory)
+  StoreProductsLoadedState(this.screenState,
+      {required this.topWantedProducts, required this.productsCategory})
       : super(screenState);
   late String title;
   late String backgroundImage;
@@ -32,11 +33,21 @@ class StoreProductsLoadedState extends StoreProductsState {
   late int storeId;
   int categoryId = -1;
   late double deliveryCost;
+
   @override
   Widget getUI(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
-    var args = ModalRoute.of(context)?.settings.arguments;
+    var height = MediaQuery
+        .of(context)
+        .size
+        .height;
+    var width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    var args = ModalRoute
+        .of(context)
+        ?.settings
+        .arguments;
     if (args is StoreModel) {
       title = args.storeOwnerName;
       backgroundImage = args.image;
@@ -60,19 +71,21 @@ class StoreProductsLoadedState extends StoreProductsState {
             children: [
               Padding(
                 padding:
-                    const EdgeInsets.only(right: 28.0, left: 28, bottom: 16),
+                const EdgeInsets.only(right: 28.0, left: 28, bottom: 16),
                 child: StoreProductsTitleBar(
-                  title: title,
-                  rate: 4.7,
-                  views: 40,
-                  deliveryCost:deliveryCost
+                    title: title,
+                    rate: 4.7,
+                    views: 40,
+                    deliveryCost: deliveryCost
                 ),
               ),
               Container(
                 height: height * 0.65,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
-                  color: Theme.of(context).cardColor,
+                  color: Theme
+                      .of(context)
+                      .cardColor,
                 ),
                 child: Stack(
                   children: [
@@ -86,7 +99,9 @@ class StoreProductsLoadedState extends StoreProductsState {
                             padding: const EdgeInsets.only(
                                 right: 28.0, left: 28.0, bottom: 25),
                             child: CustomDeliverySearch(
-                              hintText: S.of(context).searchFor,
+                              hintText: S
+                                  .of(context)
+                                  .searchFor,
                             ),
                           ),
                           Padding(
@@ -102,23 +117,10 @@ class StoreProductsLoadedState extends StoreProductsState {
                               ),
                             ),
                           ),
-                          screenState.snapshot.connectionState !=
-                                  ConnectionState.waiting
-                              ? ListView(
-                                  physics: ScrollPhysics(),
-                                  shrinkWrap: true,
-                                  children: getProducts(
-                                      defaultValue == S.of(context).mostWanted
-                                          ? topWantedProducts
-                                          : screenState.snapshot.data),
-                                )
-                              : Container(
-                                  height: 125,
-                                  width: double.maxFinite,
-                                  child: Align(
-                                      alignment:
-                                          AlignmentDirectional.bottomCenter,
-                                      child: CircularProgressIndicator())),
+                          ProductsZone(loading: screenState.snapshot
+                              .connectionState == ConnectionState.waiting,
+                              children: getProducts(defaultValue == S.current.mostWanted ? topWantedProducts : screenState.snapshot.data ?? <ProductModel>[]),
+                              snapshot: screenState.snapshot),
                           SizedBox(
                             height: 75,
                           ),
@@ -128,18 +130,31 @@ class StoreProductsLoadedState extends StoreProductsState {
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: CheckoutButton(
-                        onPressed:carts.isNotEmpty ? () {
+                        onPressed: carts.isNotEmpty ? () {
                           List<Products> items = [];
                           carts.forEach((element) {
-                            items.add(Products(productID: element.id,countProduct: element.quantity));
+                            items.add(Products(productID: element.id,
+                                countProduct: element.quantity));
                           });
-                          CheckoutModel checkoutModel = CheckoutModel(ownerId:storeId,cart: items,orderCost:double.parse(getTotal(carts)),deliveryCost:deliveryCost);
-                          Navigator.of(context).pushNamed(OrdersRoutes.CLIENT_ORDER,arguments:checkoutModel);
-                        }:(){
-                          CustomFlushBarHelper.createError(title:S.of(context).warnning, message:S.of(context).yourCartEmpty)..show(context);
+                          CheckoutModel checkoutModel = CheckoutModel(
+                              ownerId: storeId,
+                              cart: items,
+                              orderCost: double.parse(getTotal(carts)),
+                              deliveryCost: deliveryCost);
+                          Navigator.of(context).pushNamed(OrdersRoutes
+                              .CLIENT_ORDER, arguments: checkoutModel);
+                        } : () {
+                          CustomFlushBarHelper.createError(title: S
+                              .of(context)
+                              .warnning, message: S
+                              .of(context)
+                              .yourCartEmpty)
+                            ..show(context);
                         },
                         total: getTotal(carts),
-                        currency: S.of(context).sar,
+                        currency: S
+                            .of(context)
+                            .sar,
                       ),
                     ),
                   ],

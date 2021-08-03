@@ -34,7 +34,7 @@ class MyNotificationsLoadedState extends MyNotificationsState {
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
             child: ListView.builder(
-                itemCount: 10,
+                itemCount: 1,
                 shrinkWrap: true,
                 physics: ScrollPhysics(),
                 itemBuilder: (context, index) {

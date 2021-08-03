@@ -12,18 +12,18 @@ class ServicesService {
   final ServicesManager _servicesManager;
 
   ServicesService(this._servicesManager);
-  Future<OrderStatus> sendItClintOrder(SendItRequest request) async {
+  Future<OrderStateModel> sendItClintOrder(SendItRequest request) async {
     SendItResponse? sendItClientOrderResponse = await  _servicesManager.sendItClintOrder(request);
-    if (sendItClientOrderResponse == null) return OrderStatus.Error(S.current.networkError);
+    if (sendItClientOrderResponse == null) return OrderStateModel.Error(S.current.networkError);
     String statusCode =  sendItClientOrderResponse.statusCode ?? '0';
-    if ( statusCode != '201') return OrderStatus.Error(StatusCodeHelper.getStatusCodeMessages(statusCode));
-    return OrderStatus.None();
+    if ( statusCode != '201') return OrderStateModel.Error(StatusCodeHelper.getStatusCodeMessages(statusCode));
+    return OrderStateModel.None();
   }
-  Future<OrderStatus> postPrivateOrder(PrivateOrderRequest request) async {
+  Future<OrderStateModel> postPrivateOrder(PrivateOrderRequest request) async {
     SendItResponse? privateOrderResponse = await  _servicesManager.postPrivateOrder(request);
-    if (privateOrderResponse == null) return OrderStatus.Error(S.current.networkError);
+    if (privateOrderResponse == null) return OrderStateModel.Error(S.current.networkError);
     String statusCode =  privateOrderResponse.statusCode ?? '0';
-    if ( statusCode != '201') return OrderStatus.Error(StatusCodeHelper.getStatusCodeMessages(statusCode));
-    return OrderStatus.None();
+    if ( statusCode != '201') return OrderStateModel.Error(StatusCodeHelper.getStatusCodeMessages(statusCode));
+    return OrderStateModel.None();
   }
 }

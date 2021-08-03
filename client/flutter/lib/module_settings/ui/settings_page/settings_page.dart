@@ -69,9 +69,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ? Icons.nightlight_round_rounded
                             : Icons.wb_sunny),
                     onChanged: (mode) {
-                      widget._themeDataService
-                          .switchDarkMode(mode)
-                          .then((value) {});
+                      widget._themeDataService.switchDarkMode(mode);
                     },
                     visualDensity: VisualDensity.comfortable,
                     switchType: SwitchType.cupertino,
@@ -106,13 +104,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ListTile(
                     leading: Icon(Icons.person_rounded),
                     title: Text(S.of(context).signOut),
-                    trailing:Padding(
-                      padding: const EdgeInsets.only(right:10.0,left:10.0),
+                    trailing: Padding(
+                      padding: const EdgeInsets.only(right: 10.0, left: 10.0),
                       child: Icon(Icons.logout_rounded),
                     ),
-                    onTap: (){
-                      widget._authService.logout().then((value){
-                        Navigator.of(context).pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
+                    onTap: () {
+                      widget._authService.logout().then((value) {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            MainRoutes.MAIN_SCREEN, (route) => false);
                       });
                     },
                   ),

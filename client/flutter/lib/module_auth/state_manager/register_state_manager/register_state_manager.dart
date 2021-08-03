@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/module_auth/enums/auth_status.dart';
-import 'package:twaslna_delivery/module_auth/enums/user_type.dart';
 import 'package:twaslna_delivery/module_auth/request/register_request/register_request.dart';
 import 'package:twaslna_delivery/module_auth/service/auth_service/auth_service.dart';
 import 'package:twaslna_delivery/module_auth/ui/screen/register_screen/register_screen.dart';

@@ -1,15 +1,100 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_stores/ui/screen/store_products_screen.dart';
 import 'package:twaslna_delivery/module_stores/ui/state/store_products/store_products_state.dart';
+import 'package:twaslna_delivery/utils/components/custom_app_bar.dart';
+import 'package:twaslna_delivery/utils/images/images.dart';
 
 class StoreProductsErrorState extends StoreProductsState {
-  final String error;
+  final List<String> errors;
+  final int id;
   StoreProductsScreenState screenState;
 
-  StoreProductsErrorState(this.screenState, this.error) : super(screenState);
+  StoreProductsErrorState(this.screenState, this.errors, this.id)
+      : super(screenState);
 
   @override
   Widget getUI(BuildContext context) {
-    return Center(child: Text(error));
+    return Scaffold(
+      appBar: CustomTwaslnaAppBar.appBar(context,
+          title: screenState.title, buttonBackground: Colors.red),
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Flex(
+            direction: Axis.vertical,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Flushbar(
+                  title: S.of(context).errOc + ' : ',
+                  messageText: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(
+                            '1- ' + errors[0],
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(
+                            '2- ' + errors[1],
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ]),
+                  icon: Icon(
+                    Icons.info,
+                    size: 28.0,
+                    color: Colors.white,
+                  ),
+                  backgroundColor: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                  flushbarStyle: FlushbarStyle.FLOATING,
+                ),
+              ),
+              Container(
+                height: 24,
+              ),
+              SvgPicture.asset(
+                ImageAsset.ERROR_SVG,
+                height: MediaQuery.of(context).size.height * 0.5,
+              ),
+              Container(
+                height: 32,
+              ),
+              Center(
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.red,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          elevation: 0),
+                      onPressed: () async {
+                        screenState.getStoresProducts(id);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          S.of(context).refresh,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ))),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

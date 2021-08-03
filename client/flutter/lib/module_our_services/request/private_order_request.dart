@@ -31,7 +31,7 @@ class PrivateOrderRequest {
     map['destination'] = destination is String ? destination : destination.toJson();
     map['note'] = note;
     map['payment'] = payment;
-    map['ownerID'] = ownerID;
+    //map['ownerID'] = ownerID;
     map['detail'] = detail;
     map['deliveryDate'] = deliveryDate;
     map['storeOwnerProfileID'] = storeOwnerProfileID;

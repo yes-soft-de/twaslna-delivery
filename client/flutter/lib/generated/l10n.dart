@@ -3229,6 +3229,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Please login to continue`
+  String get pleaseLoginToContinue {
+    return Intl.message(
+      'Please login to continue',
+      name: 'pleaseLoginToContinue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can't edit, captain in the store.`
+  String get notAllowedCaptainInStore {
+    return Intl.message(
+      'You can\'t edit, captain in the store.',
+      name: 'notAllowedCaptainInStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wrong username or password`
+  String get invalidCredentials {
+    return Intl.message(
+      'Wrong username or password',
+      name: 'invalidCredentials',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error with Decoding Data`
+  String get dataDecodeError {
+    return Intl.message(
+      'Error with Decoding Data',
+      name: 'dataDecodeError',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

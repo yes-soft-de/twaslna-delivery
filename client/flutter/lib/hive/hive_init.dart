@@ -12,5 +12,9 @@ class HiveSetUp {
   }
  static Future <void> publicBoxes() async {
     await Hive.openBox('Authorization');
-  }
+    await Hive.openBox('Theme');
+    await Hive.openBox('Localization');
+
+
+ }
 }

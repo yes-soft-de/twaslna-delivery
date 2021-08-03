@@ -1,6 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
-import 'package:twaslna_delivery/module_auth/enums/auth_source.dart';
 import 'package:twaslna_delivery/module_auth/exceptions/auth_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,33 +7,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthPrefsHelper {
   var box = Hive.box('Authorization');
 
-  Future<void> setUserId(String userId) async {
-    SharedPreferences preferencesHelper = await SharedPreferences.getInstance();
-    await preferencesHelper.setString('uid', userId);
-    return;
-  }
-
-  Future<String?> getUserId() async {
-    SharedPreferences preferencesHelper = await SharedPreferences.getInstance();
-    return preferencesHelper.getString('uid');
-  }
-
    void setUsername(String username) {
      box.put('username', username);
   }
 
   String? getUsername() {
     return box.get('username');
-  }
-
-  Future<void> setEmail(String email) async {
-    SharedPreferences preferencesHelper = await SharedPreferences.getInstance();
-    await preferencesHelper.setString('email', email);
-  }
-
-  Future<String?> getEmail() async {
-    SharedPreferences preferencesHelper = await SharedPreferences.getInstance();
-    return preferencesHelper.getString('email');
   }
 
   void setPassword(String password) {
@@ -48,36 +26,21 @@ class AuthPrefsHelper {
   void setUserCreated(bool created) {
     box.put('created',created);
   }
+
   bool getUserCreated() {
     return box.get('created') ?? false;
   }
+
   void clearUserCreated() {
      box.delete('created');
   }
+
   bool isSignedIn() {
     try {
       String? uid = getToken();
       return uid != null;
     } catch (e) {
       return false;
-    }
-  }
-
-  Future<AuthSource?> getAuthSource() async {
-    SharedPreferences preferencesHelper = await SharedPreferences.getInstance();
-    int? index = preferencesHelper.getInt('auth_source');
-    if (index != null) {
-      return AuthSource.values[index];
-    } else {}
-  }
-
-  Future<void> setAuthSource([AuthSource? authSource]) async {
-    SharedPreferences preferencesHelper = await SharedPreferences.getInstance();
-    if (authSource != null) {
-     await preferencesHelper.setInt(
-        'auth_source',
-        authSource.index,
-      );
     }
   }
 

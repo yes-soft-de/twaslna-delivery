@@ -31,7 +31,7 @@ class LoginStateInit extends LoginState {
               MediaQuery.of(context).viewInsets.bottom == 0 ? SvgPicture.asset(ImageAsset.AUTH_SVG,width: 150,):Container(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0,left: 85,right: 85,top: 8),
-                child: Text(S.of(context).email,style: TextStyle(
+                child: Text(S.of(context).username,style: TextStyle(
                     fontWeight: FontWeight.bold
                 ),),
               ),
@@ -82,7 +82,7 @@ class LoginStateInit extends LoginState {
                   ),
                 ),
               ),
-              Container(height: 75,),
+              Container(height: 150,),
             ],
           ),
           Align(
@@ -93,7 +93,7 @@ class LoginStateInit extends LoginState {
                 loading: screen.loadingSnapshot.connectionState ==
                     ConnectionState.waiting,
                 secondButtonTab: () => Navigator.of(context)
-                    .pushReplacementNamed(AuthorizationRoutes.REGISTER_SCREEN),
+                    .pushReplacementNamed(AuthorizationRoutes.REGISTER_SCREEN,arguments: screen.args),
                 firstButtonTab: () {
                   if (_loginKey.currentState!.validate()) {
                     screen.loginClient(

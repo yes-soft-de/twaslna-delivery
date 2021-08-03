@@ -1,3 +1,5 @@
+import 'package:twaslna_delivery/utils/logger/logger.dart';
+
 class RegisterResponse {
   String? statusCode;
   String? msg;
@@ -9,9 +11,15 @@ class RegisterResponse {
     this.data});
 
   RegisterResponse.fromJson(dynamic json) {
-    statusCode = json['status_code'];
-    msg = json['msg'];
-    data = json['Data'];
+    try {
+      statusCode = json['status_code'];
+      msg = json['msg'];
+      data = json['Data'];
+    }
+    catch (e){
+      Logger().error('Auth Register Response', e.toString(), StackTrace.current);
+      statusCode = '-1';
+    }
   }
 
 }

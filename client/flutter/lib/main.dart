@@ -134,20 +134,14 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      initialData: Scaffold(),
-      future: getConfiguratedApp(YesModule.RoutesMap),
-      builder: (BuildContext context, AsyncSnapshot<Widget> scaffoldSnapshot) {
-        return scaffoldSnapshot.data!;
-      },
-    );
+    return getConfiguratedApp(YesModule.RoutesMap);
   }
 
-  Future<Widget> getConfiguratedApp(
+  Widget getConfiguratedApp(
     Map<String, WidgetBuilder> fullRoutesList,
-  ) async {
-    var activeLanguage = await widget._localizationService.getLanguage();
-    var theme = await widget._themeDataService.getActiveTheme();
+  ) {
+    var activeLanguage = widget._localizationService.getLanguage();
+    var theme = widget._themeDataService.getActiveTheme();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorObservers: <NavigatorObserver>[observer],

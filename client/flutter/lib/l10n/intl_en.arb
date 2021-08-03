@@ -117,7 +117,7 @@
   "save": "Save",
   "darkMode": "Dark Mode",
   "errorLoadingBranches": "Error Loading Branches",
-  "cancel": "CANCEL",
+  "cancel": "Cancel",
   "ourBankName": "Our Bank Name",
   "ourBankAccountNumber": "Our Bank Account Number",
   "package": "Package",
@@ -319,7 +319,14 @@
   "pleaseLoginToMakeOrder": "Please login to resuming order sending",
   "pleaseCompleteField": "Please fill the field",
   "internalServerError": "Internal server error",
-  "thisErrorHappened": "This Error happened"
+  "thisErrorHappened": "This Error happened",
+  "pleaseLoginToContinue": "Please login to continue",
+  "notAllowedCaptainInStore": "You can't edit, captain in the store.",
+  "invalidCredentials": "Wrong username or password",
+  "dataDecodeError": "Error with Decoding Data"
+
+
+
 
 
 

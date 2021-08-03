@@ -1,12 +1,19 @@
+import 'package:twaslna_delivery/utils/logger/logger.dart';
+
 class LoginResponse {
   String? token;
   String? statusCode;
   LoginResponse({this.token,this.statusCode});
 
   LoginResponse.fromJson(Map<String, dynamic> json) {
-    token = json['token'];
-    statusCode = json['statusCode'];
-
+    try {
+      token = json['token'];
+      statusCode = json['code'] ?? json['statusCode'] ?? json['status_code'];
+    }
+    catch (e){
+      Logger().error('Auth Login Response', e.toString(), StackTrace.current);
+      statusCode = '-1';
+    }
   }
 
   Map<String, dynamic> toJson() {

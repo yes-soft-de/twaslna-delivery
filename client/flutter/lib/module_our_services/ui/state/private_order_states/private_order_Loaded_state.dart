@@ -87,10 +87,10 @@ class PrivateOrderLoadedState extends PrivateOrderState {
                       SizedBox(height: 16,),
                       ListTile(
                         title: LabelText(S.of(context).note),
-                        subtitle: CustomSendItFormField(maxLines: 5,hintText: S.of(context).note,controller: noteController,),
+                        subtitle: CustomSendItFormField(maxLines: 5,hintText: S.of(context).note,controller: noteController,validator: false,),
                       ),
                       SizedBox(
-                        height: 50,
+                        height:MediaQuery.of(context).viewInsets.bottom == 0 ? 100 : 175,
                       ),
                     ],
                   ),

@@ -9,18 +9,20 @@ class BestStoreResponse {
   BestStoreResponse({this.statusCode, this.msg, this.data});
 
   BestStoreResponse.fromJson(dynamic json) {
-    statusCode = json['status_code'];
-    msg = json['msg'];
-    if (json['Data'] != null) {
-      data = [];
-      try {
+    try {
+      statusCode = json['status_code'];
+      msg = json['msg'];
+      if (json['Data'] != null) {
+        data = [];
         json['Data'].forEach((v) {
           data?.add(Data.fromJson(v));
         });
-      } catch (e) {
-        Logger().error(
-            'best store response', '${e.toString()}', StackTrace.current);
       }
+    }
+    catch (e) {
+      Logger().error(
+          'best store response', '${e.toString()}', StackTrace.current);
+      statusCode = '-1';
     }
   }
 
