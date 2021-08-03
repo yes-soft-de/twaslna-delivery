@@ -12,13 +12,13 @@ class LocalizationService {
   final LocalizationPreferencesHelper _preferencesHelper;
   LocalizationService(this._preferencesHelper);
 
-  Future<void> setLanguage(String lang) async {
-    await _preferencesHelper.setLanguage(lang);
+  void setLanguage(String lang)  {
+     _preferencesHelper.setLanguage(lang);
     _localizationSubject.add(lang);
   }
 
-  Future<String> getLanguage() async {
-    String? lang = await _preferencesHelper.getLanguage();
+  String getLanguage(){
+    String? lang = _preferencesHelper.getLanguage();
     lang ??= Platform.localeName.substring(0, 2);
     return lang;
   }

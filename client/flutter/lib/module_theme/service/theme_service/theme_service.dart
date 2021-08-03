@@ -27,8 +27,8 @@ class AppThemeDataService {
     return Colors.orangeAccent;
   }
 
-  Future<ThemeData> getActiveTheme() async {
-    var dark = await _preferencesHelper.isDarkMode();
+  ThemeData getActiveTheme() {
+    var dark =  _preferencesHelper.isDarkMode();
     if (dark == true) {
       return ThemeData(
         brightness: Brightness.dark,
@@ -36,14 +36,10 @@ class AppThemeDataService {
         primaryColorDark: PrimaryDarker,
         accentColor: AccentColor,
         primarySwatch: Colors.orange,
+        focusColor: PrimaryColor,
         cardColor: Colors.grey[150],
-        // appBarTheme: AppBarTheme(
-        //   centerTitle: true,
-        //   textTheme: TextTheme(),
-        //   brightness: Brightness.dark,
-        //   color: Colors.black,
-        //   iconTheme: IconThemeData(color: Colors.white),
-        // ),
+        fontFamily: GoogleFonts.almarai().fontFamily,
+        fixTextFieldOutlineLabel: true,
       );
     }
     return ThemeData(
@@ -62,15 +58,14 @@ class AppThemeDataService {
           dayPeriodBorderSide:
               BorderSide(color: Color.fromRGBO(235, 235, 235, 1)),
         )
-        //appBarTheme: AppBarTheme(centerTitle: true, color: Colors.white),
         );
   }
 
-  Future<void> switchDarkMode(bool darkMode) async {
+  void switchDarkMode(bool darkMode) async {
     if (darkMode) {
-      await _preferencesHelper.setDarkMode();
+       _preferencesHelper.setDarkMode();
     } else {
-      await _preferencesHelper.setDayMode();
+       _preferencesHelper.setDayMode();
     }
     var activeTheme = await getActiveTheme();
     _darkModeSubject.add(activeTheme);
