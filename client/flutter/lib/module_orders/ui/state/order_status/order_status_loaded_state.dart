@@ -28,7 +28,7 @@ class OrderStatusLoadedState extends OrderStatusState {
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            height: height * 0.89,
+            height: height * 0.88,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
               color: Theme.of(context).cardColor,

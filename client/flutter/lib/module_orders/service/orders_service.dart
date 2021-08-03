@@ -19,84 +19,54 @@ class OrdersService {
 
   OrdersService(this._myOrdersManager);
 
-  Future getOrders() async {
+  Future<OrderModel> getOrders() async {
     MyOrdersResponse? _ordersResponse = await _myOrdersManager.getOrders();
-    if (_ordersResponse == null) return null;
-    if (_ordersResponse.data != null) {
-      List<OrderModel> orders = [];
-      _ordersResponse.data?.forEach((element) {
-        String date = DateFormat('dd-MM-yyyy').format(DateTime.fromMillisecondsSinceEpoch(
-            (element.deliveryDate?.timestamp ??
-                DateTime.now().millisecondsSinceEpoch) *
-                1000));
-        orders.add(OrderModel(
-            orderDate:date,
-            orderId: element.orderNumber ?? '-1',
-            orderStatus: StatusHelper.getStatusEnum(element.state),
-            orderCost: element.orderCost ?? 0));
-      });
-      return orders;
-    }
-    else {
-      return _ordersResponse.statusCode;
-    }
+    if (_ordersResponse == null) return OrderModel.Error(S.current.networkError);
+    if (_ordersResponse.statusCode != '200') return OrderModel.Error(StatusCodeHelper.getStatusCodeMessages(_ordersResponse.statusCode));
+    if (_ordersResponse.data == null) return OrderModel.Empty();
+    return OrderModel.Data(_ordersResponse);
   }
-  Future getOrdersDetails(int id) async {
+  Future<OrderDetailsModel> getOrdersDetails(int id) async {
     OrderDetailsResponse? _ordersResponse = await _myOrdersManager.getOrderDetails(id);
-    if (_ordersResponse == null) return null;
-    if (_ordersResponse.data != null ) {
-      OrderDetailsModel orderDetails = OrderDetailsModel(
-        carts: toCartList(_ordersResponse.data?.orderDetails??<OrderDetails>[]),
-        order: toOrder(_ordersResponse.data?.order),
-        storeInfo:StoreOwnerInfo(
-          storeOwnerID: _ordersResponse.data?.storeOwner?.storeOwnerID ?? -1,
-          storeOwnerName: _ordersResponse.data?.storeOwner?.storeOwnerName ?? S.current.storeOwner,
-          image: 'https://static.parade.com/wp-content/uploads/2020/03/target-senior-hours-ftr.jpg',
-          imageURL: 'https://static.parade.com/wp-content/uploads/2020/03/target-senior-hours-ftr.jpg',
-        )
-      );
-    return orderDetails;
-    }
-    else {
-      return int.parse(_ordersResponse.statusCode??'500');
-    }
+    if (_ordersResponse == null) return OrderDetailsModel.Error(S.current.networkError);
+    if (_ordersResponse.statusCode != '200') return OrderDetailsModel.Error(StatusCodeHelper.getStatusCodeMessages(_ordersResponse.statusCode));
+    if (_ordersResponse.data == null) return OrderDetailsModel.Empty();
+    return OrderDetailsModel.Data(_ordersResponse);
   }
 
-  Future <int?> postClientOrder(ClientOrderRequest request) async {
-    int? clientOrderResponse = await _myOrdersManager.postClintOrder(request);
-    if (clientOrderResponse == null) return null;
-    return clientOrderResponse;
+  Future <MyOrderState> postClientOrder(ClientOrderRequest request) async {
+    ClientOrderResponse? clientOrderResponse = await _myOrdersManager.postClintOrder(request);
+    if (clientOrderResponse == null) return MyOrderState.error(S.current.networkError);
+    if (clientOrderResponse.statusCode != '201') return MyOrderState.error(StatusCodeHelper.getStatusCodeMessages(clientOrderResponse.statusCode));
+    return MyOrderState.empty();
   }
-  Future <DeletedOrderStatus> deleteClientOrder(int id) async {
+  Future <MyOrderState> deleteClientOrder(int id) async {
     ClientOrderResponse? clientOrderResponse = await _myOrdersManager.deleteClientOrder(id);
     if (clientOrderResponse == null) {
-      return DeletedOrderStatus.error(S.current.networkError);
+      return MyOrderState.error(S.current.networkError);
     } else {
       if (clientOrderResponse.statusCode == '204') {
-      return DeletedOrderStatus.empty();
+      return MyOrderState.empty();
       }
       else if (clientOrderResponse.statusCode == '425') {
-        return DeletedOrderStatus.error(ErrorMessages.getDeleteMessage(clientOrderResponse.data));
+        return MyOrderState.error(ErrorMessages.getDeleteMessage(clientOrderResponse.data));
       }
       else {
-        return DeletedOrderStatus.error(StatusCodeHelper.getStatusCodeMessages(int.parse(clientOrderResponse.statusCode??'500')));
+        return MyOrderState.error(StatusCodeHelper.getStatusCodeMessages(int.parse(clientOrderResponse.statusCode??'500')));
       }
     }
   }
-  Future <DeletedOrderStatus> updateClientOrder(ClientOrderRequest request) async {
+  Future <MyOrderState> updateClientOrder(ClientOrderRequest request) async {
     ClientOrderResponse? clientOrderResponse = await _myOrdersManager.updateClientOrder(request);
     if (clientOrderResponse == null) {
-      return DeletedOrderStatus.error(S.current.networkError);
-    } else {
-      if (clientOrderResponse.statusCode == '204') {
-        return DeletedOrderStatus.empty();
-      }
-      else if (clientOrderResponse.statusCode == '425') {
-        return DeletedOrderStatus.error(ErrorMessages.getDeleteMessage(clientOrderResponse.data));
-      }
-      else {
-        return DeletedOrderStatus.error(StatusCodeHelper.getStatusCodeMessages(int.parse(clientOrderResponse.statusCode??'500')));
-      }
+      return MyOrderState.error(S.current.networkError);
     }
+    if (clientOrderResponse.statusCode == '204') {
+        return MyOrderState.empty();
+      }
+    if (clientOrderResponse.statusCode == '425') {
+        return MyOrderState.error(ErrorMessages.getDeleteMessage(clientOrderResponse.data));
+    }
+    return MyOrderState.error(StatusCodeHelper.getStatusCodeMessages(clientOrderResponse.statusCode??'0'));
   }
 }

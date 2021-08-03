@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:twaslna_delivery/generated/l10n.dart';
 
 class CustomOrderDetailsAppBar extends StatelessWidget {
   final GestureTapCallback? editTap;
   final GestureTapCallback? deleteTap;
-
-  CustomOrderDetailsAppBar({this.editTap, this.deleteTap});
+  final bool collapsed;
+  CustomOrderDetailsAppBar({this.editTap, this.deleteTap,this.collapsed = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height:100,
       width: double.maxFinite,
       child: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16, top: 25),
         child: Flex(
           direction: Axis.horizontal,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
               borderRadius: BorderRadius.circular(10),
@@ -29,47 +30,56 @@ class CustomOrderDetailsAppBar extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(
                     Icons.arrow_back,
-                    color: Theme.of(context).disabledColor,
+                    color:collapsed? Colors.white :Theme.of(context).disabledColor,
                   ),
                 ),
               ),
             ),
-            Spacer(flex: 1,),
-            InkWell(
-              borderRadius: BorderRadius.circular(10),
-              onTap:deleteTap ?? (){},
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.85),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.delete,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            Container(width: 16,),
-            InkWell(
-              borderRadius: BorderRadius.circular(10),
-              onTap:editTap ?? () {},
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.85),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.edit,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
+           collapsed ? Text(S.current.deliverForMe,style: TextStyle(
+             fontSize: 20,
+             fontWeight: FontWeight.w600,
+             color: Colors.white,
+           ),) : Spacer(flex: 1,),
+           Flex(
+             direction: Axis.horizontal,
+             children: [
+               deleteTap != null ? InkWell(
+                 borderRadius: BorderRadius.circular(10),
+                 onTap:deleteTap,
+                 child: Container(
+                   decoration: BoxDecoration(
+                     color: Colors.red.withOpacity(0.85),
+                     borderRadius: BorderRadius.circular(10),
+                   ),
+                   child: Padding(
+                     padding: const EdgeInsets.all(8.0),
+                     child: Icon(
+                       Icons.delete,
+                       color: Colors.white,
+                     ),
+                   ),
+                 ),
+               ):Container(),
+               Container(width: 16,),
+               editTap!=null? InkWell(
+                 borderRadius: BorderRadius.circular(10),
+                 onTap:editTap,
+                 child: Container(
+                   decoration: BoxDecoration(
+                     color:collapsed ? Theme.of(context).cardColor.withOpacity(0.5) :Theme.of(context).primaryColor.withOpacity(0.85),
+                     borderRadius: BorderRadius.circular(10),
+                   ),
+                   child: Padding(
+                     padding: const EdgeInsets.all(8.0),
+                     child: Icon(
+                       Icons.edit,
+                       color: Colors.white,
+                     ),
+                   ),
+                 ),
+               ):Container(),
+             ],
+           ),
           ],
         ),
       ),

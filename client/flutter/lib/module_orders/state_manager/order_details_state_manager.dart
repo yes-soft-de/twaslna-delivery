@@ -7,6 +7,7 @@ import 'package:twaslna_delivery/module_orders/ui/screen/order_details_screen.da
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/order_details_loaded_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/order_details_state.dart';
+import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/orders_details_empty_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/orders_details_error_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/orders_details_loading_state.dart';
 import 'package:twaslna_delivery/utils/helpers/status_code_helper.dart';
@@ -21,22 +22,20 @@ class OrderDetailsStateManager {
   void getOrderDetails(int id,OrderDetailsScreenState screenState){
     _stateSubject.add(OrderDetailsLoadingState(screenState));
     _OrdersService.getOrdersDetails(id).then((value){
-      if (value != null){
-        if (value is String) {
-          _stateSubject.add(OrderDetailsErrorState(screenState,S.current.networkError));
-        }
-        else {
-          _stateSubject.add(OrderDetailsLoadedState(screenState,value));
-        }
+      if (value.hasError){
+        _stateSubject.add(OrderDetailsErrorState(screenState,value.error??S.current.errorHappened,id));
+      }
+      else if (value.isEmpty){
+        _stateSubject.add(OrderDetailsEmptyState(screenState,S.current.homeDataEmpty,id));
       }
       else {
-        _stateSubject.add(OrderDetailsErrorState(screenState,S.current.networkError));
+        _stateSubject.add(OrderDetailsLoadedState(screenState,value.data));
       }
     });
   }
   void deleteOrderDetails(int id,OrderDetailsScreenState screenState){
     _stateSubject.add(OrderDetailsLoadingState(screenState));
-    _OrdersService.deleteClientOrder(id).then((DeletedOrderStatus value){
+    _OrdersService.deleteClientOrder(id).then((MyOrderState value){
       if (value.hasError){
         screenState.deleteMessage(false,value.error??S.current.errorHappened);
       }
@@ -47,7 +46,7 @@ class OrderDetailsStateManager {
   }
   void updateOrderDetails(ClientOrderRequest request,OrderDetailsScreenState screenState){
     _stateSubject.add(OrderDetailsLoadingState(screenState));
-    _OrdersService.updateClientOrder(request).then((DeletedOrderStatus value){
+    _OrdersService.updateClientOrder(request).then((MyOrderState value){
       if (value.hasError){
         screenState.updateMessage(false,value.error??S.current.errorHappened);
       }

@@ -12,7 +12,7 @@ CustomOrderDetailsAppBar({required this.onTap,required this.onSave});
       height: 100,
       width: double.maxFinite,
       child: Padding(
-        padding:  EdgeInsets.only(left: 16.0, right: 16, top: MediaQuery.of(context).size.height * 0.01,),
+        padding:  EdgeInsets.only(left: 16.0, right: 16, top: MediaQuery.of(context).size.height * 0.025,),
         child: Align(
           alignment: AlignmentDirectional.centerStart,
           child:Flex(

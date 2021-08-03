@@ -1,58 +1,48 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
-import 'package:twaslna_delivery/module_orders/ui/screen/my_orders_screen.dart';
-import 'package:twaslna_delivery/module_orders/ui/state/my_orders/my_orders_state.dart';
+import 'package:twaslna_delivery/module_orders/ui/screen/order_status_screen.dart';
+import 'package:twaslna_delivery/module_orders/ui/state/order_status/order_status_state.dart';
 import 'package:twaslna_delivery/utils/components/custom_app_bar.dart';
 import 'package:twaslna_delivery/utils/images/images.dart';
+class OrderStatusEmptyState extends OrderStatusState {
+  final String empty;
+  final int id;
+  OrderStatusScreenState screenState;
 
-
-class MyOrdersErrorState extends MyOrdersState {
-  final String error;
-  MyOrdersScreenState screenState;
-
-  MyOrdersErrorState(this.screenState, this.error) : super(screenState);
+  OrderStatusEmptyState(this.screenState, this.empty,this.id) : super(screenState);
 
   @override
   Widget getUI(BuildContext context) {
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-      child: Container(
-        height: MediaQuery.of(context).size.height,
+    return Scaffold(
+      appBar: CustomTwaslnaAppBar.appBar(context, title:S.current.orderStatus),
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         child: Flex(
           direction: Axis.vertical,
           children: [
+            Container(height: 50,),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Flushbar(
-                title:S.of(context).thisErrorHappened,
-                message:error,
-                icon: Icon(
-                  Icons.info,
-                  size: 28.0,
-                  color: Colors.white,
+              padding: const EdgeInsets.all(16),
+              child: Center(
+                child: Text(
+                  empty,
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
                 ),
-                backgroundColor: Colors.red,
-                borderRadius: BorderRadius.circular(10),
-                flushbarStyle: FlushbarStyle.FLOATING,
               ),
             ),
-            Container(height: 24,),
             SvgPicture.asset(
-              ImageAsset.ERROR_SVG,
+              ImageAsset.EMPTY_SVG,
               height: MediaQuery.of(context).size.height * 0.5,
             ),
-            Container(height: 32,),
             Center(
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.red,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                         elevation: 0),
                     onPressed: () async {
-                    await  screenState.getOrders();
+                      screenState.getOrderStatus(id);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),

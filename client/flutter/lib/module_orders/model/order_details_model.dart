@@ -5,12 +5,46 @@ import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/utils/helpers/order_status_helper.dart';
 
 class OrderDetailsModel {
-  List<Item> carts;
-  StoreOwnerInfo storeInfo;
-  OrderInfo order;
+  List<Item> carts = [];
+  StoreOwnerInfo storeInfo = StoreOwnerInfo.Empty();
+  OrderInfo order = OrderInfo.Empty();
+  String? error;
+  bool empty = false;
+  OrderDetailsModel? orderDetailsModel;
 
   OrderDetailsModel(
       {required this.carts, required this.storeInfo, required this.order});
+
+  OrderDetailsModel.Error(this.error);
+
+  OrderDetailsModel.Empty() {
+    empty = true;
+  }
+
+  bool get isEmpty => empty;
+
+  bool get hasError => error != null;
+
+  OrderDetailsModel.Data(OrderDetailsResponse response) {
+    orderDetailsModel = OrderDetailsModel(
+        carts: toCartList(response.data?.orderDetails ?? <OrderDetails>[]),
+        order: toOrder(response.data?.order),
+        storeInfo: StoreOwnerInfo(
+          storeOwnerID: response.data?.storeOwner?.storeOwnerID ?? -1,
+          storeOwnerName:
+              response.data?.storeOwner?.storeOwnerName ?? S.current.storeOwner,
+          image:
+              'https://img.etimg.com/thumb/width-1200,height-900,imgsize-46347,resizemode-1,msid-79150455/news/international/business/pizza-hut-to-offer-pizzas-with-beyond-meat-sausages-in-u-s-uk.jpg',
+          imageURL:
+              'https://img.etimg.com/thumb/width-1200,height-900,imgsize-46347,resizemode-1,msid-79150455/news/international/business/pizza-hut-to-offer-pizzas-with-beyond-meat-sausages-in-u-s-uk.jpg',
+        ));
+  }
+
+  bool get hasData => orderDetailsModel != null;
+
+  OrderDetailsModel get data =>
+      orderDetailsModel ??
+      OrderDetailsModel(carts: carts, storeInfo: storeInfo, order: order);
 }
 
 class Item {
@@ -35,10 +69,11 @@ class Item {
 }
 
 class StoreOwnerInfo {
-  String storeOwnerName;
-  int storeOwnerID;
-  String image;
-  String imageURL;
+  String storeOwnerName = '';
+  int storeOwnerID = -1;
+  String image = '';
+  String imageURL = '';
+  bool empty = false;
 
   StoreOwnerInfo({
     required this.storeOwnerName,
@@ -46,32 +81,53 @@ class StoreOwnerInfo {
     required this.image,
     required this.imageURL,
   });
+
+  StoreOwnerInfo.Empty() {
+    empty = true;
+  }
+
+  bool get isEmpty => empty;
 }
 
 class OrderInfo {
-  int id;
-  OrderStatus state;
-  String roomID;
-  int ownerID;
-  String deliveryDate;
-  double deliveryCost;
-  double orderCost;
-  String payment;
+  int id = -1;
+  OrderStatus state = OrderStatus.WAITING;
+  String roomID = '';
+  int ownerID = -1;
+  String deliveryDate = '';
+  double deliveryCost = 0;
+  double orderCost = 0;
+  String payment = '';
   String? note;
   GeoJson? destination;
+  bool empty = false;
+  int orderType = 0;
+  String? orderDetails;
+  String? recipientName;
+  String? recipientPhoneNumber;
+  bool? removable;
+  OrderInfo(
+      {required this.id,
+      required this.state,
+      required this.roomID,
+      required this.ownerID,
+      required this.deliveryDate,
+      required this.orderCost,
+      required this.deliveryCost,
+      required this.payment,
+      this.note,
+      this.destination,
+      required this.orderType,
+      this.orderDetails,
+      this.recipientName,
+      this.recipientPhoneNumber,
+      required this.removable});
 
-  OrderInfo({
-    required this.id,
-    required this.state,
-    required this.roomID,
-    required this.ownerID,
-    required this.deliveryDate,
-    required this.orderCost,
-    required this.deliveryCost,
-    required this.payment,
-    this.note,
-    this.destination
-  });
+  OrderInfo.Empty() {
+    empty = true;
+  }
+
+  bool get isEmpty => empty;
 }
 
 List<Item> toCartList(List<OrderDetails> ordersItems) {
@@ -95,20 +151,34 @@ List<Item> toCartList(List<OrderDetails> ordersItems) {
 
 OrderInfo toOrder(Order? order) {
   if (order != null) {
-    print(order.ownerID);
+    bool timeout = false;
+    var date = DateTime.fromMillisecondsSinceEpoch(
+        (order.createdAt?.timestamp ?? DateTime.now().millisecondsSinceEpoch) *
+            1000);
+    if (DateTime.now().difference(date).inMinutes > 30) {
+      timeout = true;
+    }
     return OrderInfo(
         id: order.id ?? -1,
         state: StatusHelper.getStatusEnum(order.state),
         roomID: order.roomID ?? 'roomID',
         ownerID: order.ownerID ?? -1,
         orderCost: order.orderCost ?? 0,
-        deliveryDate: DateTime.fromMillisecondsSinceEpoch((order.deliveryDate?.timestamp ??
-                DateTime.now().millisecondsSinceEpoch) * 1000).toUtc().toIso8601String(),
+        deliveryDate: DateTime.fromMillisecondsSinceEpoch(
+                (order.deliveryDate?.timestamp ??
+                        DateTime.now().millisecondsSinceEpoch) *
+                    1000)
+            .toUtc()
+            .toIso8601String(),
         deliveryCost: order.deliveryCost ?? 0,
         payment: order.payment!,
         note: order.note,
-        destination: order.destination
-    );
+        destination: order.destination,
+        orderType: order.orderType ?? 0,
+        orderDetails: order.detail,
+        recipientName: order.recipientName,
+        recipientPhoneNumber: order.recipientPhone,
+        removable: !timeout);
   } else {
     return OrderInfo(
         id: -1,
@@ -118,6 +188,8 @@ OrderInfo toOrder(Order? order) {
         deliveryDate: DateFormat('dd-MM-yyyy').format(DateTime.now()),
         orderCost: 0,
         deliveryCost: 0,
-        payment: 'cash');
+        payment: 'cash',
+        orderType: 0,
+        removable: false);
   }
 }

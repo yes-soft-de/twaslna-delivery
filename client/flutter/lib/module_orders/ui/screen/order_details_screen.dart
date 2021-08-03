@@ -6,6 +6,7 @@ import 'package:twaslna_delivery/module_orders/request/client_order_request.dart
 import 'package:twaslna_delivery/module_orders/state_manager/order_details_state_manager.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/order_details_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/orders_details_loading_state.dart';
+import 'package:twaslna_delivery/module_orders/ui/widget/order_details/custom_alert_dialog.dart';
 import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 @injectable
 class OrderDetailsScreen extends StatefulWidget {
@@ -58,10 +59,18 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   // methods
   void deleteOrder(int id){
-    widget._stateManager.deleteOrderDetails(id, this);
+    showDialog(context: context, builder:(_){
+      return CustomAlertDialog(onPressed: (){
+        Navigator.of(context).pop();
+        widget._stateManager.deleteOrderDetails(id, this);
+      },);
+    });
   }
  void updateClientOrder() {
     widget._stateManager.updateOrderDetails(clientOrderRequest!, this);
+ }
+ void getOrderDetails(int id){
+   widget._stateManager.getOrderDetails(id, this);
  }
   @override
   void initState() {

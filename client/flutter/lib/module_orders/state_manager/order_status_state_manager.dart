@@ -3,6 +3,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:twaslna_delivery/module_orders/service/orders_service.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_orders/ui/screen/order_status_screen.dart';
+import 'package:twaslna_delivery/module_orders/ui/state/order_status/order_status_empty_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_status/order_status_loaded_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_status/order_status_loading_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_status/order_status_state.dart';
@@ -17,16 +18,14 @@ class OrderStatusStateManager {
   void getOrderDetails(int id,OrderStatusScreenState screenState){
     _stateSubject.add(OrderStatusLoadingState(screenState));
     _OrdersService.getOrdersDetails(id).then((value){
-      if (value != null){
-        if (value is int) {
-          _stateSubject.add(OrderStatusErrorState(screenState,S.current.networkError));
-        }
-        else {
-          _stateSubject.add(OrderStatusLoadedState(screenState,value));
-        }
+      if (value.hasError){
+        _stateSubject.add(OrderStatusErrorState(screenState,value.error!,id));
+      }
+      else if (value.isEmpty){
+        _stateSubject.add(OrderStatusEmptyState(screenState,S.current.homeDataEmpty,id));
       }
       else {
-        _stateSubject.add(OrderStatusErrorState(screenState,S.current.networkError));
+        _stateSubject.add(OrderStatusLoadedState(screenState,value.data));
       }
     });
   }

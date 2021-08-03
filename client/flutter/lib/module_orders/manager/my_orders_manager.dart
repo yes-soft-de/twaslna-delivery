@@ -13,7 +13,7 @@ class MyOrdersManager {
 
   Future <MyOrdersResponse?> getOrders() => _myOrdersRepository.getOrders();
   Future <OrderDetailsResponse?> getOrderDetails(int id) => _myOrdersRepository.getOrdersDetails(id);
-  Future <int?> postClintOrder(ClientOrderRequest request) => _myOrdersRepository.postClientOrder(request);
+  Future <ClientOrderResponse?> postClintOrder(ClientOrderRequest request) => _myOrdersRepository.postClientOrder(request);
   Future <ClientOrderResponse?> deleteClientOrder(int id) => _myOrdersRepository.deleteClientOrder(id);
   Future <ClientOrderResponse?> updateClientOrder(ClientOrderRequest request) => _myOrdersRepository.updateClientOrder(request);
 

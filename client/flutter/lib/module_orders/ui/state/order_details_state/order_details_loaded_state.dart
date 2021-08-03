@@ -11,6 +11,8 @@ import 'package:twaslna_delivery/module_orders/ui/widget/order_details/bill.dart
 import 'package:twaslna_delivery/module_orders/ui/widget/order_details/order_chip.dart';
 import 'package:twaslna_delivery/module_orders/ui/widget/order_details/order_details_app_bar.dart';
 import 'package:twaslna_delivery/module_orders/ui/widget/order_details/order_details_title_bar.dart';
+import 'package:twaslna_delivery/module_our_services/ui/widget/custom_field_send_it.dart';
+import 'package:twaslna_delivery/module_our_services/ui/widget/label_text.dart';
 import 'package:twaslna_delivery/utils/helpers/order_status_helper.dart';
 
 class OrderDetailsLoadedState extends OrderDetailsState {
@@ -26,20 +28,22 @@ class OrderDetailsLoadedState extends OrderDetailsState {
     var width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
-        Image.network(
+        orderDetails.order.orderType != 3 ? Image.network(
           orderDetails.storeInfo.image,
           height: height,
           width: width,
           fit: BoxFit.cover,
-        ),
+        ) : Container(color: Theme.of(context).primaryColor,height:height,width:width,),
         CustomOrderDetailsAppBar(
-          editTap: () {
-            screenState.currentState = OrderDetailsEditState(screenState,orderDetails);
+          editTap:orderDetails.order.state == OrderStatus.WAITING || orderDetails.order.state == OrderStatus.GOT_CAPTAIN ? () {
+            screenState.currentState =
+                OrderDetailsEditState(screenState, orderDetails);
             screenState.refresh();
-          },
-          deleteTap: () {
-            screenState.deleteOrder(screenState.orderNumber??-1);
-          },
+          }:null,
+          deleteTap:orderDetails.order.removable! && orderDetails.order.state == OrderStatus.WAITING ? () {
+            screenState.deleteOrder(screenState.orderNumber ?? -1);
+          }:null,
+         collapsed:orderDetails.order.orderType == 3,
         ),
         Align(
           alignment: Alignment.bottomCenter,
@@ -47,16 +51,16 @@ class OrderDetailsLoadedState extends OrderDetailsState {
             direction: Axis.vertical,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Padding(
+              orderDetails.order.orderType == 3 ?Container(): Padding(
                 padding:
                     const EdgeInsets.only(right: 28.0, left: 28, bottom: 16),
                 child: OrderDetailsTitleBar(
                   title: orderDetails.storeInfo.storeOwnerName,
                   rate: 4.7,
                 ),
-              ),
+              ) ,
               Container(
-                height: height * 0.70,
+                height:orderDetails.order.orderType == 3 ? height * 0.875 : height * 0.70,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
                   color: Theme.of(context).cardColor,
@@ -119,40 +123,7 @@ class OrderDetailsLoadedState extends OrderDetailsState {
                               ),
                             ),
                           ),
-                          orderDetails.carts.isNotEmpty
-                              ? Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 16, right: 16),
-                                  child: ListTile(
-                                    leading: Icon(
-                                      Icons.shopping_cart_rounded,
-                                      color: Theme.of(context).disabledColor,
-                                      size: 25,
-                                    ),
-                                    title: Text(
-                                      S.of(context).orderList,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18),
-                                    ),
-                                  ),
-                                )
-                              : Container(),
-                          orderDetails.carts.isNotEmpty
-                              ? ListView(
-                                  physics: ScrollPhysics(),
-                                  shrinkWrap: true,
-                                  children: getOrdersList(orderDetails.carts),
-                                )
-                              : Container(),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: BillCard(
-                              id: screenState.orderNumber!,
-                              deliveryCost: orderDetails.order.deliveryCost,
-                              orderCost: orderDetails.order.orderCost,
-                            ),
-                          ),
+                          getOrderTypeWidget(orderDetails.order.orderType),
                           SizedBox(
                             height: 35,
                           ),
@@ -169,6 +140,172 @@ class OrderDetailsLoadedState extends OrderDetailsState {
     );
   }
 
+  Widget getOrderTypeWidget(int orderType) {
+    var context = screenState.context;
+    String note = orderDetails.order.note ?? '';
+    if (orderType == 1) {
+      return Flex(
+        direction: Axis.vertical,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: ListTile(
+              leading: Icon(
+                Icons.shopping_cart_rounded,
+                color: Theme.of(context).disabledColor,
+                size: 25,
+              ),
+              title: Text(
+                S.of(context).orderList,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            ),
+          ),
+          ListView(
+            physics: ScrollPhysics(),
+            shrinkWrap: true,
+            children: getOrdersList(orderDetails.carts),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: BillCard(
+              id: screenState.orderNumber!,
+              deliveryCost: orderDetails.order.deliveryCost,
+              orderCost: orderDetails.order.orderCost,
+            ),
+          )
+        ],
+      );
+    } else if (orderType == 2) {
+      return Flex(
+        direction: Axis.vertical,
+        children: [
+          ListTile(
+            title: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(S.current.orderDetails),
+            ),
+            subtitle: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Theme.of(screenState.context).backgroundColor,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  orderDetails.order.orderDetails ?? '',
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            ),
+          ),
+          note.isNotEmpty ? ListTile(
+            title: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(S.current.note),
+            ),
+            subtitle: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Theme.of(screenState.context).backgroundColor,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  orderDetails.order.note ?? '',
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            ),
+          ):Container(),
+        ],
+      );
+    } else if (orderType == 3) {
+      return Flex(
+        direction: Axis.vertical,
+        children: [
+          ListTile(
+            title: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(S.current.orderDetails),
+            ),
+            subtitle: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Theme.of(screenState.context).backgroundColor,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  orderDetails.order.orderDetails ?? '',
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            ),
+          ),
+          note.isNotEmpty ? ListTile(
+            title: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(S.current.note),
+            ),
+            subtitle: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Theme.of(screenState.context).backgroundColor,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  orderDetails.order.note ?? '',
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            ),
+          ):Container(),
+          ListTile(
+            title: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(S.current.recipientName),
+            ),
+            subtitle: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Theme.of(screenState.context).backgroundColor,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  orderDetails.order.recipientName ?? '',
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            ),
+          ),
+          ListTile(
+            title: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(S.current.recipientPhoneNumber),
+            ),
+            subtitle: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Theme.of(screenState.context).backgroundColor,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  orderDetails.order.recipientPhoneNumber ?? '',
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+    return Container();
+  }
+
   List<Widget> getOrdersList(List<Item> carts) {
     List<Widget> orderChips = [];
     carts.forEach((element) {
@@ -177,7 +314,7 @@ class OrderDetailsLoadedState extends OrderDetailsState {
         image: element.productImage,
         price: element.productPrice,
         currency: S.current.sar,
-        quantity: (q,p) {},
+        quantity: (q, p) {},
         editable: false,
         defaultQuantity: element.countProduct,
       ));

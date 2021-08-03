@@ -1,7 +1,6 @@
-class DeletedOrderStatus {
+class MyOrderState {
   String? error;
-
-  DeletedOrderStatus.error(this.error);
-  DeletedOrderStatus.empty();
+  MyOrderState.error(this.error);
+  MyOrderState.empty();
   bool get hasError => error != null ;
 }

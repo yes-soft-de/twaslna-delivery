@@ -23,7 +23,9 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
       setState(() {});
     }
   }
-
+ void getOrderStatus(int id){
+   widget._stateManager.getOrderDetails(id, this);
+ }
   @override
   void initState() {
     super.initState();
