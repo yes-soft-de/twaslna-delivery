@@ -5,6 +5,7 @@ class StatusCodeHelper {
     if (statusCode is int) {
       statusCode = statusCode.toString();
     }
+    statusCode ??= '0';
     switch (statusCode) {
       case '200':
         return S.current.statusCodeOk;
@@ -18,6 +19,8 @@ class StatusCodeHelper {
         return S.current.StatusCodeNotFound;
       case '500':
         return S.current.internalServerError;
+      case '-1':
+        return S.current.dataDecodeError;
       default:
         return S.current.errorHappened;
     }
