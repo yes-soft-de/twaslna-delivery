@@ -1,24 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:intl/intl.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
-import 'package:twaslna_delivery/module_account/ui/widget/custom_field.dart';
-import 'package:twaslna_delivery/module_account/ui/widget/update_button.dart';
-import 'package:twaslna_delivery/utils/text_style/text_style.dart';
+import 'package:twaslna_delivery/module_account/account_routes.dart';
+import 'package:twaslna_delivery/module_account/model/profile_model.dart';
+import 'package:twaslna_delivery/module_account/request/profile_request.dart';
+import 'package:twaslna_delivery/module_account/state_manager/presonal_data_state_manager.dart';
+import 'package:twaslna_delivery/module_account/ui/state/personal_data/personal_data_loaded_state.dart';
+import 'package:twaslna_delivery/module_account/ui/state/personal_data/personal_data_state.dart';
+import 'package:twaslna_delivery/module_main/main_routes.dart';
+import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 
 @injectable
 class PersonalDataScreen extends StatefulWidget {
+ final PersonalDataStateManager _personalDataStateManager;
+
+ PersonalDataScreen(this._personalDataStateManager);
+
   @override
-  _PersonalDataScreenState createState() => _PersonalDataScreenState();
+  PersonalDataScreenState createState() => PersonalDataScreenState();
 }
 
-class _PersonalDataScreenState extends State<PersonalDataScreen> {
-  final GlobalKey<FormState> _personal_data = GlobalKey<FormState>();
-  TextEditingController dateController = TextEditingController();
-  String? genders = '' ;
-  var gender ;
+class PersonalDataScreenState extends State<PersonalDataScreen> {
+  PersonalDataState? currentState;
+  void refresh(){
+    if(mounted){
+      setState(() {
+      });
+    }
+  }
+  void moveDecision(bool success, [String err = '']) {
+    if (success) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false,arguments: 3);
+      CustomFlushBarHelper.createSuccess(
+        title: S.of(context).warnning,
+        message: S.of(context).uploadProfileSuccess,
+      )..show(context);
+    } else {
+      Navigator.of(context).pop();
+      CustomFlushBarHelper.createError(
+          title: S.of(context).warnning, message: err)
+        ..show(context);
+    }
+  }
+  @override
+  void initState() {
+    super.initState();
+    widget._personalDataStateManager.stateStream.listen((event) {
+      currentState = event;
+      refresh();
+    });
+  }
+  bool  flagData = true ;
+  void postClientProfile(ProfileRequest request){
+    widget._personalDataStateManager.postClientProfile(this, request);
+  }
+  void uploadImage(ProfileModel profileModel , String imagePath){
+    widget._personalDataStateManager.uploadImage(imagePath, this, profileModel);
+  }
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute.of(context)?.settings.arguments;
+    if (flagData && args is ProfileModel) {
+      flagData = false;
+      currentState = PersonalDataLoadedState(this,args);
+      refresh();
+    }
     return GestureDetector(
       onTap: () {
         var focus = FocusScope.of(context);
@@ -58,173 +105,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
           ),
           elevation: 0,
         ),
-        body:Stack(
-          children: [
-            ListView(
-              physics: BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics()),
-              children: [
-                SizedBox(
-                  height: 16,
-                ),
-                Container(
-                  height: 150,
-                  child: Center(
-                    child: SizedBox(
-                      width: 150,
-                      height: 150,
-                      child: Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(18),
-                            child: Image.network(
-                              'https://img.bundesliga.com/tachyon/sites/2/2021/06/kimmich-look-fcb-bayern.jpg?crop=128px,0px,1351px,1080px',
-                              fit: BoxFit.cover,
-                              width: 150,
-                              height: 150,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Align(
-                              alignment: AlignmentDirectional.bottomEnd,
-                              child: Opacity(
-                                opacity: 0.9,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(18),
-                                      color: Theme.of(context).primaryColor),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Icon(
-                                      Icons.add_a_photo_rounded,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Form(
-                  key: _personal_data,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 16.0, left: 16),
-                    child: Flex(
-                      direction: Axis.vertical,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ListTile(
-                          title: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              S.of(context).name,
-                              style: TextStyle(fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          subtitle: CustomFormField(
-                            preIcon: Icon(Icons.person),
-                            hintText: S.of(context).nameHint,
-                          ),
-                        ),
-                        ListTile(
-                          title: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              S.of(context).birthDate,
-                              style: TextStyle(fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          subtitle: CustomFormField(
-                            readOnly: true,
-                            preIcon: Icon(Icons.calendar_today_rounded),
-                            hintText: S.of(context).birthDateHint,
-                            controller: dateController,
-                            onTap: () {
-                              showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1900, 1, 1),
-                                lastDate: DateTime.now(),
-                              ).then((value) {
-                                if (value != null) {
-                                  dateController.text =
-                                      DateFormat('yyyy - MM - dd').format(value);
-                                  setState(() {});
-                                }
-                              });
-                            },
-                          ),
-                        ),
-                        ListTile(
-                          title: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              S.of(context).gender,
-                              style: TextStyle(fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          subtitle:Flex(
-                            direction: Axis.horizontal,
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Theme.of(context).backgroundColor,
-                                  ),
-                                  child: RadioListTile(
-                                    title: Text(S.of(context).male),
-                                    value:'male',
-                                    groupValue:genders,
-                                    onChanged: (String? value){
-                                      genders = value;
-                                      setState(() {
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 16,),
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Theme.of(context).backgroundColor,
-                                  ),
-                                  child: RadioListTile(
-                                    title: Text(S.of(context).female),
-                                    value:'female',
-                                    groupValue:genders,
-                                    onChanged: (String? value){
-                                      genders = value;
-                                      setState(() {
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-              ],
-            ),
-            Align(
-                alignment: Alignment.bottomCenter,
-                child: UpdateButton(onPressed:(){})),
-          ],
-        ),
+        body:currentState?.getUI(context),
       ),
     );
   }

@@ -21,7 +21,6 @@ class _CustomFormFieldState extends State<CustomFormField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: widget.height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: Theme

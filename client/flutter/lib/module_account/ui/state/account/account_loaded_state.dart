@@ -1,6 +1,6 @@
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_account/account_routes.dart';
+import 'package:twaslna_delivery/module_account/model/profile_model.dart';
 import 'package:twaslna_delivery/module_account/ui/screen/account_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/module_account/ui/state/account/account_state.dart';
@@ -8,12 +8,12 @@ import 'package:twaslna_delivery/module_account/ui/widget/account_app_bar.dart';
 import 'package:twaslna_delivery/module_account/ui/widget/account_tile.dart';
 import 'package:twaslna_delivery/module_account/ui/widget/account_unsigned_app_bar.dart';
 import 'package:twaslna_delivery/module_settings/setting_routes.dart';
-import 'package:twaslna_delivery/utils/text_style/text_style.dart';
 
 class AccountLoadedState extends AccountState {
   AccountScreenState screenState;
   bool signIn;
-  AccountLoadedState(this.screenState,{required this.signIn}) : super(screenState);
+  ProfileModel? profileModel;
+  AccountLoadedState(this.screenState,{required this.signIn ,this.profileModel}) : super(screenState);
 
   @override
   Widget getUI(BuildContext context) {
@@ -22,7 +22,7 @@ class AccountLoadedState extends AccountState {
       child: ListView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         children: [
-          signIn?AccountAppBar():AccountUnsignedAppBar(),
+          signIn?AccountAppBar(profileModel):AccountUnsignedAppBar(),
           Padding(
             padding: const EdgeInsets.only(right: 25.0, left: 25),
             child: Divider(
@@ -31,7 +31,7 @@ class AccountLoadedState extends AccountState {
             ),
           ),
           signIn?AccountTile(text:S.of(context).personalData,icon:Icons.person,onTap: (){
-            Navigator.of(context).pushNamed(AccountRoutes.PERSONAL_DATA);
+            Navigator.of(context).pushNamed(AccountRoutes.PERSONAL_DATA,arguments: profileModel);
           },):Container(),
           AccountTile(text:S.of(context).settings,icon:Icons.settings,onTap: (){
             Navigator.of(context).pushNamed(SettingRoutes.ROUTE_SETTINGS);

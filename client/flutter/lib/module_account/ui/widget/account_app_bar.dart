@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:twaslna_delivery/consts/urls.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_account/model/profile_model.dart';
+import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
+import 'package:twaslna_delivery/utils/images/images.dart';
 import 'package:twaslna_delivery/utils/text_style/text_style.dart';
 
 class AccountAppBar extends StatelessWidget {
+  final ProfileModel? profileModel;
+
+  AccountAppBar(this.profileModel);
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +44,16 @@ class AccountAppBar extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
-                    'https://m.media-amazon.com/images/M/MV5BY2JkZGI2NzYtYTA1NS00YWU1LWE0OTUtNWI4ZjQ4YTRlOTJjXkEyXkFqcGdeQXVyMjUyNDk2ODc@._V1_.jpg',
+                    Urls.IMAGES_ROOT +'${profileModel?.image??''}',
                     fit: BoxFit.cover,
+                    errorBuilder: (context,error,t){
+                      return Image.asset(ImageAsset.LOGO);
+                    },
                   ),
                 ),
               ),
               Container(width: 16,),
-              Text('Kimmich',style: TextStyle(
+              Text(profileModel?.name??'${S.of(context).username}',style: TextStyle(
                   fontSize: 17.5,
                   fontWeight: FontWeight.bold
               ),),
