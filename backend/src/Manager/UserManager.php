@@ -473,14 +473,13 @@ class UserManager
 
     public function updateClientProfile(ClientProfileUpdateRequest $request)
     {
-        $item = $this->clientProfileEntityRepository->findOneBy(['userID'=>$request->getClientID()]);
-
+        $item = $this->clientProfileEntityRepository->findOneBy(['clientID'=>$request->getClientID()]);
+       
         if ($item) {
             $item = $this->autoMapping->mapToObject(ClientProfileUpdateRequest::class, ClientProfileEntity::class, $request, $item);
 
             $this->entityManager->flush();
             $this->entityManager->clear();
-
             return $item;
         }
     }
