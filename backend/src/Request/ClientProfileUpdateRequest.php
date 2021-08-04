@@ -4,15 +4,13 @@ namespace App\Request;
 
 class ClientProfileUpdateRequest
 {
-    private $id;
+    // private $id;
 
     private $clientID;
 
     private $clientName;
 
     private $image;
-
-    private $roomID;
     
     private $phone;
 
@@ -21,10 +19,10 @@ class ClientProfileUpdateRequest
     /**
      * @return mixed
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    // public function getId()
+    // {
+    //     return $this->id;
+    // }
 
     /**
      * @return mixed
@@ -73,34 +71,6 @@ class ClientProfileUpdateRequest
     // {
     //     $this->story = $story;
     // }
-
-    // /**
-    //  * @return mixed
-    //  */
-    // public function getImage()
-    // {
-    //     return $this->image;
-    // }
-
-    // /**
-    //  * @param mixed $image
-    //  */
-    // public function setImage($image): void
-    // {
-    //     $this->image = $image;
-    // }
-
-    public function getRoomID(): ?string
-    {
-        return $this->roomID;
-    }
-
-    public function setRoomID(?string $roomID): self
-    {
-        $this->roomID = $roomID;
-
-        return $this;
-    }
 
     /**
      * @return mixed
