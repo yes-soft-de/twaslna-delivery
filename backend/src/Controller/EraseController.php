@@ -39,7 +39,6 @@ class EraseController extends BaseController
 {
     /**
      * @Route("eraseAll", name="deleteAllData", methods={"DELETE"})
-     * @IsGranted("ROLE_ADMIN")
      * 
      */
     public function eraseAllData()
@@ -191,5 +190,75 @@ class EraseController extends BaseController
             }
     
             return $this->response("DELETED", self::DELETE);
+    }
+    /**
+     * @Route("eraseOrder", name="deleteAllDataOfOrderAndOrderDetail", methods={"DELETE"})
+     * 
+     */
+    public function eraseOrder()
+    {
+        try
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->getRepository(OrderDetailEntity::class)->createQueryBuilder('AnnouncementEntity')
+                ->delete()
+                ->getQuery()
+                ->execute();
+
+            $em->getRepository(OrderEntity::class)->createQueryBuilder('OrderEntity')
+                ->delete()
+                ->getQuery()
+                ->execute();
+
+            $em->getRepository(OrderLogEntity::class)->createQueryBuilder('OrderLogEntity')
+                ->delete()
+                ->getQuery()
+                ->execute();
+            }
+            catch (\Exception $ex)
+            {
+                return $this->json($ex);
+            }
+    
+            return $this->response("DELETED", self::DELETE);
+    }
+
+    /**
+     * @Route("eraseCaptain", name="deleteAllDataOfCaptain", methods={"DELETE"})
+     * 
+     */
+    public function eraseCaptainProfile()
+    {
+        try
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->getRepository(CaptainPaymentEntity::class)->createQueryBuilder('CaptainPaymentEntity')
+                ->delete()
+                ->getQuery()
+                ->execute();
+
+            $em->getRepository(CaptainProfileEntity::class)->createQueryBuilder('CaptainProfileEntity')
+                ->delete()
+                ->getQuery()
+                ->execute();
+
+            $em->getRepository(CaptainTermEntity::class)->createQueryBuilder('CaptainTermEntity')
+                ->delete()
+                ->getQuery()
+                ->execute();
+
+            $em->getRepository(CaptainVacationEntity::class)->createQueryBuilder('CaptainVacationEntity')
+                ->delete()
+                ->getQuery()
+                ->execute();
+            }
+            catch (\Exception $ex)
+                {
+                    return $this->json($ex);
+                }
+        
+                return $this->response("DELETED", self::DELETE);        
     }
 }

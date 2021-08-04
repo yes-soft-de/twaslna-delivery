@@ -41,7 +41,6 @@ class ClientProfileController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
         
-
         $request = $this->autoMapping->map(stdClass::class, UserRegisterRequest::class, (object)$data);
 
         $violations = $this->validator->validate($request);
@@ -86,7 +85,7 @@ class ClientProfileController extends BaseController
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, ClientProfileUpdateRequest::class, (object)$data);
-        $request->setUserID($this->getUserId());
+        $request->setClientID($this->getUserId());
 
         $response = $this->clientProfileService->updateClientProfile($request);
 
