@@ -49,6 +49,7 @@ class Data {
         ? StoreOwner.fromJson(json['storeOwner'])
         : null;
     order = json['order'] != null ? Order.fromJson(json['order']) : null;
+    order = json['order'] != null ? Order.fromJson(json['order']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -90,13 +91,13 @@ class Order {
   dynamic updatedAt;
   String? note;
   String? payment;
-  dynamic recipientName;
-  dynamic recipientPhone;
+  String? recipientName;
+  String ?recipientPhone;
   String? state;
   String? roomID;
   dynamic captainID;
   CreatedAt? createdAt;
-  dynamic detail;
+  String? detail;
   double? deliveryCost;
   double? orderCost;
   int? orderType;
@@ -324,7 +325,7 @@ class StoreOwner {
   String? storeOwnerName;
   int? storeOwnerID;
   String? image;
-  dynamic? branch;
+  dynamic branch;
   bool? free;
   List<Branches>? branches;
   dynamic city;

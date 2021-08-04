@@ -1,5 +1,6 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_orders/model/order_details_model.dart';
 import 'package:twaslna_delivery/module_orders/request/client_order_request.dart';
@@ -11,6 +12,11 @@ import 'package:twaslna_delivery/module_orders/ui/widget/order_details/custom_or
 import 'package:twaslna_delivery/module_orders/ui/widget/order_details/order_chip.dart';
 import 'package:twaslna_delivery/module_our_services/ui/widget/custom_field_send_it.dart';
 import 'package:twaslna_delivery/module_our_services/ui/widget/label_text.dart';
+import 'package:twaslna_delivery/module_stores/presistance/cart_hive_box_helper.dart';
+import 'package:twaslna_delivery/module_stores/store_routes.dart';
+import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
+import 'package:twaslna_delivery/utils/images/images.dart';
+import 'package:twaslna_delivery/utils/models/store.dart';
 
 class OrderDetailsEditState extends OrderDetailsState {
   OrderDetailsScreenState screenState;
@@ -19,22 +25,21 @@ class OrderDetailsEditState extends OrderDetailsState {
   OrderDetailsEditState(this.screenState, this.orderDetails)
       : super(screenState) {
     screenState.clientOrderRequest = ClientOrderRequest(
-      ownerID: orderDetails.order.ownerID,
-      payment: orderDetails.order.payment,
-      note: orderDetails.order.note,
-      orderNumber: screenState.orderNumber,
-      destination: GeoJson(
-          long: orderDetails.order.destination?.long,
-          lat: orderDetails.order.destination?.lat),
-      deliveryDate: orderDetails.order.deliveryDate,
-      deliveryCost: orderDetails.order.deliveryCost,
-      orderCost: orderDetails.order.orderCost,
-      products: toProducts(orderDetails.carts),
-      detail: orderDetails.order.orderDetails,
-      recipientName: orderDetails.order.recipientName,
-      recipientPhone: orderDetails.order.recipientPhoneNumber,
-      orderType: orderDetails.order.orderType
-    );
+        ownerID: orderDetails.order.ownerID,
+        payment: orderDetails.order.payment,
+        note: orderDetails.order.note,
+        orderNumber: screenState.orderNumber,
+        destination: GeoJson(
+            long: orderDetails.order.destination?.long,
+            lat: orderDetails.order.destination?.lat),
+        deliveryDate: orderDetails.order.deliveryDate,
+        deliveryCost: orderDetails.order.deliveryCost,
+        orderCost: orderDetails.order.orderCost,
+        products: toProducts(orderDetails.carts),
+        detail: orderDetails.order.orderDetails,
+        recipientName: orderDetails.order.recipientName,
+        recipientPhone: orderDetails.order.recipientPhoneNumber,
+        orderType: orderDetails.order.orderType);
     total = orderDetails.order.orderCost;
     orderDetailsController.text = orderDetails.order.orderDetails ?? '';
     noteController.text = orderDetails.order.note ?? '';
@@ -48,6 +53,7 @@ class OrderDetailsEditState extends OrderDetailsState {
   TextEditingController receiptNameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   final GlobalKey<FormState> _edit = GlobalKey<FormState>();
+  final CartHiveHelper cartHiveHelper = CartHiveHelper();
 
   @override
   Widget getUI(BuildContext context) {
@@ -55,86 +61,123 @@ class OrderDetailsEditState extends OrderDetailsState {
     var width = MediaQuery.of(context).size.width;
     return WillPopScope(
       onWillPop: () async {
+        await cartHiveHelper.deleteCart();
         screenState.currentState =
             OrderDetailsLoadedState(screenState, orderDetails);
         screenState.refresh();
         return false;
       },
-      child: Stack(
-        children: [
-          Container(
-            height: height,
-            width: width,
-            color: Theme.of(context).primaryColor,
-          ),
-          CustomOrderDetailsAppBar(
-            onTap: () {
-              screenState.currentState =
-                  OrderDetailsLoadedState(screenState, orderDetails);
-              screenState.refresh();
-            },
-            onSave: () {
-              if (orderDetails.order.orderType != 1){
-                screenState.clientOrderRequest?.products = null;
-                screenState.clientOrderRequest?.detail = orderDetailsController.text.isEmpty ? null : orderDetailsController.text;
-                screenState.clientOrderRequest?.note =noteController.text.isEmpty ? null : noteController.text;
-                screenState.clientOrderRequest?.recipientName =receiptNameController.text.isEmpty ? null : receiptNameController.text;
-                screenState.clientOrderRequest?.recipientPhone = phoneNumberController.text.isEmpty ? null : phoneNumberController.text;
-              if (orderDetails.order.orderType == 3){
-                screenState.clientOrderRequest?.ownerID = null;
-              }
-              if (_edit.currentState!.validate()){
-                screenState.updateClientOrder();
-              }
-              }
-              else {
-                screenState.updateClientOrder();
-              }
-            },
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: height * 0.89,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
-                color: Theme.of(context).cardColor,
+      child: ValueListenableBuilder(
+        valueListenable:
+            Hive.box('Order').listenable(keys: [cartHiveHelper.cartKey]),
+        builder: (context, box, widget) {
+          if (cartHiveHelper.getProduct() != null) {
+            screenState.clientOrderRequest?.products =
+                cartHiveHelper.getProduct();
+            if (cartHiveHelper.getFinish()) {
+              cartHiveHelper.deleteCart();
+            }
+            updateTotal();
+          }
+          return Stack(
+            children: [
+              Container(
+                height: height,
+                width: width,
+                color: Theme.of(context).primaryColor,
               ),
-              child: Stack(
-                children: [
-                  ListView(
-                    padding: EdgeInsets.all(8),
-                    physics: BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
+              CustomOrderDetailsAppBar(
+                onTap: () {
+                  cartHiveHelper.deleteCart().whenComplete(() {
+                    screenState.currentState =
+                        OrderDetailsLoadedState(screenState, orderDetails);
+                    screenState.refresh();
+                  });
+                },
+                onSave: () {
+                  if (orderDetails.order.orderType != 1) {
+                    screenState.clientOrderRequest?.products = null;
+                    screenState.clientOrderRequest?.detail =
+                        orderDetailsController.text.isEmpty
+                            ? null
+                            : orderDetailsController.text;
+                    screenState.clientOrderRequest?.note =
+                        noteController.text.isEmpty
+                            ? null
+                            : noteController.text;
+                    screenState.clientOrderRequest?.recipientName =
+                        receiptNameController.text.isEmpty
+                            ? null
+                            : receiptNameController.text;
+                    screenState.clientOrderRequest?.recipientPhone =
+                        phoneNumberController.text.isEmpty
+                            ? null
+                            : phoneNumberController.text;
+                    if (orderDetails.order.orderType == 3) {
+                      screenState.clientOrderRequest?.ownerID = null;
+                    }
+                    if (_edit.currentState!.validate()) {
+                      screenState.updateClientOrder();
+                    }
+                  } else {
+                    if (screenState.clientOrderRequest!.products!.isEmpty) {
+                      CustomFlushBarHelper.createError(
+                              title: S.current.warnning,
+                              message: S.current.yourCartEmpty)
+                          .show(context);
+                    } else {
+                      screenState.updateClientOrder();
+                    }
+                  }
+                },
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: height * 0.89,
+                  decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(18)),
+                    color: Theme.of(context).cardColor,
+                  ),
+                  child: Stack(
                     children: [
-                      ListTile(
-                        leading: Icon(Icons.info),
-                        title: Text(S.of(context).updateOrderNote),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 16.0, left: 16.0),
-                        child: Divider(
-                          color: Theme.of(context).backgroundColor,
-                          thickness: 2.5,
-                        ),
-                      ),
-                      getOrderTypeWidget(orderDetails.order.orderType),
-                      SizedBox(
-                        height: 75,
+                      ListView(
+                        padding: EdgeInsets.all(8),
+                        physics: BouncingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics()),
+                        children: [
+                          ListTile(
+                            leading: Icon(Icons.info),
+                            title: Text(S.of(context).updateOrderNote),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 16.0, left: 16.0),
+                            child: Divider(
+                              color: Theme.of(context).backgroundColor,
+                              thickness: 2.5,
+                            ),
+                          ),
+                          getOrderTypeWidget(
+                              orderDetails.order.orderType, context),
+                          SizedBox(
+                            height: 75,
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }
 
-  Widget getOrderTypeWidget(int orderType) {
-    var context = screenState.context;
+  Widget getOrderTypeWidget(int orderType, BuildContext context) {
     if (orderType == 1) {
       return Flex(
         direction: Axis.vertical,
@@ -156,7 +199,40 @@ class OrderDetailsEditState extends OrderDetailsState {
           ListView(
             physics: ScrollPhysics(),
             shrinkWrap: true,
-            children: getOrdersList(orderDetails.carts),
+            children:
+                getOrdersList(screenState.clientOrderRequest?.products ?? []),
+          ),
+          Container(
+            height: 8,
+          ),
+          Container(
+            width: double.maxFinite,
+            child: TextButton(
+                style: TextButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () {
+                  cartHiveHelper.setCart(
+                      screenState.clientOrderRequest?.products ?? <Products>[]);
+                  Navigator.of(screenState.context).pushNamed(
+                      StoreRoutes.STORE_PRODUCTS,
+                      arguments: StoreModel(
+                          deliveryCost: orderDetails.order.deliveryCost,
+                          id: orderDetails.order.ownerID,
+                          storeOwnerName: orderDetails.storeInfo.storeOwnerName,
+                          image: orderDetails.storeInfo.image,
+                          privateOrders: false,
+                          hasProducts: true));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    S.current.addProducts,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                )),
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -173,7 +249,7 @@ class OrderDetailsEditState extends OrderDetailsState {
         direction: Axis.vertical,
         children: [
           Form(
-            key:_edit,
+            key: _edit,
             child: ListTile(
               title: LabelText(S.of(context).orderDetails),
               subtitle: CustomSendItFormField(
@@ -198,7 +274,7 @@ class OrderDetailsEditState extends OrderDetailsState {
       );
     } else if (orderType == 3) {
       return Form(
-        key:_edit,
+        key: _edit,
         child: Flex(
           direction: Axis.vertical,
           children: [
@@ -251,29 +327,34 @@ class OrderDetailsEditState extends OrderDetailsState {
     return Container();
   }
 
-  List<Widget> getOrdersList(List<Item> carts) {
+  List<Widget> getOrdersList(List<Products>? carts) {
     List<Widget> orderChips = [];
-    carts.forEach((element) {
+    carts?.forEach((element) {
       orderChips.add(OrderChip(
-        title: element.productName,
-        image: element.productImage,
-        price: element.productPrice,
+        productID: element.productID!,
+        title: element.productName ?? S.current.product,
+        image: element.productsImage ?? ImageAsset.NETWORK,
+        price: element.price!,
         currency: S.current.sar,
-        quantity: (q, price) {
+        quantity: (q, price, name, image,id) {
           if (q == 0) {
             screenState.clientOrderRequest?.products
-                ?.removeWhere((item) => item.productID == element.productID);
+                ?.removeWhere((item) => item.productID == id);
           } else {
             screenState.clientOrderRequest?.products
-                ?.removeWhere((item) => item.productID == element.productID);
+                ?.removeWhere((item) => item.productID == id);
             screenState.clientOrderRequest?.products?.add(Products(
-                productID: element.productID, countProduct: q, price: price));
+                productID: id,
+                countProduct: q,
+                price: price,
+                productName: name,
+                productsImage: image));
           }
           updateTotal();
           screenState.refresh();
         },
         editable: true,
-        defaultQuantity: element.countProduct,
+        defaultQuantity: element.countProduct!,
       ));
       orderChips.add(Padding(
         padding: const EdgeInsets.only(right: 8.0, left: 8.0),
@@ -293,7 +374,9 @@ class OrderDetailsEditState extends OrderDetailsState {
       products.add(Products(
           productID: element.productID,
           countProduct: element.countProduct,
-          price: element.productPrice));
+          price: element.productPrice,
+          productsImage: element.productImage,
+          productName: element.productName));
     });
     return products;
   }

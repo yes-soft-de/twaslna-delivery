@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_stores/presistance/cart_hive_box_helper.dart';
 import 'package:twaslna_delivery/module_stores/service/store_products_service.dart';
 import 'package:twaslna_delivery/module_stores/ui/screen/store_products_screen.dart';
 import 'package:twaslna_delivery/module_stores/ui/state/store_products/store_products_empty_state.dart';
@@ -18,6 +19,7 @@ class StoreProductsStateManager {
   final PublishSubject<StoreProductsState> _stateSubject = PublishSubject();
   final PublishSubject<AsyncSnapshot<Object?>> _categorySubject =
       PublishSubject();
+  final CartHiveHelper cartHiveHelper = CartHiveHelper();
 
   Stream<StoreProductsState> get stateStream => _stateSubject.stream;
 
@@ -35,7 +37,9 @@ class StoreProductsStateManager {
         var data = value.data;
         _stateSubject.add(StoreProductsLoadedState(screenState,
             topWantedProducts: data.topWanted,
-            productsCategory: data.storeCategories));
+            productsCategory: data.storeCategories,
+            orderCart: cartHiveHelper.getCart()
+        ));
         if (value.hasErrors) {
           CustomFlushBarHelper.createError(
                   title: S.current.warnning, message: value.errors[0])

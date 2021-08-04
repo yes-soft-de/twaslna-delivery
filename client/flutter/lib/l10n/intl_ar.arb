@@ -62,7 +62,7 @@
   "weNeedYourImageInOrderToSignUp": "نحتاج صورتك للتسجيل",
   "uploadAndSubmit": "رفع الصور وارسال الطلب",
   "thisMightTakeAWhilePleaseWait": "سوف يستغرق الامر دقيقة واحدة الرجاء الانتظار",
-  "uploadingImagesPleaseWait": "يتم رفع الصور",
+  "uploadingImagesPleaseWait": "يتم رفع الصورة",
   "driverLicence": "رخصة القيادة",
   "age": "العمر",
   "uploadingAndSubmitting": "جار الرفع وارسال الطلب",
@@ -321,5 +321,12 @@
   "pleaseLoginToContinue": "من فضلك قم بتسجيل الدخول للمتابعة",
   "notAllowedCaptainInStore": "لا يمكنك تعديل الطلب لأن الكابتن في المتجر",
   "invalidCredentials": "هناك خطأ في كلمة السر أو اسم المستخدم",
-  "dataDecodeError": "هناك مشكلة في تفسير البيانات"
+  "dataDecodeError": "هناك مشكلة في تفسير البيانات",
+  "addProducts": "إضافة منتجات",
+  "profileDataEmpty": "لايوجد بيانات شخصية متوفرة بعد",
+  "profileFetchedSuccessfully": "تم جلب بياناتك الشخصية بنجاح",
+  "uploadProfileSuccess": "تم تعديل البيانات الشخصية بنجاح",
+  "uploadImageSuccess": "تم رفع الصورة بنجاح",
+  "address": "الموقع"
+
 }

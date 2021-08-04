@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,6 +19,7 @@ class StoreProductsErrorState extends StoreProductsState {
 
   @override
   Widget getUI(BuildContext context) {
+    List<String> errs = LinkedHashSet<String>.from(errors).toList();
     return Scaffold(
       appBar: CustomTwaslnaAppBar.appBar(context,
           title: screenState.title, buttonBackground: Colors.red),
@@ -30,30 +33,11 @@ class StoreProductsErrorState extends StoreProductsState {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Flushbar(
-                  title: S.of(context).errOc + ' : ',
+                  title:(errs.length > 1 ? S.of(context).errOc : S.of(context).thisErrorHappened) + ' : ',
                   messageText: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Text(
-                            '1- ' + errors[0],
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Text(
-                            '2- ' + errors[1],
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ]),
+                      children:getErrorMessage(errs, errs.length > 1)),
                   icon: Icon(
                     Icons.info,
                     size: 28.0,
@@ -96,5 +80,22 @@ class StoreProductsErrorState extends StoreProductsState {
         ),
       ),
     );
+  }
+  List<Widget> getErrorMessage(List<String> errs,bool indexed) {
+    List<Widget> errorMessages = [];
+    int i = 1;
+    String index;
+    errs.forEach((element) {
+      index = indexed ? '$i- ' : '';
+      errorMessages.add(Padding(
+        padding: const EdgeInsets.all(8),
+        child: Text(
+          index + element,
+          style: TextStyle(fontWeight: FontWeight.w600,color: Colors.white),
+        ),
+      ));
+      i++;
+    });
+    return errorMessages;
   }
 }

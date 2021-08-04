@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_main/main_routes.dart';
 
 class CustomOrderDetailsAppBar extends StatelessWidget {
   final GestureTapCallback? editTap;
   final GestureTapCallback? deleteTap;
   final bool collapsed;
-  CustomOrderDetailsAppBar({this.editTap, this.deleteTap,this.collapsed = false});
+  final bool edit;
+  CustomOrderDetailsAppBar({this.editTap, this.deleteTap,this.collapsed = false,this.edit = false});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class CustomOrderDetailsAppBar extends StatelessWidget {
           children: [
             InkWell(
               borderRadius: BorderRadius.circular(10),
-              onTap: () => Navigator.of(context).pop(),
+              onTap: () =>edit?Navigator.of(context).pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false,arguments: 1): Navigator.of(context).pop(),
               child: Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).cardColor.withOpacity(0.5),

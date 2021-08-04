@@ -89,10 +89,14 @@ class Products {
   int? productID;
   int? countProduct;
   double? price;
+  String? productName;
+  String? productsImage;
   Products({
       this.productID, 
       this.countProduct,
-      this.price
+      this.price,
+      this.productName,
+      this.productsImage
   });
 
   Products.fromJson(dynamic json) {

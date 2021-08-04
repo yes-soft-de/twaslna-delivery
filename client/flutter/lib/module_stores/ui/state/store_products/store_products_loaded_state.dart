@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_orders/orders_routes.dart';
 import 'package:twaslna_delivery/module_orders/request/client_order_request.dart';
-import 'package:twaslna_delivery/module_stores/model/cart_model.dart';
+import 'package:twaslna_delivery/hive/objects/cart_model/cart_model.dart';
 import 'package:twaslna_delivery/module_stores/model/category_model.dart';
 import 'package:twaslna_delivery/module_stores/model/checkout_model.dart';
+import 'package:twaslna_delivery/module_stores/presistance/cart_hive_box_helper.dart';
 import 'package:twaslna_delivery/module_stores/ui/screen/store_products_screen.dart';
 import 'package:twaslna_delivery/module_stores/ui/state/store_products/store_products_state.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/checkout_button.dart';
@@ -22,10 +23,15 @@ class StoreProductsLoadedState extends StoreProductsState {
   StoreProductsScreenState screenState;
   List<ProductModel> topWantedProducts;
   List<CategoryModel> productsCategory;
-
+  List<CartModel>? orderCart;
   StoreProductsLoadedState(this.screenState,
-      {required this.topWantedProducts, required this.productsCategory})
-      : super(screenState);
+      {required this.topWantedProducts, required this.productsCategory,required this.orderCart})
+      : super(screenState){
+    if (orderCart != null ){
+      fromEditingOrder = true;
+      carts = orderCart??[];
+    }
+  }
   late String title;
   late String backgroundImage;
   String defaultValue = S.current.mostWanted;
@@ -33,7 +39,7 @@ class StoreProductsLoadedState extends StoreProductsState {
   late int storeId;
   int categoryId = -1;
   late double deliveryCost;
-
+  bool fromEditingOrder = false;
   @override
   Widget getUI(BuildContext context) {
     var height = MediaQuery
@@ -141,8 +147,16 @@ class StoreProductsLoadedState extends StoreProductsState {
                               cart: items,
                               orderCost: double.parse(getTotal(carts)),
                               deliveryCost: deliveryCost);
-                          Navigator.of(context).pushNamed(OrdersRoutes
-                              .CLIENT_ORDER, arguments: checkoutModel);
+                          if (fromEditingOrder){
+                            CartHiveHelper().setCart(carts);
+                            CartHiveHelper().setFinish();
+                            Navigator.of(context).pop();
+                          }
+                          else {
+                            Navigator.of(context).pushNamed(OrdersRoutes
+                                .CLIENT_ORDER, arguments: checkoutModel);
+                          }
+
                         } : () {
                           CustomFlushBarHelper.createError(title: S
                               .of(context)
@@ -180,7 +194,7 @@ class StoreProductsLoadedState extends StoreProductsState {
             if (q > 0) {
               carts.removeWhere((e) => e.id == element.id);
               carts.add(
-                  CartModel(id: element.id, quantity: q, price: element.price));
+                  CartModel(id: element.id, quantity: q, price: element.price,image:element.image,name: element.title));
             }
             if (q == 0) {
               carts.removeWhere((e) => e.id == element.id);

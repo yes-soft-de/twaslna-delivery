@@ -41,6 +41,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Sorry your request for add branch faild please try again"),
         "addBranchSuccess": MessageLookupByLibrary.simpleMessage(
             "Branch has been added successfully"),
+        "addProducts": MessageLookupByLibrary.simpleMessage("Add Products"),
+        "address": MessageLookupByLibrary.simpleMessage("Address"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
@@ -56,7 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "branch": MessageLookupByLibrary.simpleMessage("Branch"),
         "branch01": MessageLookupByLibrary.simpleMessage("Branch 01"),
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
-        "cancel": MessageLookupByLibrary.simpleMessage("CANCEL"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "captain": MessageLookupByLibrary.simpleMessage("Captain"),
         "captainAcceptOrderDescription":
             MessageLookupByLibrary.simpleMessage("captain headed to store"),
@@ -147,7 +149,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "emailAddressIsRequired":
             MessageLookupByLibrary.simpleMessage("Email Address is Required"),
         "errOc":
-            MessageLookupByLibrary.simpleMessage("The next problem occurred"),
+            MessageLookupByLibrary.simpleMessage("The next problems occurred"),
         "errorHappened": MessageLookupByLibrary.simpleMessage("Error Happened"),
         "errorLoadingBranches":
             MessageLookupByLibrary.simpleMessage("Error Loading Branches"),
@@ -354,6 +356,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "privateOrder": MessageLookupByLibrary.simpleMessage("Private Order"),
         "product": MessageLookupByLibrary.simpleMessage("product"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
+        "profileDataEmpty": MessageLookupByLibrary.simpleMessage(
+            "There is no profile data available"),
+        "profileFetchedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Profile Data Fetched Successfully"),
         "reasonIsRequired":
             MessageLookupByLibrary.simpleMessage("Reason is Required"),
         "reasonOfTheReport":
@@ -462,18 +468,22 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Update Branches"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
             "You can update your order item from this interface"),
-        "updateOrderSuccess": MessageLookupByLibrary.simpleMessage(
-            "Your update has been updated"),
+        "updateOrderSuccess":
+            MessageLookupByLibrary.simpleMessage("Your order has been updated"),
         "updateOrders": MessageLookupByLibrary.simpleMessage("Orders Details"),
         "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),
         "uploadAndSubmit":
             MessageLookupByLibrary.simpleMessage("Upload and submit"),
+        "uploadImageSuccess":
+            MessageLookupByLibrary.simpleMessage("Upload image was a success"),
+        "uploadProfileSuccess": MessageLookupByLibrary.simpleMessage(
+            "Upload profile was a success"),
         "uploadingAndSubmitting":
             MessageLookupByLibrary.simpleMessage("Uploading and Submitting"),
         "uploadingImages":
             MessageLookupByLibrary.simpleMessage("Uploading Images"),
         "uploadingImagesPleaseWait": MessageLookupByLibrary.simpleMessage(
-            "Uploading Images, Please Wait"),
+            "Uploading Image, Please Wait"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "views": MessageLookupByLibrary.simpleMessage("views"),
         "waiting": MessageLookupByLibrary.simpleMessage("waiting"),

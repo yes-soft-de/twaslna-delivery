@@ -23,6 +23,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   ClientOrderRequest? clientOrderRequest;
   bool flagOrderId = true;
   int? orderNumber;
+  bool edit = false;
   void refresh() {
     if (mounted) {
       setState(() {});

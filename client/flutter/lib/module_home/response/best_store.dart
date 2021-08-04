@@ -41,8 +41,8 @@ class Data {
   int? id;
   String? storeOwnerName;
   String? image;
-  dynamic? phone;
-  dynamic? location;
+  dynamic phone;
+  dynamic location;
   double? deliveryCost;
   bool? privateOrders;
   bool? hasProducts;

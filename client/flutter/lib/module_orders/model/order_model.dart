@@ -8,7 +8,7 @@ class OrderModel {
   late String orderId;
   late OrderStatus orderStatus;
   late DateTime dateTime;
-  dynamic orderCost;
+  late double orderCost;
   String? error;
   bool empty = false;
   List<OrderModel> models = [];

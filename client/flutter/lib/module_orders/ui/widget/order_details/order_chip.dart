@@ -4,22 +4,30 @@ class OrderChip extends StatefulWidget {
   final String image;
   final price;
   final String currency;
-  final Function(int,double) quantity;
+  final Function(int,double,String?,String?,int) quantity;
   final int defaultQuantity;
   final bool editable;
+  final int productID;
   OrderChip({
-    required this.title,required this.image,required this.price,this.currency = 'SAR',required this.quantity,this.defaultQuantity = 0,this.editable = true});
+    required this.title,required this.productID,required this.image,required this.price,this.currency = 'SAR',required this.quantity,this.defaultQuantity = 0,this.editable = true});
   @override
   _OrderChipState createState() => _OrderChipState();
 }
 
 class _OrderChipState extends State<OrderChip> {
   late int quantity ;
-
+  String? name;
+  String? image;
+  double? price;
+  int? id;
   @override
   void initState() {
     super.initState();
     quantity = widget.defaultQuantity;
+    name = widget.title;
+    image = widget.image;
+    price = widget.price;
+    id = widget.productID;
   }
   @override
   Widget build(BuildContext context) {
@@ -40,7 +48,7 @@ class _OrderChipState extends State<OrderChip> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Image.network(
-                    widget.image,
+                    image??widget.image,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -51,7 +59,7 @@ class _OrderChipState extends State<OrderChip> {
             padding: const EdgeInsets.only(bottom: 26.0),
             child: Align(
                 alignment: Alignment.bottomCenter,
-                child: Text('${widget.price} ${widget.currency}',style: TextStyle(
+                child: Text('${price??widget.price} ${widget.currency}',style: TextStyle(
                     fontWeight: FontWeight.w600,
                 ),overflow: TextOverflow.ellipsis,)),
           ),
@@ -63,7 +71,7 @@ class _OrderChipState extends State<OrderChip> {
                 direction: Axis.vertical,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(widget.title,style: TextStyle(
+                  Text(name??widget.title,style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 17
                   ),overflow: TextOverflow.ellipsis,),
@@ -101,7 +109,7 @@ class _OrderChipState extends State<OrderChip> {
                             if (quantity > 0) {
                               quantity = quantity - 1 ;
                               setState(() {
-                                widget.quantity(quantity,widget.price);
+                                widget.quantity(quantity,price??widget.price,name,image,id??widget.productID);
                               });
                             }
                           },
@@ -121,7 +129,7 @@ class _OrderChipState extends State<OrderChip> {
                           onPressed: () {
                             quantity = quantity + 1 ;
                             setState(() {
-                              widget.quantity(quantity,widget.price);
+                              widget.quantity(quantity,price??widget.price,name,image,id??widget.productID);
                             });
                           },
                           child: Icon(Icons.add),

@@ -41,6 +41,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "عذرا لم تنجح عملية إضافة فرع الرجاء إعادة المحاولة لاحقا"),
         "addBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تمت إضافة الفرع بنجاح"),
+        "addProducts": MessageLookupByLibrary.simpleMessage("إضافة منتجات"),
+        "address": MessageLookupByLibrary.simpleMessage("الموقع"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
@@ -346,6 +348,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "privateOrder": MessageLookupByLibrary.simpleMessage("طلب خاص"),
         "product": MessageLookupByLibrary.simpleMessage("منتج"),
         "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
+        "profileDataEmpty": MessageLookupByLibrary.simpleMessage(
+            "لايوجد بيانات شخصية متوفرة بعد"),
+        "profileFetchedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "تم جلب بياناتك الشخصية بنجاح"),
         "reasonIsRequired":
             MessageLookupByLibrary.simpleMessage("الرجاء تزويدنا بسبب الابلاغ"),
         "reasonOfTheReport":
@@ -430,7 +436,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تجديد الباقة بنجاح"),
         "sum": MessageLookupByLibrary.simpleMessage("المجموع"),
         "sureForDelete": MessageLookupByLibrary.simpleMessage(
-            "هل أنت متأكد من قيامك بحذف هذا الطلب"),
+            "هل أنت متأكد من قيامك بحذف هذاالطلب"),
         "syria": MessageLookupByLibrary.simpleMessage("سوريا"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
@@ -463,12 +469,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تحديث البيانات"),
         "uploadAndSubmit":
             MessageLookupByLibrary.simpleMessage("رفع الصور وارسال الطلب"),
+        "uploadImageSuccess":
+            MessageLookupByLibrary.simpleMessage("تم رفع الصورة بنجاح"),
+        "uploadProfileSuccess": MessageLookupByLibrary.simpleMessage(
+            "تم تعديل البيانات الشخصية بنجاح"),
         "uploadingAndSubmitting":
             MessageLookupByLibrary.simpleMessage("جار الرفع وارسال الطلب"),
         "uploadingImages":
             MessageLookupByLibrary.simpleMessage("جار رفع الصور"),
         "uploadingImagesPleaseWait":
-            MessageLookupByLibrary.simpleMessage("يتم رفع الصور"),
+            MessageLookupByLibrary.simpleMessage("يتم رفع الصورة"),
         "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "views": MessageLookupByLibrary.simpleMessage("مشاهدة"),
         "waiting": MessageLookupByLibrary.simpleMessage("في الانتظار"),
