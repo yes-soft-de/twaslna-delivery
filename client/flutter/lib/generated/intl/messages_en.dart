@@ -150,6 +150,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Email Address is Required"),
         "errOc":
             MessageLookupByLibrary.simpleMessage("The next problems occurred"),
+        "errorDownloadingImage":
+            MessageLookupByLibrary.simpleMessage("error download image"),
         "errorHappened": MessageLookupByLibrary.simpleMessage("Error Happened"),
         "errorLoadingBranches":
             MessageLookupByLibrary.simpleMessage("Error Loading Branches"),

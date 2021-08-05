@@ -15,6 +15,7 @@ import 'package:twaslna_delivery/module_orders/ui/widget/order_details/order_det
 import 'package:twaslna_delivery/module_our_services/ui/widget/custom_field_send_it.dart';
 import 'package:twaslna_delivery/module_our_services/ui/widget/label_text.dart';
 import 'package:twaslna_delivery/module_stores/presistance/cart_hive_box_helper.dart';
+import 'package:twaslna_delivery/utils/components/progresive_image.dart';
 import 'package:twaslna_delivery/utils/helpers/order_status_helper.dart';
 
 class OrderDetailsLoadedState extends OrderDetailsState {
@@ -35,11 +36,11 @@ class OrderDetailsLoadedState extends OrderDetailsState {
       },
       child: Stack(
         children: [
-          orderDetails.order.orderType != 3 ? Image.network(
-            orderDetails.storeInfo.image,
+          orderDetails.order.orderType != 3 ? CustomNetworkImage(
+           image: orderDetails.storeInfo.image,
             height: height,
             width: width,
-            fit: BoxFit.cover,
+          
           ) : Container(color: Theme.of(context).primaryColor,height:height,width:width,),
           CustomOrderDetailsAppBar(
             editTap:orderDetails.order.state == OrderStatus.WAITING || orderDetails.order.state == OrderStatus.GOT_CAPTAIN ? () {
@@ -325,7 +326,7 @@ class OrderDetailsLoadedState extends OrderDetailsState {
         image: element.productImage,
         price: element.productPrice,
         currency: S.current.sar,
-        quantity: (q,p,n,i,d) {},
+        quantity: (p) {},
         editable: false,
         defaultQuantity: element.countProduct,
       ));

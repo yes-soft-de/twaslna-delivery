@@ -1,32 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:twaslna_delivery/hive/objects/cart_model/cart_model.dart';
+import 'package:twaslna_delivery/utils/components/progresive_image.dart';
 
 class ProductsCard extends StatefulWidget {
   final String title;
   final String image;
   final price;
   final String currency;
-  final Function(int) quantity;
+  final Function(CartModel) quantity;
   final int defaultQuantity;
-
+  final id;
   ProductsCard(
       {required this.title,
       required this.image,
       required this.price,
       this.currency = 'SAR',
       required this.quantity,
-      this.defaultQuantity = 0});
+      this.defaultQuantity = 0,
+      required this.id
+      });
 
   @override
   _ProductsCardState createState() => _ProductsCardState();
 }
 
 class _ProductsCardState extends State<ProductsCard> {
-  late int quantity;
-
+  late CartModel cartModel;
   @override
   void initState() {
     super.initState();
-    quantity = widget.defaultQuantity;
+    cartModel = CartModel(id: widget.id, quantity: widget.defaultQuantity, price: widget.price,name: widget.title,image: widget.image);
   }
 
   @override
@@ -57,9 +60,10 @@ class _ProductsCardState extends State<ProductsCard> {
                   borderRadius: BorderRadius.circular(18),
                   child: Container(
                     height: 100,
-                    child: Image.network(
-                      widget.image,
-                      fit: BoxFit.cover,
+                    child: CustomNetworkImage(
+                      image:cartModel.image??widget.image,
+                      width: double.maxFinite,
+                      height: double.maxFinite,
                     ),
                   ),
                 ),
@@ -111,10 +115,10 @@ class _ProductsCardState extends State<ProductsCard> {
                             ),
                           ),
                           onPressed: () {
-                            if (quantity > 0) {
-                              quantity = quantity - 1;
+                            if (cartModel.quantity > 0) {
+                              cartModel.quantity = cartModel.quantity - 1;
                               setState(() {
-                                widget.quantity(quantity);
+                                widget.quantity(cartModel);
                               });
                             }
                           },
@@ -122,7 +126,7 @@ class _ProductsCardState extends State<ProductsCard> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                          child: Text(quantity.toString()),
+                          child: Text(cartModel.quantity.toString()),
                         ),
                         TextButton(
                           style: ButtonStyle(
@@ -135,9 +139,9 @@ class _ProductsCardState extends State<ProductsCard> {
                             ),
                           ),
                           onPressed: () {
-                            quantity = quantity + 1;
+                            cartModel.quantity = cartModel.quantity + 1;
                             setState(() {
-                              widget.quantity(quantity);
+                              widget.quantity(cartModel);
                             });
                           },
                           child: Icon(Icons.add),

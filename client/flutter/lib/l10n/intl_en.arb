@@ -329,7 +329,8 @@
   "profileFetchedSuccessfully": "Profile Data Fetched Successfully",
   "uploadProfileSuccess": "Upload profile was a success",
   "uploadImageSuccess": "Upload image was a success",
-  "address": "Address"
+  "address": "Address",
+  "errorDownloadingImage": "error download image"
 
 
 

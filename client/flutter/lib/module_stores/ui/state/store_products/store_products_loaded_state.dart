@@ -15,6 +15,7 @@ import 'package:twaslna_delivery/module_stores/ui/widget/store_products/products
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/products_zone.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/store_products_title_bar.dart';
 import 'package:twaslna_delivery/utils/components/costom_search.dart';
+import 'package:twaslna_delivery/utils/components/progresive_image.dart';
 import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 import 'package:twaslna_delivery/utils/models/product.dart';
 import 'package:twaslna_delivery/utils/models/store.dart';
@@ -62,11 +63,10 @@ class StoreProductsLoadedState extends StoreProductsState {
     }
     return Stack(
       children: [
-        Image.network(
-          backgroundImage,
+        CustomNetworkImage(
+          image:backgroundImage,
           height: height,
           width: width,
-          fit: BoxFit.cover,
         ),
         CustomStoresProductsAppBar(),
         Align(
@@ -149,7 +149,6 @@ class StoreProductsLoadedState extends StoreProductsState {
                               deliveryCost: deliveryCost);
                           if (fromEditingOrder){
                             CartHiveHelper().setCart(carts);
-                            CartHiveHelper().setFinish();
                             Navigator.of(context).pop();
                           }
                           else {
@@ -186,18 +185,18 @@ class StoreProductsLoadedState extends StoreProductsState {
     List<ProductsCard> prods = [];
     topWantedProducts.forEach((element) {
       prods.add(ProductsCard(
+          id:element.id,
           title: element.title,
           image: element.image,
           price: element.price,
           defaultQuantity: getQuantity(element.id),
-          quantity: (q) {
-            if (q > 0) {
-              carts.removeWhere((e) => e.id == element.id);
-              carts.add(
-                  CartModel(id: element.id, quantity: q, price: element.price,image:element.image,name: element.title));
+          quantity: (cartModel) {
+            if (cartModel.quantity > 0) {
+              carts.removeWhere((e) => e.id == cartModel.id);
+              carts.add(cartModel);
             }
-            if (q == 0) {
-              carts.removeWhere((e) => e.id == element.id);
+            if (cartModel.quantity == 0) {
+              carts.removeWhere((e) => e.id == cartModel.id);
             }
             screenState.refresh();
           }));

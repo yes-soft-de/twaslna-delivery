@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_main/main_routes.dart';
@@ -7,6 +8,7 @@ import 'package:twaslna_delivery/module_orders/state_manager/order_details_state
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/order_details_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/orders_details_loading_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/widget/order_details/custom_alert_dialog.dart';
+import 'package:twaslna_delivery/module_stores/presistance/cart_hive_box_helper.dart';
 import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 @injectable
 class OrderDetailsScreen extends StatefulWidget {
@@ -21,6 +23,8 @@ class OrderDetailsScreen extends StatefulWidget {
 class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   late OrderDetailsState currentState;
   ClientOrderRequest? clientOrderRequest;
+  ClientOrderRequest handleOrderRequest = ClientOrderRequest();
+
   bool flagOrderId = true;
   int? orderNumber;
   bool edit = false;
@@ -79,6 +83,17 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     currentState = OrderDetailsLoadingState(this);
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
+      if (mounted){
+        setState(() {
+        });
+      }
+    });
+    Hive.box('Order').listenable(keys: ['cart']).addListener(() {
+      if (CartHiveHelper().getProduct()!=null){
+        clientOrderRequest?.products = CartHiveHelper().getProduct();
+        handleOrderRequest.products = CartHiveHelper().getProduct();
+        CartHiveHelper().setFinish();
+      }
       if (mounted){
         setState(() {
         });

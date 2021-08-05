@@ -3329,6 +3329,16 @@ class S {
       args: [],
     );
   }
+
+  /// `error download image`
+  String get errorDownloadingImage {
+    return Intl.message(
+      'error download image',
+      name: 'errorDownloadingImage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

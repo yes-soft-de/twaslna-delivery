@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/consts/urls.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_account/model/profile_model.dart';
+import 'package:twaslna_delivery/utils/components/progresive_image.dart';
 import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 import 'package:twaslna_delivery/utils/images/images.dart';
 import 'package:twaslna_delivery/utils/text_style/text_style.dart';
@@ -9,8 +10,15 @@ import 'package:twaslna_delivery/utils/text_style/text_style.dart';
 class AccountAppBar extends StatelessWidget {
   final ProfileModel? profileModel;
 
-  AccountAppBar(this.profileModel);
-
+  AccountAppBar(this.profileModel){
+    if (profileModel!.image.contains('http')){
+      image = profileModel!.image;
+    }
+    else {
+      image = Urls.IMAGES_ROOT +'${profileModel?.image??''}';
+    }
+  }
+  late String image;
   @override
   Widget build(BuildContext context) {
     return Flex(
@@ -43,12 +51,10 @@ class AccountAppBar extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
-                    Urls.IMAGES_ROOT +'${profileModel?.image??''}',
-                    fit: BoxFit.cover,
-                    errorBuilder: (context,error,t){
-                      return Image.asset(ImageAsset.LOGO);
-                    },
+                  child: CustomNetworkImage(
+                    image:image,
+                    width: double.maxFinite,
+                    height: double.maxFinite,
                   ),
                 ),
               ),

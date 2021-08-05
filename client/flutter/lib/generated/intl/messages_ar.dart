@@ -148,6 +148,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "emailAddressIsRequired": MessageLookupByLibrary.simpleMessage(
             "يرجى توفير البريد الالكتروني"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
+        "errorDownloadingImage":
+            MessageLookupByLibrary.simpleMessage("لم نستطع تحميل الصورة"),
         "errorHappened": MessageLookupByLibrary.simpleMessage("حدث خطأ ما"),
         "errorLoadingBranches":
             MessageLookupByLibrary.simpleMessage("حدث خطأ أثناء تحميل الفروع"),
@@ -436,7 +438,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تجديد الباقة بنجاح"),
         "sum": MessageLookupByLibrary.simpleMessage("المجموع"),
         "sureForDelete": MessageLookupByLibrary.simpleMessage(
-            "هل أنت متأكد من قيامك بحذف هذاالطلب"),
+            "هل أنت متأكد من قيامك بحذف هذا الطلب"),
         "syria": MessageLookupByLibrary.simpleMessage("سوريا"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),

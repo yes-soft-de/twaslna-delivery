@@ -61,118 +61,101 @@ class OrderDetailsEditState extends OrderDetailsState {
     var width = MediaQuery.of(context).size.width;
     return WillPopScope(
       onWillPop: () async {
+        screenState.handleOrderRequest = ClientOrderRequest();
         await cartHiveHelper.deleteCart();
         screenState.currentState =
             OrderDetailsLoadedState(screenState, orderDetails);
         screenState.refresh();
         return false;
       },
-      child: ValueListenableBuilder(
-        valueListenable:
-            Hive.box('Order').listenable(keys: [cartHiveHelper.cartKey]),
-        builder: (context, box, widget) {
-          if (cartHiveHelper.getProduct() != null) {
-            screenState.clientOrderRequest?.products =
-                cartHiveHelper.getProduct();
-            if (cartHiveHelper.getFinish()) {
-              cartHiveHelper.deleteCart();
-            }
-            updateTotal();
-          }
-          return Stack(
-            children: [
-              Container(
-                height: height,
-                width: width,
-                color: Theme.of(context).primaryColor,
+      child: Stack(
+        children: [
+          Container(
+            height: height,
+            width: width,
+            color: Theme.of(context).primaryColor,
+          ),
+          CustomOrderDetailsAppBar(
+            onTap: () {
+              screenState.handleOrderRequest = ClientOrderRequest();
+              cartHiveHelper.deleteCart().whenComplete(() {
+                screenState.currentState =
+                    OrderDetailsLoadedState(screenState, orderDetails);
+                screenState.refresh();
+              });
+            },
+            onSave: () {
+              if (orderDetails.order.orderType != 1) {
+                screenState.clientOrderRequest?.products = null;
+                screenState.clientOrderRequest?.detail =
+                    orderDetailsController.text.isEmpty
+                        ? null
+                        : orderDetailsController.text;
+                screenState.clientOrderRequest?.note =
+                    noteController.text.isEmpty ? null : noteController.text;
+                screenState.clientOrderRequest?.recipientName =
+                    receiptNameController.text.isEmpty
+                        ? null
+                        : receiptNameController.text;
+                screenState.clientOrderRequest?.recipientPhone =
+                    phoneNumberController.text.isEmpty
+                        ? null
+                        : phoneNumberController.text;
+                if (orderDetails.order.orderType == 3) {
+                  screenState.clientOrderRequest?.ownerID = null;
+                }
+                if (_edit.currentState!.validate()) {
+                  screenState.updateClientOrder();
+                }
+              } else {
+                if (screenState.clientOrderRequest!.products!.isEmpty) {
+                  CustomFlushBarHelper.createError(
+                          title: S.current.warnning,
+                          message: S.current.yourCartEmpty)
+                      .show(context);
+                } else {
+                  screenState.updateClientOrder();
+                }
+              }
+            },
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: height * 0.89,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
+                color: Theme.of(context).cardColor,
               ),
-              CustomOrderDetailsAppBar(
-                onTap: () {
-                  cartHiveHelper.deleteCart().whenComplete(() {
-                    screenState.currentState =
-                        OrderDetailsLoadedState(screenState, orderDetails);
-                    screenState.refresh();
-                  });
-                },
-                onSave: () {
-                  if (orderDetails.order.orderType != 1) {
-                    screenState.clientOrderRequest?.products = null;
-                    screenState.clientOrderRequest?.detail =
-                        orderDetailsController.text.isEmpty
-                            ? null
-                            : orderDetailsController.text;
-                    screenState.clientOrderRequest?.note =
-                        noteController.text.isEmpty
-                            ? null
-                            : noteController.text;
-                    screenState.clientOrderRequest?.recipientName =
-                        receiptNameController.text.isEmpty
-                            ? null
-                            : receiptNameController.text;
-                    screenState.clientOrderRequest?.recipientPhone =
-                        phoneNumberController.text.isEmpty
-                            ? null
-                            : phoneNumberController.text;
-                    if (orderDetails.order.orderType == 3) {
-                      screenState.clientOrderRequest?.ownerID = null;
-                    }
-                    if (_edit.currentState!.validate()) {
-                      screenState.updateClientOrder();
-                    }
-                  } else {
-                    if (screenState.clientOrderRequest!.products!.isEmpty) {
-                      CustomFlushBarHelper.createError(
-                              title: S.current.warnning,
-                              message: S.current.yourCartEmpty)
-                          .show(context);
-                    } else {
-                      screenState.updateClientOrder();
-                    }
-                  }
-                },
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: height * 0.89,
-                  decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(18)),
-                    color: Theme.of(context).cardColor,
-                  ),
-                  child: Stack(
+              child: Stack(
+                children: [
+                  ListView(
+                    padding: EdgeInsets.all(8),
+                    physics: BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics()),
                     children: [
-                      ListView(
-                        padding: EdgeInsets.all(8),
-                        physics: BouncingScrollPhysics(
-                            parent: AlwaysScrollableScrollPhysics()),
-                        children: [
-                          ListTile(
-                            leading: Icon(Icons.info),
-                            title: Text(S.of(context).updateOrderNote),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 16.0, left: 16.0),
-                            child: Divider(
-                              color: Theme.of(context).backgroundColor,
-                              thickness: 2.5,
-                            ),
-                          ),
-                          getOrderTypeWidget(
-                              orderDetails.order.orderType, context),
-                          SizedBox(
-                            height: 75,
-                          ),
-                        ],
+                      ListTile(
+                        leading: Icon(Icons.info),
+                        title: Text(S.of(context).updateOrderNote),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16.0, left: 16.0),
+                        child: Divider(
+                          color: Theme.of(context).backgroundColor,
+                          thickness: 2.5,
+                        ),
+                      ),
+                      getOrderTypeWidget(orderDetails.order.orderType, context),
+                      SizedBox(
+                        height: 75,
                       ),
                     ],
                   ),
-                ),
+                ],
               ),
-            ],
-          );
-        },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -200,7 +183,7 @@ class OrderDetailsEditState extends OrderDetailsState {
             physics: ScrollPhysics(),
             shrinkWrap: true,
             children:
-                getOrdersList(screenState.clientOrderRequest?.products ?? []),
+                getOrdersList(screenState.handleOrderRequest.products??toProducts(orderDetails.carts)),
           ),
           Container(
             height: 8,
@@ -328,43 +311,49 @@ class OrderDetailsEditState extends OrderDetailsState {
   }
 
   List<Widget> getOrdersList(List<Products>? carts) {
+    updateTotal();
     List<Widget> orderChips = [];
     carts?.forEach((element) {
-      orderChips.add(OrderChip(
-        productID: element.productID!,
-        title: element.productName ?? S.current.product,
-        image: element.productsImage ?? ImageAsset.NETWORK,
-        price: element.price!,
-        currency: S.current.sar,
-        quantity: (q, price, name, image,id) {
-          if (q == 0) {
-            screenState.clientOrderRequest?.products
-                ?.removeWhere((item) => item.productID == id);
-          } else {
-            screenState.clientOrderRequest?.products
-                ?.removeWhere((item) => item.productID == id);
-            screenState.clientOrderRequest?.products?.add(Products(
-                productID: id,
-                countProduct: q,
-                price: price,
-                productName: name,
-                productsImage: image));
-          }
-          updateTotal();
-          screenState.refresh();
-        },
-        editable: true,
-        defaultQuantity: element.countProduct!,
-      ));
-      orderChips.add(Padding(
-        padding: const EdgeInsets.only(right: 8.0, left: 8.0),
-        child: DottedLine(
-          dashColor: Theme.of(screenState.context).backgroundColor,
-          lineThickness: 2.5,
-          dashLength: 6,
-        ),
-      ));
-    });
+        orderChips.add(OrderChip(
+          productID: element.productID!,
+          title: element.productName ?? S.current.product,
+          image: element.productsImage ?? ImageAsset.NETWORK,
+          price: element.price!,
+          currency: S.current.sar,
+          quantity: (product) {
+            if (product.countProduct == 0) {
+              screenState.clientOrderRequest?.products
+                  ?.forEach((element) {
+                    if (element.productID == product.productID){
+                      element.countProduct = 0;
+                    }
+              });
+            } else {
+              screenState.clientOrderRequest?.products
+                  ?.forEach((element) {
+                if (element.productID == product.productID){
+                  element.countProduct = product.countProduct;
+                }
+              });
+            }
+            updateTotal();
+            screenState.refresh();
+          },
+          editable: true,
+          defaultQuantity: element.countProduct!,
+        ));
+        orderChips.add(Padding(
+          padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+          child: DottedLine(
+            dashColor: Theme.of(screenState.context).backgroundColor,
+            lineThickness: 2.5,
+            dashLength: 6,
+          ),
+        ));
+      }
+    );
+    cleanProducts();
+    screenState.refresh();
     return orderChips;
   }
 
@@ -389,5 +378,8 @@ class OrderDetailsEditState extends OrderDetailsState {
     });
     total = currentTotal;
     screenState.clientOrderRequest?.orderCost = total;
+  }
+  void cleanProducts() {
+    screenState.clientOrderRequest?.products?.removeWhere((element) => element.countProduct == 0);
   }
 }

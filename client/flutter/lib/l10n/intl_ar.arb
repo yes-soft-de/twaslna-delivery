@@ -188,7 +188,7 @@
   "go":"انطلق",
   "errorLoggingInFirebaseAccountNotFound": "Error logging in, firebase account not found",
   "locationOfCustomer": "(التسليم) موقع الزبون",
-  "sureForDelete":"هل أنت متأكد من قيامك بحذف هذاالطلب",
+  "sureForDelete":"هل أنت متأكد من قيامك بحذف هذا الطلب",
   "deleteSuccess":"تمت عملية حذف الطلب بنجاح",
   "ProvideDistanceInKm":"المسافة المقطوعة بالكيلومتر",
   "notVerified":"لم يتم تفعيل الباقة بعد",
@@ -327,6 +327,7 @@
   "profileFetchedSuccessfully": "تم جلب بياناتك الشخصية بنجاح",
   "uploadProfileSuccess": "تم تعديل البيانات الشخصية بنجاح",
   "uploadImageSuccess": "تم رفع الصورة بنجاح",
-  "address": "الموقع"
+  "address": "الموقع",
+  "errorDownloadingImage": "لم نستطع تحميل الصورة"
 
 }

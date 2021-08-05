@@ -10,6 +10,7 @@ import 'package:twaslna_delivery/module_our_services/ui/widget/custom_private_or
 import 'package:twaslna_delivery/module_our_services/ui/widget/label_text.dart';
 import 'package:twaslna_delivery/module_our_services/ui/widget/private_order_title_bar.dart';
 import 'package:twaslna_delivery/utils/components/make_order_button.dart';
+import 'package:twaslna_delivery/utils/components/progresive_image.dart';
 import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 import 'package:twaslna_delivery/utils/models/store.dart';
 
@@ -38,11 +39,10 @@ class PrivateOrderLoadedState extends PrivateOrderState {
     }
     return Stack(
       children: [
-        Image.network(
-          backgroundImage,
+        CustomNetworkImage(
+          image: backgroundImage,
           height: height,
           width: width,
-          fit: BoxFit.cover,
         ),
         CustomPrivateOrderAppBar(),
         Align(

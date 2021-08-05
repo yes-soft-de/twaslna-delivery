@@ -9,32 +9,43 @@ import 'package:twaslna_delivery/module_account/ui/screen/presonal_data_screen.d
 import 'package:twaslna_delivery/module_account/ui/state/personal_data/personal_data_state.dart';
 import 'package:twaslna_delivery/module_account/ui/widget/update_button.dart';
 import 'package:twaslna_delivery/utils/components/custom_feild.dart';
+import 'package:twaslna_delivery/utils/customIcon/custom_icons.dart';
 import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 import 'package:twaslna_delivery/utils/images/images.dart';
-
 
 class PersonalDataLoadedState extends PersonalDataState {
   PersonalDataScreenState screenState;
   ProfileModel? profileModel;
-  PersonalDataLoadedState(this.screenState,this.profileModel) : super(screenState){
-    nameController.text = profileModel?.name??'';
-    locationController.text = profileModel?.location??'';
-    image = profileModel?.image ?? ImageAsset.NETWORK ;
+
+  PersonalDataLoadedState(this.screenState, this.profileModel)
+      : super(screenState) {
+    nameController.text = profileModel?.name ?? '';
+    locationController.text = profileModel?.location ?? '';
+    image = profileModel?.image ?? ImageAsset.NETWORK;
+    if (profileModel!.image.contains('http')) {
+      image = profileModel!.image;
+    } else {
+      image = Urls.IMAGES_ROOT + profileModel!.image;
+    }
   }
+
   final GlobalKey<FormState> _personal_data = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   late ProfileRequest request;
-  String? genders = '' ;
-  var gender ;
+  String? genders = '';
+
+  var gender;
+
   late String image;
+
   @override
   Widget getUI(BuildContext context) {
     return Stack(
       children: [
         ListView(
-          physics: BouncingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics()),
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           children: [
             SizedBox(
               height: 16,
@@ -47,14 +58,19 @@ class PersonalDataLoadedState extends PersonalDataState {
                   height: 150,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(18),
-                    onTap: (){
-                      ImagePicker.platform.pickImage(source:ImageSource.gallery,imageQuality: 75).then((value){
-                        if (value!=null){
-                          screenState.uploadImage(ProfileModel(
-                            name: nameController.text.trim(),
-                            location: locationController.text.trim(),
-                            image: image,
-                          ), value.path);
+                    onTap: () {
+                      ImagePicker.platform
+                          .pickImage(
+                              source: ImageSource.gallery, imageQuality: 75)
+                          .then((value) {
+                        if (value != null) {
+                          screenState.uploadImage(
+                              ProfileModel(
+                                name: nameController.text.trim(),
+                                location: locationController.text.trim(),
+                                image: image,
+                              ),
+                              value.path);
                         }
                       });
                     },
@@ -62,14 +78,54 @@ class PersonalDataLoadedState extends PersonalDataState {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(18),
-                          child: Image.network(
-                            Urls.IMAGES_ROOT + image,
+                          child: FadeInImage(
+                            placeholder:Image.asset(ImageAsset.PLACEHOLDER).image,
+                            placeholderErrorBuilder: (_, w, t) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Theme.of(context).backgroundColor),
+                                child: Center(
+                                    child: Icon(
+                                  Icons.info,
+                                  size: 50,
+                                )),
+                              );
+                            },
+                            imageErrorBuilder: (_, w, t) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Theme.of(context).backgroundColor),
+                                child: Flex(
+                                  direction: Axis.vertical,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(
+                                        child: Text(
+                                          S.current.errorDownloadingImage,
+                                          style: TextStyle(fontSize: 10),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom:16.0),
+                                      child: Icon(
+                                        Icons.info,
+                                        size: 50,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
                             fit: BoxFit.cover,
+                            image: NetworkImage(image),
                             width: 150,
                             height: 150,
-                            errorBuilder: (context,error,t){
-                              return Image.asset(ImageAsset.LOGO);
-                            },
                           ),
                         ),
                         Padding(
@@ -228,13 +284,12 @@ class PersonalDataLoadedState extends PersonalDataState {
         ),
         Align(
             alignment: Alignment.bottomCenter,
-            child: UpdateButton(onPressed:(){
+            child: UpdateButton(onPressed: () {
               if (_personal_data.currentState!.validate()) {
                 request = ProfileRequest(
-                  clientName: nameController.text.trim(),
-                  location: locationController.text.trim(),
-                  image: image.contains('http') ? '' : image
-                );
+                    clientName: nameController.text.trim(),
+                    location: locationController.text.trim(),
+                    image: profileModel!.image);
                 screenState.postClientProfile(request);
               }
             })),
