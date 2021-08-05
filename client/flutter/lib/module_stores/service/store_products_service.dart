@@ -2,9 +2,11 @@ import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_stores/manager/store_products.dart';
 import 'package:twaslna_delivery/module_stores/model/category_model.dart';
+import 'package:twaslna_delivery/module_stores/model/store_products_model.dart';
 import 'package:twaslna_delivery/module_stores/response/products_by_category.dart';
 import 'package:twaslna_delivery/module_stores/response/products_category.dart';
 import 'package:twaslna_delivery/module_stores/response/store_products.dart';
+import 'package:twaslna_delivery/utils/helpers/status_code_helper.dart';
 import 'package:twaslna_delivery/utils/models/product.dart';
 
 @injectable
@@ -13,63 +15,50 @@ class StoreProductsService {
 
   StoreProductsService(this._storeProductsManager);
 
-  Future getStoresProductsTopWanted(int id) async {
+  Future<ProductModel> getStoresProductsTopWanted(int id) async {
     StoreProducts? storeProducts =
-        await _storeProductsManager.getStoreProducts(id);
-    if (storeProducts == null) return null;
-    if (storeProducts.msgErr != null) return storeProducts.msgErr;
-    List<ProductModel> products = [];
-    storeProducts.data?.forEach((element) {
-      products.add(ProductModel(
-          title: element.productName ?? S.current.product,
-          image:
-              'https://images.unsplash.com/photo-1513104890138-7c749659a591?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80',
-          id: element.id ?? -1,
-          price: element.productPrice ?? 0));
-    });
-    return products;
+    await _storeProductsManager.getStoreProducts(id);
+    if (storeProducts == null) return ProductModel.Error(S.current.networkError);
+    if (storeProducts.statusCode != '200') return ProductModel.Error(StatusCodeHelper.getStatusCodeMessages(storeProducts.statusCode));
+    if (storeProducts.data == null) return ProductModel.Empty();
+    return ProductModel.topWantedData(storeProducts);
   }
 
-  Future getProductsCategory(int id) async {
+  Future<CategoryModel>getProductsCategory(int id) async {
     ProductsCategory? productsCategory =
         await _storeProductsManager.getProductsCategory(id);
-    if (productsCategory == null) return null;
-    if (productsCategory.msgErr != null) return productsCategory.msgErr;
-    List<CategoryModel> categories = [];
-    productsCategory.data?.forEach((element) {
-      categories.add(CategoryModel(
-          id: element.id ?? -1,
-          label: element.productCategoryName ?? S.current.categories));
-    });
-    return categories;
+    if (productsCategory == null) return CategoryModel.Error(S.current.networkError);
+    if (productsCategory.statusCode != '200') return CategoryModel.Error(StatusCodeHelper.getStatusCodeMessages(productsCategory.statusCode));
+    if (productsCategory.data == null) return CategoryModel.Empty();
+    return CategoryModel.Data(productsCategory);
   }
 
-  Future getProductsByCategory(int storeId, int categoryId) async {
+  Future<ProductModel>getProductsByCategory(int storeId, int categoryId) async {
     ProductsByCategory? productsByCategory =
         await _storeProductsManager.getProductsByCategory(storeId, categoryId);
-    if (productsByCategory == null) return null;
-    if (productsByCategory.msgErr != null) return productsByCategory.msgErr;
-    List<ProductModel> products = [];
-    productsByCategory.data?.forEach((element) {
-      products.add(ProductModel(
-          title: element.productName ?? S.current.product,
-          image:
-              'https://images.unsplash.com/photo-1513104890138-7c749659a591?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80',
-          price: element.productPrice ?? 0,
-          id: element.id ?? -1));
-    });
-
-    return products;
+    if (productsByCategory == null) return ProductModel.Error(S.current.networkError);
+    if (productsByCategory.statusCode != '200') return ProductModel.Error(StatusCodeHelper.getStatusCodeMessages(productsByCategory.statusCode));
+    if (productsByCategory.data == null) return ProductModel.Empty();
+    return ProductModel.Data(productsByCategory);
   }
 
-  Future getProductsData(int id) async {
+  Future <StoreProductsData> getProductsData(int id) async {
     var topWanted = await getStoresProductsTopWanted(id);
     var cats = await getProductsCategory(id);
-    if (topWanted == null && cats == null) return null;
-    if (topWanted == null) return null;
-    if (topWanted is String) return topWanted;
-    cats ??= <CategoryModel>[];
-    if (cats is String) cats = <CategoryModel>[];
-    return [topWanted, cats];
+    List<String> errors = [];
+    if (topWanted.hasError) {
+      errors.add(topWanted.error!);
+    }
+    if (cats.hasError) {
+      errors.add(cats.error!);
+    }
+    if (errors.isNotEmpty && errors.length == 2) {
+      return StoreProductsData.Error(errors);
+    }
+    if (topWanted.isEmpty && cats.isEmpty) {
+      return StoreProductsData.Empty();
+    }
+    return StoreProductsData.Data(
+        topWanted.data, cats.data,errors);
   }
 }

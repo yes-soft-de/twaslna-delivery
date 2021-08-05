@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_stores/store_routes.dart';
+import 'package:twaslna_delivery/utils/components/progresive_image.dart';
 class StoreCard extends StatelessWidget {
   final String title;
   final GestureTapCallback? onTap;
@@ -25,7 +26,7 @@ class StoreCard extends StatelessWidget {
             children: [
               ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(image,fit: BoxFit.cover,height: double.maxFinite,)),
+                  child: CustomNetworkImage(image:image,height: double.maxFinite,width:double.maxFinite,)),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),

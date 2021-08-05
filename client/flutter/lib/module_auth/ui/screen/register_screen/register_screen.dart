@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
-import 'package:twaslna_delivery/module_auth/enums/user_type.dart';
 import 'package:twaslna_delivery/module_auth/request/register_request/register_request.dart';
 import 'package:twaslna_delivery/module_auth/state_manager/register_state_manager/register_state_manager.dart';
 import 'package:twaslna_delivery/module_auth/ui/states/register_states/register_state.dart';
@@ -49,31 +47,39 @@ class RegisterScreenState extends State<RegisterScreen> {
       }
     });
   }
-
+  dynamic args;
   @override
   Widget build(BuildContext context) {
-    dynamic args = ModalRoute.of(context)?.settings.arguments;
+    args = ModalRoute.of(context)?.settings.arguments;
     if (args != null) {
       if (args is bool) returnToPreviousScreen = args;
       if (args is int) returnToMainScreen = args;
     }
-    return GestureDetector(
-      onTap: () {
-        var focus = FocusScope.of(context);
-        if (focus.canRequestFocus) {
-          focus.unfocus();
-        }
+    return WillPopScope(
+      onWillPop: () async {
+        await Navigator.of(context).pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
+        return returnToMainScreen == null;
       },
-      child: Scaffold(
-        appBar: CustomTwaslnaAppBar.appBar(context, title:S.of(context).register),
-        body:loadingSnapshot.connectionState != ConnectionState.waiting ? _currentState.getUI(context) : Stack(
-          children: [
-            _currentState.getUI(context),
-            Container(
-              width: double.maxFinite,
-              color: Colors.transparent.withOpacity(0.0),
-            ),
-          ],
+      child: GestureDetector(
+        onTap: () {
+          var focus = FocusScope.of(context);
+          if (focus.canRequestFocus) {
+            focus.unfocus();
+          }
+        },
+        child: Scaffold(
+          appBar: CustomTwaslnaAppBar.appBar(context, title:S.of(context).register,onTap: returnToMainScreen != null ? (){
+            Navigator.of(context).pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
+          } : null),
+          body:loadingSnapshot.connectionState != ConnectionState.waiting ? _currentState.getUI(context) : Stack(
+            children: [
+              _currentState.getUI(context),
+              Container(
+                width: double.maxFinite,
+                color: Colors.transparent.withOpacity(0.0),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,11 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
-import 'package:twaslna_delivery/module_auth/authorization_routes.dart';
-import 'package:twaslna_delivery/module_auth/enums/user_type.dart';
 import 'package:twaslna_delivery/module_auth/service/auth_service/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:twaslna_delivery/module_home/home_module.dart';
-import 'package:twaslna_delivery/module_home/home_routes.dart';
 import 'package:twaslna_delivery/module_main/main_routes.dart';
 import 'package:twaslna_delivery/utils/images/images.dart';
 

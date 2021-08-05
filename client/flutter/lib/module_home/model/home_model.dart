@@ -10,7 +10,7 @@ class HomeModel {
   late List<TopWantedProductsModel> topWanted;
   late List<StoreCategoryModel> storeCategory;
   late List<StoreModel> storeModel;
-  late HomeModel homeData;
+   HomeModel? homeData;
 
   HomeModel(
       {required this.topWanted,
@@ -37,6 +37,6 @@ class HomeModel {
   }
 
   bool get isEmpty => _empty;
-  bool get hasData => !_empty;
-  HomeModel get data => homeData;
+  bool get hasData => homeData != null;
+  HomeModel get data => homeData ?? HomeModel(topWanted: [],storeCategory: [],storeModel: []);
 }

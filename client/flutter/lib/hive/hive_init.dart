@@ -1,5 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive/hive.dart';
+import 'package:twaslna_delivery/hive/objects/cart_model/cart_model.dart';
 
 class HiveSetUp {
   static Future<void> init()async{
@@ -8,9 +9,12 @@ class HiveSetUp {
     await publicBoxes();
   }
    static Future<void> adapterRegistration() async {
-
+     Hive.registerAdapter(CartModelAdapter());
   }
  static Future <void> publicBoxes() async {
     await Hive.openBox('Authorization');
-  }
+    await Hive.openBox('Theme');
+    await Hive.openBox('Localization');
+    await Hive.openBox('Order');
+ }
 }

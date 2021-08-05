@@ -1,26 +1,28 @@
+import 'package:twaslna_delivery/utils/logger/logger.dart';
+
 class StoreCategoryList {
   String? statusCode;
   String? msg;
   List<Data>? data;
-  String? msgErr;
 
-  StoreCategoryList({this.statusCode, this.msg, this.data, this.msgErr});
+  StoreCategoryList({this.statusCode, this.msg, this.data});
 
   StoreCategoryList.fromJson(dynamic json) {
-    statusCode = json['status_code'];
-    msg = json['msg'];
-    if (json['Data'] != null) {
-      if (json['Data'] is String) {
-        msgErr = json['Data'];
-      } else {
+    try {
+      statusCode = json['status_code'];
+      msg = json['msg'];
+      if (json['Data'] != null) {
         data = [];
         json['Data'].forEach((v) {
           data?.add(Data.fromJson(v));
         });
       }
+    } catch (e) {
+      Logger().error(
+          'store category response', '${e.toString()}', StackTrace.current);
+      statusCode = '-1';
     }
   }
-
 }
 
 class Data {

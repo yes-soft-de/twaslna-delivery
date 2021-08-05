@@ -41,6 +41,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "عذرا لم تنجح عملية إضافة فرع الرجاء إعادة المحاولة لاحقا"),
         "addBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تمت إضافة الفرع بنجاح"),
+        "addProducts": MessageLookupByLibrary.simpleMessage("إضافة منتجات"),
+        "address": MessageLookupByLibrary.simpleMessage("الموقع"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
@@ -119,6 +121,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الرصيد الحالي:"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "darkMode": MessageLookupByLibrary.simpleMessage("الوضع الليلي"),
+        "dataDecodeError": MessageLookupByLibrary.simpleMessage(
+            "هناك مشكلة في تفسير البيانات"),
         "date": MessageLookupByLibrary.simpleMessage("التاريخ"),
         "days": MessageLookupByLibrary.simpleMessage("يوم"),
         "defaultBranch":
@@ -144,6 +148,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "emailAddressIsRequired": MessageLookupByLibrary.simpleMessage(
             "يرجى توفير البريد الالكتروني"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
+        "errorDownloadingImage":
+            MessageLookupByLibrary.simpleMessage("لم نستطع تحميل الصورة"),
         "errorHappened": MessageLookupByLibrary.simpleMessage("حدث خطأ ما"),
         "errorLoadingBranches":
             MessageLookupByLibrary.simpleMessage("حدث خطأ أثناء تحميل الفروع"),
@@ -195,6 +201,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "initData": MessageLookupByLibrary.simpleMessage("تعيين البيانات"),
         "internalServerError":
             MessageLookupByLibrary.simpleMessage("هناك مشكلة ما في الخادم"),
+        "invalidCredentials": MessageLookupByLibrary.simpleMessage(
+            "هناك خطأ في كلمة السر أو اسم المستخدم"),
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 موظف"),
@@ -239,6 +247,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("تاريخ الدفعة القادمة:"),
         "noImage": MessageLookupByLibrary.simpleMessage("لا يوجد صورة"),
+        "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
+            "لا يمكنك تعديل الطلب لأن الكابتن في المتجر"),
         "notAllowedCaptainReceived": MessageLookupByLibrary.simpleMessage(
             "لايمكن إزالة الطلب لاستلام الكابتن للطلب"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
@@ -318,6 +328,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "الرجاء ادخال البريد الالكتروني"),
         "pleaseInputPhoneNumber":
             MessageLookupByLibrary.simpleMessage("الرجاء ادخال رقم الهاتف"),
+        "pleaseLoginToContinue": MessageLookupByLibrary.simpleMessage(
+            "من فضلك قم بتسجيل الدخول للمتابعة"),
         "pleaseLoginToMakeOrder": MessageLookupByLibrary.simpleMessage(
             "من فضلك قم بتسجيل الدخول لاستكمال طلبك"),
         "pleaseProvidePaymentMethode":
@@ -338,6 +350,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "privateOrder": MessageLookupByLibrary.simpleMessage("طلب خاص"),
         "product": MessageLookupByLibrary.simpleMessage("منتج"),
         "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
+        "profileDataEmpty": MessageLookupByLibrary.simpleMessage(
+            "لايوجد بيانات شخصية متوفرة بعد"),
+        "profileFetchedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "تم جلب بياناتك الشخصية بنجاح"),
         "reasonIsRequired":
             MessageLookupByLibrary.simpleMessage("الرجاء تزويدنا بسبب الابلاغ"),
         "reasonOfTheReport":
@@ -447,7 +463,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تعديل الفرع بنجاح"),
         "updateBranches": MessageLookupByLibrary.simpleMessage("تعديل الأفرع"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
-            "يمكنك تعديل حالة الطلب من خلال النافذة الحالية"),
+            "يمكنك تعديل الطلب من خلال النافذة الحالية"),
         "updateOrderSuccess":
             MessageLookupByLibrary.simpleMessage("نم تعديل طلبك بنجاح"),
         "updateOrders": MessageLookupByLibrary.simpleMessage("تعديل الطلبات"),
@@ -455,12 +471,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تحديث البيانات"),
         "uploadAndSubmit":
             MessageLookupByLibrary.simpleMessage("رفع الصور وارسال الطلب"),
+        "uploadImageSuccess":
+            MessageLookupByLibrary.simpleMessage("تم رفع الصورة بنجاح"),
+        "uploadProfileSuccess": MessageLookupByLibrary.simpleMessage(
+            "تم تعديل البيانات الشخصية بنجاح"),
         "uploadingAndSubmitting":
             MessageLookupByLibrary.simpleMessage("جار الرفع وارسال الطلب"),
         "uploadingImages":
             MessageLookupByLibrary.simpleMessage("جار رفع الصور"),
         "uploadingImagesPleaseWait":
-            MessageLookupByLibrary.simpleMessage("يتم رفع الصور"),
+            MessageLookupByLibrary.simpleMessage("يتم رفع الصورة"),
         "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "views": MessageLookupByLibrary.simpleMessage("مشاهدة"),
         "waiting": MessageLookupByLibrary.simpleMessage("في الانتظار"),

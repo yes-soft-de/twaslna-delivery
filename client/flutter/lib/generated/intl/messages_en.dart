@@ -41,6 +41,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Sorry your request for add branch faild please try again"),
         "addBranchSuccess": MessageLookupByLibrary.simpleMessage(
             "Branch has been added successfully"),
+        "addProducts": MessageLookupByLibrary.simpleMessage("Add Products"),
+        "address": MessageLookupByLibrary.simpleMessage("Address"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
@@ -56,7 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "branch": MessageLookupByLibrary.simpleMessage("Branch"),
         "branch01": MessageLookupByLibrary.simpleMessage("Branch 01"),
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
-        "cancel": MessageLookupByLibrary.simpleMessage("CANCEL"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "captain": MessageLookupByLibrary.simpleMessage("Captain"),
         "captainAcceptOrderDescription":
             MessageLookupByLibrary.simpleMessage("captain headed to store"),
@@ -121,6 +123,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Current Balance:"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
+        "dataDecodeError":
+            MessageLookupByLibrary.simpleMessage("Error with Decoding Data"),
         "date": MessageLookupByLibrary.simpleMessage("Date"),
         "days": MessageLookupByLibrary.simpleMessage("day"),
         "defaultBranch": MessageLookupByLibrary.simpleMessage("Default Branch"),
@@ -145,7 +149,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "emailAddressIsRequired":
             MessageLookupByLibrary.simpleMessage("Email Address is Required"),
         "errOc":
-            MessageLookupByLibrary.simpleMessage("The next problem occurred"),
+            MessageLookupByLibrary.simpleMessage("The next problems occurred"),
+        "errorDownloadingImage":
+            MessageLookupByLibrary.simpleMessage("error download image"),
         "errorHappened": MessageLookupByLibrary.simpleMessage("Error Happened"),
         "errorLoadingBranches":
             MessageLookupByLibrary.simpleMessage("Error Loading Branches"),
@@ -202,6 +208,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "initData": MessageLookupByLibrary.simpleMessage("Init Data"),
         "internalServerError":
             MessageLookupByLibrary.simpleMessage("Internal server error"),
+        "invalidCredentials":
+            MessageLookupByLibrary.simpleMessage("Wrong username or password"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 Employees"),
@@ -245,6 +253,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("Next Payment Date:"),
         "noImage": MessageLookupByLibrary.simpleMessage("No Image"),
+        "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
+            "You can\'t edit, captain in the store."),
         "notAllowedCaptainReceived": MessageLookupByLibrary.simpleMessage(
             "Can not remove it, The captain received the order"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
@@ -326,6 +336,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please Enter Your Email"),
         "pleaseInputPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Please input phone number"),
+        "pleaseLoginToContinue":
+            MessageLookupByLibrary.simpleMessage("Please login to continue"),
         "pleaseLoginToMakeOrder": MessageLookupByLibrary.simpleMessage(
             "Please login to resuming order sending"),
         "pleaseProvidePaymentMethode": MessageLookupByLibrary.simpleMessage(
@@ -346,6 +358,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "privateOrder": MessageLookupByLibrary.simpleMessage("Private Order"),
         "product": MessageLookupByLibrary.simpleMessage("product"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
+        "profileDataEmpty": MessageLookupByLibrary.simpleMessage(
+            "There is no profile data available"),
+        "profileFetchedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Profile Data Fetched Successfully"),
         "reasonIsRequired":
             MessageLookupByLibrary.simpleMessage("Reason is Required"),
         "reasonOfTheReport":
@@ -454,18 +470,22 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Update Branches"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
             "You can update your order item from this interface"),
-        "updateOrderSuccess": MessageLookupByLibrary.simpleMessage(
-            "Your update has been updated"),
+        "updateOrderSuccess":
+            MessageLookupByLibrary.simpleMessage("Your order has been updated"),
         "updateOrders": MessageLookupByLibrary.simpleMessage("Orders Details"),
         "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),
         "uploadAndSubmit":
             MessageLookupByLibrary.simpleMessage("Upload and submit"),
+        "uploadImageSuccess":
+            MessageLookupByLibrary.simpleMessage("Upload image was a success"),
+        "uploadProfileSuccess": MessageLookupByLibrary.simpleMessage(
+            "Upload profile was a success"),
         "uploadingAndSubmitting":
             MessageLookupByLibrary.simpleMessage("Uploading and Submitting"),
         "uploadingImages":
             MessageLookupByLibrary.simpleMessage("Uploading Images"),
         "uploadingImagesPleaseWait": MessageLookupByLibrary.simpleMessage(
-            "Uploading Images, Please Wait"),
+            "Uploading Image, Please Wait"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "views": MessageLookupByLibrary.simpleMessage("views"),
         "waiting": MessageLookupByLibrary.simpleMessage("waiting"),

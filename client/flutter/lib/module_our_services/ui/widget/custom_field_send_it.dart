@@ -14,12 +14,13 @@ class CustomSendItFormField extends StatefulWidget {
   final int? maxLines;
   final bool numbers;
   final bool last;
+  final bool validator;
   @override
   _CustomSendItFormFieldState createState() => _CustomSendItFormFieldState();
 
   CustomSendItFormField({this.height = 50,
     this.contentPadding = const EdgeInsets.fromLTRB(16, 8, 16, 8),
-    this.hintText, this.preIcon, this.sufIcon, this.controller,this.readOnly = false,this.onTap,this.maxLines,this.numbers = false,this.last = false});
+    this.hintText, this.preIcon, this.sufIcon, this.controller,this.readOnly = false,this.onTap,this.maxLines,this.numbers = false,this.last = false,this.validator = true});
 }
 
 class _CustomSendItFormFieldState extends State<CustomSendItFormField> {
@@ -60,7 +61,7 @@ class _CustomSendItFormFieldState extends State<CustomSendItFormField> {
             setState(() {
             });
           },
-          validator: (value){
+          validator:widget.validator ? (value){
             if (mode == AutovalidateMode.disabled){
               setState(() {
                 mode = AutovalidateMode.onUserInteraction;
@@ -82,7 +83,7 @@ class _CustomSendItFormFieldState extends State<CustomSendItFormField> {
               clean = true;
               return null;
             }
-          },
+          }:null,
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: widget.hintText,

@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_orders/orders_routes.dart';
 import 'package:twaslna_delivery/module_orders/request/client_order_request.dart';
-import 'package:twaslna_delivery/module_stores/model/cart_model.dart';
+import 'package:twaslna_delivery/hive/objects/cart_model/cart_model.dart';
 import 'package:twaslna_delivery/module_stores/model/category_model.dart';
 import 'package:twaslna_delivery/module_stores/model/checkout_model.dart';
+import 'package:twaslna_delivery/module_stores/presistance/cart_hive_box_helper.dart';
 import 'package:twaslna_delivery/module_stores/ui/screen/store_products_screen.dart';
 import 'package:twaslna_delivery/module_stores/ui/state/store_products/store_products_state.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/checkout_button.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/custom_stores_products_app_bar.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/products_card.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/products_chip.dart';
+import 'package:twaslna_delivery/module_stores/ui/widget/store_products/products_zone.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/store_products_title_bar.dart';
 import 'package:twaslna_delivery/utils/components/costom_search.dart';
+import 'package:twaslna_delivery/utils/components/progresive_image.dart';
 import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 import 'package:twaslna_delivery/utils/models/product.dart';
 import 'package:twaslna_delivery/utils/models/store.dart';
@@ -21,10 +24,15 @@ class StoreProductsLoadedState extends StoreProductsState {
   StoreProductsScreenState screenState;
   List<ProductModel> topWantedProducts;
   List<CategoryModel> productsCategory;
-
-  StoreProductsLoadedState(
-      this.screenState, this.topWantedProducts, this.productsCategory)
-      : super(screenState);
+  List<CartModel>? orderCart;
+  StoreProductsLoadedState(this.screenState,
+      {required this.topWantedProducts, required this.productsCategory,required this.orderCart})
+      : super(screenState){
+    if (orderCart != null ){
+      fromEditingOrder = true;
+      carts = orderCart??[];
+    }
+  }
   late String title;
   late String backgroundImage;
   String defaultValue = S.current.mostWanted;
@@ -32,11 +40,21 @@ class StoreProductsLoadedState extends StoreProductsState {
   late int storeId;
   int categoryId = -1;
   late double deliveryCost;
+  bool fromEditingOrder = false;
   @override
   Widget getUI(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
-    var args = ModalRoute.of(context)?.settings.arguments;
+    var height = MediaQuery
+        .of(context)
+        .size
+        .height;
+    var width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    var args = ModalRoute
+        .of(context)
+        ?.settings
+        .arguments;
     if (args is StoreModel) {
       title = args.storeOwnerName;
       backgroundImage = args.image;
@@ -45,11 +63,10 @@ class StoreProductsLoadedState extends StoreProductsState {
     }
     return Stack(
       children: [
-        Image.network(
-          backgroundImage,
+        CustomNetworkImage(
+          image:backgroundImage,
           height: height,
           width: width,
-          fit: BoxFit.cover,
         ),
         CustomStoresProductsAppBar(),
         Align(
@@ -60,19 +77,21 @@ class StoreProductsLoadedState extends StoreProductsState {
             children: [
               Padding(
                 padding:
-                    const EdgeInsets.only(right: 28.0, left: 28, bottom: 16),
+                const EdgeInsets.only(right: 28.0, left: 28, bottom: 16),
                 child: StoreProductsTitleBar(
-                  title: title,
-                  rate: 4.7,
-                  views: 40,
-                  deliveryCost:deliveryCost
+                    title: title,
+                    rate: 4.7,
+                    views: 40,
+                    deliveryCost: deliveryCost
                 ),
               ),
               Container(
                 height: height * 0.65,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
-                  color: Theme.of(context).cardColor,
+                  color: Theme
+                      .of(context)
+                      .cardColor,
                 ),
                 child: Stack(
                   children: [
@@ -86,7 +105,9 @@ class StoreProductsLoadedState extends StoreProductsState {
                             padding: const EdgeInsets.only(
                                 right: 28.0, left: 28.0, bottom: 25),
                             child: CustomDeliverySearch(
-                              hintText: S.of(context).searchFor,
+                              hintText: S
+                                  .of(context)
+                                  .searchFor,
                             ),
                           ),
                           Padding(
@@ -102,23 +123,10 @@ class StoreProductsLoadedState extends StoreProductsState {
                               ),
                             ),
                           ),
-                          screenState.snapshot.connectionState !=
-                                  ConnectionState.waiting
-                              ? ListView(
-                                  physics: ScrollPhysics(),
-                                  shrinkWrap: true,
-                                  children: getProducts(
-                                      defaultValue == S.of(context).mostWanted
-                                          ? topWantedProducts
-                                          : screenState.snapshot.data),
-                                )
-                              : Container(
-                                  height: 125,
-                                  width: double.maxFinite,
-                                  child: Align(
-                                      alignment:
-                                          AlignmentDirectional.bottomCenter,
-                                      child: CircularProgressIndicator())),
+                          ProductsZone(loading: screenState.snapshot
+                              .connectionState == ConnectionState.waiting,
+                              children: getProducts(defaultValue == S.current.mostWanted ? topWantedProducts : screenState.snapshot.data ?? <ProductModel>[]),
+                              snapshot: screenState.snapshot),
                           SizedBox(
                             height: 75,
                           ),
@@ -128,18 +136,38 @@ class StoreProductsLoadedState extends StoreProductsState {
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: CheckoutButton(
-                        onPressed:carts.isNotEmpty ? () {
+                        onPressed: carts.isNotEmpty ? () {
                           List<Products> items = [];
                           carts.forEach((element) {
-                            items.add(Products(productID: element.id,countProduct: element.quantity));
+                            items.add(Products(productID: element.id,
+                                countProduct: element.quantity));
                           });
-                          CheckoutModel checkoutModel = CheckoutModel(ownerId:storeId,cart: items,orderCost:double.parse(getTotal(carts)),deliveryCost:deliveryCost);
-                          Navigator.of(context).pushNamed(OrdersRoutes.CLIENT_ORDER,arguments:checkoutModel);
-                        }:(){
-                          CustomFlushBarHelper.createError(title:S.of(context).warnning, message:S.of(context).yourCartEmpty)..show(context);
+                          CheckoutModel checkoutModel = CheckoutModel(
+                              ownerId: storeId,
+                              cart: items,
+                              orderCost: double.parse(getTotal(carts)),
+                              deliveryCost: deliveryCost);
+                          if (fromEditingOrder){
+                            CartHiveHelper().setCart(carts);
+                            Navigator.of(context).pop();
+                          }
+                          else {
+                            Navigator.of(context).pushNamed(OrdersRoutes
+                                .CLIENT_ORDER, arguments: checkoutModel);
+                          }
+
+                        } : () {
+                          CustomFlushBarHelper.createError(title: S
+                              .of(context)
+                              .warnning, message: S
+                              .of(context)
+                              .yourCartEmpty)
+                            ..show(context);
                         },
                         total: getTotal(carts),
-                        currency: S.of(context).sar,
+                        currency: S
+                            .of(context)
+                            .sar,
                       ),
                     ),
                   ],
@@ -157,18 +185,18 @@ class StoreProductsLoadedState extends StoreProductsState {
     List<ProductsCard> prods = [];
     topWantedProducts.forEach((element) {
       prods.add(ProductsCard(
+          id:element.id,
           title: element.title,
           image: element.image,
           price: element.price,
           defaultQuantity: getQuantity(element.id),
-          quantity: (q) {
-            if (q > 0) {
-              carts.removeWhere((e) => e.id == element.id);
-              carts.add(
-                  CartModel(id: element.id, quantity: q, price: element.price));
+          quantity: (cartModel) {
+            if (cartModel.quantity > 0) {
+              carts.removeWhere((e) => e.id == cartModel.id);
+              carts.add(cartModel);
             }
-            if (q == 0) {
-              carts.removeWhere((e) => e.id == element.id);
+            if (cartModel.quantity == 0) {
+              carts.removeWhere((e) => e.id == cartModel.id);
             }
             screenState.refresh();
           }));

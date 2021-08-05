@@ -20,7 +20,7 @@ class RegisterStateInit extends RegisterState {
         ..show(screen.context);
     }
   }
-
+  TextEditingController nameController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _registerKey = GlobalKey<FormState>();
@@ -46,28 +46,31 @@ class RegisterStateInit extends RegisterState {
                       ),
                     )
                   : Container(),
-              // Padding(
-              //   padding: const EdgeInsets.only(bottom: 8.0,left: 85,right: 85,top: 24),
-              //   child: Text(S.of(context).name,style: TextStyle(
-              //       fontWeight: FontWeight.bold
-              //   ),),
-              // ),
-              // ListTile(
-              //   leading: Container(
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(10),
-              //       color: Theme.of(context).backgroundColor,
-              //     ),
-              //     child: Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: Icon(Icons.person),
-              //     ),
-              //   ),
-              //   title: Padding(
-              //     padding: const EdgeInsets.all(8.0),
-              //     child: CustomLoginFormField(),
-              //   ),
-              // ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0,left: 85,right: 85,top: 24),
+                child: Text(S.of(context).name,style: TextStyle(
+                    fontWeight: FontWeight.bold
+                ),),
+              ),
+              ListTile(
+                leading: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Theme.of(context).backgroundColor,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(Icons.person),
+                  ),
+                ),
+                title: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomLoginFormField(
+                    controller: nameController,
+                    hintText: S.of(context).nameHint,
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(
                     bottom: 8.0, left: 85, right: 85, top: 8),
@@ -137,7 +140,7 @@ class RegisterStateInit extends RegisterState {
                     }),
               ),
               Container(
-                height: 75,
+                height: 175,
               ),
             ],
           ),
@@ -150,12 +153,12 @@ class RegisterStateInit extends RegisterState {
             loading: screen.loadingSnapshot.connectionState ==
                 ConnectionState.waiting,
             secondButtonTab: () => Navigator.of(context)
-                .pushReplacementNamed(AuthorizationRoutes.LOGIN_SCREEN),
+                .pushReplacementNamed(AuthorizationRoutes.LOGIN_SCREEN,arguments: screen.args),
             firstButtonTab: agreed
                 ? () {
                     if (_registerKey.currentState!.validate()) {
                       screen.registerClient(
-                          RegisterRequest(userID:usernameController.text ,password:passwordController.text));
+                          RegisterRequest(userID:usernameController.text ,password:passwordController.text,userName: nameController.text));
                     }
                   }
                 : null,

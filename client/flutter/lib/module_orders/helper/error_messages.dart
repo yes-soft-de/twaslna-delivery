@@ -11,6 +11,9 @@ class ErrorMessages {
     else if (err == 'can not remove it, The captain received the order') {
       return S.current.notAllowedCaptainReceived;
     }
+    else if (err == "you can't edit, captain in the store.") {
+      return S.current.notAllowedCaptainInStore;
+    }
     else {
       return S.current.errorHappened;
     }

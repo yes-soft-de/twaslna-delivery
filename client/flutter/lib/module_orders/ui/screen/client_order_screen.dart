@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_auth/authorization_routes.dart';
 import 'package:twaslna_delivery/module_main/main_routes.dart';
 import 'package:twaslna_delivery/module_orders/request/client_order_request.dart';
 import 'package:twaslna_delivery/module_orders/state_manager/client_order_state_manager.dart';
@@ -49,6 +50,11 @@ class ClientOrderScreenState extends State<ClientOrderScreen> {
           title: S.of(context).warnning, message: err)
         ..show(context);
     }
+  }
+
+  void goToLogin(){
+    Navigator.of(context).pushNamed(AuthorizationRoutes.LOGIN_SCREEN,arguments:true);
+    CustomFlushBarHelper.createError(title:S.current.warnning, message:S.current.pleaseLoginToMakeOrder).show(context);
   }
 
   @override

@@ -5,12 +5,13 @@ import 'package:twaslna_delivery/module_auth/request/register_request/register_r
 import 'package:twaslna_delivery/module_auth/response/login_response/login_response.dart';
 import 'package:twaslna_delivery/module_auth/response/regester_response/regester_response.dart';
 import 'package:twaslna_delivery/module_network/http_client/http_client.dart';
+import 'package:twaslna_delivery/utils/logger/logger.dart';
 
 @injectable
 class AuthRepository {
   final ApiClient _apiClient;
-
-  AuthRepository(this._apiClient);
+  final Logger _logger;
+  AuthRepository(this._apiClient,this._logger);
 
   Future<RegisterResponse?> createUser(RegisterRequest request) async {
     dynamic result = await _apiClient.post(
@@ -29,6 +30,6 @@ class AuthRepository {
     if (result == null) {
       return null;
     }
-    return LoginResponse.fromJson(result);
+   return LoginResponse.fromJson(result);
   }
 }

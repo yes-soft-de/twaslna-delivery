@@ -1,3 +1,5 @@
+import 'package:twaslna_delivery/utils/logger/logger.dart';
+
 class OrderDetailsResponse {
   String? statusCode;
   String? msg;
@@ -6,9 +8,16 @@ class OrderDetailsResponse {
   OrderDetailsResponse({this.statusCode, this.msg, this.data});
 
   OrderDetailsResponse.fromJson(dynamic json) {
-    statusCode = json['status_code'];
-    msg = json['msg'];
-    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
+    try {
+      statusCode = json['status_code'];
+      msg = json['msg'];
+      data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
+    } catch (e) {
+      Logger().error(
+          'Order Details Response', '${e.toString()}', StackTrace.current);
+      statusCode = '-1';
+    }
+
   }
 
   Map<String, dynamic> toJson() {
@@ -39,6 +48,7 @@ class Data {
     storeOwner = json['storeOwner'] != null
         ? StoreOwner.fromJson(json['storeOwner'])
         : null;
+    order = json['order'] != null ? Order.fromJson(json['order']) : null;
     order = json['order'] != null ? Order.fromJson(json['order']) : null;
   }
 
@@ -81,16 +91,16 @@ class Order {
   dynamic updatedAt;
   String? note;
   String? payment;
-  dynamic recipientName;
-  dynamic recipientPhone;
+  String? recipientName;
+  String ?recipientPhone;
   String? state;
   String? roomID;
   dynamic captainID;
   CreatedAt? createdAt;
-  dynamic detail;
+  String? detail;
   double? deliveryCost;
   double? orderCost;
-
+  int? orderType;
   Order(
       {this.id,
       this.ownerID,
@@ -108,7 +118,9 @@ class Order {
       this.createdAt,
       this.detail,
       this.orderCost,
-      this.deliveryCost});
+      this.deliveryCost,
+      this.orderType
+      });
 
   Order.fromJson(dynamic json) {
     id = json['id'];
@@ -143,6 +155,7 @@ class Order {
     detail = json['detail'];
     deliveryCost = json['deliveryCost']?.toDouble();
     orderCost = json['orderCost']?.toDouble();
+    orderType = json['orderType'];
   }
 
   Map<String, dynamic> toJson() {
@@ -312,7 +325,7 @@ class StoreOwner {
   String? storeOwnerName;
   int? storeOwnerID;
   String? image;
-  dynamic? branch;
+  dynamic branch;
   bool? free;
   List<Branches>? branches;
   dynamic city;

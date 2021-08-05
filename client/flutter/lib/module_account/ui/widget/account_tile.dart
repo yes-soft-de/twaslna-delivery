@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twaslna_delivery/generated/l10n.dart';
 class AccountTile extends StatelessWidget {
   final String text;
   final IconData icon;
@@ -20,7 +21,7 @@ class AccountTile extends StatelessWidget {
                 color: Colors.white),
           ),
         ),
-        title: Text(text),
+        title: Text(text.isEmpty?S.of(context).username:text),
         trailing: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),

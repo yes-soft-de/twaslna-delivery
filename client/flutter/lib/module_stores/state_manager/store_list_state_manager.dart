@@ -21,8 +21,8 @@ class StoreListStateManager {
       if (value.empty) {
         _stateSubject.add(StoreListEmptyState(screenState,S.current.homeDataEmpty,id));
       }
-      else if (!value.hasError) {
-        _stateSubject.add(StoreListErrorState(screenState,value.error??S.current.networkError,id));
+      else if (value.hasError) {
+        _stateSubject.add(StoreListErrorState(screenState,value.error!,id));
       }
       else {
         _stateSubject.add(StoreListLoadedState(screenState,value.data));

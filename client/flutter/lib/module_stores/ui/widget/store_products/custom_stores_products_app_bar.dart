@@ -23,7 +23,7 @@ class CustomStoresProductsAppBar extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(
                   Icons.arrow_back,
-                  color: Theme.of(context).disabledColor,
+                  color: Colors.white.withOpacity(0.85),
                 ),
               ),
             ),

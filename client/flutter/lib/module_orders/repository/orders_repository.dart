@@ -30,14 +30,14 @@ class MyOrdersRepository {
     return OrderDetailsResponse.fromJson(response);
   }
 
-  Future<int?> postClientOrder(ClientOrderRequest request) async {
+  Future<ClientOrderResponse?> postClientOrder(ClientOrderRequest request) async {
     var token = await _authService.getToken();
 
     dynamic response = await _apiClient.post(
         Urls.POST_CLIENT_ORDER_API, request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
-    return int.parse(ClientOrderResponse.fromJson(response).statusCode??'500');
+    return ClientOrderResponse.fromJson(response);
   }
   Future<ClientOrderResponse?> deleteClientOrder(int id) async {
     var token = await _authService.getToken();
@@ -47,10 +47,20 @@ class MyOrdersRepository {
     if (response == null) return null;
     return ClientOrderResponse.fromJson(response);
   }
-  Future<ClientOrderResponse?> updateClientOrder(request) async {
+  Future<ClientOrderResponse?> updateClientOrder(ClientOrderRequest request) async {
     var token = await _authService.getToken();
+    String url;
+    if (request.orderType == 2) {
+      url = Urls.UPDATE_SPECIAL_CLIENT_ORDER_API;
+    }
+    else if (request.orderType == 3){
+      url = Urls.UPDATE_SEND_CLIENT_ORDER_API;
+    }
+    else {
+      url = Urls.UPDATE_CLIENT_ORDER_API;
+    }
     dynamic response = await _apiClient.put(
-        Urls.UPDATE_CLIENT_ORDER_API,request.toJson(),
+        url,request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ClientOrderResponse.fromJson(response);

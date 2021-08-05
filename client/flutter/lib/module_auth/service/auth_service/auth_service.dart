@@ -32,13 +32,19 @@ class AuthService {
       password: password,
     ));
     if (loginResult == null) {
-      _authSubject.addError(S.current.networkError);
       await logout();
+      _authSubject.addError(S.current.networkError);
       throw AuthorizationException(S.current.networkError);
-    } else if (loginResult.token == null) {
+    }
+    else if (loginResult.statusCode == '401'){
+      await logout();
+      _authSubject.addError(S.current.invalidCredentials);
+      throw AuthorizationException(S.current.networkError);
+    }
+    else if (loginResult.token == null) {
+      await logout();
       _authSubject.addError(StatusCodeHelper.getStatusCodeMessages(
           loginResult.statusCode ?? '0'));
-      await logout();
       throw AuthorizationException(StatusCodeHelper.getStatusCodeMessages(
           loginResult.statusCode ?? '0'));
     }

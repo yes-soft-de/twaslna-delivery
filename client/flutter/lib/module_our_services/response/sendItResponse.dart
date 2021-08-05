@@ -1,3 +1,5 @@
+import 'package:twaslna_delivery/utils/logger/logger.dart';
+
 class SendItResponse {
   String? statusCode;
   String? msg;
@@ -9,9 +11,16 @@ class SendItResponse {
     this.data});
 
   SendItResponse.fromJson(dynamic json) {
-    statusCode = json['status_code'];
-    msg = json['msg'];
-    data = json['Data'];
+    try {
+      statusCode = json['status_code'];
+      msg = json['msg'];
+      data = json['Data'];
+    }
+    catch (e) {
+      Logger().error(
+          'Send It response', '${e.toString()}', StackTrace.current);
+      statusCode = '-1';
+    }
   }
 
 }

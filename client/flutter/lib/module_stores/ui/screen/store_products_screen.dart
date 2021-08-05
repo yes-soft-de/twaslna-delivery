@@ -27,7 +27,9 @@ class StoreProductsScreenState extends State<StoreProductsScreen> {
   void getProductsByCategory(storeId , categoryId) async {
      widget.stateManager.getProductsByCategory(storeId, categoryId);
   }
-
+  void getStoresProducts(int id){
+    widget.stateManager.getStoresProducts(id, this);
+  }
   @override
   void initState() {
     super.initState();
@@ -48,6 +50,7 @@ class StoreProductsScreenState extends State<StoreProductsScreen> {
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
     if (flag && args is StoreModel) {
+      title = args.storeOwnerName;
       widget.stateManager.getStoresProducts(args.id, this);
       flag = false;
     }

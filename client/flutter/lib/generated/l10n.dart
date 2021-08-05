@@ -670,10 +670,10 @@ class S {
     );
   }
 
-  /// `Uploading Images, Please Wait`
+  /// `Uploading Image, Please Wait`
   String get uploadingImagesPleaseWait {
     return Intl.message(
-      'Uploading Images, Please Wait',
+      'Uploading Image, Please Wait',
       name: 'uploadingImagesPleaseWait',
       desc: '',
       args: [],
@@ -1220,10 +1220,10 @@ class S {
     );
   }
 
-  /// `CANCEL`
+  /// `Cancel`
   String get cancel {
     return Intl.message(
-      'CANCEL',
+      'Cancel',
       name: 'cancel',
       desc: '',
       args: [],
@@ -3110,10 +3110,10 @@ class S {
     );
   }
 
-  /// `Your update has been updated`
+  /// `Your order has been updated`
   String get updateOrderSuccess {
     return Intl.message(
-      'Your update has been updated',
+      'Your order has been updated',
       name: 'updateOrderSuccess',
       desc: '',
       args: [],
@@ -3180,10 +3180,10 @@ class S {
     );
   }
 
-  /// `The next problem occurred`
+  /// `The next problems occurred`
   String get errOc {
     return Intl.message(
-      'The next problem occurred',
+      'The next problems occurred',
       name: 'errOc',
       desc: '',
       args: [],
@@ -3225,6 +3225,116 @@ class S {
     return Intl.message(
       'This Error happened',
       name: 'thisErrorHappened',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please login to continue`
+  String get pleaseLoginToContinue {
+    return Intl.message(
+      'Please login to continue',
+      name: 'pleaseLoginToContinue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can't edit, captain in the store.`
+  String get notAllowedCaptainInStore {
+    return Intl.message(
+      'You can\'t edit, captain in the store.',
+      name: 'notAllowedCaptainInStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wrong username or password`
+  String get invalidCredentials {
+    return Intl.message(
+      'Wrong username or password',
+      name: 'invalidCredentials',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error with Decoding Data`
+  String get dataDecodeError {
+    return Intl.message(
+      'Error with Decoding Data',
+      name: 'dataDecodeError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Products`
+  String get addProducts {
+    return Intl.message(
+      'Add Products',
+      name: 'addProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is no profile data available`
+  String get profileDataEmpty {
+    return Intl.message(
+      'There is no profile data available',
+      name: 'profileDataEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile Data Fetched Successfully`
+  String get profileFetchedSuccessfully {
+    return Intl.message(
+      'Profile Data Fetched Successfully',
+      name: 'profileFetchedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload profile was a success`
+  String get uploadProfileSuccess {
+    return Intl.message(
+      'Upload profile was a success',
+      name: 'uploadProfileSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload image was a success`
+  String get uploadImageSuccess {
+    return Intl.message(
+      'Upload image was a success',
+      name: 'uploadImageSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address`
+  String get address {
+    return Intl.message(
+      'Address',
+      name: 'address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `error download image`
+  String get errorDownloadingImage {
+    return Intl.message(
+      'error download image',
+      name: 'errorDownloadingImage',
       desc: '',
       args: [],
     );

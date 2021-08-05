@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/module_stores/store_routes.dart';
+import 'package:twaslna_delivery/utils/components/progresive_image.dart';
 
 class HomeCard extends StatelessWidget {
   final String title;
@@ -20,19 +21,12 @@ class HomeCard extends StatelessWidget {
             onTap:onTap,
             child: Stack(
               children: [
-                image.contains('assets/')
-                    ? Image.asset(
-                        image,
-                        fit: BoxFit.cover,
-                        height: 200,
-                        width: 200,
-                      )
-                    : Image.network(
-                        image,
-                        fit: BoxFit.cover,
-                        height: 200,
-                        width: 200,
-                      ),
+                 CustomNetworkImage(
+                  width: 200,
+                  height: 200,
+                  image: image,
+                  asset: image.contains('assets/'),
+                ),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(

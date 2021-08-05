@@ -19,7 +19,9 @@ class PrivateFinishOrderStateState extends PrivateOrderState {
 
   PrivateFinishOrderStateState(
       PrivateOrderScreenState screenState, this.clientAddress)
-      : super(screenState);
+      : super(screenState){
+    clientLocation = this.clientAddress;
+  }
   final _mapController = MapController();
   TextEditingController noteController = TextEditingController();
   TimeOfDay time = TimeOfDay.now();
@@ -174,7 +176,14 @@ class PrivateFinishOrderStateState extends PrivateOrderState {
                       child: MakeOrderButton(
                         text: S.of(context).createNewOrder,
                         onPressed: () {
-                          if (payments == null) {
+                          if (clientLocation == null) {
+                            CustomFlushBarHelper.createError(
+                                title: S.of(context).warnning,
+                                message:
+                                S.of(context).pleaseProvideYourAddress)
+                              ..show(context);
+                          }
+                          else if (payments == null) {
                             CustomFlushBarHelper.createError(
                                 title: S.of(context).warnning,
                                 message:

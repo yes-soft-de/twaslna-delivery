@@ -1,5 +1,6 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_orders/model/order_details_model.dart';
 import 'package:twaslna_delivery/module_orders/request/client_order_request.dart';
@@ -9,6 +10,13 @@ import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/orde
 import 'package:twaslna_delivery/module_orders/ui/widget/order_details/bill.dart';
 import 'package:twaslna_delivery/module_orders/ui/widget/order_details/custom_order_details_app_bar.dart';
 import 'package:twaslna_delivery/module_orders/ui/widget/order_details/order_chip.dart';
+import 'package:twaslna_delivery/module_our_services/ui/widget/custom_field_send_it.dart';
+import 'package:twaslna_delivery/module_our_services/ui/widget/label_text.dart';
+import 'package:twaslna_delivery/module_stores/presistance/cart_hive_box_helper.dart';
+import 'package:twaslna_delivery/module_stores/store_routes.dart';
+import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
+import 'package:twaslna_delivery/utils/images/images.dart';
+import 'package:twaslna_delivery/utils/models/store.dart';
 
 class OrderDetailsEditState extends OrderDetailsState {
   OrderDetailsScreenState screenState;
@@ -16,20 +24,36 @@ class OrderDetailsEditState extends OrderDetailsState {
 
   OrderDetailsEditState(this.screenState, this.orderDetails)
       : super(screenState) {
-   screenState.clientOrderRequest = ClientOrderRequest(
-     ownerID: orderDetails.order.ownerID,
-     payment: orderDetails.order.payment,
-     note: orderDetails.order.note,
-     orderNumber: screenState.orderNumber,
-     destination:GeoJson(long: orderDetails.order.destination?.long,lat: orderDetails.order.destination?.lat),
-     deliveryDate: orderDetails.order.deliveryDate,
-     deliveryCost:  orderDetails.order.deliveryCost,
-     orderCost:  orderDetails.order.orderCost,
-     products: toProducts(orderDetails.carts),
-   );
-   total = orderDetails.order.orderCost;
+    screenState.clientOrderRequest = ClientOrderRequest(
+        ownerID: orderDetails.order.ownerID,
+        payment: orderDetails.order.payment,
+        note: orderDetails.order.note,
+        orderNumber: screenState.orderNumber,
+        destination: GeoJson(
+            long: orderDetails.order.destination?.long,
+            lat: orderDetails.order.destination?.lat),
+        deliveryDate: orderDetails.order.deliveryDate,
+        deliveryCost: orderDetails.order.deliveryCost,
+        orderCost: orderDetails.order.orderCost,
+        products: toProducts(orderDetails.carts),
+        detail: orderDetails.order.orderDetails,
+        recipientName: orderDetails.order.recipientName,
+        recipientPhone: orderDetails.order.recipientPhoneNumber,
+        orderType: orderDetails.order.orderType);
+    total = orderDetails.order.orderCost;
+    orderDetailsController.text = orderDetails.order.orderDetails ?? '';
+    noteController.text = orderDetails.order.note ?? '';
+    receiptNameController.text = orderDetails.order.recipientName ?? '';
+    phoneNumberController.text = orderDetails.order.recipientPhoneNumber ?? '';
   }
+
   double total = 0;
+  TextEditingController orderDetailsController = TextEditingController();
+  TextEditingController noteController = TextEditingController();
+  TextEditingController receiptNameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  final GlobalKey<FormState> _edit = GlobalKey<FormState>();
+  final CartHiveHelper cartHiveHelper = CartHiveHelper();
 
   @override
   Widget getUI(BuildContext context) {
@@ -37,6 +61,8 @@ class OrderDetailsEditState extends OrderDetailsState {
     var width = MediaQuery.of(context).size.width;
     return WillPopScope(
       onWillPop: () async {
+        screenState.handleOrderRequest = ClientOrderRequest();
+        await cartHiveHelper.deleteCart();
         screenState.currentState =
             OrderDetailsLoadedState(screenState, orderDetails);
         screenState.refresh();
@@ -51,12 +77,46 @@ class OrderDetailsEditState extends OrderDetailsState {
           ),
           CustomOrderDetailsAppBar(
             onTap: () {
-              screenState.currentState =
-                  OrderDetailsLoadedState(screenState, orderDetails);
-              screenState.refresh();
+              screenState.handleOrderRequest = ClientOrderRequest();
+              cartHiveHelper.deleteCart().whenComplete(() {
+                screenState.currentState =
+                    OrderDetailsLoadedState(screenState, orderDetails);
+                screenState.refresh();
+              });
             },
             onSave: () {
-              screenState.updateClientOrder();
+              if (orderDetails.order.orderType != 1) {
+                screenState.clientOrderRequest?.products = null;
+                screenState.clientOrderRequest?.detail =
+                    orderDetailsController.text.isEmpty
+                        ? null
+                        : orderDetailsController.text;
+                screenState.clientOrderRequest?.note =
+                    noteController.text.isEmpty ? null : noteController.text;
+                screenState.clientOrderRequest?.recipientName =
+                    receiptNameController.text.isEmpty
+                        ? null
+                        : receiptNameController.text;
+                screenState.clientOrderRequest?.recipientPhone =
+                    phoneNumberController.text.isEmpty
+                        ? null
+                        : phoneNumberController.text;
+                if (orderDetails.order.orderType == 3) {
+                  screenState.clientOrderRequest?.ownerID = null;
+                }
+                if (_edit.currentState!.validate()) {
+                  screenState.updateClientOrder();
+                }
+              } else {
+                if (screenState.clientOrderRequest!.products!.isEmpty) {
+                  CustomFlushBarHelper.createError(
+                          title: S.current.warnning,
+                          message: S.current.yourCartEmpty)
+                      .show(context);
+                } else {
+                  screenState.updateClientOrder();
+                }
+              }
             },
           ),
           Align(
@@ -85,40 +145,7 @@ class OrderDetailsEditState extends OrderDetailsState {
                           thickness: 2.5,
                         ),
                       ),
-                      orderDetails.carts.isNotEmpty
-                          ? Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 16, right: 16),
-                              child: ListTile(
-                                leading: Icon(
-                                  Icons.shopping_cart_rounded,
-                                  color: Theme.of(context).disabledColor,
-                                  size: 25,
-                                ),
-                                title: Text(
-                                  S.of(context).orderList,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                ),
-                              ),
-                            )
-                          : Container(),
-                      orderDetails.carts.isNotEmpty
-                          ? ListView(
-                              physics: ScrollPhysics(),
-                              shrinkWrap: true,
-                              children: getOrdersList(orderDetails.carts),
-                            )
-                          : Container(),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: BillCard(
-                          id: screenState.orderNumber!,
-                          deliveryCost: orderDetails.order.deliveryCost,
-                          orderCost: total,
-                        ),
-                      ),
+                      getOrderTypeWidget(orderDetails.order.orderType, context),
                       SizedBox(
                         height: 75,
                       ),
@@ -133,48 +160,212 @@ class OrderDetailsEditState extends OrderDetailsState {
     );
   }
 
-  List<Widget> getOrdersList(List<Item> carts) {
-    List<Widget> orderChips = [];
-    carts.forEach((element) {
-      orderChips.add(OrderChip(
-        title: element.productName,
-        image: element.productImage,
-        price: element.productPrice,
-        currency: S.current.sar,
-        quantity: (q,price) {
-          if (q == 0) {
-            screenState.clientOrderRequest?.products?.removeWhere((item) => item.productID == element.productID);
-          }
-          else {
-            screenState.clientOrderRequest?.products?.removeWhere((item) => item.productID == element.productID);
-            screenState.clientOrderRequest?.products?.add(Products(productID: element.productID,countProduct: q,price: price));
-          }
-          updateTotal();
-          screenState.refresh();
-        },
-        editable: true,
-        defaultQuantity: element.countProduct,
-      ));
-      orderChips.add(Padding(
-        padding: const EdgeInsets.only(right: 8.0, left: 8.0),
-        child: DottedLine(
-          dashColor: Theme.of(screenState.context).backgroundColor,
-          lineThickness: 2.5,
-          dashLength: 6,
+  Widget getOrderTypeWidget(int orderType, BuildContext context) {
+    if (orderType == 1) {
+      return Flex(
+        direction: Axis.vertical,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: ListTile(
+              leading: Icon(
+                Icons.shopping_cart_rounded,
+                color: Theme.of(context).disabledColor,
+                size: 25,
+              ),
+              title: Text(
+                S.of(context).orderList,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            ),
+          ),
+          ListView(
+            physics: ScrollPhysics(),
+            shrinkWrap: true,
+            children:
+                getOrdersList(screenState.handleOrderRequest.products??toProducts(orderDetails.carts)),
+          ),
+          Container(
+            height: 8,
+          ),
+          Container(
+            width: double.maxFinite,
+            child: TextButton(
+                style: TextButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () {
+                  cartHiveHelper.setCart(
+                      screenState.clientOrderRequest?.products ?? <Products>[]);
+                  Navigator.of(screenState.context).pushNamed(
+                      StoreRoutes.STORE_PRODUCTS,
+                      arguments: StoreModel(
+                          deliveryCost: orderDetails.order.deliveryCost,
+                          id: orderDetails.order.ownerID,
+                          storeOwnerName: orderDetails.storeInfo.storeOwnerName,
+                          image: orderDetails.storeInfo.image,
+                          privateOrders: false,
+                          hasProducts: true));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    S.current.addProducts,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                )),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: BillCard(
+              id: screenState.orderNumber!,
+              deliveryCost: orderDetails.order.deliveryCost,
+              orderCost: total,
+            ),
+          ),
+        ],
+      );
+    } else if (orderType == 2) {
+      return Flex(
+        direction: Axis.vertical,
+        children: [
+          Form(
+            key: _edit,
+            child: ListTile(
+              title: LabelText(S.of(context).orderDetails),
+              subtitle: CustomSendItFormField(
+                maxLines: 7,
+                hintText: S.of(context).orderDetailHint,
+                controller: orderDetailsController,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          ListTile(
+            title: LabelText(S.of(context).note),
+            subtitle: CustomSendItFormField(
+              maxLines: 7,
+              hintText: S.of(context).note,
+              controller: noteController,
+            ),
+          ),
+        ],
+      );
+    } else if (orderType == 3) {
+      return Form(
+        key: _edit,
+        child: Flex(
+          direction: Axis.vertical,
+          children: [
+            ListTile(
+              title: LabelText(S.of(context).orderDetails),
+              subtitle: CustomSendItFormField(
+                maxLines: 7,
+                hintText: S.of(context).orderDetailHint,
+                controller: orderDetailsController,
+              ),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            ListTile(
+              title: LabelText(S.of(context).note),
+              subtitle: CustomSendItFormField(
+                maxLines: 7,
+                hintText: S.of(context).note,
+                controller: noteController,
+                validator: false,
+              ),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            ListTile(
+              title: LabelText(S.of(context).recipientName),
+              subtitle: CustomSendItFormField(
+                hintText: S.of(context).nameHint,
+                controller: receiptNameController,
+              ),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            ListTile(
+              title: LabelText(S.of(context).recipientPhoneNumber),
+              subtitle: CustomSendItFormField(
+                hintText: S.of(context).pleaseInputPhoneNumber,
+                numbers: true,
+                controller: phoneNumberController,
+                maxLines: 1,
+              ),
+            ),
+          ],
         ),
-      ));
-    });
+      );
+    }
+    return Container();
+  }
+
+  List<Widget> getOrdersList(List<Products>? carts) {
+    updateTotal();
+    List<Widget> orderChips = [];
+    carts?.forEach((element) {
+        orderChips.add(OrderChip(
+          productID: element.productID!,
+          title: element.productName ?? S.current.product,
+          image: element.productsImage ?? ImageAsset.NETWORK,
+          price: element.price!,
+          currency: S.current.sar,
+          quantity: (product) {
+            if (product.countProduct == 0) {
+              screenState.clientOrderRequest?.products
+                  ?.forEach((element) {
+                    if (element.productID == product.productID){
+                      element.countProduct = 0;
+                    }
+              });
+            } else {
+              screenState.clientOrderRequest?.products
+                  ?.forEach((element) {
+                if (element.productID == product.productID){
+                  element.countProduct = product.countProduct;
+                }
+              });
+            }
+            updateTotal();
+            screenState.refresh();
+          },
+          editable: true,
+          defaultQuantity: element.countProduct!,
+        ));
+        orderChips.add(Padding(
+          padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+          child: DottedLine(
+            dashColor: Theme.of(screenState.context).backgroundColor,
+            lineThickness: 2.5,
+            dashLength: 6,
+          ),
+        ));
+      }
+    );
+    cleanProducts();
+    screenState.refresh();
     return orderChips;
   }
 
- List<Products> toProducts(List<Item> carts) {
-   List<Products> products = [];
+  List<Products> toProducts(List<Item> carts) {
+    List<Products> products = [];
     carts.forEach((element) {
-     products.add(Products(
-       productID: element.productID,
-       countProduct: element.countProduct,
-       price: element.productPrice
-     ));
+      products.add(Products(
+          productID: element.productID,
+          countProduct: element.countProduct,
+          price: element.productPrice,
+          productsImage: element.productImage,
+          productName: element.productName));
     });
     return products;
   }
@@ -182,10 +373,13 @@ class OrderDetailsEditState extends OrderDetailsState {
   void updateTotal() {
     double currentTotal = 0;
     screenState.clientOrderRequest?.products?.forEach((element) {
-      currentTotal = (element.countProduct!.toDouble() * element.price!) + currentTotal ;
+      currentTotal =
+          (element.countProduct!.toDouble() * element.price!) + currentTotal;
     });
     total = currentTotal;
     screenState.clientOrderRequest?.orderCost = total;
   }
-
+  void cleanProducts() {
+    screenState.clientOrderRequest?.products?.removeWhere((element) => element.countProduct == 0);
+  }
 }

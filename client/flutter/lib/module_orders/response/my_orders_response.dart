@@ -1,21 +1,26 @@
+import 'package:twaslna_delivery/utils/logger/logger.dart';
+
 class MyOrdersResponse {
   String? statusCode;
   String? msg;
   List<Data>? data;
 
-  MyOrdersResponse({
-      this.statusCode, 
-      this.msg, 
-      this.data});
+  MyOrdersResponse({this.statusCode, this.msg, this.data});
 
   MyOrdersResponse.fromJson(dynamic json) {
-    statusCode = json['status_code'];
-    msg = json['msg'];
-    if (json['Data'] != null) {
-      data = [];
-      json['Data'].forEach((v) {
-        data?.add(Data.fromJson(v));
-      });
+    try {
+      statusCode = json['status_code'];
+      msg = json['msg'];
+      if (json['Data'] != null) {
+        data = [];
+        json['Data'].forEach((v) {
+          data?.add(Data.fromJson(v));
+        });
+      }
+    } catch (e) {
+      Logger()
+          .error('My Orders Response', '${e.toString()}', StackTrace.current);
+      statusCode = '-1';
     }
   }
 
@@ -28,7 +33,6 @@ class MyOrdersResponse {
     }
     return map;
   }
-
 }
 
 class Data {
@@ -39,20 +43,24 @@ class Data {
   dynamic amount;
   double? deliveryCost;
   double? orderCost;
-  Data({
-      this.deliveryDate, 
-      this.state, 
-      this.createdAt, 
-      this.orderNumber, 
+
+  Data(
+      {this.deliveryDate,
+      this.state,
+      this.createdAt,
+      this.orderNumber,
       this.amount,
       this.orderCost,
-      this.deliveryCost
-  });
+      this.deliveryCost});
 
   Data.fromJson(dynamic json) {
-    deliveryDate = json['deliveryDate'] != null ? DeliveryDate.fromJson(json['deliveryDate']) : null;
+    deliveryDate = json['deliveryDate'] != null
+        ? DeliveryDate.fromJson(json['deliveryDate'])
+        : null;
     state = json['state'];
-    createdAt = json['createdAt'] != null ? CreatedAt.fromJson(json['createdAt']) : null;
+    createdAt = json['createdAt'] != null
+        ? CreatedAt.fromJson(json['createdAt'])
+        : null;
     orderNumber = json['orderNumber'];
     amount = json['amount'];
     orderCost = json['orderCost']?.toDouble();
@@ -72,7 +80,6 @@ class Data {
     map['amount'] = amount;
     return map;
   }
-
 }
 
 class CreatedAt {
@@ -80,13 +87,11 @@ class CreatedAt {
   int? offset;
   int? timestamp;
 
-  CreatedAt({
-      this.timezone, 
-      this.offset, 
-      this.timestamp});
+  CreatedAt({this.timezone, this.offset, this.timestamp});
 
   CreatedAt.fromJson(dynamic json) {
-    timezone = json['timezone'] != null ? Timezone.fromJson(json['timezone']) : null;
+    timezone =
+        json['timezone'] != null ? Timezone.fromJson(json['timezone']) : null;
     offset = json['offset'];
     timestamp = json['timestamp'];
   }
@@ -100,7 +105,6 @@ class CreatedAt {
     map['timestamp'] = timestamp;
     return map;
   }
-
 }
 
 class Timezone {
@@ -108,10 +112,7 @@ class Timezone {
   List<Transitions>? transitions;
   Location? location;
 
-  Timezone({
-      this.name, 
-      this.transitions, 
-      this.location});
+  Timezone({this.name, this.transitions, this.location});
 
   Timezone.fromJson(dynamic json) {
     name = json['name'];
@@ -121,7 +122,8 @@ class Timezone {
         transitions?.add(Transitions.fromJson(v));
       });
     }
-    location = json['location'] != null ? Location.fromJson(json['location']) : null;
+    location =
+        json['location'] != null ? Location.fromJson(json['location']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -135,7 +137,6 @@ class Timezone {
     }
     return map;
   }
-
 }
 
 class Location {
@@ -144,11 +145,7 @@ class Location {
   int? longitude;
   String? comments;
 
-  Location({
-      this.countryCode, 
-      this.latitude, 
-      this.longitude, 
-      this.comments});
+  Location({this.countryCode, this.latitude, this.longitude, this.comments});
 
   Location.fromJson(dynamic json) {
     countryCode = json['country_code'];
@@ -165,7 +162,6 @@ class Location {
     map['comments'] = comments;
     return map;
   }
-
 }
 
 class Transitions {
@@ -175,12 +171,7 @@ class Transitions {
   bool? isdst;
   String? abbr;
 
-  Transitions({
-      this.ts, 
-      this.time, 
-      this.offset, 
-      this.isdst, 
-      this.abbr});
+  Transitions({this.ts, this.time, this.offset, this.isdst, this.abbr});
 
   Transitions.fromJson(dynamic json) {
     ts = json['ts'];
@@ -199,7 +190,6 @@ class Transitions {
     map['abbr'] = abbr;
     return map;
   }
-
 }
 
 class DeliveryDate {
@@ -207,13 +197,11 @@ class DeliveryDate {
   int? offset;
   int? timestamp;
 
-  DeliveryDate({
-      this.timezone, 
-      this.offset, 
-      this.timestamp});
+  DeliveryDate({this.timezone, this.offset, this.timestamp});
 
   DeliveryDate.fromJson(dynamic json) {
-    timezone = json['timezone'] != null ? Timezone.fromJson(json['timezone']) : null;
+    timezone =
+        json['timezone'] != null ? Timezone.fromJson(json['timezone']) : null;
     offset = json['offset'];
     timestamp = json['timestamp'];
   }
@@ -227,5 +215,4 @@ class DeliveryDate {
     map['timestamp'] = timestamp;
     return map;
   }
-
 }

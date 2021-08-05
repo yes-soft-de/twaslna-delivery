@@ -34,8 +34,8 @@ class PrivateOrderStateManager{
   }
 
   void postPrivateOrder(PrivateOrderRequest request,PrivateOrderScreenState screenState){
-    _stateSubject.add(PrivateOrderLoadingState(screenState));
     if (_authService.isLoggedIn) {
+      _stateSubject.add(PrivateOrderLoadingState(screenState));
       _servicesService.postPrivateOrder(request).then((value){
         if (value.hasError) {
           screenState.moveDecision(false, value.getError);
