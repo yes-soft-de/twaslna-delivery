@@ -117,8 +117,6 @@ App\Request\CaptainProfileUpdateRequest:
       - NotBlank: ~
     image:
       - NotBlank: ~
-    location:
-      - NotBlank: ~
     age:
       - NotBlank: ~
     car:

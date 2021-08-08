@@ -15,6 +15,7 @@ use App\Request\StoreOwnerProfileCreateRequest;
 use App\Request\StoreOwnerProfileCreateByAdminRequest;
 use App\Request\StoreOwnerUpdateByAdminRequest;
 use App\Request\CaptainProfileCreateRequest;
+use App\Request\CaptainProfileUpdateLocationRequest;
 use App\Request\CaptainVacationCreateRequest;
 use App\Request\StoreOwnerProfileUpdateRequest;
 use App\Request\CaptainProfileUpdateByAdminRequest;
@@ -305,6 +306,18 @@ class UserManager
         $item = $this->captainProfileEntityRepository->getByCaptainIDForUpdate($request->getUserID());
         if ($item) {
             $item = $this->autoMapping->mapToObject(CaptainProfileUpdateRequest::class, CaptainProfileEntity::class, $request, $item);
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+
+            return $item;
+        }
+    }
+
+    public function captainProfileUpdateLocation(CaptainProfileUpdateLocationRequest $request)
+    {
+        $item = $this->captainProfileEntityRepository->getByCaptainIDForUpdate($request->getUserID());
+        if ($item) {
+            $item = $this->autoMapping->mapToObject(CaptainProfileUpdateLocationRequest::class, CaptainProfileEntity::class, $request, $item);
             $this->entityManager->flush();
             $this->entityManager->clear();
 

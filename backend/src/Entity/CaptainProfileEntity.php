@@ -32,10 +32,10 @@ class CaptainProfileEntity
      */
     private $image;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     /**
+     * @ORM\Column(type="json", nullable=true)
      */
-    private $location;
+    private $location = [];
 
     /**
      * @ORM\Column(type="integer", length=255, nullable=true)
@@ -164,12 +164,12 @@ class CaptainProfileEntity
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getLocation(): ?array
     {
         return $this->location;
     }
 
-    public function setLocation(?string $location): self
+    public function setLocation(array $location): self
     {
         $this->location = $location;
 

@@ -10,7 +10,7 @@ class CaptainProfileUpdateRequest
 
     private $image;
 
-    private $location;
+    // private $location;
 
     private $age;
 
@@ -74,25 +74,17 @@ class CaptainProfileUpdateRequest
         return $this;
     }
 
-    /**
-     * Get the value of location
-     */
-    public function getLocation()
-    {
-        return $this->location;
-    }
+    // public function getLocation()
+    // {
+    //     return $this->location;
+    // }
 
-    /**
-     * Set the value of location
-     *
-     * @return  self
-     */
-    public function setLocation($location)
-    {
-        $this->location = $location;
+    // public function setLocation($location)
+    // {
+    //     $this->location = $location;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * Get the value of age

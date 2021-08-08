@@ -8,6 +8,7 @@ use App\Entity\UserEntity;
 use App\Request\CaptainProfileCreateRequest;
 use App\Request\CaptainVacationCreateRequest;
 use App\Request\CaptainProfileUpdateRequest;
+use App\Request\CaptainProfileUpdateLocationRequest;
 use App\Request\UserRegisterRequest;
 use App\Request\CaptainProfileUpdateByAdminRequest;
 use App\Response\CaptainProfileCreateResponse;
@@ -20,7 +21,7 @@ use App\Service\RatingService;
 use App\Service\DateFactoryService;
 use App\Manager\UserManager;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-
+use DateTime;
 
 class CaptainProfileService
 {
@@ -80,6 +81,13 @@ class CaptainProfileService
     public function updateCaptainProfile(CaptainProfileUpdateRequest $request)
     {
         $item = $this->userManager->updateCaptainProfile($request);
+        
+        return $this->autoMapping->map(CaptainProfileEntity::class, CaptainProfileCreateResponse::class, $item);
+    }
+
+    public function captainProfileUpdateLocation(CaptainProfileUpdateLocationRequest $request)
+    {
+        $item = $this->userManager->captainProfileUpdateLocation($request);
         
         return $this->autoMapping->map(CaptainProfileEntity::class, CaptainProfileCreateResponse::class, $item);
     }
@@ -240,15 +248,18 @@ class CaptainProfileService
         $response=[];
 
         $item = $this->userManager->getCaptainAsArrayByCaptainId($captainId);
-       
+     
         $sumPayments = $this->captainPaymentService->getSumPayments($captainId);
+       
         $payments = $this->captainPaymentService->getCaptainPayments($captainId);
-        
+     
         if ($item) {
              $countAcceptedOrder = $this->captainService->countCaptainOrdersDelivered($item[0]['captainID']);
-             $item['countOrdersDeliverd'] = $countAcceptedOrder[0]['countOrdersDeliverd'];
-             $item['bounce'] = $item[0]['bounce'] * $item['countOrdersDeliverd'];
-             $item['sumPayments'] = $sumPayments[0]['sumPayments'];
+             
+             $item['countOrdersDelivered'] = $countAcceptedOrder[0]['countOrdersDelivered'];
+
+             $item['bounce'] = $item[0]['bounce'] * $item['countOrdersDelivered'];
+             $item['sumPayments'] = (float)$sumPayments[0]['sumPayments'];
              $item['NetProfit'] = $item['bounce'] + $item[0]['salary'];
              $item['total'] = $item['NetProfit'] - $item['sumPayments'];
              $item['payments'] = $payments;
@@ -256,6 +267,43 @@ class CaptainProfileService
              $response[] = $this->autoMapping->map('array', CaptainFinancialAccountDetailsResponse::class,  $item);
             
         }
+        return $response;
+    }
+
+    public function captainFinancialAccountInLastMonth($captainId)
+    {
+        $response = [];
+        $dateNow =new DateTime("now");
+        $year = $dateNow->format("Y");
+        $month = $dateNow->format("m");
+        $date = $this->dateFactoryService->returnLastMonthDate($year, $month);
+       
+        $item = $this->userManager->getCaptainAsArrayByCaptainId($captainId);
+    
+        $sumPayments = $this->captainPaymentService->getSumPaymentsInSpecificDate($captainId, $date[0], $date[1]);
+      
+        if( $sumPayments[0]['sumPayments'] == null) { 
+            $sumPayments[0]['sumPayments'] = (float)0; 
+        }
+      
+        $payments = $this->captainPaymentService->getPaymentsInSpecificDate($captainId, $date[0], $date[1]);          
+dd( $payments);
+        if ($item) {
+            
+             $countAcceptedOrder = $this->acceptedOrderService->countAcceptedOrderInThisMonth($item[0]['captainID'], $date[0], $date[1]);
+             
+             $item['bounceInThisMonth'] = $item[0]['bounce'] * $countAcceptedOrder[0]['countOrdersDeliverd'];
+             $item['countOrdersDeliverdInThisMonth'] = $countAcceptedOrder[0]['countOrdersDeliverd'];
+             $item['sumPaymentsInThisMonth'] = (float)$sumPayments[0]['sumPayments'];
+             $item['NetProfitInThisMonth'] = $item['bounceInThisMonth'] + $item[0]['salary'];
+            
+             $item['paymentsInThisMonth'] = $payments;
+                 $item['totalInThisMonth'] = ($item['bounceInThisMonth'] + $item[0]['salary'] ) - $item['sumPaymentsInThisMonth'];
+          
+             $response = $this->autoMapping->map('array', CaptainTotalBounceInThisMonthResponse::class,  $item);
+            
+        }
+
         return $response;
     }
 
