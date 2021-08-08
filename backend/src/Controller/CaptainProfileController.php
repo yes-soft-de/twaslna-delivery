@@ -111,7 +111,6 @@ class CaptainProfileController extends BaseController
         return $this->response($response, self::UPDATE);
         
     }
-  
 
     /**
      * @Route("/captainProfileUpdateLocation", name="captainProfileUpdateLocation", methods={"PUT"})
