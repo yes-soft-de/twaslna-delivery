@@ -102,11 +102,6 @@ class CaptainProfileController extends BaseController
 
         $request = $this->autoMapping->map(stdClass::class, CaptainProfileUpdateRequest::class, (object)$data);
         $request->setUserID($this->getUserId());
-        $violations = $this->validator->validate($request);
-            if (\count($violations) > 0) {
-                $violationsString = (string) $violations;
-                return new JsonResponse($violationsString, Response::HTTP_OK);
-            }
         $response = $this->captainProfileService->updateCaptainProfile($request);
         return $this->response($response, self::UPDATE);
         

@@ -305,6 +305,9 @@ class UserManager
     {
         $item = $this->captainProfileEntityRepository->getByCaptainIDForUpdate($request->getUserID());
         if ($item) {
+            if($request->getCaptainName() == null) {
+                $request->setCaptainName($item->getCaptainName());
+            }
             $item = $this->autoMapping->mapToObject(CaptainProfileUpdateRequest::class, CaptainProfileEntity::class, $request, $item);
             $this->entityManager->flush();
             $this->entityManager->clear();
