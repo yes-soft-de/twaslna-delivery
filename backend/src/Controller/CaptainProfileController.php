@@ -67,22 +67,26 @@ class CaptainProfileController extends BaseController
      */
     public function createCaptainProfile(Request $request)
     {
+        $response="error lon or lat";
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, CaptainProfileCreateRequest::class, (object)$data);
 
-        $request->setCaptainID($this->getUserId());
+        $lon = isset($request->getLocation()["lon"]);
+        $lat = isset($request->getLocation()["lat"]);
+        if( $lon == true && $lat == true) {
 
-        $violations = $this->validator->validate($request);
-        if (\count($violations) > 0) {
-            $violationsString = (string) $violations;
+            $request->setCaptainID($this->getUserId());
 
-            return new JsonResponse($violationsString, Response::HTTP_OK);
+            $violations = $this->validator->validate($request);
+            if (\count($violations) > 0) {
+                $violationsString = (string) $violations;
+                return new JsonResponse($violationsString, Response::HTTP_OK);
+            }
+            $response = $this->captainProfileService->createCaptainProfile($request);
+            return $this->response($response, self::CREATE);
         }
-
-        $response = $this->captainProfileService->createCaptainProfile($request);
-
-        return $this->response($response, self::CREATE);
+        return $this->response($response, self::ERROR);
     }
 
     /**
@@ -93,21 +97,24 @@ class CaptainProfileController extends BaseController
      */
     public function updateCaptainProfile(Request $request)
     {
+        $response="error lon or lat";
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, CaptainProfileUpdateRequest::class, (object)$data);
         $request->setUserID($this->getUserId());
-        $violations = $this->validator->validate($request);
 
-        if (\count($violations) > 0) {
-            $violationsString = (string) $violations;
-
-            return new JsonResponse($violationsString, Response::HTTP_OK);
+        $lon = isset($request->getLocation()["lon"]);
+        $lat = isset($request->getLocation()["lat"]);
+        if( $lon == true && $lat == true) {
+            $violations = $this->validator->validate($request);
+            if (\count($violations) > 0) {
+                $violationsString = (string) $violations;
+                return new JsonResponse($violationsString, Response::HTTP_OK);
+            }
+            $response = $this->captainProfileService->updateCaptainProfile($request);
+            return $this->response($response, self::UPDATE);
         }
-
-        $response = $this->captainProfileService->updateCaptainProfile($request);
-
-        return $this->response($response, self::UPDATE);
+        return $this->response($response, self::ERROR);
     }
   
     /**
@@ -231,6 +238,18 @@ class CaptainProfileController extends BaseController
     public function getCaptainFinancialAccountDetailsByCaptainId()
     {
         $response = $this->captainProfileService->getCaptainFinancialAccountDetailsByCaptainId($this->getUserId());
+
+        return $this->response($response, self::FETCH);
+    }
+
+     /**
+     * @Route("/captainFinancialAccountInLastMonth", name="captainFinancialAccountInLastMonth",methods={"GET"})
+     * @IsGranted("ROLE_CAPTAIN")
+     *  @return JsonResponse
+     */
+    public function captainFinancialAccountInLastMonth()
+    {
+        $response = $this->captainProfileService->captainFinancialAccountInLastMonth($this->getUserId());
 
         return $this->response($response, self::FETCH);
     }
