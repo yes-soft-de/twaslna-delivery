@@ -6,6 +6,7 @@ use App\AutoMapping;
 
 use App\Request\CaptainProfileCreateRequest;
 use App\Request\CaptainProfileUpdateRequest;
+use App\Request\CaptainProfileUpdateLocationRequest;
 use App\Request\CaptainProfileUpdateByAdminRequest;
 use App\Request\UserRegisterRequest;
 use App\Service\CaptainProfileService;
@@ -97,21 +98,39 @@ class CaptainProfileController extends BaseController
      */
     public function updateCaptainProfile(Request $request)
     {
-        $response="error lon or lat";
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, CaptainProfileUpdateRequest::class, (object)$data);
+        $request->setUserID($this->getUserId());
+        $violations = $this->validator->validate($request);
+            if (\count($violations) > 0) {
+                $violationsString = (string) $violations;
+                return new JsonResponse($violationsString, Response::HTTP_OK);
+            }
+        $response = $this->captainProfileService->updateCaptainProfile($request);
+        return $this->response($response, self::UPDATE);
+        
+    }
+  
+
+    /**
+     * @Route("/captainProfileUpdateLocation", name="captainProfileUpdateLocation", methods={"PUT"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function captainProfileUpdateLocation(Request $request)
+    {
+        $response="error lon or lat";
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CaptainProfileUpdateLocationRequest::class, (object)$data);
         $request->setUserID($this->getUserId());
 
         $lon = isset($request->getLocation()["lon"]);
         $lat = isset($request->getLocation()["lat"]);
         if( $lon == true && $lat == true) {
-            $violations = $this->validator->validate($request);
-            if (\count($violations) > 0) {
-                $violationsString = (string) $violations;
-                return new JsonResponse($violationsString, Response::HTTP_OK);
-            }
-            $response = $this->captainProfileService->updateCaptainProfile($request);
+            $response = $this->captainProfileService->captainProfileUpdateLocation($request);
             return $this->response($response, self::UPDATE);
         }
         return $this->response($response, self::ERROR);
