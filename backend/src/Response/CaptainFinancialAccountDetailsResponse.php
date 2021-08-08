@@ -12,7 +12,7 @@ class CaptainFinancialAccountDetailsResponse
 
     public $total;
 
-    public $countOrdersDeliverd;
+    public $countOrdersDelivered;
 
     public $payments;
 }

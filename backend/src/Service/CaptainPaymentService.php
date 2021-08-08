@@ -35,4 +35,14 @@ class CaptainPaymentService
     {
        return $this->captainPaymentManager->getSumPayments($captainId);
     }
+
+    public function getSumPaymentsInSpecificDate($captainId, $fromDate, $toDate)
+    {
+       return $this->captainPaymentManager->getSumPaymentsInSpecificDate($captainId, $fromDate, $toDate);
+    }
+
+    public function getPaymentsInSpecificDate($captainId, $fromDate, $toDate)
+    {
+       return $this->captainPaymentManager->getPaymentsInSpecificDate($captainId, $fromDate, $toDate);
+    }
 }

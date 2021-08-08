@@ -43,4 +43,36 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
                ->getQuery()
                ->getResult();
     }
+
+    public function getSumPaymentsInSpecificDate($captainId, $fromDate, $toDate)
+    {
+        return $this->createQueryBuilder('PaymentsCaptain')
+               ->select('sum(PaymentsCaptain.amount) as sumPayments ')
+
+               ->where('PaymentsCaptain.captainId = :captainId')
+               ->andWhere('PaymentsCaptain.date >= :fromDate')
+               ->andWhere('PaymentsCaptain.date < :toDate')
+
+               ->setParameter('captainId', $captainId)
+               ->setParameter('fromDate', $fromDate)
+               ->setParameter('toDate', $toDate)
+               ->getQuery()
+               ->getResult();
+    }
+
+    public function getPaymentsInSpecificDate($captainId, $fromDate, $toDate)
+    {
+        return $this->createQueryBuilder('PaymentsCaptain')
+               ->select('PaymentsCaptain.id, PaymentsCaptain.captainId, PaymentsCaptain.amount, PaymentsCaptain.date')
+
+               ->where('PaymentsCaptain.captainId = :captainId')
+               ->andWhere('PaymentsCaptain.date >= :fromDate')
+               ->andWhere('PaymentsCaptain.date < :toDate')
+
+               ->setParameter('captainId', $captainId)
+               ->setParameter('fromDate', $fromDate)
+               ->setParameter('toDate', $toDate)
+               ->getQuery()
+               ->getResult();
+    }
 }
