@@ -173,9 +173,11 @@ class OrderService
             foreach ($orders as $order) {
                 if ($order['storeOwnerProfileID'] == true) {  
                     $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($order['storeOwnerProfileID']);
-                    $order['storeOwnerName']=$order['storeOwner']->storeOwnerName;
-                    $order['image']=$order['storeOwner']->image;
-                    $order['branches']=$order['storeOwner']->branches;
+                    if( $order['storeOwner'] != null ){
+                        $order['storeOwnerName']=$order['storeOwner']->storeOwnerName;
+                        $order['image']=$order['storeOwner']->image;
+                        $order['branches']=$order['storeOwner']->branches;
+                    }
                 }
                 $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
             }

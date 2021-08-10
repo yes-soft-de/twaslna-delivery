@@ -86,12 +86,16 @@ class StoreOwnerProfileService
 
     public function getStoreOwnerProfileById($id)
     {
+        $response = null;
         $item = $this->userManager->getStoreOwnerProfileByID($id);
-        $item['imageURL'] = $item['image'];
-        $item['image'] = $this->params.$item['image'];
-        $item['baseURL'] = $this->params;
-        $item['branches'] = $this->storeOwnerBranchService->getBranchesByStoreOwnerProfileID($item['id']);
-        return $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $item);
+        if($item){
+            $item['imageURL'] = $item['image'];
+            $item['image'] = $this->params.$item['image'];
+            $item['baseURL'] = $this->params;
+            $item['branches'] = $this->storeOwnerBranchService->getBranchesByStoreOwnerProfileID($item['id']);
+            $response = $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $item);
+        }
+        return $response;
     }
 
     public function getAllStoreOwners()
