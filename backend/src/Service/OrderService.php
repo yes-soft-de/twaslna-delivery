@@ -25,6 +25,7 @@ use App\Response\OrderClosestResponse;
 use App\Response\OrderPendingResponse;
 use App\Response\OrderUpdateStateResponse;
 use App\Response\OrdersResponse;
+use App\Response\OrderUpdateInvoiceByCaptainResponse;
 use App\Response\OrderCreateClientResponse;
 use App\Response\OrderClientSendCreateResponse;
 use App\Response\AcceptedOrderResponse;
@@ -634,7 +635,7 @@ class OrderService
             
             $this->orderLogService->createOrderLog($request->getOrderNumber(), $item->getState(), $request->getCaptainID());
 
-            $response = $this->autoMapping->map(OrderEntity::class, OrderUpdateStateResponse::class, $item);
+            $response = $this->autoMapping->map(OrderEntity::class, OrderUpdateInvoiceByCaptainResponse::class, $item);
       
        }
         return $response;
