@@ -182,7 +182,9 @@ class UserManager
             
         if ($captainProfile == null) {
             $captainProfile = $this->autoMapping->map(UserRegisterRequest::class, CaptainProfileEntity::class, $request);
-            $captainProfile->setStatus('inactive');
+              //change setStatus to inactive
+            $captainProfile->setStatus('active');
+
             $captainProfile->setCaptainID($userRegister->getId());
             $captainProfile->setCaptainName($request->getUserName());
             
