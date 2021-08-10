@@ -10,6 +10,7 @@ use App\Request\OrderClientCreateRequest;
 use App\Request\OrderClientSendCreateRequest;
 use App\Request\OrderClientSpecialCreateRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
+use App\Request\OrderUpdateInvoiceByCaptainRequest;
 use App\Request\OrderUpdateByClientRequest;
 use App\Request\OrderUpdateSpecialByClientRequest;
 use App\Request\OrderUpdateSendByClientRequest;
@@ -620,6 +621,22 @@ class OrderService
             $response[] = $this->autoMapping->map('array', OrdersByClientResponse::class, $order);
        }
 
+        return $response;
+    }
+
+    public function orderUpdateInvoiceByCaptain(OrderUpdateInvoiceByCaptainRequest $request)
+    {
+        $response = "Not updated!!";
+        $orderDetails = $this->orderDetailService->getOrderIdByOrderNumber($request->getOrderNumber());
+        if($orderDetails){
+            $request->setId($orderDetails[0]->orderID);
+            $item = $this->orderManager->orderUpdateInvoiceByCaptain($request);
+            
+            $this->orderLogService->createOrderLog($request->getOrderNumber(), $item->getState(), $request->getCaptainID());
+
+            $response = $this->autoMapping->map(OrderEntity::class, OrderUpdateStateResponse::class, $item);
+      
+       }
         return $response;
     }
 }

@@ -11,6 +11,7 @@ use App\Request\OrderClientSendCreateRequest;
 use App\Request\OrderClientSpecialCreateRequest;
 use App\Request\OrderUpdateByClientRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
+use App\Request\OrderUpdateInvoiceByCaptainRequest;
 use App\Request\OrderUpdateSpecialByClientRequest;
 use App\Request\OrderUpdateSendByClientRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -281,5 +282,21 @@ class OrderManager
     public function getOrdersDeliveredAndCancelledByClientId($clientID)
     {
         return $this->orderEntityRepository->getOrdersDeliveredAndCancelledByClientId($clientID);
+    }
+
+    public function orderUpdateInvoiceByCaptain(OrderUpdateInvoiceByCaptainRequest $request)
+    {
+        $item = $this->orderEntityRepository->find($request->getId());
+       
+        if ($item) {
+            $item = $this->autoMapping->mapToObject(OrderUpdateInvoiceByCaptainRequest::class, OrderEntity::class, $request, $item);
+
+            $item->setUpdatedAt($item->getUpdatedAt());
+            
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+
+            return $item;
+        }
     }
 }
