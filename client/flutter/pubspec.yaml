@@ -85,7 +85,7 @@ dependencies:
   uuid: ^3.0.4
   # Geo
   latlong2: ^0.8.0
-  location: ^4.1.1
+  location: ^4.3.0
   uni_links: ^0.5.1
   # Payment Gates
   flutter_credit_card: ^2.0.0

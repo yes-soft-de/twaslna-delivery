@@ -3,8 +3,6 @@ import 'package:twaslna_delivery/consts/urls.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_account/model/profile_model.dart';
 import 'package:twaslna_delivery/utils/components/progresive_image.dart';
-import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
-import 'package:twaslna_delivery/utils/images/images.dart';
 import 'package:twaslna_delivery/utils/text_style/text_style.dart';
 
 class AccountAppBar extends StatelessWidget {

@@ -26,7 +26,7 @@ class AuthService {
 
   Stream<AuthStatus> get authListener => _authSubject.stream;
 
-  Future<void> loginApi(String username, String password) async {
+  Future<void> loginApi(String username, String password,[bool? registered]) async {
     LoginResponse? loginResult = await _authManager.login(LoginRequest(
       username: username,
       password: password,

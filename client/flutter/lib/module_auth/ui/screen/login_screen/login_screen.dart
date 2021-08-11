@@ -60,7 +60,9 @@ class LoginScreenState extends State<LoginScreen> {
     }
     return WillPopScope(
       onWillPop: () async {
-        await Navigator.of(context).pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
+        if (returnToMainScreen != null){
+          await Navigator.of(context).pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
+        }
         return returnToMainScreen == null;
       },
       child: GestureDetector(
