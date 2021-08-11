@@ -12,6 +12,7 @@ use App\Request\OrderUpdateStateByCaptainRequest;
 use App\Request\OrderUpdateByClientRequest;
 use App\Request\OrderUpdateSpecialByClientRequest;
 use App\Request\OrderUpdateSendByClientRequest;
+use App\Request\OrderUpdateInvoiceByCaptainRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -345,5 +346,25 @@ class OrderController extends BaseController
   
           return $this->response($result, self::FETCH);
       }
+
+    /**
+     * @Route("/orderUpdateInvoiceByCaptain", name="orderUpdateInvoiceByCaptain", methods={"PUT"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function orderUpdateInvoiceByCaptain(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderUpdateInvoiceByCaptainRequest::class, (object) $data);
+        $request->setCaptainID($this->getUserId());
+        $response = $this->orderService->orderUpdateInvoiceByCaptain($request);
+        if(is_string($response)){
+            return $this->response($response, self::ERROR);  
+          }
+        return $this->response($response, self::UPDATE);
+    }
+
 }
 

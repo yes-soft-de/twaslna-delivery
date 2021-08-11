@@ -12,6 +12,8 @@ class UserRegisterRequest
 
     private $userName;
 
+    private $location;
+
     /**
      * @return mixed
      */
@@ -68,6 +70,26 @@ class UserRegisterRequest
     public function setUserName($userName)
     {
         $this->userName = $userName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of location
+     */ 
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * Set the value of location
+     *
+     * @return  self
+     */ 
+    public function setLocation($location)
+    {
+        $this->location = $location;
 
         return $this;
     }

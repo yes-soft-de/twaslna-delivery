@@ -124,6 +124,16 @@ class OrderEntity
      */
     private $orderType;
 
+     /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $invoiceAmount ;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $invoiceImage;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -384,6 +394,30 @@ class OrderEntity
     public function setOrderType(?int $orderType): self
     {
         $this->orderType = $orderType;
+
+        return $this;
+    }
+
+    public function getInvoiceAmount()
+    {
+        return $this->invoiceAmount;
+    }
+
+    public function setInvoiceAmount($invoiceAmount)
+    {
+        $this->invoiceAmount = $invoiceAmount;
+
+        return $this;
+    }
+
+    public function getInvoiceImage()
+    {
+        return $this->invoiceImage;
+    }
+
+    public function setInvoiceImage($invoiceImage)
+    {
+        $this->invoiceImage = $invoiceImage;
 
         return $this;
     }

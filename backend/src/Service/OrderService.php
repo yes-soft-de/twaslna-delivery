@@ -10,6 +10,7 @@ use App\Request\OrderClientCreateRequest;
 use App\Request\OrderClientSendCreateRequest;
 use App\Request\OrderClientSpecialCreateRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
+use App\Request\OrderUpdateInvoiceByCaptainRequest;
 use App\Request\OrderUpdateByClientRequest;
 use App\Request\OrderUpdateSpecialByClientRequest;
 use App\Request\OrderUpdateSendByClientRequest;
@@ -24,6 +25,7 @@ use App\Response\OrderClosestResponse;
 use App\Response\OrderPendingResponse;
 use App\Response\OrderUpdateStateResponse;
 use App\Response\OrdersResponse;
+use App\Response\OrderUpdateInvoiceByCaptainResponse;
 use App\Response\OrderCreateClientResponse;
 use App\Response\OrderClientSendCreateResponse;
 use App\Response\AcceptedOrderResponse;
@@ -173,9 +175,11 @@ class OrderService
             foreach ($orders as $order) {
                 if ($order['storeOwnerProfileID'] == true) {  
                     $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($order['storeOwnerProfileID']);
-                    $order['storeOwnerName']=$order['storeOwner']->storeOwnerName;
-                    $order['image']=$order['storeOwner']->image;
-                    $order['branches']=$order['storeOwner']->branches;
+                    if( $order['storeOwner'] != null ){
+                        $order['storeOwnerName']=$order['storeOwner']->storeOwnerName;
+                        $order['image']=$order['storeOwner']->image;
+                        $order['branches']=$order['storeOwner']->branches;
+                    }
                 }
                 $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
             }
@@ -618,6 +622,22 @@ class OrderService
             $response[] = $this->autoMapping->map('array', OrdersByClientResponse::class, $order);
        }
 
+        return $response;
+    }
+
+    public function orderUpdateInvoiceByCaptain(OrderUpdateInvoiceByCaptainRequest $request)
+    {
+        $response = "Not updated!!";
+        $orderDetails = $this->orderDetailService->getOrderIdByOrderNumber($request->getOrderNumber());
+        if($orderDetails){
+            $request->setId($orderDetails[0]->orderID);
+            $item = $this->orderManager->orderUpdateInvoiceByCaptain($request);
+            
+            $this->orderLogService->createOrderLog($request->getOrderNumber(), $item->getState(), $request->getCaptainID());
+
+            $response = $this->autoMapping->map(OrderEntity::class, OrderUpdateInvoiceByCaptainResponse::class, $item);
+      
+       }
         return $response;
     }
 }
