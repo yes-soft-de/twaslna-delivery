@@ -25,6 +25,11 @@ class CaptainService
         return $this->orderManager->countCaptainOrdersDelivered($captainId);
     }
 
+    public function captainOrdersDelivered($captainId)
+    {
+        return $this->orderManager->captainOrdersDelivered($captainId);
+    }
+
     public function countOrdersInMonthForCaptain($fromDate, $toDate, $captainId)
     {
         return $this->orderManager->countOrdersInMonthForCaptain($fromDate, $toDate, $captainId);
@@ -38,5 +43,10 @@ class CaptainService
     public function countCaptainOrdersInDay($captainID, $fromDate, $toDate)
     {
         return $this->orderManager->countCaptainOrdersInDay($captainID, $fromDate, $toDate);
+    }
+
+    public function countOrdersDeliveredInToday($captainID, $todayStart, $todayEnd)
+    {
+        return $this->orderManager->countOrdersDeliveredInToday($captainID, $todayStart, $todayEnd);
     }
 }

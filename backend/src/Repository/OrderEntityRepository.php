@@ -273,7 +273,20 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function countCaptainOrdersDelivered($captainId)
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->select('count(OrderEntity.id) as countOrdersDelivered')
+            ->select('count(OrderEntity.id) as countOrdersDelivered', 'sum(OrderEntity.invoiceAmount) as sumInvoiceAmount', 'sum(OrderEntity.deliveryCost) as deliveryCost' )
+
+            ->andWhere('OrderEntity.captainID = :captainId')
+            ->andWhere("OrderEntity.state = 'delivered'")
+
+            ->setParameter('captainId', $captainId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function captainOrdersDelivered($captainId)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+            ->select('OrderEntity.id', 'OrderEntity.invoiceAmount', 'OrderEntity.deliveryCost', 'OrderEntity.deliveryDate')
 
             ->andWhere('OrderEntity.captainID = :captainId')
             ->andWhere("OrderEntity.state = 'delivered'")
@@ -287,13 +300,12 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('OrderEntity')
 
-            ->select('count(OrderEntity.id) as countOrdersInMonth')
+            ->select('count(OrderEntity.id) as countOrdersInMonth', 'sum(OrderEntity.invoiceAmount) as sumInvoiceAmount', 'sum(OrderEntity.deliveryCost) as deliveryCost')
        
-
             ->where('OrderEntity.deliveryDate >= :fromDate')
             ->andWhere('OrderEntity.deliveryDate < :toDate')
             ->andWhere('OrderEntity.captainID = :captainId')
-
+            ->andWhere("OrderEntity.state = 'delivered'")
             ->setParameter('fromDate', $fromDate)
             ->setParameter('toDate', $toDate)
             ->setParameter('captainId', $captainId)
@@ -342,6 +354,23 @@ class OrderEntityRepository extends ServiceEntityRepository
           
           ->getQuery()
           ->getResult(); 
+    }
+
+    public function countOrdersDeliveredInToday($captainID, $todayStart, $todayEnd)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+
+          ->select('count(OrderEntity.id) as countOrdersDeliveredInToday')
+        
+          ->andWhere('OrderEntity.captainID = :captainID') 
+          ->andWhere('OrderEntity.deliveryDate >= :todayStart')
+          ->andWhere('OrderEntity.deliveryDate <= :todayEnd')
+          ->andWhere("OrderEntity.state = 'delivered'")
+          ->setParameter('captainID', $captainID)
+          ->setParameter('todayStart', $todayStart)
+          ->setParameter('todayEnd', $todayEnd)
+          ->getQuery()
+          ->getOneOrNullResult(); 
     }
 
     public function getOrdersByClientID($clientID)

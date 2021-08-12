@@ -34,6 +34,12 @@ class CaptainPaymentEntity
      */
     private $amount;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $paymentFromCompany;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,6 +77,18 @@ class CaptainPaymentEntity
     public function setAmount(?float $amount): self
     {
         $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getPaymentFromCompany(): ?bool
+    {
+        return $this->paymentFromCompany;
+    }
+
+    public function setPaymentFromCompany(?bool $paymentFromCompany): self
+    {
+        $this->paymentFromCompany = $paymentFromCompany;
 
         return $this;
     }

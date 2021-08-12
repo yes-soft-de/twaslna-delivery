@@ -19,12 +19,28 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, CaptainPaymentEntity::class);
     }
 
-    public function  getCaptainPayments($captainId)
+    public function  getCaptainPaymentsFromCompany($captainId)
     {
         return $this->createQueryBuilder('PaymentsCaptain')
                ->select('PaymentsCaptain.id, PaymentsCaptain.captainId, PaymentsCaptain.amount, PaymentsCaptain.date')
 
                ->andWhere('PaymentsCaptain.captainId = :captainId')
+               ->andWhere("PaymentsCaptain.paymentFromCompany = 1 ")
+               
+               ->setParameter('captainId', $captainId)
+
+               ->getQuery()
+               ->getResult();
+    }
+    
+
+    public function  getCaptainPaymentsToCompany($captainId)
+    {
+        return $this->createQueryBuilder('PaymentsCaptain')
+               ->select('PaymentsCaptain.id, PaymentsCaptain.captainId, PaymentsCaptain.amount, PaymentsCaptain.date')
+
+               ->andWhere('PaymentsCaptain.captainId = :captainId')
+               ->andWhere("PaymentsCaptain.paymentFromCompany = 0 ")
 
                ->setParameter('captainId', $captainId)
 
@@ -32,19 +48,31 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
                ->getResult();
     }
     
-    public function getSumPayments($captainId)
+    public function sumPaymentsFromCompany($captainId)
     {
         return $this->createQueryBuilder('PaymentsCaptain')
-               ->select('sum(PaymentsCaptain.amount) as sumPayments')
+               ->select('sum(PaymentsCaptain.amount) as sumPaymentsFromCompany')
                ->andWhere('PaymentsCaptain.captainId = :captainId')
+               ->andWhere("PaymentsCaptain.paymentFromCompany = 1 ")
+               ->setParameter('captainId', $captainId)
 
+               ->getQuery()
+               ->getResult();
+    }
+    
+    public function sumPaymentsToCompany($captainId)
+    {
+        return $this->createQueryBuilder('PaymentsCaptain')
+               ->select('sum(PaymentsCaptain.amount) as sumPaymentsToCompany')
+               ->andWhere('PaymentsCaptain.captainId = :captainId')
+               ->andWhere("PaymentsCaptain.paymentFromCompany = 0 ")
                ->setParameter('captainId', $captainId)
 
                ->getQuery()
                ->getResult();
     }
 
-    public function getSumPaymentsInSpecificDate($captainId, $fromDate, $toDate)
+    public function getSumPaymentsFromCompanyInSpecificDate($captainId, $fromDate, $toDate)
     {
         return $this->createQueryBuilder('PaymentsCaptain')
                ->select('sum(PaymentsCaptain.amount) as sumPayments ')
@@ -52,6 +80,24 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
                ->where('PaymentsCaptain.captainId = :captainId')
                ->andWhere('PaymentsCaptain.date >= :fromDate')
                ->andWhere('PaymentsCaptain.date < :toDate')
+               ->andWhere("PaymentsCaptain.paymentFromCompany = 1 ")
+               
+               ->setParameter('captainId', $captainId)
+               ->setParameter('fromDate', $fromDate)
+               ->setParameter('toDate', $toDate)
+               ->getQuery()
+               ->getResult();
+    }
+
+    public function getSumPaymentsToCompanyInSpecificDate($captainId, $fromDate, $toDate)
+    {
+        return $this->createQueryBuilder('PaymentsCaptain')
+               ->select('sum(PaymentsCaptain.amount) as sumPayments ')
+
+               ->where('PaymentsCaptain.captainId = :captainId')
+               ->andWhere('PaymentsCaptain.date >= :fromDate')
+               ->andWhere('PaymentsCaptain.date < :toDate')
+               ->andWhere("PaymentsCaptain.paymentFromCompany = 0 ")
 
                ->setParameter('captainId', $captainId)
                ->setParameter('fromDate', $fromDate)
@@ -60,7 +106,7 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
                ->getResult();
     }
 
-    public function getPaymentsInSpecificDate($captainId, $fromDate, $toDate)
+    public function getPaymentsFromCompanyInSpecificDate($captainId, $fromDate, $toDate)
     {
         return $this->createQueryBuilder('PaymentsCaptain')
                ->select('PaymentsCaptain.id, PaymentsCaptain.captainId, PaymentsCaptain.amount, PaymentsCaptain.date')
@@ -68,7 +114,23 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
                ->where('PaymentsCaptain.captainId = :captainId')
                ->andWhere('PaymentsCaptain.date >= :fromDate')
                ->andWhere('PaymentsCaptain.date < :toDate')
+               ->andWhere("PaymentsCaptain.paymentFromCompany = 1 ")
+               ->setParameter('captainId', $captainId)
+               ->setParameter('fromDate', $fromDate)
+               ->setParameter('toDate', $toDate)
+               ->getQuery()
+               ->getResult();
+    }
 
+    public function getPaymentsToCompanyInSpecificDate($captainId, $fromDate, $toDate)
+    {
+        return $this->createQueryBuilder('PaymentsCaptain')
+               ->select('PaymentsCaptain.id, PaymentsCaptain.captainId, PaymentsCaptain.amount, PaymentsCaptain.date')
+
+               ->where('PaymentsCaptain.captainId = :captainId')
+               ->andWhere('PaymentsCaptain.date >= :fromDate')
+               ->andWhere('PaymentsCaptain.date < :toDate')
+               ->andWhere("PaymentsCaptain.paymentFromCompany = 0 ")
                ->setParameter('captainId', $captainId)
                ->setParameter('fromDate', $fromDate)
                ->setParameter('toDate', $toDate)

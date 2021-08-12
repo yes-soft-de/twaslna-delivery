@@ -25,24 +25,44 @@ class CaptainPaymentService
 
         return $this->autoMapping->map(CaptainPaymentEntity::class, CaptainPaymentCreateResponse::class, $item);
     }
-
-    public function getCaptainPayments($captainId)
+    
+    public function getCaptainPaymentsFromCompany($captainId)
     {
-       return $this->captainPaymentManager->getCaptainPayments($captainId);
+      return $this->captainPaymentManager->getCaptainPaymentsFromCompany($captainId);
+    }
+    
+    public function getCaptainPaymentsToCompany($captainId)
+    {
+       return $this->captainPaymentManager->getCaptainPaymentsToCompany($captainId);
     }
 
-    public function getSumPayments($captainId)
+    public function sumPaymentsFromCompany($captainId)
     {
-       return $this->captainPaymentManager->getSumPayments($captainId);
+       return $this->captainPaymentManager->sumPaymentsFromCompany($captainId);
     }
 
-    public function getSumPaymentsInSpecificDate($captainId, $fromDate, $toDate)
+    public function sumPaymentsToCompany($captainId)
     {
-       return $this->captainPaymentManager->getSumPaymentsInSpecificDate($captainId, $fromDate, $toDate);
+       return $this->captainPaymentManager->sumPaymentsToCompany($captainId);
     }
 
-    public function getPaymentsInSpecificDate($captainId, $fromDate, $toDate)
+    public function getSumPaymentsFromCompanyInSpecificDate($captainId, $fromDate, $toDate)
     {
-       return $this->captainPaymentManager->getPaymentsInSpecificDate($captainId, $fromDate, $toDate);
+       return $this->captainPaymentManager->getSumPaymentsFromCompanyInSpecificDate($captainId, $fromDate, $toDate);
+    }
+
+    public function getSumPaymentsToCompanyInSpecificDate($captainId, $fromDate, $toDate)
+    {
+       return $this->captainPaymentManager->getSumPaymentsToCompanyInSpecificDate($captainId, $fromDate, $toDate);
+    }
+
+    public function getPaymentsFromCompanyInSpecificDate($captainId, $fromDate, $toDate)
+    {
+       return $this->captainPaymentManager->getPaymentsFromCompanyInSpecificDate($captainId, $fromDate, $toDate);
+    }
+
+    public function getPaymentsToCompanyInSpecificDate($captainId, $fromDate, $toDate)
+    {
+       return $this->captainPaymentManager->getPaymentsToCompanyInSpecificDate($captainId, $fromDate, $toDate);
     }
 }

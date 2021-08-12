@@ -151,6 +151,11 @@ class OrderManager
         return $this->orderEntityRepository->countCaptainOrdersDelivered($captainId);
     }
 
+    public function  captainOrdersDelivered($captainId)
+    {
+        return $this->orderEntityRepository->captainOrdersDelivered($captainId);
+    }
+
     public function countOrdersInMonthForCaptain($fromDate, $toDate, $captainId)
     {
         return $this->orderEntityRepository->countOrdersInMonthForCaptain($fromDate, $toDate, $captainId);
@@ -164,6 +169,11 @@ class OrderManager
     public function countCaptainOrdersInDay($captainID, $fromDate, $toDate)
     {
         return $this->orderEntityRepository->countCaptainOrdersInDay($captainID, $fromDate, $toDate);
+    }
+
+    public function countOrdersDeliveredInToday($captainID, $todayStart, $todayEnd)
+    {
+        return $this->orderEntityRepository->countOrdersDeliveredInToday($captainID, $todayStart, $todayEnd);
     }
 
     public function createClientOrder(OrderClientCreateRequest $request, $roomID)

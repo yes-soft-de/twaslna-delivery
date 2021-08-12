@@ -2,7 +2,7 @@
 
 namespace App\Response;
 
-class CaptainFinancialAccountDetailsResponse
+class CaptainTotalFinancialAccountInMonthResponse
 {
     public $sumPaymentsFromCompany;
 
@@ -19,8 +19,6 @@ class CaptainFinancialAccountDetailsResponse
     public $amountYouOwn;
 
     public $remainingAmountForCompany;//مستحقات الشركة
-
-    public $salary;
 
     public $bounce;
 
