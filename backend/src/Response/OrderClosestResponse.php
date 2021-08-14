@@ -17,4 +17,6 @@ class OrderClosestResponse
     public $deliveryCost;
     public $orderCost;
     public $orderType;
+    public $destination;
+    public $note;
 }
