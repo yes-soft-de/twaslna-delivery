@@ -57,7 +57,9 @@ class RegisterScreenState extends State<RegisterScreen> {
     }
     return WillPopScope(
       onWillPop: () async {
-        await Navigator.of(context).pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
+        if (returnToMainScreen != null){
+          await Navigator.of(context).pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
+        }
         return returnToMainScreen == null;
       },
       child: GestureDetector(
@@ -105,8 +107,8 @@ class RegisterScreenState extends State<RegisterScreen> {
     }
     CustomFlushBarHelper.createSuccess(title:S.current.warnning, message: S.current.loginSuccess).show(context);
   }
-  void userRegistered(){
-    CustomFlushBarHelper.createSuccess(title: S.current.warnning, message:S.current.registerSuccess,timeout: 2).show(context);
+  Future<void> userRegistered() async{
+    await CustomFlushBarHelper.createSuccess(title: S.current.warnning, message:S.current.registerSuccess,timeout: 2).show(context);
   }
 
   @override
