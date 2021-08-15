@@ -158,7 +158,7 @@ class UserManager
         }
     }
 
-    public function captainRegister(UserRegisterRequest $request)
+    public function captainRegister(UserRegisterRequest $request, $roomID)
     {
         $user = $this->getUserByUserID($request->getUserID());
         if ($user == null) {
@@ -184,9 +184,11 @@ class UserManager
             $captainProfile = $this->autoMapping->map(UserRegisterRequest::class, CaptainProfileEntity::class, $request);
               //change setStatus to inactive
             $captainProfile->setStatus('active');
-
+            $captainProfile->setRoomID($roomID);
             $captainProfile->setCaptainID($userRegister->getId());
             $captainProfile->setCaptainName($request->getUserName());
+            $captainProfile->setSalary(0);
+            $captainProfile->setBounce(0);
             
             $this->entityManager->persist($captainProfile);
             $this->entityManager->flush();
@@ -201,8 +203,13 @@ class UserManager
         if ($captainProfile == null)
         {
             $captainProfile = $this->autoMapping->map(UserRegisterRequest::class, CaptainProfileEntity::class, $request);
+             //change setStatus to inactive
+             $captainProfile->setStatus('active');
+             $captainProfile->setRoomID($roomID);
             $captainProfile->setCaptainID($user['id']);
             $captainProfile->setCaptainName($request->getUserName());
+            $captainProfile->setSalary(0);
+            $captainProfile->setBounce(0);
             
             $this->entityManager->persist($captainProfile);
             $this->entityManager->flush();

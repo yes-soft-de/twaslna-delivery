@@ -54,14 +54,27 @@ class CaptainPaymentController extends BaseController
     }
 
      /**
-      * @Route("/captainpayments", name="getCaptainPayments", methods={"GET"})
+      * @Route("/CaptainPaymentsToCompany", name="getCaptainPaymentsToCompany", methods={"GET"})
       * @IsGranted("ROLE_CAPTAIN")
       * @param Request $request
       * @return JsonResponse
       */
-      public function getCaptainPayments()
+      public function getCaptainPaymentsToCompany()
       {
-          $result = $this->captainPaymentService->getCaptainPayments($this->getUserId());
+          $result = $this->captainPaymentService->getCaptainPaymentsToCompany($this->getUserId());
+  
+          return $this->response($result, self::FETCH);
+      }
+
+     /**
+      * @Route("/captainPaymentsFromCompany", name="getCaptainPaymentsFromCompany", methods={"GET"})
+      * @IsGranted("ROLE_CAPTAIN")
+      * @param Request $request
+      * @return JsonResponse
+      */
+      public function getCaptainPaymentsFromCompany()
+      {
+          $result = $this->captainPaymentService->getCaptainPaymentsFromCompany($this->getUserId());
   
           return $this->response($result, self::FETCH);
       }
