@@ -4,6 +4,8 @@ namespace App\Request;
 
 class StoreOwnerProfileCreateByAdminRequest
 {
+    private $userID;
+
     private $storeOwnerName;
 
     // private $story;
@@ -24,6 +26,19 @@ class StoreOwnerProfileCreateByAdminRequest
 
     private $hasProducts;
 
+
+    /**
+     * @return mixed
+     */
+    public function getUserID()
+    {
+        return $this->userID;
+    }
+
+    public function setUserID($userID): void
+    {
+        $this->userID = $userID;
+    }
 
     /**
      * @return mixed

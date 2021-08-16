@@ -14,7 +14,7 @@ class CaptainFinancialAccountDetailsResponse
  
     public $deliveryCost;
 
-    public $payments;
+    // public $payments;
 
     public $amountYouOwn;
 
@@ -24,7 +24,9 @@ class CaptainFinancialAccountDetailsResponse
 
     public $bounce;
 
-    public $NetProfit;
+    public $kilometerBonus;
+
+    public $netProfit;
 
     public $total;
 

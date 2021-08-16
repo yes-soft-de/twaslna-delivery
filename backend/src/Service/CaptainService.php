@@ -49,4 +49,15 @@ class CaptainService
     {
         return $this->orderManager->countOrdersDeliveredInToday($captainID, $todayStart, $todayEnd);
     }
+
+    public function getOrderKilometers($captainId)
+    {
+        return $this->orderManager->getOrderKilometers($captainId);
+    }
+
+    public function getOrderKilometersInThisMonth($captainId, $fromDate, $toDate)
+    {
+        return $this->orderManager->getOrderKilometersInThisMonth($captainId, $fromDate, $toDate);
+    }
+    
 }

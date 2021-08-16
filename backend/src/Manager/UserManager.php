@@ -533,7 +533,8 @@ class UserManager
     {
             $userProfile = $this->autoMapping->map(StoreOwnerProfileCreateByAdminRequest::class, StoreOwnerProfileEntity::class, $request);
 
-            $userProfile->setStatus('inactive');
+            $userProfile->setStatus('active');
+            $userProfile->setStoreOwnerID($request->getUserID());
             $userProfile->setFree(false);
             $userProfile->setIs_best(false);
 
