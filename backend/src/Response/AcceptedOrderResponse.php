@@ -17,4 +17,5 @@ class AcceptedOrderResponse
     public $orderDetail;
     public $deliveryCost;
     public $orderType;
+    public $orderNumber;
 }
