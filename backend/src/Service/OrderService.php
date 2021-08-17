@@ -482,17 +482,16 @@ class OrderService
         $deliveryCost = $this->deliveryCompanyFinancialService->getDeliveryCost();
         
         if($orderDetails) {
-        $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
-        if ($order[0]['storeOwnerProfileID']) {
-            if($orderDetails[0]->storeOwnerProfileID){
-                $storeOwner = $this->storeOwnerProfileService->getStoreOwnerProfileById($orderDetails[0]->storeOwnerProfileID);
-           
-                $response['orderDetails'] = $orderDetails;
-                $response['storeOwner'] = $storeOwner;
+            $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
+            if ($order[0]['storeOwnerProfileID']) {
+                    $storeOwner = $this->storeOwnerProfileService->getStoreOwnerProfileById($order[0]['storeOwnerProfileID']);
+                    if($orderDetails[0]->storeOwnerProfileID){
+                        $response['orderDetails'] = $orderDetails;
+                    }
+                    $response['storeOwner'] = $storeOwner;
             }
-        }
-        $response['deliveryCost'] = $deliveryCost;
-        $response['order'] = $order[0];
+            $response['deliveryCost'] = $deliveryCost;
+            $response['order'] = $order[0];
     }
         return $response;
     }
