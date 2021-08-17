@@ -7,7 +7,7 @@ use App\Entity\CaptainProfileEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\BranchesEntity;
 use App\Entity\OrderDetailEntity;
-use App\Entity\ClientPaymentEntity;
+use App\Entity\DeliveryCompanyFinancialCompensationEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
@@ -63,11 +63,11 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function closestOrders()
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.createdAt', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.payment', 'OrderEntity.detail', 'OrderEntity.deliveryCost', 'OrderEntity.orderCost', 'OrderEntity.orderType')
+            ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.createdAt', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.payment', 'OrderEntity.detail', 'OrderEntity.deliveryCost', 'OrderEntity.orderCost', 'OrderEntity.orderType', 'OrderEntity.destination', 'OrderEntity.note')
             ->addSelect('orderDetailEntity.id as orderDetailId', 'orderDetailEntity.orderNumber')
 
             ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
-
+            ->andWhere("OrderEntity.state = 'pending' ")
             ->addGroupBy('OrderEntity.id')
             ->getQuery()
             ->getResult();
@@ -402,6 +402,43 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere("OrderEntity.state = 'delivered' or OrderEntity.state = 'cancelled'")
             ->setParameter('clientID', $clientID)
             ->addGroupBy('OrderEntity.id')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getOrderKilometers($captainId)
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.kilometer as orderKilometers')
+            ->addSelect('financialCompensationEntity.kilometers', 'financialCompensationEntity.maxKilometerBonus', 'financialCompensationEntity.minKilometerBonus')
+
+            ->join(DeliveryCompanyFinancialCompensationEntity::class, 'financialCompensationEntity')
+
+            ->andWhere('orderEntity.captainID = :captainId')
+            ->andWhere("orderEntity.state = 'delivered'")
+
+            ->setParameter('captainId', $captainId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getOrderKilometersInThisMonth($captainId, $fromDate, $toDate)
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.kilometer as orderKilometers')
+            ->addSelect('financialCompensationEntity.kilometers', 'financialCompensationEntity.maxKilometerBonus', 'financialCompensationEntity.minKilometerBonus')
+
+            ->join(DeliveryCompanyFinancialCompensationEntity::class, 'financialCompensationEntity')
+
+            ->andWhere('orderEntity.captainID = :captainId')
+            ->andWhere("orderEntity.state = 'delivered'")
+            ->andWhere('orderEntity.deliveryDate >= :fromDate')
+            ->andWhere('orderEntity.deliveryDate < :toDate')
+
+            ->setParameter('fromDate', $fromDate)
+            ->setParameter('toDate', $toDate)
+
+            ->setParameter('captainId', $captainId)
             ->getQuery()
             ->getResult();
     }

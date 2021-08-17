@@ -320,6 +320,17 @@ class CaptainProfileController extends BaseController
 
         return $this->response($response, self::FETCH);
     }
+    /**
+     * @Route("/captainFinancialAccountInSpecificDate/{fromDate}/{toDate}", name="captainFinancialAccountInSpecificDate",methods={"GET"})
+     * @IsGranted("ROLE_CAPTAIN")
+     *  @return JsonResponse
+     */
+    public function captainFinancialAccountInSpecificDate($fromDate, $toDate)
+    {
+        $response = $this->captainProfileService->captainFinancialAccountInSpecificDate($this->getUserId(), $fromDate, $toDate);
+
+        return $this->response($response, self::FETCH);
+    }
 
     /**
      * @Route("/countOrdersCaptainDeliveredInToday", name="countOrdersCaptainDeliveredInToday",methods={"GET"})

@@ -31,6 +31,20 @@ class DateFactoryService
     //    return [$toDate,  $fromDate];
     
      }
+     
+   public function returnSpecificDate( $fromDate, $toDate):array
+     {
+      //   $fromDate =new \DateTime( $fromDate); 
+        $toDate =new \DateTime($toDate); 
+        
+      //   $fromDate = $toDate->format("y-m-d 00:00:00");
+      //   $toDate = $toDate->format("y-m-d 23:59:59");
+      $fromDate =new \DateTime($fromDate); 
+      $toDate = new \DateTime($toDate->format('Y-m-d 23:59:59'));
+       return [$fromDate,  $toDate];
+
+    
+     }
 
    public function subtractTwoDates($firstDate, $lastDate)
       {

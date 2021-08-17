@@ -309,4 +309,14 @@ class OrderManager
             return $item;
         }
     }
+
+    public function  getOrderKilometers($captainId)
+    {
+        return $this->orderEntityRepository->getOrderKilometers($captainId);
+    }
+
+    public function  getOrderKilometersInThisMonth($captainId, $fromDate, $toDate)
+    {
+        return $this->orderEntityRepository->getOrderKilometersInThisMonth($captainId, $fromDate, $toDate);
+    }
 }

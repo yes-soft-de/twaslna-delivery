@@ -14,13 +14,15 @@ class CaptainTotalFinancialAccountInMonthResponse
  
     public $deliveryCost;
 
-    public $payments;
+    public $paymentsFromCompany;
 
     public $amountYouOwn;
 
     public $remainingAmountForCompany;//مستحقات الشركة
 
     public $bounce;
+    
+    public $kilometerBonus;
 
     public $NetProfit;
 

@@ -382,8 +382,8 @@ class OrderService
         $orders = $this->orderManager->getAcceptedOrderByCaptainId($captainID);
    
         foreach ($orders as $order){
-          
           $order['orderDetail'] = $this->orderDetailService->getOrderNumberByOrderId($order['id']);
+          $order['orderNumber'] = $order['orderDetail'][0]->orderNumber;
           $response[] = $this->autoMapping->map('array', AcceptedOrderResponse::class, $order);
         }
     
@@ -482,17 +482,16 @@ class OrderService
         $deliveryCost = $this->deliveryCompanyFinancialService->getDeliveryCost();
         
         if($orderDetails) {
-        $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
-        if ($order[0]['storeOwnerProfileID']) {
-            if($orderDetails[0]->storeOwnerProfileID){
-                $storeOwner = $this->storeOwnerProfileService->getStoreOwnerProfileById($orderDetails[0]->storeOwnerProfileID);
-           
-                $response['orderDetails'] = $orderDetails;
-                $response['storeOwner'] = $storeOwner;
+            $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
+            if ($order[0]['storeOwnerProfileID']) {
+                    $storeOwner = $this->storeOwnerProfileService->getStoreOwnerProfileById($order[0]['storeOwnerProfileID']);
+                    if($orderDetails[0]->storeOwnerProfileID){
+                        $response['orderDetails'] = $orderDetails;
+                    }
+                    $response['storeOwner'] = $storeOwner;
             }
-        }
-        $response['deliveryCost'] = $deliveryCost;
-        $response['order'] = $order[0];
+            $response['deliveryCost'] = $deliveryCost;
+            $response['order'] = $order[0];
     }
         return $response;
     }
