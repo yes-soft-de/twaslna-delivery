@@ -35,6 +35,11 @@ class StoreCategoryManager
 
     public function updateStoreCategory(StoreCategoryUpdateRequest $request)
     {
+        $related = $this->storeCategoryEntityRepository->areThereItemsRelatedToThisStoreCategory($request->getId());
+       
+        if ($related) {
+            return 'has items';
+        }
         $entity = $this->storeCategoryEntityRepository->find($request->getId());
 
         if (!$entity) {

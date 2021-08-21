@@ -132,6 +132,10 @@ class ProductController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, ProductUpdateRequest::class, (object)$data);
         $result = $this->productService->updateProductByAdmin($request);
 
+        if(is_string($result)){
+            return $this->response($result, self::ERROR);  
+          }
+          
         return $this->response($result, self::CREATE);
     }
 }

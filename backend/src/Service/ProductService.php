@@ -112,6 +112,10 @@ class ProductService
    {
        $item = $this->productManager->updateProductByAdmin($request);
 
+       if (is_string($item)){ 
+        return $item;
+     }
+
        return $this->autoMapping->map(ProductEntity::class, ProductCreateResponse::class, $item);
    }
 }

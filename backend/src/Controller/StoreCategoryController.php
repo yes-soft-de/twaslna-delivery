@@ -54,6 +54,10 @@ class StoreCategoryController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, StoreCategoryUpdateRequest::class, (object)$data);
         $result = $this->storeCategoryService->updateStoreCategory($request);
 
+        if(is_string($result)){
+            return $this->response($result, self::ERROR);  
+          }
+          
         return $this->response($result, self::CREATE);
     }
 

@@ -70,6 +70,12 @@ class ProductManager
 
     public function updateProductByAdmin(ProductUpdateRequest $request)
     {
+        $related = $this->productEntityRepository->areThereItemsRelatedToThisProduct($request->getId());
+       
+        if ($related) {
+            return 'has items';
+        }
+
         $entity = $this->productEntityRepository->find($request->getId());
 
         if (!$entity) {

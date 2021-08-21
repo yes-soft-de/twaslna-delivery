@@ -7,6 +7,7 @@ use App\Entity\ProductCategoryEntity;
 use App\Repository\ProductCategoryEntityRepository;
 use App\Request\ProductCategoryCreateRequest;
 use App\Request\ProductCategoryUpdateRequest;
+use App\Request\DeleteRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ProductCategoryManager
@@ -35,6 +36,12 @@ class ProductCategoryManager
 
     public function updateProductCategory(ProductCategoryUpdateRequest $request)
     {
+        $related = $this->productCategoryEntityRepository->areThereItemsRelatedToThisCategory($request->getId());
+       
+        if ($related) {
+            return 'has items';
+        }
+        
         $entity = $this->productCategoryEntityRepository->find($request->getId());
 
         if (!$entity) {
@@ -55,5 +62,26 @@ class ProductCategoryManager
     public function getProductCategory($id)
     {
        return $this->productCategoryEntityRepository->find($id);
+    }
+
+    public function delete(DeleteRequest $request)
+    {
+        $related = $this->productCategoryEntityRepository->areThereItemsRelatedToThisCategory($request->getId());
+       
+        if ($related) {
+            return 'has items';
+        }
+
+        $item = $this->productCategoryEntityRepository->find($request->getId());
+        if (!$item )
+        {
+            return null;
+        }
+        else
+         {
+            $this->entityManager->remove($item);
+            $this->entityManager->flush();
+         }
+         return $item;
     }
 }

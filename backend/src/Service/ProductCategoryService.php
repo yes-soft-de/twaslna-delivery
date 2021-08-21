@@ -29,6 +29,10 @@ class ProductCategoryService
     public function updateProductCategory($request)
     {
         $item = $this->productCategoryManager->updateProductCategory($request);
+       
+        if (is_string($item)){ 
+            return $item;
+         }
 
         return $this->autoMapping->map(ProductCategoryEntity::class, ProductCategoryResponse::class, $item);
     }
@@ -48,5 +52,21 @@ class ProductCategoryService
        $item = $this->productCategoryManager->getProductCategory($id);
        return $this->autoMapping->map(ProductCategoryEntity::class, ProductCategoryResponse::class, $item);  
        
+    }
+
+    public function delete($request)
+    {
+        $result = $this->productCategoryManager->delete($request);
+
+        if (is_string($result)){ 
+            return $result;
+         }
+
+        if(!($result instanceof ProductCategoryEntity))
+        {
+            return $result;
+        }
+
+        return $this->autoMapping->map(ProductCategoryEntity::class, ProductCategoryResponse::class, $result);
     }
 }

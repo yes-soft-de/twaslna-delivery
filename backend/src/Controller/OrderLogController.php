@@ -44,20 +44,15 @@ class OrderLogController extends BaseController
       }
 
      /**
-      * @Route("/orderlogs", name="GetLogsByUserId", methods={"GET"})
+      * @Route("/orderLogs", name="GetLogsByUserId", methods={"GET"})
       * @param Request $request
       * @return JsonResponse
       */
     public function getOrderLogsByUserID()
     {    
-        if( $this->isGranted('ROLE_OWNER') ) {
-         $result = $this->orderLogService->getOrderLogsByStoreOwner($this->getUserId());
+        if( $this->isGranted('ROLE_OWNER')  || $this->isGranted('ROLE_CAPTAIN')  || $this->isGranted('ROLE_CLIENT') ) {
+            $result = $this->orderLogService->getOrderLogs($this->getUserId());
         }
-
-        if( $this->isGranted('ROLE_CAPTAIN') ) {
-         $result = $this->orderLogService->getOrderLogsByCaptain($this->getUserId());
-        }
-        
         return $this->response($result, self::FETCH);
     }
 
