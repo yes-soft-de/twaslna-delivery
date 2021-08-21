@@ -198,6 +198,19 @@ class ProductEntityRepository extends ServiceEntityRepository
         ->setParameter('storeOwnerProfileId',$storeOwnerProfileId)
         ->getQuery()
         ->getOneOrNullResult();
-        // ->getResult();
     }
+
+    public function areThereItemsRelatedToThisProduct($id) {
+      
+        return $this->createQueryBuilder('product')
+        ->leftJoin(StoreProductEntity::class, 'storeProduct', Join::WITH, 'storeProduct.productID = :id')
+        ->leftJoin(OrderDetailEntity::class, 'orderDetail', Join::WITH, 'orderDetail.productID = :id')
+
+        ->andWhere(' storeProduct.productID = :id ')
+        ->orWhere(' orderDetail.productID = :id ')
+
+        ->setParameter('id',$id)
+        ->getQuery()
+        ->getResult();
+      }
 }

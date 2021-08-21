@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\ProductCategoryEntity;
+use App\Entity\ProductEntity;
+use App\Entity\StoreProductCategoryEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method ProductCategoryEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +22,19 @@ class ProductCategoryEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, ProductCategoryEntity::class);
     }
 
-    // /**
-    //  * @return ProductCategoryEntity[] Returns an array of ProductCategoryEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+  public function areThereItemsRelatedToThisCategory($id) {
+      
+    return $this->createQueryBuilder('productCategory')
+    ->leftJoin(ProductEntity::class, 'productEntity', Join::WITH, 'productEntity.ProductCategoryID = :id')
 
-    /*
-    public function findOneBySomeField($value): ?ProductCategoryEntity
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+    ->leftJoin(StoreProductCategoryEntity::class, 'storeProductCategoryEntity', Join::WITH, 'storeProductCategoryEntity.productCategoryId = :id')
+
+    ->andWhere(' productEntity.ProductCategoryID = :id ')
+
+    ->orWhere(' storeProductCategoryEntity.productCategoryId = :id ')
+
+    ->setParameter('id',$id)
+    ->getQuery()
+    ->getResult();
+  }
 }

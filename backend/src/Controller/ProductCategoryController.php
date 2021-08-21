@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\AutoMapping;
 use App\Request\ProductCategoryCreateRequest;
 use App\Request\ProductCategoryUpdateRequest;
+use App\Request\DeleteRequest;
 use App\Service\ProductCategoryService;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -53,7 +54,11 @@ class ProductCategoryController extends BaseController
 
         $request = $this->autoMapping->map(stdClass::class, ProductCategoryUpdateRequest::class, (object)$data);
         $result = $this->productCategoryService->updateProductCategory($request);
-
+       
+        if(is_string($result)){
+            return $this->response($result, self::ERROR);  
+          }
+          
         return $this->response($result, self::CREATE);
     }
 
@@ -80,5 +85,19 @@ class ProductCategoryController extends BaseController
   
           return $this->response($result, self::FETCH);
       }
-
+    
+    /**
+     * @Route("/productcategory/{id}", name="deleteProductCategory", methods={"DELETE"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function delete(Request $request)
+    {
+        $request = new DeleteRequest($request->get('id'));
+        $result = $this->productCategoryService->delete($request);
+        if(is_string($result)){
+            return $this->response($result, self::ERROR);  
+          }
+        return $this->response($result, self::DELETE);
+    }
 }
