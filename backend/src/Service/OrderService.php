@@ -492,6 +492,8 @@ class OrderService
             }
             $response['deliveryCost'] = $deliveryCost;
             $response['order'] = $order[0];
+            $response['invoice']['invoiceAmount'] = $order[0]['invoiceAmount'];
+            $response['invoice']['invoiceImage'] = $order[0]['invoiceImage'];
     }
         return $response;
     }
