@@ -13,11 +13,11 @@ class OrderLogManager
     private $entityManager;
     private $orderLogEntityRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, OrderLogEntityRepository $orderlogEntityRepository)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, OrderLogEntityRepository $orderLogEntityRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
-        $this->orderlogEntityRepository = $orderlogEntityRepository;
+        $this->orderLogEntityRepository = $orderLogEntityRepository;
     }
 
     public function createOrderLog($log)
@@ -60,5 +60,10 @@ class OrderLogManager
     public function getOrderNumberByCaptainId($captainID)
     {
         return $this->orderLogEntityRepository->getOrderNumberByCaptainId($captainID);
+    }
+
+    public function getOrderNumberUserID($userID)
+    {
+        return $this->orderLogEntityRepository->getOrderNumberUserID($userID);
     }
 }
