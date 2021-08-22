@@ -109,6 +109,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     onTap: () {
                       widget._authService.logout().then((value) {
+                        Navigator.pushNamedAndRemoveUntil(context,AuthorizationRoutes.LOGIN_SCREEN, (route) => false);
                       });
                     },
                   ),
