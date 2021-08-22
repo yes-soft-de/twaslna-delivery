@@ -12,19 +12,30 @@ import 'package:twaslna_captain/utils/helpers/custom_flushbar.dart';
 import 'package:twaslna_captain/utils/images/images.dart';
 
 class RegisterStateInit extends RegisterState {
-  RegisterStateInit(RegisterScreenState screen, {String? error})
+  RegisterStateInit(RegisterScreenState screen,
+      {String? error, bool registered = false})
       : super(screen) {
     if (error != null) {
-      CustomFlushBarHelper.createError(
-          title: S.current.warnning, message: error)
-        ..show(screen.context);
+      if (registered) {
+        screen.userRegistered().whenComplete(() {
+          CustomFlushBarHelper.createError(
+              title: S.current.warnning, message: error)
+            ..show(screen.context);
+        });
+      } else {
+        CustomFlushBarHelper.createError(
+            title: S.current.warnning, message: error)
+          ..show(screen.context);
+      }
     }
   }
+
   TextEditingController nameController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _registerKey = GlobalKey<FormState>();
   bool agreed = false;
+  TextStyle tileStyle = TextStyle(fontWeight: FontWeight.w600);
 
   @override
   Widget getUI(BuildContext context) {
@@ -37,95 +48,68 @@ class RegisterStateInit extends RegisterState {
                 BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             children: [
               MediaQuery.of(context).viewInsets.bottom == 0
-                  ? Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Image.asset(
-                        ImageAsset.LOGO,
-                        width: 85,
-                        height: 85,
-                      ),
+                  ? SvgPicture.asset(
+                      SvgAsset.EMAIL,
+                      width: 150,
                     )
                   : Container(),
               Padding(
                 padding: const EdgeInsets.only(
-                    bottom: 8.0, left: 85, right: 85, top: 24),
+                    bottom: 4.0, left: 32, right: 32, top: 8),
                 child: Text(
                   S.of(context).name,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: tileStyle,
                 ),
               ),
               ListTile(
-                leading: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).backgroundColor,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.person),
-                  ),
-                ),
                 title: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CustomLoginFormField(
+                    contentPadding:
+                        EdgeInsets.only(left: 0, right: 0, top: 15, bottom: 0),
                     controller: nameController,
                     hintText: S.of(context).nameHint,
+                    preIcon: Icon(Icons.person),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                    bottom: 8.0, left: 85, right: 85, top: 8),
+                    bottom: 4.0, left: 32, right: 32, top: 8),
                 child: Text(
                   S.of(context).username,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: tileStyle,
                 ),
               ),
               ListTile(
-                leading: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).backgroundColor,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.email),
-                  ),
-                ),
                 title: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CustomLoginFormField(
+                    contentPadding:
+                        EdgeInsets.only(left: 0, right: 0, top: 15, bottom: 0),
                     controller: usernameController,
                     hintText: S.of(context).registerHint,
+                    preIcon: Icon(Icons.email),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                    bottom: 8.0, left: 85, right: 85, top: 8),
+                    bottom: 8.0, left: 32, right: 32, top: 8),
                 child: Text(
                   S.of(context).password,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: tileStyle,
                 ),
               ),
               ListTile(
-                leading: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).backgroundColor,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.lock),
-                  ),
-                ),
                 title: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CustomLoginFormField(
+                    preIcon: Icon(Icons.lock),
                     last: true,
                     controller: passwordController,
                     password: true,
-                    contentPadding: EdgeInsets.fromLTRB(16, 13, 16, 0),
+                    contentPadding: EdgeInsets.fromLTRB(0, 15, 0, 0),
                     hintText: S.of(context).password,
                   ),
                 ),

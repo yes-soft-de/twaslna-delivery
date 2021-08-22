@@ -21,7 +21,7 @@ class ChatService {
       List<ChatModel> chatMessagesList = [];
       event.docs.forEach((element) {
         chatMessagesList.add(
-            new ChatModel.fromJson(element.data() as Map<String, dynamic>));
+             ChatModel.fromJson(element.data() as Map<String, dynamic>));
       });
 
       _chatPublishSubject.add(chatMessagesList);
@@ -29,16 +29,14 @@ class ChatService {
   }
 
   void sendMessage(
-      String chatRoomID, String msg, bool support, feedBack) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user = auth.currentUser;
+      String chatRoomID, String msg,String username) async {
     ChatModel model = new ChatModel(
       msg: msg,
-      sender: user!.uid,
+      sender: username,
       sentDate: DateTime.now().toString(),
     );
     _chatManager.sendMessage(chatRoomID, model);
-    _chatManager.sendNotification(chatRoomID, support, feedBack);
+    _chatManager.sendNotification(chatRoomID);
   }
 
   void dispose() {

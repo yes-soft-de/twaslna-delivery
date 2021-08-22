@@ -2,18 +2,25 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:twaslna_captain/consts/urls.dart';
 import 'package:twaslna_captain/generated/l10n.dart';
 import 'package:twaslna_captain/module_upload/service/image_upload/image_upload_service.dart';
+import 'package:twaslna_captain/utils/components/chat_field.dart';
+import 'package:twaslna_captain/utils/components/custom_feild.dart';
+import 'package:twaslna_captain/utils/effect/scaling.dart';
+import 'package:twaslna_captain/utils/helpers/custom_flushbar.dart';
 
 class ChatWriterWidget extends StatefulWidget {
-  final Function(String)? onMessageSend;
-  final ImageUploadService? uploadService;
+  final Function(String) onMessageSend;
+  final ImageUploadService uploadService;
+  final Function() onTap;
 
   ChatWriterWidget({
-    this.onMessageSend,
-    this.uploadService,
+    required this.onMessageSend,
+    required this.uploadService,
+    required this.onTap,
   });
 
   @override
@@ -25,117 +32,201 @@ class _ChatWriterWidget extends State<ChatWriterWidget> {
   final ImagePicker _imagePicker = ImagePicker();
 
   File? imageFile;
-
+  String? media;
+  bool notUploaded = true;
   @override
   Widget build(BuildContext context) {
-    if (imageFile != null) {
-      return Container(
-        height: 120,
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: Image.file(
-                imageFile!,
-                fit: BoxFit.cover,
-              ),
-            ),
-            Positioned(
-              right: 8,
-              bottom: 8,
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  backgroundBlendMode: BlendMode.darken,
-                  color: Colors.black38,
-                ),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.send,
-                    color: Colors.white,
+    Color color = Theme.of(context).backgroundColor;
+    if (imageFile != null && notUploaded) {
+      return ScalingWidget(
+        child: Container(
+          height: 250,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.file(
+                      imageFile!,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  onPressed: () {
-                    widget.uploadService!
-                        .uploadImage(imageFile!.path)
-                        .then((value) {
-                      imageFile = null;
-                      if (value != null) {
-                        sendMessage(value.contains('http')
-                            ? value
-                            : Urls.IMAGES_ROOT + value);
-                        setState(() {});
-                      }
-                    });
-                  },
                 ),
               ),
-            )
-          ],
-        ),
-      );
-    }
-    return Flex(
-      direction: Axis.horizontal,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: DropdownButton(
-            items: [
-              DropdownMenuItem(
-                child: Icon(Icons.image),
-                onTap: () {
-                  _imagePicker
-                      .getImage(source: ImageSource.gallery, imageQuality: 70)
-                      .then((value) {
-                    imageFile = File(value!.path);
-                    setState(() {});
-                  });
-                },
+              Align(
+                alignment: AlignmentDirectional.bottomEnd,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      backgroundBlendMode: BlendMode.darken,
+                      color: Colors.black38,
+                    ),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_upward_rounded,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        notUploaded = false;
+                        setState(() {
+                        });
+                        CustomFlushBarHelper.createSuccess(title:S.current.note, message:S.current.uploadingImagesPleaseWait,background: Theme.of(context).primaryColor).show(context);
+                        widget.uploadService
+                            .uploadImage(imageFile!.path)
+                            .then((value) {
+                          imageFile = null;
+                          notUploaded = true;
+                          if (value != null) {
+                            sendMessage(value.contains('http')
+                                ? value
+                                : Urls.IMAGES_ROOT + value);
+                            setState(() {});
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                ),
               ),
-              DropdownMenuItem(
-                child: Icon(Icons.camera),
-                onTap: () {
-                  _imagePicker
-                      .getImage(source: ImageSource.camera, imageQuality: 70)
-                      .then((value) {
-                    if (value != null) {
-                      imageFile = File(value.path);
-                      setState(() {});
-                    }
-                  });
-                },
+              Align(
+                alignment: AlignmentDirectional.bottomStart,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      backgroundBlendMode: BlendMode.darken,
+                      color: Colors.black38,
+                    ),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        imageFile = null;
+                        notUploaded = true;
+                        setState(() {
+                        });
+                      },
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
         ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 4),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: S.of(context).startWriting,
+      );
+    } else {
+      return Container(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Flex(
+            direction: Axis.horizontal,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(bottom: 4),
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.zero,
+                        elevation: 0,
+                        visualDensity: VisualDensity.compact),
+                    onPressed: () {
+                      _imagePicker
+                          .getImage(source: ImageSource.camera, imageQuality: 70)
+                          .then((value) {
+                        if (value != null) {
+                          imageFile = File(value.path);
+                          setState(() {});
+                        }
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.camera_alt_rounded,
+                        color: Colors.white,
+                      ),
+                    )),
               ),
-              controller: _msgController,
-              onChanged: (s) {
-                setState(() {});
-              },
-            ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 4),
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        elevation: 0,
+                        shape: CircleBorder(),
+                        visualDensity: VisualDensity.compact),
+                    onPressed: () {
+                      _imagePicker
+                          .getImage(source: ImageSource.gallery, imageQuality: 70)
+                          .then((value) {
+                        if (value != null) {
+                          imageFile = File(value.path);
+                          setState(() {});
+                        }
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.image,
+                        color: Colors.white,
+                      ),
+                    )),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8,right: 8,bottom: 8,),
+                  child: ChatFormField(
+                    maxLines: 7,
+                    onTap: () {
+                      widget.onTap();
+                    },
+                    controller: _msgController,
+                    hintText: S.current.startWriting,
+                    contentPadding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                    onChanged: () {
+                      setState(() {});
+                    },
+                    sufIcon: Padding(
+                      padding: const EdgeInsets.only(right: 8.0,left: 8.0),
+                      child: AnimatedContainer(
+                          duration: Duration(milliseconds: 150),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: _msgController.text.trim().isEmpty
+                                  ? Theme.of(context).disabledColor
+                                  : Theme.of(context).primaryColor),
+                          child: InkWell(
+                              onTap: _msgController.text.trim().isNotEmpty
+                                  ? () {
+                                      sendMessage(_msgController.text);
+                                    }
+                                  : null,
+                              child: Icon(
+                                Icons.arrow_upward_rounded,
+                                size: 28,
+                                color: Colors.white,
+                              ))),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-        IconButton(
-          padding: EdgeInsets.all(4),
-          onPressed: _msgController.text.trim().isNotEmpty
-              ? () {
-                  sendMessage(_msgController.text.trim());
-                }
-              : null,
-          icon: Icon(Icons.send),
-        )
-      ],
-    );
+      );
+    }
   }
 
   void sendMessage(String msg) {
-    widget.onMessageSend!(msg);
+    widget.onMessageSend(msg);
     _msgController.clear();
   }
 }

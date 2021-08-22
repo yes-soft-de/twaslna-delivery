@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:progressive_image/progressive_image.dart';
+import 'package:twaslna_captain/consts/urls.dart';
 import 'package:twaslna_captain/utils/customIcon/custom_icons.dart';
 import 'package:twaslna_captain/utils/images/images.dart';
 
 class CustomNetworkImage extends StatelessWidget {
   final double height;
   final double width;
-  final String image;
+  final String imageSource;
   final bool asset;
-  CustomNetworkImage(
-      {required this.height,
-      required this.width,
-      required this.image,
-      this.asset = false});
+  final Color? background;
+  CustomNetworkImage({required this.height,
+    required this.width,
+    required this.imageSource,
+    this.asset = false,
+    this.background,
+  });
 
   @override
   Widget build(BuildContext context) {
+    var image = imageSource;
     if (asset) {
       return ProgressiveImage.custom(
         height: height,
@@ -25,7 +29,9 @@ class CustomNetworkImage extends StatelessWidget {
             width: double.maxFinite,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Theme.of(context).backgroundColor),
+                color:background ?? Theme
+                    .of(context)
+                    .backgroundColor),
             child: Flex(
               direction: Axis.vertical,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -40,13 +46,17 @@ class CustomNetworkImage extends StatelessWidget {
                 ),
                 Padding(
                   padding:
-                      const EdgeInsets.only(left: 16.0, right: 16.0, top: 10.0),
+                  const EdgeInsets.only(left: 16.0, right: 16.0, top: 10.0),
                   child: Container(
                     width: 28,
                     child: LinearProgressIndicator(
                         minHeight: 2,
                         valueColor: AlwaysStoppedAnimation<Color>(
-                            Theme.of(context).textTheme.headline1!.color!)),
+                            Theme
+                                .of(context)
+                                .textTheme
+                                .headline1!
+                                .color!)),
                   ),
                 ),
               ],
@@ -59,15 +69,21 @@ class CustomNetworkImage extends StatelessWidget {
         fit: BoxFit.cover,
       );
     } else {
+      if (!image.contains('http')){
+      image = Urls.IMAGES_ROOT + image;
+      }
       return ProgressiveImage.custom(
         height: height,
         width: width,
         placeholderBuilder: (context) {
           return Container(
-            width: double.maxFinite,
+            width: width,
+            height: height,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Theme.of(context).backgroundColor),
+                color:background?? Theme
+                    .of(context)
+                    .backgroundColor),
             child: Flex(
               direction: Axis.vertical,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -82,13 +98,17 @@ class CustomNetworkImage extends StatelessWidget {
                 ),
                 Padding(
                   padding:
-                      const EdgeInsets.only(left: 16.0, right: 16.0, top: 10.0),
+                  const EdgeInsets.only(left: 16.0, right: 16.0, top: 10.0),
                   child: Container(
                     width: 28,
                     child: LinearProgressIndicator(
                         minHeight: 2,
                         valueColor: AlwaysStoppedAnimation<Color>(
-                            Theme.of(context).textTheme.headline1!.color!)),
+                            Theme
+                                .of(context)
+                                .textTheme
+                                .headline1!
+                                .color!)),
                   ),
                 ),
               ],

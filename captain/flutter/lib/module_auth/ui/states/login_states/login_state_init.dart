@@ -20,6 +20,7 @@ class LoginStateInit extends LoginState {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _loginKey = GlobalKey<FormState>();
+  TextStyle tileStyle = TextStyle(fontWeight: FontWeight.w600);
   @override
   Widget getUI(BuildContext context) {
     return Form(
@@ -32,63 +33,47 @@ class LoginStateInit extends LoginState {
             children: [
               MediaQuery.of(context).viewInsets.bottom == 0
                   ? SvgPicture.asset(
-                      ImageAsset.AUTH_SVG,
+                      SvgAsset.WE_DELIVER,
                       width: 150,
                     )
                   : Container(),
+
               Padding(
                 padding: const EdgeInsets.only(
-                    bottom: 8.0, left: 85, right: 85, top: 8),
+                    bottom: 4.0, left: 32, right: 32, top: 8),
                 child: Text(
                   S.of(context).username,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: tileStyle,
                 ),
               ),
               ListTile(
-                leading: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).backgroundColor,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.email),
-                  ),
-                ),
                 title: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CustomLoginFormField(
+                    contentPadding:EdgeInsets.only(left: 0,right: 0,top: 15,bottom: 0),
                     controller: usernameController,
                     hintText: S.of(context).registerHint,
+                    preIcon: Icon(Icons.email),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                    bottom: 8.0, left: 85, right: 85, top: 8),
+                    bottom: 8.0, left: 32, right: 32, top: 8),
                 child: Text(
                   S.of(context).password,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: tileStyle,
                 ),
               ),
               ListTile(
-                leading: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).backgroundColor,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.lock),
-                  ),
-                ),
                 title: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CustomLoginFormField(
+                    preIcon:Icon(Icons.lock),
                     last: true,
                     controller: passwordController,
                     password: true,
-                    contentPadding: EdgeInsets.fromLTRB(16, 13, 16, 0),
+                    contentPadding: EdgeInsets.fromLTRB(0, 15, 0, 0),
                     hintText: S.of(context).password,
                   ),
                 ),

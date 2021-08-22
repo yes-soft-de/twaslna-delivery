@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-
-import 'package:timeago/timeago.dart' as timeago;
+import 'package:intl/intl.dart';
+import 'package:twaslna_captain/utils/components/progresive_image.dart';
+import 'package:flutter/material.dart' as m;
 
 class ChatBubbleWidget extends StatefulWidget {
   final bool? showImage;
-  final String? message;
-  final DateTime? sentDate;
+  final String message;
+  final DateTime sentDate;
   final bool me;
 
   ChatBubbleWidget({
     Key? key,
-    this.message,
-    this.sentDate,
+    required this.message,
+    required this.sentDate,
     required this.me,
     this.showImage,
   });
@@ -22,47 +23,69 @@ class ChatBubbleWidget extends StatefulWidget {
 
 class ChatBubbleWidgetState extends State<ChatBubbleWidget> {
   bool focused = false;
-  
+  var reg = RegExp(
+      r'[\u0600-\u06ff]|[\u0750-\u077f]|[\ufb50-\ufc3f]|[\ufe70-\ufefc]');
+  var format = DateFormat().add_jm();
+
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: widget.me ? Alignment.centerLeft : Alignment.centerRight,
       child: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Container(
-          width: 240,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            border: Border.all(),
-            color: Theme.of(context).brightness == Brightness.light
-                ? Colors.white
-                : Colors.black,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  timeago.format(widget.sentDate ?? DateTime.now(),locale:Localizations.localeOf(context).languageCode),
-                
+          padding: EdgeInsets.all(8.0),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Container(
+              constraints: BoxConstraints(
+                minWidth: 100,
+                maxWidth: 240,
+              ),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(25)),
+                  color: widget.me
+                      ? Theme.of(context).primaryColor.withOpacity(0.25)
+                      : Theme.of(context).backgroundColor),
+              child: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    textDirection: reg.hasMatch(widget.message)
+                        ? m.TextDirection.rtl
+                        : m.TextDirection.ltr,
+                    children: [
+                      widget.message.contains('http')
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: CustomNetworkImage(
+                                background:widget.me ? Theme.of(context).primaryColor.withOpacity(0.25) : null,
+                                imageSource: widget.message
+                                    .replaceFirst('uploadimage', 'upload/image'),
+                                height: 250,
+                                width: 240,
+                              ),
+                            )
+                          : Text(
+                            '${widget.message}',
+                            textAlign: reg.hasMatch(widget.message)
+                                ? TextAlign.right
+                                : TextAlign.left,
+                            style: TextStyle(fontWeight: FontWeight.w400),
+                          ),
+                    ],
+                  ),
                 ),
-                widget.message!.contains('http')
-                    ? Image.network(widget.message
-                        !.replaceFirst('uploadimage', 'upload/image'))
-                    : Text(
-                        '${widget.message}',
-                        style: TextStyle(
-                          color: Theme.of(context).brightness == Brightness.dark
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                      ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16, top: 4),
+              child: Text(
+                format.format(widget.sentDate),
+                textAlign: TextAlign.start,
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
+          ])),
     );
   }
 }

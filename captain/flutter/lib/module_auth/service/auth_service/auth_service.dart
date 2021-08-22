@@ -23,7 +23,11 @@ class AuthService {
   );
 
   bool get isLoggedIn => _prefsHelper.isSignedIn();
-
+  bool get needToInitAccount => _prefsHelper.needInit();
+  String get username => _prefsHelper.getUsername() ?? '';
+  void profiled() {
+    _prefsHelper.setNeedInit(false);
+  }
   Stream<AuthStatus> get authListener => _authSubject.stream;
 
   Future<void> loginApi(String username, String password) async {
@@ -66,6 +70,7 @@ class AuthService {
           registerResponse.statusCode ?? '0'));
     }
     _authSubject.add(AuthStatus.REGISTERED);
+    _prefsHelper.setNeedInit(true);
     await loginApi(request.userID ?? '', request.password ?? '');
   }
 

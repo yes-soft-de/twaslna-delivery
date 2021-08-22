@@ -44,6 +44,7 @@ dependencies:
   google_fonts: ^2.1.0
   # Camera And Gallery
   image_picker: ^0.8.0
+  edge_detection: ^1.0.6
   # Shared Pref
   shared_preferences: ^2.0.6
   # NoSQL Database
@@ -60,6 +61,7 @@ dependencies:
   analyzer_plugin: ^0.6.0
   # Time Ago Generator
   timeago: ^3.0.2
+  simple_moment: ^1.1.1
   # String Validators
   validators: ^3.0.0
   # Svg Loader
@@ -101,6 +103,12 @@ dependencies:
   list_tile_switch: ^1.0.0
   dotted_line: ^3.0.0
   progressive_image: ^2.0.0
+  flutter_advanced_drawer: ^1.2.3
+  flutter_snake_navigationbar: ^0.5.0
+  scroll_to_index: ^2.0.0
+  soundpool: ^2.1.0
+  permission_handler: ^8.1.4+2
+  device_info: ^2.0.2
 dev_dependencies:
   # Test Libs
   flutter_test:
@@ -114,10 +122,12 @@ dev_dependencies:
   flutter_launcher_icons: ^0.9.0
   # Flutter Native Splash Screen
   flutter_native_splash: ^1.1.8+4
+  # Feature Descovery
+  feature_discovery: ^0.14.0
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon/icon.jpg"
+  image_path: "assets/icon/icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -134,6 +144,8 @@ flutter:
   assets:
    - assets/images/
    - assets/icon/
+   - assets/animations/
+   - assets/sounds/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

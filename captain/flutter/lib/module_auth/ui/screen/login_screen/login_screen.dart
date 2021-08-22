@@ -5,6 +5,7 @@ import 'package:twaslna_captain/module_auth/state_manager/login_state_manager/lo
 import 'package:twaslna_captain/module_auth/ui/states/login_states/login_state.dart';
 import 'package:twaslna_captain/module_auth/ui/states/login_states/login_state_init.dart';
 import 'package:flutter/material.dart';
+import 'package:twaslna_captain/module_orders/orders_routes.dart';
 import 'package:twaslna_captain/utils/components/custom_app_bar.dart';
 import 'package:twaslna_captain/utils/helpers/custom_flushbar.dart';
 
@@ -23,6 +24,7 @@ class LoginScreenState extends State<LoginScreen> {
   late AsyncSnapshot loadingSnapshot;
   late StreamSubscription _stateSubscription;
   bool deepLinkChecked = false;
+
   void refresh() {
     if (mounted) setState(() {});
   }
@@ -49,6 +51,7 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   dynamic args;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -60,7 +63,7 @@ class LoginScreenState extends State<LoginScreen> {
       },
       child: Scaffold(
         appBar: CustomTwaslnaAppBar.appBar(context,
-            title: S.of(context).login),
+            title: S.of(context).login, canGoBack: false),
         body: loadingSnapshot.connectionState != ConnectionState.waiting
             ? _currentStates.getUI(context)
             : Stack(
@@ -87,6 +90,8 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   void moveToNext() {
+    Navigator.of(context).pushNamedAndRemoveUntil(OrdersRoutes.CAPTAIN_ORDERS_SCREEN, (route) => false);
+
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.loginSuccess)
         .show(context);

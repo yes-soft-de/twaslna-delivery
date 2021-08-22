@@ -44,7 +44,7 @@ class FireNotificationService {
     if (token != null) {
       // And Subscribe to the changes
       try {
-        _notificationRepo.postToken(token);
+        //_notificationRepo.postToken(token);
       } catch (e) {}
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         Logger().info('FireNotificationService', 'onMessage: $message');

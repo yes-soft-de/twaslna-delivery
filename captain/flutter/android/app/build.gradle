@@ -47,7 +47,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "de.yes_soft.twaslna"
+        applicationId "de.yes_soft.twaslna_captain"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
