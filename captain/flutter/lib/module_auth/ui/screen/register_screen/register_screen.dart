@@ -7,6 +7,7 @@ import 'package:twaslna_captain/module_auth/state_manager/register_state_manager
 import 'package:twaslna_captain/module_auth/ui/states/register_states/register_state.dart';
 import 'package:twaslna_captain/module_auth/ui/states/register_states/register_state_init.dart';
 import 'package:flutter/material.dart';
+import 'package:twaslna_captain/module_init/init_routes.dart';
 import 'package:twaslna_captain/utils/components/custom_app_bar.dart';
 import 'package:twaslna_captain/utils/helpers/custom_flushbar.dart';
 
@@ -57,7 +58,8 @@ class RegisterScreenState extends State<RegisterScreen> {
       },
       child: Scaffold(
         appBar: CustomTwaslnaAppBar.appBar(context,
-            title: S.of(context).register),
+            title: S.of(context).register,canGoBack: false),
+
         body: loadingSnapshot.connectionState != ConnectionState.waiting
             ? _currentState.getUI(context)
             : Stack(
@@ -82,13 +84,14 @@ class RegisterScreenState extends State<RegisterScreen> {
   }
 
   void moveToNext() {
+    Navigator.of(context).pushNamedAndRemoveUntil(InitAccountRoutes.INIT_ACCOUNT_SCREEN, (route) => false);
     CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning, message: S.current.loginSuccess)
+        title: S.current.warnning, message: S.current.loginSuccess)
         .show(context);
   }
 
-  void userRegistered() {
-    CustomFlushBarHelper.createSuccess(
+  Future<void> userRegistered() async {
+    await CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
             message: S.current.registerSuccess,
             timeout: 2)
