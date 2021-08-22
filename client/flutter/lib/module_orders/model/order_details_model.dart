@@ -106,6 +106,9 @@ class OrderInfo {
   String? recipientName;
   String? recipientPhoneNumber;
   bool? removable;
+  String? invoiceImage;
+  num? invoiceAmount;
+
   OrderInfo(
       {required this.id,
       required this.state,
@@ -121,7 +124,9 @@ class OrderInfo {
       this.orderDetails,
       this.recipientName,
       this.recipientPhoneNumber,
-      required this.removable});
+      required this.removable,
+      this.invoiceImage,
+      this.invoiceAmount});
 
   OrderInfo.Empty() {
     empty = true;
@@ -178,6 +183,8 @@ OrderInfo toOrder(Order? order) {
         orderDetails: order.detail,
         recipientName: order.recipientName,
         recipientPhoneNumber: order.recipientPhone,
+        invoiceAmount: order.invoiceAmount,
+        invoiceImage: order.invoiceImage,
         removable: !timeout);
   } else {
     return OrderInfo(

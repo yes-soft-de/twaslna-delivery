@@ -17,7 +17,6 @@ class OrderDetailsResponse {
           'Order Details Response', '${e.toString()}', StackTrace.current);
       statusCode = '-1';
     }
-
   }
 
   Map<String, dynamic> toJson() {
@@ -66,15 +65,18 @@ class Data {
     return map;
   }
 }
+
 class GeoJson {
   double? long;
   double? lat;
 
   GeoJson({this.long, this.lat});
-  GeoJson.fromJson(dynamic json) { 
+
+  GeoJson.fromJson(dynamic json) {
     long = json['long'];
     lat = json['lat'];
   }
+
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
     map['long'] = long;
@@ -82,6 +84,7 @@ class GeoJson {
     return map;
   }
 }
+
 class Order {
   int? id;
   int? ownerID;
@@ -92,7 +95,7 @@ class Order {
   String? note;
   String? payment;
   String? recipientName;
-  String ?recipientPhone;
+  String? recipientPhone;
   String? state;
   String? roomID;
   dynamic captainID;
@@ -101,6 +104,9 @@ class Order {
   double? deliveryCost;
   double? orderCost;
   int? orderType;
+  num? invoiceAmount;
+  String? invoiceImage;
+
   Order(
       {this.id,
       this.ownerID,
@@ -119,8 +125,9 @@ class Order {
       this.detail,
       this.orderCost,
       this.deliveryCost,
-      this.orderType
-      });
+      this.orderType,
+      this.invoiceAmount,
+      this.invoiceImage});
 
   Order.fromJson(dynamic json) {
     id = json['id'];
@@ -131,10 +138,9 @@ class Order {
       //   source?.add(dynamic.fromJson(v));
       // });
     }
-    if (json['destination'] != null){
+    if (json['destination'] != null) {
       if (json['destination'] is String) {
-      }
-      else {
+      } else {
         destination = GeoJson.fromJson(json['destination']);
       }
     }
@@ -156,6 +162,8 @@ class Order {
     deliveryCost = json['deliveryCost']?.toDouble();
     orderCost = json['orderCost']?.toDouble();
     orderType = json['orderType'];
+    invoiceAmount = json['invoiceAmount'];
+    invoiceImage = json['invoiceImage'];
   }
 
   Map<String, dynamic> toJson() {

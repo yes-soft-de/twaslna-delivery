@@ -6,6 +6,7 @@ import 'package:twaslna_delivery/module_orders/request/client_order_request.dart
 import 'package:twaslna_delivery/module_orders/response/client_order_response.dart';
 import 'package:twaslna_delivery/module_orders/response/my_orders_response.dart';
 import 'package:twaslna_delivery/module_orders/response/order_details_response.dart';
+import 'package:twaslna_delivery/module_orders/response/orders_logs_response.dart';
 
 @injectable
 class MyOrdersRepository {
@@ -19,6 +20,13 @@ class MyOrdersRepository {
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return MyOrdersResponse.fromJson(response);
+  }
+  Future<OrdersLogsResponse?> getOrdersLogs() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(Urls.GET_ORDER_LOGS,
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return OrdersLogsResponse.fromJson(response);
   }
 
   Future<OrderDetailsResponse?> getOrdersDetails(int id) async {

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
@@ -9,32 +11,59 @@ import 'package:twaslna_delivery/module_orders/ui/state/my_orders/my_orders_erro
 import 'package:twaslna_delivery/module_orders/ui/state/my_orders/my_orders_loaded_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/my_orders/my_orders_loading_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/my_orders/my_orders_state.dart';
+import 'package:twaslna_delivery/utils/helpers/fire_store_helper.dart';
 
 @injectable
 class MyOrdersStateManager {
   final OrdersService _myOrdersService;
   final AuthService _authService;
-  final PublishSubject<MyOrdersState> _stateSubject = PublishSubject<MyOrdersState>();
+  final FireStoreHelper _fireStoreHelper;
+  final PublishSubject<MyOrdersState> _stateSubject =
+      PublishSubject<MyOrdersState>();
 
   Stream<MyOrdersState> get stateStream => _stateSubject.stream;
 
-  MyOrdersStateManager(this._myOrdersService, this._authService);
+  MyOrdersStateManager(
+      this._myOrdersService, this._authService, this._fireStoreHelper);
+
+  StreamSubscription? newActionSubscription;
 
   void getOrders(MyOrdersScreenState screenState) {
     if (_authService.isLoggedIn) {
       _stateSubject.add(MyOrdersLoadingState(screenState));
       _myOrdersService.getOrders().then((value) {
         if (value.hasError) {
-          _stateSubject.add(MyOrdersErrorState(screenState, value.error??S.current.errorHappened));
+          _stateSubject.add(MyOrdersErrorState(
+              screenState, value.error ?? S.current.errorHappened));
         } else if (value.isEmpty) {
           _stateSubject
               .add(MyOrdersEmptyState(screenState, S.current.homeDataEmpty));
         } else {
           _stateSubject.add(MyOrdersLoadedState(screenState, value.data));
+          initListening(screenState);
         }
       });
     } else {
       screenState.goToLogin();
     }
+  }
+
+  void initListening(MyOrdersScreenState screenState) {
+    newActionSubscription =
+        _fireStoreHelper.onInsertChangeWatcher()?.listen((event) {
+      if (_authService.isLoggedIn) {
+        _myOrdersService.getOrders().then((value) {
+          if (value.hasError) {
+            _stateSubject.add(MyOrdersErrorState(
+                screenState, value.error ?? S.current.errorHappened));
+          } else if (value.isEmpty) {
+            _stateSubject
+                .add(MyOrdersEmptyState(screenState, S.current.homeDataEmpty));
+          } else {
+            _stateSubject.add(MyOrdersLoadedState(screenState, value.data));
+          }
+        });
+      }
+    });
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:twaslna_delivery/module_orders/model/deleted_order_status.dart';
@@ -10,50 +12,79 @@ import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/orde
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/orders_details_empty_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/orders_details_error_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_details_state/orders_details_loading_state.dart';
+import 'package:twaslna_delivery/utils/helpers/fire_store_helper.dart';
 import 'package:twaslna_delivery/utils/helpers/status_code_helper.dart';
 
 @injectable
 class OrderDetailsStateManager {
-  final OrdersService _OrdersService;
+  final OrdersService _ordersService;
   final PublishSubject<OrderDetailsState> _stateSubject = PublishSubject();
-  Stream<OrderDetailsState> get stateStream => _stateSubject.stream;
-  OrderDetailsStateManager(this._OrdersService);
 
-  void getOrderDetails(int id,OrderDetailsScreenState screenState){
+  Stream<OrderDetailsState> get stateStream => _stateSubject.stream;
+  final FireStoreHelper _fireStoreHelper;
+
+  OrderDetailsStateManager(this._ordersService, this._fireStoreHelper);
+
+  StreamSubscription? newActionSubscription;
+
+  void getOrderDetails(int id, OrderDetailsScreenState screenState) {
     _stateSubject.add(OrderDetailsLoadingState(screenState));
-    _OrdersService.getOrdersDetails(id).then((value){
-      if (value.hasError){
-        _stateSubject.add(OrderDetailsErrorState(screenState,value.error??S.current.errorHappened,id));
-      }
-      else if (value.isEmpty){
-        _stateSubject.add(OrderDetailsEmptyState(screenState,S.current.homeDataEmpty,id));
-      }
-      else {
-        _stateSubject.add(OrderDetailsLoadedState(screenState,value.data));
+    _ordersService.getOrdersDetails(id).then((value) {
+      if (value.hasError) {
+        _stateSubject.add(OrderDetailsErrorState(
+            screenState, value.error ?? S.current.errorHappened, id));
+      } else if (value.isEmpty) {
+        _stateSubject.add(
+            OrderDetailsEmptyState(screenState, S.current.homeDataEmpty, id));
+      } else {
+        _stateSubject.add(OrderDetailsLoadedState(screenState, value.data));
+        initListening(screenState,id);
       }
     });
   }
-  void deleteOrderDetails(int id,OrderDetailsScreenState screenState){
+
+  void deleteOrderDetails(int id, OrderDetailsScreenState screenState) {
     _stateSubject.add(OrderDetailsLoadingState(screenState));
-    _OrdersService.deleteClientOrder(id).then((MyOrderState value){
-      if (value.hasError){
-        screenState.deleteMessage(false,value.error??S.current.errorHappened);
-      }
-      else {
-       screenState.deleteMessage(true);
+     newActionSubscription?.cancel();
+    _ordersService.deleteClientOrder(id).then((MyOrderState value) {
+      if (value.hasError) {
+        screenState.deleteMessage(
+            false, value.error ?? S.current.errorHappened);
+      } else {
+        screenState.deleteMessage(true);
       }
     });
   }
-  void updateOrderDetails(ClientOrderRequest request,OrderDetailsScreenState screenState){
+
+  void updateOrderDetails(
+      ClientOrderRequest request, OrderDetailsScreenState screenState) {
     _stateSubject.add(OrderDetailsLoadingState(screenState));
-    _OrdersService.updateClientOrder(request).then((MyOrderState value){
-      if (value.hasError){
-        screenState.updateMessage(false,value.error??S.current.errorHappened);
-      }
-      else {
+     newActionSubscription?.cancel();
+    _ordersService.updateClientOrder(request).then((MyOrderState value) {
+      if (value.hasError) {
+        screenState.updateMessage(
+            false, value.error ?? S.current.errorHappened);
+      } else {
         getOrderDetails(request.orderNumber!, screenState);
         screenState.updateMessage(true);
       }
+    });
+  }
+
+  void initListening(OrderDetailsScreenState screenState, int id) {
+    newActionSubscription =
+        _fireStoreHelper.onInsertChangeWatcher()?.listen((event) {
+      _ordersService.getOrdersDetails(id).then((value) {
+        if (value.hasError) {
+          _stateSubject.add(OrderDetailsErrorState(
+              screenState, value.error ?? S.current.errorHappened, id));
+        } else if (value.isEmpty) {
+          _stateSubject.add(
+              OrderDetailsEmptyState(screenState, S.current.homeDataEmpty, id));
+        } else {
+          _stateSubject.add(OrderDetailsLoadedState(screenState, value.data));
+        }
+      });
     });
   }
 }

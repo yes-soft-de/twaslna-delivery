@@ -1,6 +1,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:twaslna_delivery/consts/order_status.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_chat/chat_routes.dart';
 import 'package:twaslna_delivery/module_main/main_routes.dart';
 import 'package:twaslna_delivery/module_orders/model/order_details_model.dart';
 import 'package:twaslna_delivery/module_orders/orders_routes.dart';
@@ -12,9 +13,7 @@ import 'package:twaslna_delivery/module_orders/ui/widget/order_details/bill.dart
 import 'package:twaslna_delivery/module_orders/ui/widget/order_details/order_chip.dart';
 import 'package:twaslna_delivery/module_orders/ui/widget/order_details/order_details_app_bar.dart';
 import 'package:twaslna_delivery/module_orders/ui/widget/order_details/order_details_title_bar.dart';
-import 'package:twaslna_delivery/module_our_services/ui/widget/custom_field_send_it.dart';
-import 'package:twaslna_delivery/module_our_services/ui/widget/label_text.dart';
-import 'package:twaslna_delivery/module_stores/presistance/cart_hive_box_helper.dart';
+import 'package:twaslna_delivery/utils/components/animation_alert.dart';
 import 'package:twaslna_delivery/utils/components/progresive_image.dart';
 import 'package:twaslna_delivery/utils/helpers/order_status_helper.dart';
 
@@ -36,11 +35,23 @@ class OrderDetailsLoadedState extends OrderDetailsState {
       },
       child: Stack(
         children: [
-          orderDetails.order.orderType != 3 ? CustomNetworkImage(
-           image: orderDetails.storeInfo.image,
+          orderDetails.order.orderType != 3 ? Container(
             height: height,
             width: width,
-          
+            child: Flex(
+              direction: Axis.vertical,
+              children: [
+                CustomNetworkImage(
+                  imageSource: orderDetails.storeInfo.image,
+                  height: height/2,
+                  width: width,
+                ),
+                SizedBox(
+                  width: width,
+                  height: height/2,
+                ),
+              ],
+            ),
           ) : Container(color: Theme.of(context).primaryColor,height:height,width:width,),
           CustomOrderDetailsAppBar(
             editTap:orderDetails.order.state == OrderStatus.WAITING || orderDetails.order.state == OrderStatus.GOT_CAPTAIN ? () {
@@ -95,12 +106,17 @@ class OrderDetailsLoadedState extends OrderDetailsState {
                                     fontSize: 25, fontWeight: FontWeight.bold),
                               ),
                             ),
+                            orderDetails.order.invoiceImage != null && orderDetails.order.invoiceAmount != null  ? CustomInvoiceAlert(
+                              image:orderDetails.order.invoiceImage.toString(),
+                              cost: orderDetails.order.invoiceAmount.toString(),
+                            ) : SizedBox(),
                             Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: Theme.of(context).primaryColor),
+                                    color: StatusHelper.getOrderStatusColor(
+                                        orderDetails.order.state)),
                                 child: ListTile(
                                   onTap: () {
                                     Navigator.of(context).pushNamed(
@@ -133,6 +149,41 @@ class OrderDetailsLoadedState extends OrderDetailsState {
                                 ),
                               ),
                             ),
+                            orderDetails.order.roomID.isNotEmpty ? Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Theme.of(context).primaryColor),
+                                child: ListTile(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                        ChatRoutes.chatRoute,
+                                        arguments:orderDetails.order.roomID);
+                                  },
+                                  title: Text(
+                                    S.of(context).chatWithCaptain,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                  subtitle: Text(
+                                    S.of(context).openChatRoom,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  leading: Icon(
+                                    Icons.sms,
+                                    color: Colors.white,
+                                    size: 35,
+                                  ),
+                                  trailing: Icon(
+                                    Icons.arrow_forward,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ) :SizedBox(),
                             getOrderTypeWidget(orderDetails.order.orderType),
                             SizedBox(
                               height: 35,

@@ -2,32 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_auth/authorization_routes.dart';
-import 'package:twaslna_delivery/module_orders/state_manager/my_orders_state_manager.dart';
-import 'package:twaslna_delivery/module_orders/ui/state/my_orders/my_orders_loading_state.dart';
-import 'package:twaslna_delivery/module_orders/ui/state/my_orders/my_orders_state.dart';
+import 'package:twaslna_delivery/module_orders/state_manager/order_logs_state_manager.dart';
+import 'package:twaslna_delivery/module_orders/ui/state/order_logs_state/order_logs_error_state.dart';
+import 'package:twaslna_delivery/module_orders/ui/state/order_logs_state/order_logs_loading_state.dart';
+import 'package:twaslna_delivery/module_orders/ui/state/order_logs_state/order_logs_state.dart';
+import 'package:twaslna_delivery/utils/components/custom_app_bar.dart';
 import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 
 @injectable
-class MyOrdersScreen extends StatefulWidget {
-  final MyOrdersStateManager _stateManager;
+class OrderLogsScreen extends StatefulWidget {
+  final OrderLogsStateManager _stateManager;
 
-  MyOrdersScreen(this._stateManager);
+  OrderLogsScreen(this._stateManager);
 
   @override
-  MyOrdersScreenState createState() => MyOrdersScreenState();
+  OrderLogsScreenState createState() => OrderLogsScreenState();
 }
 
-class MyOrdersScreenState extends State<MyOrdersScreen> {
-  late MyOrdersState currentState;
+class OrderLogsScreenState extends State<OrderLogsScreen> {
+  late OrderLogsState currentState;
 
   void refresh() {
     if (mounted) {
       setState(() {});
     }
   }
- Future <void> getOrders() async {
-   widget._stateManager.getOrders(this);
- }
   void goToLogin(){
     Navigator.of(context).pushNamed(AuthorizationRoutes.LOGIN_SCREEN,arguments:1);
     CustomFlushBarHelper.createError(title:S.current.warnning, message:S.current.pleaseLoginToContinue).show(context);
@@ -35,8 +34,8 @@ class MyOrdersScreenState extends State<MyOrdersScreen> {
   @override
   void initState() {
     super.initState();
-    currentState = MyOrdersLoadingState(this);
-    widget._stateManager.getOrders(this);
+    currentState = OrderLogsLoadingState(this);
+    widget._stateManager.getOrdersLogs(this);
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
@@ -44,7 +43,9 @@ class MyOrdersScreenState extends State<MyOrdersScreen> {
       }
     });
   }
-
+  Future<void> getOrders() async {
+     widget._stateManager.getOrdersLogs(this);
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -55,14 +56,9 @@ class MyOrdersScreenState extends State<MyOrdersScreen> {
         }
       },
       child: Scaffold(
+        appBar: CustomTwaslnaAppBar.appBar(context, title:S.current.orderLog,buttonBackground:currentState is OrderLogsErrorState ? Colors.red : null),
         body: currentState.getUI(context),
       ),
     );
-  }
-
-  @override
-  void dispose(){
-    widget._stateManager.newActionSubscription?.cancel();
-    super.dispose();
   }
 }

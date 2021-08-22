@@ -121,4 +121,9 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
       ),
     );
   }
+  @override
+  void dispose(){
+    widget._stateManager.newActionSubscription?.cancel();
+    super.dispose();
+  }
 }
