@@ -28,29 +28,12 @@ class ChatRepository {
         .add(chatMessage.toJson());
   }
 
-  Future<void> sendNotification(
-      String chatRoomID, bool support, bool feedBack) async {
-    var token = await _authService.getToken();
-    var result;
-    if (support) {
-      result = await _apiClient.post(
-      Urls.NOTIFICATIONTOADMIN_API,
-      {'roomID': chatRoomID},
-      headers: {'Authorization': 'Bearer ' + token!},
-    );
-    } else if (feedBack) {
-      result = await _apiClient.post(
-      Urls.NOTIFICATIONTOADMIN_API,
-      {'roomID': chatRoomID},
-      headers: {'Authorization': 'Bearer ' + token!},
-    );
-    } else {
-      result = await _apiClient.post(
-      Urls.NOTIFICATIONNEWCHAT_API,
-      {'roomID': chatRoomID},
-      headers: {'Authorization': 'Bearer ' + token!},
-    );
-    }
-     
+  Future<void> sendNotification(String chatRoomID) async {
+    // var token = await _authService.getToken();
+    // // await _apiClient.post(
+    // //   Urls.NOTIFICATIONNEWCHAT_API,
+    // //   {'roomID': chatRoomID},
+    // //   headers: {'Authorization': 'Bearer ' + token!},
+    // // );
   }
 }

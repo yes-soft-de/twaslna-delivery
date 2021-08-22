@@ -15,10 +15,10 @@ class ChatModule extends YesModule {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 
-
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      ChatRoutes.chatRoute: (context) => _authService.isLoggedIn ? _chatPage : Scaffold()
+      ChatRoutes.chatRoute: (context) =>
+          _authService.isLoggedIn ? _chatPage : Scaffold()
     };
   }
 }
