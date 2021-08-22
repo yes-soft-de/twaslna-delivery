@@ -25,8 +25,10 @@ class AuthService {
   bool get isLoggedIn => _prefsHelper.isSignedIn();
 
   Stream<AuthStatus> get authListener => _authSubject.stream;
+  String get username => _prefsHelper.getUsername() ?? '';
 
-  Future<void> loginApi(String username, String password,[bool? registered]) async {
+
+  Future<void> loginApi(String username, String password) async {
     LoginResponse? loginResult = await _authManager.login(LoginRequest(
       username: username,
       password: password,

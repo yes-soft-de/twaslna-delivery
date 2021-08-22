@@ -40,7 +40,7 @@ class PrivateOrderLoadedState extends PrivateOrderState {
     return Stack(
       children: [
         CustomNetworkImage(
-          image: backgroundImage,
+          imageSource: backgroundImage,
           height: height,
           width: width,
         ),

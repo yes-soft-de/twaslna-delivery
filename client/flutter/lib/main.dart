@@ -114,8 +114,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    widget._fireNotificationService.init();
-    widget._localNotificationService.init();
+    // widget._fireNotificationService.init();
+    // widget._localNotificationService.init();
     widget._localizationService.localizationStream.listen((event) {
       timeago.setDefaultLocale(event);
       setState(() {});

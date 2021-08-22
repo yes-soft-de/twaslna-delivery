@@ -1840,11 +1840,21 @@ class S {
     );
   }
 
-  /// `minute`
+  /// `minutes`
   String get minutes {
     return Intl.message(
-      'minute',
+      'minutes',
       name: 'minutes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `minute`
+  String get minute {
+    return Intl.message(
+      'minute',
+      name: 'minute',
       desc: '',
       args: [],
     );
@@ -2111,9 +2121,19 @@ class S {
   }
 
   /// `day`
-  String get days {
+  String get day {
     return Intl.message(
       'day',
+      name: 'day',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `days`
+  String get days {
+    return Intl.message(
+      'days',
       name: 'days',
       desc: '',
       args: [],
@@ -2121,9 +2141,19 @@ class S {
   }
 
   /// `second`
-  String get seconds {
+  String get second {
     return Intl.message(
       'second',
+      name: 'second',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `seconds`
+  String get seconds {
+    return Intl.message(
+      'seconds',
       name: 'seconds',
       desc: '',
       args: [],
@@ -2131,9 +2161,19 @@ class S {
   }
 
   /// `hour`
-  String get hours {
+  String get hour {
     return Intl.message(
       'hour',
+      name: 'hour',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `hours`
+  String get hours {
+    return Intl.message(
+      'hours',
       name: 'hours',
       desc: '',
       args: [],
@@ -2380,10 +2420,10 @@ class S {
     );
   }
 
-  /// `order id`
+  /// `order Number`
   String get orderNumber {
     return Intl.message(
-      'order id',
+      'order Number',
       name: 'orderNumber',
       desc: '',
       args: [],
@@ -3335,6 +3375,96 @@ class S {
     return Intl.message(
       'error download image',
       name: 'errorDownloadingImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Messages`
+  String get lastSeenMessage {
+    return Intl.message(
+      'New Messages',
+      name: 'lastSeenMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Be the first one to send message`
+  String get firstSendMessage {
+    return Intl.message(
+      'Be the first one to send message',
+      name: 'firstSendMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chat With Captain`
+  String get chatWithCaptain {
+    return Intl.message(
+      'Chat With Captain',
+      name: 'chatWithCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancelled`
+  String get cancelled {
+    return Intl.message(
+      'Cancelled',
+      name: 'cancelled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The order has been cancelled by the client`
+  String get cancelledHint {
+    return Intl.message(
+      'The order has been cancelled by the client',
+      name: 'cancelledHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Completion Time`
+  String get completeTime {
+    return Intl.message(
+      'Completion Time',
+      name: 'completeTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The total cost without delivery cost`
+  String get totalBillCostHint {
+    return Intl.message(
+      'The total cost without delivery cost',
+      name: 'totalBillCostHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Image`
+  String get invoiceImage {
+    return Intl.message(
+      'Invoice Image',
+      name: 'invoiceImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Cost`
+  String get invoiceCost {
+    return Intl.message(
+      'Invoice Cost',
+      name: 'invoiceCost',
       desc: '',
       args: [],
     );

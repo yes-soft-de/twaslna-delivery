@@ -59,6 +59,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "branch01": MessageLookupByLibrary.simpleMessage("Branch 01"),
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "cancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
+        "cancelledHint": MessageLookupByLibrary.simpleMessage(
+            "The order has been cancelled by the client"),
         "captain": MessageLookupByLibrary.simpleMessage("Captain"),
         "captainAcceptOrderDescription":
             MessageLookupByLibrary.simpleMessage("captain headed to store"),
@@ -90,6 +93,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Change Language"),
         "chatRoom": MessageLookupByLibrary.simpleMessage("Chat Room"),
+        "chatWithCaptain":
+            MessageLookupByLibrary.simpleMessage("Chat With Captain"),
         "chatWithStoreOwner":
             MessageLookupByLibrary.simpleMessage("Chat with Store Owner"),
         "checkOrders": MessageLookupByLibrary.simpleMessage("Check Orders"),
@@ -107,6 +112,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseYourSize":
             MessageLookupByLibrary.simpleMessage("Choose Your Size"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
+        "completeTime": MessageLookupByLibrary.simpleMessage("Completion Time"),
         "completedOrders":
             MessageLookupByLibrary.simpleMessage("Completed Orders"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
@@ -126,7 +132,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dataDecodeError":
             MessageLookupByLibrary.simpleMessage("Error with Decoding Data"),
         "date": MessageLookupByLibrary.simpleMessage("Date"),
-        "days": MessageLookupByLibrary.simpleMessage("day"),
+        "day": MessageLookupByLibrary.simpleMessage("day"),
+        "days": MessageLookupByLibrary.simpleMessage("days"),
         "defaultBranch": MessageLookupByLibrary.simpleMessage("Default Branch"),
         "deleteSuccess": MessageLookupByLibrary.simpleMessage(
             "the order has been deleted successfully"),
@@ -174,6 +181,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your subscription is out of date please renew your subscription"),
         "finishedOrdering":
             MessageLookupByLibrary.simpleMessage("Finish Order"),
+        "firstSendMessage": MessageLookupByLibrary.simpleMessage(
+            "Be the first one to send message"),
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("From WhatsApp"),
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),
@@ -184,7 +193,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "homeDataEmpty": MessageLookupByLibrary.simpleMessage(
             "There is no data to show you yet"),
-        "hours": MessageLookupByLibrary.simpleMessage("hour"),
+        "hour": MessageLookupByLibrary.simpleMessage("hour"),
+        "hours": MessageLookupByLibrary.simpleMessage("hours"),
         "howWeWork": MessageLookupByLibrary.simpleMessage("How we work"),
         "iAgreeToTheTermsOfServicePrivacyPolicy":
             MessageLookupByLibrary.simpleMessage(
@@ -210,9 +220,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Internal server error"),
         "invalidCredentials":
             MessageLookupByLibrary.simpleMessage("Wrong username or password"),
+        "invoiceCost": MessageLookupByLibrary.simpleMessage("Invoice Cost"),
+        "invoiceImage": MessageLookupByLibrary.simpleMessage("Invoice Image"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 Employees"),
+        "lastSeenMessage": MessageLookupByLibrary.simpleMessage("New Messages"),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("Latest Updates"),
         "lebanon": MessageLookupByLibrary.simpleMessage("Lebanon"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading"),
@@ -225,7 +238,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "me": MessageLookupByLibrary.simpleMessage("ME"),
         "mediumMoreThan20EmployeesLessThan100":
             MessageLookupByLibrary.simpleMessage("21 - 100 Employees"),
-        "minutes": MessageLookupByLibrary.simpleMessage("minute"),
+        "minute": MessageLookupByLibrary.simpleMessage("minute"),
+        "minutes": MessageLookupByLibrary.simpleMessage("minutes"),
         "mohammad": MessageLookupByLibrary.simpleMessage("Mohammad"),
         "mostSoldProduct":
             MessageLookupByLibrary.simpleMessage("Most Sold Product"),
@@ -286,7 +300,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order is in undefined State"),
         "orderList": MessageLookupByLibrary.simpleMessage("Order List"),
         "orderLog": MessageLookupByLibrary.simpleMessage("Orders Log"),
-        "orderNumber": MessageLookupByLibrary.simpleMessage("order id"),
+        "orderNumber": MessageLookupByLibrary.simpleMessage("order Number"),
         "orderNumberNotFound":
             MessageLookupByLibrary.simpleMessage("Order number not found!!"),
         "orderPrice": MessageLookupByLibrary.simpleMessage("order price"),
@@ -407,7 +421,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "search for order by order number"),
         "searchingForCaptain":
             MessageLookupByLibrary.simpleMessage("Searching for Captain"),
-        "seconds": MessageLookupByLibrary.simpleMessage("second"),
+        "second": MessageLookupByLibrary.simpleMessage("second"),
+        "seconds": MessageLookupByLibrary.simpleMessage("seconds"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("Send me code"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
@@ -456,6 +471,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "To find out more, please leave your phone.\nand we will contact you personally"),
         "took": MessageLookupByLibrary.simpleMessage("Took"),
+        "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
+            "The total cost without delivery cost"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "Your request not accepted from administration you can contact us to get info"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),

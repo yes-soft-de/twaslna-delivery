@@ -59,6 +59,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "branch01": MessageLookupByLibrary.simpleMessage("الفرع 01"),
         "businessName": MessageLookupByLibrary.simpleMessage("الاسم التجاري"),
         "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
+        "cancelled": MessageLookupByLibrary.simpleMessage("ملغى"),
+        "cancelledHint": MessageLookupByLibrary.simpleMessage(
+            "الطلب تم إلغاءه من جهة العميل"),
         "captain": MessageLookupByLibrary.simpleMessage("كابتن"),
         "captainAcceptOrderDescription":
             MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إلى المتجر"),
@@ -89,6 +92,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "category": MessageLookupByLibrary.simpleMessage("تصنيف"),
         "changeLanguage": MessageLookupByLibrary.simpleMessage("غير لغة"),
         "chatRoom": MessageLookupByLibrary.simpleMessage("غرفة المحادثة"),
+        "chatWithCaptain":
+            MessageLookupByLibrary.simpleMessage("التحدث مع الكابتن"),
         "chatWithStoreOwner":
             MessageLookupByLibrary.simpleMessage("التحدث مع صاحب المحل"),
         "checkOrders": MessageLookupByLibrary.simpleMessage("تاكد من الطلبات"),
@@ -106,6 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("عدد الموظفين العاملين"),
         "community":
             MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),
+        "completeTime": MessageLookupByLibrary.simpleMessage("مدة الإنجاز"),
         "completedOrders":
             MessageLookupByLibrary.simpleMessage(" طلبات منتهية "),
         "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
@@ -124,7 +130,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dataDecodeError": MessageLookupByLibrary.simpleMessage(
             "هناك مشكلة في تفسير البيانات"),
         "date": MessageLookupByLibrary.simpleMessage("التاريخ"),
-        "days": MessageLookupByLibrary.simpleMessage("يوم"),
+        "day": MessageLookupByLibrary.simpleMessage("يوم"),
+        "days": MessageLookupByLibrary.simpleMessage("أيام"),
         "defaultBranch":
             MessageLookupByLibrary.simpleMessage("الفرع الافتراضي"),
         "deleteSuccess":
@@ -169,6 +176,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "finishedDate": MessageLookupByLibrary.simpleMessage(
             "لقد انتهت صلاحية اشتراكك الرجاء تجديد الاشتراك من الإعدادات"),
         "finishedOrdering": MessageLookupByLibrary.simpleMessage("إنهاء الطلب"),
+        "firstSendMessage":
+            MessageLookupByLibrary.simpleMessage("كن أول من يرسل رسالة"),
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("من واتساب"),
         "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
         "getDirection":
@@ -180,7 +189,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "homeDataEmpty":
             MessageLookupByLibrary.simpleMessage("لايوجد بيانات حاليا لعرضها"),
-        "hours": MessageLookupByLibrary.simpleMessage("ساعة"),
+        "hour": MessageLookupByLibrary.simpleMessage("ساعة"),
+        "hours": MessageLookupByLibrary.simpleMessage("ساعات"),
         "howWeWork": MessageLookupByLibrary.simpleMessage("كيف يعمل التطبيق"),
         "iAgreeToTheTermsOfServicePrivacyPolicy":
             MessageLookupByLibrary.simpleMessage(
@@ -203,9 +213,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("هناك مشكلة ما في الخادم"),
         "invalidCredentials": MessageLookupByLibrary.simpleMessage(
             "هناك خطأ في كلمة السر أو اسم المستخدم"),
+        "invoiceCost": MessageLookupByLibrary.simpleMessage("تكلفة الفاتورة"),
+        "invoiceImage": MessageLookupByLibrary.simpleMessage("صورة الفاتورة"),
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 موظف"),
+        "lastSeenMessage": MessageLookupByLibrary.simpleMessage("رسائل جديدة"),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("اخر التحديثات"),
         "lebanon": MessageLookupByLibrary.simpleMessage("لبنان"),
         "loading": MessageLookupByLibrary.simpleMessage("جار التحميل"),
@@ -218,7 +231,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "me": MessageLookupByLibrary.simpleMessage("مهنتي"),
         "mediumMoreThan20EmployeesLessThan100":
             MessageLookupByLibrary.simpleMessage("21 - 100 موظف"),
-        "minutes": MessageLookupByLibrary.simpleMessage("دقيقة"),
+        "minute": MessageLookupByLibrary.simpleMessage("دقيقة"),
+        "minutes": MessageLookupByLibrary.simpleMessage("دقائق"),
         "mohammad": MessageLookupByLibrary.simpleMessage("محمد"),
         "mostSoldProduct":
             MessageLookupByLibrary.simpleMessage("المنتجات الأكثر مبيعا"),
@@ -399,7 +413,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "ابحث عن طلب بإدخال رقم الطلب"),
         "searchingForCaptain":
             MessageLookupByLibrary.simpleMessage("جار البحث عن كابتن"),
-        "seconds": MessageLookupByLibrary.simpleMessage("ثانية"),
+        "second": MessageLookupByLibrary.simpleMessage("ثانية"),
+        "seconds": MessageLookupByLibrary.simpleMessage("ثواني"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("ارسل رمز التأكيد"),
         "settings": MessageLookupByLibrary.simpleMessage("الاعدادات"),
         "share": MessageLookupByLibrary.simpleMessage("المشاركة"),
@@ -451,6 +466,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "للمزيد من المعلومات خذ موعدا بترك رقم هاتفك، وسيتم التواصل معك"),
         "took": MessageLookupByLibrary.simpleMessage("استغرق"),
+        "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
+            "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "لم يتم الموافقة على اشتراكك من قبل الإدارة يمكنك التواصل معنا للحصول على المزيد من التفاصيل"),
         "unknown": MessageLookupByLibrary.simpleMessage("غير معروف"),
