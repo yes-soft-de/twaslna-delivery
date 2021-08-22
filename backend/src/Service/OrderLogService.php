@@ -124,16 +124,18 @@ class OrderLogService
          $response = [];
       
         $items = $this->orderLogManager->getOrderNumberUserID($userID);
-   
+ 
         foreach ($items as $item) {
             $firstDate = $this->getFirstDate($item['orderNumber']); 
             $lastDate = $this->getLastDate($item['orderNumber']);
+           
             $item['currentStage'] =  $lastDate;
             if($firstDate[0]['createdAt'] && $lastDate[0]['createdAt']) {
                 $item['completionTime'] = $this->dateFactoryService->subtractTwoDates($firstDate[0]['createdAt'], $lastDate[0]['createdAt']);
                 }
-            $response[] = $this->autoMapping->map('array', OrderLogResponse::class, $item);
             }
+        $response[] = $this->autoMapping->map('array', OrderLogResponse::class, $item);
+            // }
             return $response;
     }
 
