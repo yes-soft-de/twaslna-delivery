@@ -17,7 +17,7 @@ class LocalNotificationService {
 
   Future<void> init() async {
     AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('logo');
+        AndroidInitializationSettings('icon');
 
     final IOSInitializationSettings initializationSettingsIOS =
         IOSInitializationSettings(requestSoundPermission: true);

@@ -22,17 +22,25 @@ class DeepLinksService {
 
   static Future<LatLng?> defaultLocation() async {
     Location location = new Location();
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
 
-    bool _serviceEnabled = await location.serviceEnabled();
+    _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return null;
+      }
     }
 
-    var _permissionGranted = await location.requestPermission();
+    _permissionGranted = await location.hasPermission();
     if (_permissionGranted == PermissionStatus.denied) {
-      return null;
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return null;
+      }
     }
-
     var myLocation = await Location.instance.getLocation();
     LatLng myPos = LatLng(myLocation.latitude ?? 0, myLocation.longitude ?? 0);
     return myPos;

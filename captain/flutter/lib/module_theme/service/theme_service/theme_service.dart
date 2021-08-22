@@ -50,7 +50,7 @@ class AppThemeDataService {
         focusColor: PrimaryColor,
         primarySwatch: Colors.orange,
         cardColor: Color.fromRGBO(245, 245, 245, 1),
-        backgroundColor: Color.fromRGBO(235, 235, 235, 1),
+        backgroundColor: Color.fromRGBO(236, 239, 241, 1),
         fontFamily: GoogleFonts.almarai().fontFamily,
         fixTextFieldOutlineLabel: true,
         timePickerTheme: TimePickerThemeData(
