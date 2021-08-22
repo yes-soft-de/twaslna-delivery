@@ -15,26 +15,32 @@ class StatusHelper {
       return OrderStatus.DELIVERING;
     } else if (status == 'delivered') {
       return OrderStatus.FINISHED;
+    } else if (status == 'cancelled') {
+      return OrderStatus.CANCELLED;
     }
     return OrderStatus.WAITING;
   }
-  static String getStatusString(OrderStatus status) {
+
+  static String getStatusString(OrderStatus? status) {
     switch (status) {
       case OrderStatus.WAITING:
-        return 'waiting';
+        return 'pending';
       case OrderStatus.IN_STORE:
         return 'in store';
       case OrderStatus.DELIVERING:
-        return 'delivering';
+        return 'ongoing';
       case OrderStatus.GOT_CAPTAIN:
-        return 'got captain';
+        return 'on way to pick order';
       case OrderStatus.FINISHED:
-        return 'finish';
+        return 'delivered';
+      case OrderStatus.CANCELLED:
+        return 'cancelled';
       default:
-        return 'waiting';
+        return 'pending';
     }
   }
-  static String getOrderStatusMessages(OrderStatus orderStatus) {
+
+  static String getOrderStatusMessages(OrderStatus? orderStatus) {
     switch (orderStatus) {
       case OrderStatus.WAITING:
         return S.current.waiting;
@@ -46,10 +52,13 @@ class StatusHelper {
         return S.current.captainAcceptedOrder;
       case OrderStatus.FINISHED:
         return S.current.iFinishedDelivering;
+      case OrderStatus.CANCELLED:
+        return S.current.cancelled;
       default:
         return S.current.waiting;
     }
   }
+
   static String getOrderStatusDescriptionMessages(OrderStatus orderStatus) {
     switch (orderStatus) {
       case OrderStatus.WAITING:
@@ -62,26 +71,46 @@ class StatusHelper {
         return S.current.captainAcceptOrderDescription;
       case OrderStatus.FINISHED:
         return S.current.orderDeliveredDescription;
+      case OrderStatus.CANCELLED:
+        return S.current.cancelledHint;
       default:
         return S.current.waitingDescription;
     }
   }
+
   static IconData getOrderStatusIcon(OrderStatus status) {
     switch (status) {
       case OrderStatus.WAITING:
-        return Icons.timer;
+        return Icons.timer_rounded;
       case OrderStatus.IN_STORE:
-        return Icons.store;
+        return Icons.store_rounded;
       case OrderStatus.DELIVERING:
         return Icons.pedal_bike_rounded;
       case OrderStatus.GOT_CAPTAIN:
         return Icons.account_circle_rounded;
       case OrderStatus.FINISHED:
-        return Icons.check_circle;
+        return Icons.check_circle_rounded;
       default:
-        return Icons.timer;
+        return Icons.cancel_rounded;
     }
   }
+  static Color getOrderStatusColor(OrderStatus status) {
+    switch (status) {
+      case OrderStatus.WAITING:
+        return Colors.amber;
+      case OrderStatus.IN_STORE:
+        return Colors.blue;
+      case OrderStatus.DELIVERING:
+        return Colors.orange;
+      case OrderStatus.GOT_CAPTAIN:
+        return Colors.yellow;
+      case OrderStatus.FINISHED:
+        return Colors.green;
+      default:
+        return Colors.red;
+    }
+  }
+
   static int getOrderStatusIndex(OrderStatus status) {
     switch (status) {
       case OrderStatus.WAITING:
@@ -95,7 +124,7 @@ class StatusHelper {
       case OrderStatus.FINISHED:
         return 4;
       default:
-        return 0;
+        return 5;
     }
   }
 }

@@ -36,11 +36,7 @@ class MyOrdersScreenState extends State<MyOrdersScreen> {
   void initState() {
     super.initState();
     currentState = MyOrdersLoadingState(this);
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      Future.delayed(Duration(seconds: 2)).whenComplete((){
-        widget._stateManager.getOrders(this);
-      });
-    });
+    widget._stateManager.getOrders(this);
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
@@ -62,5 +58,11 @@ class MyOrdersScreenState extends State<MyOrdersScreen> {
         body: currentState.getUI(context),
       ),
     );
+  }
+
+  @override
+  void dispose(){
+    widget._stateManager.newActionSubscription?.cancel();
+    super.dispose();
   }
 }

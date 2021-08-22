@@ -24,7 +24,7 @@ class HomeCard extends StatelessWidget {
                  CustomNetworkImage(
                   width: 200,
                   height: 200,
-                  image: image,
+                  imageSource: image,
                   asset: image.contains('assets/'),
                 ),
                 Align(

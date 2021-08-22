@@ -68,7 +68,7 @@ class _OrderChipState extends State<OrderChip> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: CustomNetworkImage(
-                   image:products.productsImage??widget.image,
+                   imageSource:products.productsImage??widget.image,
                     width:double.maxFinite,
                     height:double.maxFinite ,
                   ),

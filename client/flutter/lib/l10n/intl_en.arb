@@ -179,7 +179,8 @@
   "noImage": "No Image",
   "howWeWork": "How we work",
   "took": "Took",
-  "minutes": "minute",
+  "minutes": "minutes",
+  "minute": "minute",
   "iAgreeToTheTermsOsService": "I Agree to the Terms os service.",
   "iAgreeToTheTermsOfServicePrivacyPolicy": "I Agree To The Terms Of Service & privacy policy",
   "businessName":"Business Name",
@@ -206,9 +207,12 @@
   "notSubscription":"You dont have a subscription yet",
   "subscribe":"Subscribe",
   "captainNotActive":"Your account not activated yet please wait",
-  "days":"day",
-  "seconds":"second",
-  "hours":"hour",
+  "day":"day",
+  "days":"days",
+  "second":"second",
+  "seconds":"seconds",
+  "hour":"hour",
+  "hours":"hours",
   "failureRenew":"Your renew has been failed please try again",
   "store":"Store",
   "updateBranches":"Update Branches",
@@ -234,7 +238,7 @@
   "searchFor": "Search for store , product",
   "views": "views",
   "sortByRate": "highest rate",
-  "orderNumber": "order id",
+  "orderNumber": "order Number",
   "orderDate": "order date",
   "orderStatus": "order status",
   "cost": "cost",
@@ -259,7 +263,6 @@
   "gender": "Gender",
   "male": "Male",
   "female": "Female",
-  "personalData": "Personal Data",
   "updateYourData": "Update Data",
   "community": "Community",
   "waiting": "waiting",
@@ -330,27 +333,14 @@
   "uploadProfileSuccess": "Upload profile was a success",
   "uploadImageSuccess": "Upload image was a success",
   "address": "Address",
-  "errorDownloadingImage": "error download image"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  "errorDownloadingImage": "error download image",
+  "lastSeenMessage": "New Messages",
+  "firstSendMessage": "Be the first one to send message",
+  "chatWithCaptain": "Chat With Captain",
+  "cancelled": "Cancelled",
+  "cancelledHint": "The order has been cancelled by the client",
+  "completeTime": "Completion Time",
+  "totalBillCostHint": "The total cost without delivery cost",
+  "invoiceImage": "Invoice Image",
+  "invoiceCost": "Invoice Cost"
 }

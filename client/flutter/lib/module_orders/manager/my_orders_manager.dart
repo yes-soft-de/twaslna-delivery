@@ -4,6 +4,7 @@ import 'package:twaslna_delivery/module_orders/request/client_order_request.dart
 import 'package:twaslna_delivery/module_orders/response/client_order_response.dart';
 import 'package:twaslna_delivery/module_orders/response/my_orders_response.dart';
 import 'package:twaslna_delivery/module_orders/response/order_details_response.dart';
+import 'package:twaslna_delivery/module_orders/response/orders_logs_response.dart';
 
 @injectable
 class MyOrdersManager {
@@ -12,6 +13,8 @@ class MyOrdersManager {
   MyOrdersManager(this._myOrdersRepository);
 
   Future <MyOrdersResponse?> getOrders() => _myOrdersRepository.getOrders();
+  Future <OrdersLogsResponse?> getOrdersLogs() => _myOrdersRepository.getOrdersLogs();
+
   Future <OrderDetailsResponse?> getOrderDetails(int id) => _myOrdersRepository.getOrdersDetails(id);
   Future <ClientOrderResponse?> postClintOrder(ClientOrderRequest request) => _myOrdersRepository.postClientOrder(request);
   Future <ClientOrderResponse?> deleteClientOrder(int id) => _myOrdersRepository.deleteClientOrder(id);

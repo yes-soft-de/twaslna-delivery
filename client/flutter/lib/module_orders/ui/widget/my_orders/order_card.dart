@@ -10,7 +10,8 @@ class OrderCard extends StatelessWidget {
   final OrderStatus orderStatus;
   final String orderDate;
   final String orderCost;
-  OrderCard({required this.orderId,required this.orderStatus,required this.orderDate,required this.orderCost});
+  final String? completeTime;
+  OrderCard({required this.orderId,required this.orderStatus,required this.orderDate,this.orderCost = '0',this.completeTime});
 
   @override
   Widget build(BuildContext context) {
@@ -103,10 +104,11 @@ class OrderCard extends StatelessWidget {
                   children: [
                     Flex(
                       direction: Axis.vertical,
+                      crossAxisAlignment:completeTime != null ? CrossAxisAlignment.start : CrossAxisAlignment.center,
                       children: [
-                        Text(S.of(context).cost, style: TextStyle(fontSize: 14)),
+                        Text(completeTime != null ? S.of(context).completeTime : S.of(context).cost, style: TextStyle(fontSize: 14)),
                         Text(
-                          '${orderCost} ${S.of(context).sar}',
+                            completeTime != null ? '${completeTime.toString()}' : '${orderCost} ${S.of(context).sar}',
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,

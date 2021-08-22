@@ -6,26 +6,18 @@ import 'package:twaslna_delivery/module_auth/ui/screen/register_screen/register_
 import 'package:twaslna_delivery/module_auth/ui/states/register_states/register_state.dart';
 import 'package:twaslna_delivery/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:flutter/material.dart';
+import 'package:twaslna_delivery/module_auth/ui/widget/rigester/custom_register_app_bar.dart';
 import 'package:twaslna_delivery/utils/components/auth_buttons.dart';
 import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 import 'package:twaslna_delivery/utils/images/images.dart';
 
 class RegisterStateInit extends RegisterState {
-  RegisterStateInit(RegisterScreenState screen, {String? error, bool registered = false})
+  RegisterStateInit(RegisterScreenState screen, {String? error})
       : super(screen) {
     if (error != null) {
-      if (registered) {
-        screen.userRegistered().whenComplete((){
-          CustomFlushBarHelper.createError(
-              title: S.current.warnning, message: error)
-            ..show(screen.context);
-        });
-      }
-      else {
-        CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: error)
-          ..show(screen.context);
-      }
+      CustomFlushBarHelper.createError(
+          title: S.current.warnning, message: error)
+        ..show(screen.context);
     }
   }
   TextEditingController nameController = TextEditingController();
