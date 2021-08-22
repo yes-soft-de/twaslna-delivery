@@ -3,10 +3,10 @@ import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:twaslna_captain/module_chat/model/chat/chat_model.dart';
 
-import '../../service/chat/char_service.dart';
+import '../service/chat/char_service.dart';
 
 @injectable
-class ChatPageBloc {
+class ChatStateManager {
   static const STATUS_CODE_INIT = 1588;
   static const STATUS_CODE_EMPTY_LIST = 1589;
   static const STATUS_CODE_GOT_DATA = 1590;
@@ -16,7 +16,7 @@ class ChatPageBloc {
 
   final ChatService _chatService;
 
-  ChatPageBloc(
+  ChatStateManager(
     this._chatService,
   );
 
@@ -30,14 +30,19 @@ class ChatPageBloc {
   void getMessages(String chatRoomID) {
     if (!listening) listening = true;
     _chatService.chatMessagesStream.listen((event) {
-      _chatBlocSubject.add(Pair(STATUS_CODE_GOT_DATA, event));
+      if (event.isEmpty) {
+        _chatBlocSubject.add(Pair(STATUS_CODE_EMPTY_LIST, event));
+      }
+      else {
+        _chatBlocSubject.add(Pair(STATUS_CODE_GOT_DATA, event));
+      }
     });
     _chatService.requestMessages(chatRoomID);
   }
 
   void sendMessage(
-      String chatRoomID, String chat, bool support, bool feedBack) {
-    _chatService.sendMessage(chatRoomID, chat, support, feedBack);
+      String chatRoomID, String chat , String username) {
+    _chatService.sendMessage(chatRoomID, chat,username);
   }
 
   void dispose() {
