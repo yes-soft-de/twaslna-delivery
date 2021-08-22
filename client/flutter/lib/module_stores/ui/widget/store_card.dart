@@ -26,7 +26,7 @@ class StoreCard extends StatelessWidget {
             children: [
               ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: CustomNetworkImage(image:image,height: double.maxFinite,width:double.maxFinite,)),
+                  child: CustomNetworkImage(imageSource:image,height: double.maxFinite,width:double.maxFinite,)),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),

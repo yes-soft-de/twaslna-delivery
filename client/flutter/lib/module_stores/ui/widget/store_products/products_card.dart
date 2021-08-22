@@ -61,7 +61,7 @@ class _ProductsCardState extends State<ProductsCard> {
                   child: Container(
                     height: 100,
                     child: CustomNetworkImage(
-                      image:cartModel.image??widget.image,
+                      imageSource:cartModel.image??widget.image,
                       width: double.maxFinite,
                       height: double.maxFinite,
                     ),
