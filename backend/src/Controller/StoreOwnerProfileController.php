@@ -55,7 +55,14 @@ class StoreOwnerProfileController extends BaseController
         }
 
         $response = $this->storeOwnerProfileService->storeOwnerRegister($request);
-       
+        $isArray = is_array($response);
+        if($isArray){
+            $found = isset($response['found']);
+        
+            if( $found == "yes"){
+                return $this->response($response, self::ERROR); 
+          }
+        }
         return $this->response($response, self::CREATE);
     }
 
@@ -186,5 +193,17 @@ class StoreOwnerProfileController extends BaseController
         $response = $this->storeOwnerProfileService->createStoreOwnerProfileByAdmin($request);
 
         return $this->response($response, self::CREATE);
+    }
+
+    /**
+     * @Route("/storeOwnerProfileByStoreID", name="storeOwnerProfileByStoreID",methods={"GET"})
+     * @IsGranted("ROLE_CLIENT")
+     * @return JsonResponse
+     */
+    public function storeOwnerProfileByStoreID()
+    {
+        $response = $this->storeOwnerProfileService->storeOwnerProfileByStoreID($this->getUserId());
+
+        return $this->response($response, self::FETCH);
     }
 }

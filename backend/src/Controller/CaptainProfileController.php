@@ -56,7 +56,14 @@ class CaptainProfileController extends BaseController
         }
 
         $response = $this->captainProfileService->captainRegister($request);
-       
+        $isArray = is_array($response);
+        if($isArray){
+            $found = isset($response['found']);
+        
+            if( $found == "yes"){
+                return $this->response($response, self::ERROR); 
+          }
+        }
         return $this->response($response, self::CREATE);
     }
 

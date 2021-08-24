@@ -36,7 +36,7 @@ class OrderLogEntityRepository extends ServiceEntityRepository
     public function getOrderLogsByOrderNumber($orderNumber)
     {
         return $this->createQueryBuilder('OrderLogEntity')
-            ->select('OrderLogEntity.id, OrderLogEntity.orderNumber, OrderLogEntity.state, OrderLogEntity.date')
+            ->select('OrderLogEntity.id, OrderLogEntity.orderNumber, OrderLogEntity.state, OrderLogEntity.createdAt')
             
             ->andWhere("OrderLogEntity.orderNumber =:orderNumber")
             ->setParameter('orderNumber', $orderNumber)
@@ -96,6 +96,7 @@ class OrderLogEntityRepository extends ServiceEntityRepository
             ->select('OrderLogEntity.id, OrderLogEntity.state, OrderLogEntity.createdAt, OrderLogEntity.userID, OrderLogEntity.orderNumber')
             ->andWhere("OrderLogEntity.userID = :userID ")
             ->setParameter('userID', $userID) 
+            ->groupBy('OrderLogEntity.orderNumber')
             ->getQuery()
             ->getResult();
     }

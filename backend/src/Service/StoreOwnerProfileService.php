@@ -137,4 +137,11 @@ class StoreOwnerProfileService
             return $this->autoMapping->map(StoreOwnerProfileEntity::class,StoreOwnerProfileCreateResponse::class, $userProfile);
        }
     }
+
+    public function storeOwnerProfileByStoreID($storeOwnerID)
+    {
+        $item = $this->userManager->storeOwnerProfileByStoreID($storeOwnerID);  
+            
+        return $this->autoMapping->map('array', ClientProfileResponse::class, $item);
+    }
 }
