@@ -51,7 +51,14 @@ class ClientProfileController extends BaseController
         }
 
         $response = $this->clientProfileService->clientRegister($request);
-       
+        $isArray = is_array($response);
+        if($isArray){
+            $found = isset($response['found']);
+        
+            if( $found == "yes"){
+                return $this->response($response, self::ERROR); 
+          }
+        }
         return $this->response($response, self::CREATE);
     }
 

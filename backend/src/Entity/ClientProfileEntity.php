@@ -43,7 +43,7 @@ class ClientProfileEntity
     private $roomID;
 
      /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json", nullable=true)
      */
     private $location = [];
 

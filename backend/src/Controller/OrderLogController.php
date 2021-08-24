@@ -50,9 +50,14 @@ class OrderLogController extends BaseController
       */
     public function getOrderLogsByUserID()
     {    
-        if( $this->isGranted('ROLE_OWNER')  || $this->isGranted('ROLE_CAPTAIN')  || $this->isGranted('ROLE_CLIENT') ) {
-            $result = $this->orderLogService->getOrderLogs($this->getUserId());
+        if( $this->isGranted('ROLE_CLIENT') ) {
+            $result = $this->orderLogService->getClientOrderLogs($this->getUserId());
         }
+
+        if($this->isGranted('ROLE_CAPTAIN')) {
+            $result = $this->orderLogService->getCaptainOrderLogs($this->getUserId());
+        }
+
         return $this->response($result, self::FETCH);
     }
 

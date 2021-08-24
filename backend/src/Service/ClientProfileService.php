@@ -34,7 +34,8 @@ class ClientProfileService
 
     public function clientRegister(UserRegisterRequest $request)
     {
-        $userRegister = $this->userManager->clientRegister($request);
+        $roomID = $this->roomIdHelperService->roomIdGenerate();
+        $userRegister = $this->userManager->clientRegister($request, $roomID);
         if ($userRegister instanceof UserEntity) {
             
         return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $userRegister);

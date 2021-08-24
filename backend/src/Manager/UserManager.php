@@ -47,38 +47,95 @@ class UserManager
         $this->clientProfileEntityRepository = $clientProfileEntityRepository;
     }
 
+    // public function storeOwnerRegister(UserRegisterRequest $request)
+    // {
+    //     $user = $this->getUserByUserID($request->getUserID());
+    //     if ($user == null) {
+
+    //     $userRegister = $this->autoMapping->map(UserRegisterRequest::class, UserEntity::class, $request);
+
+    //     $user = new UserEntity($request->getUserID());
+
+    //     if ($request->getPassword()) {
+    //         $userRegister->setPassword($this->encoder->encodePassword($user, $request->getPassword()));
+    //     }
+
+    //     $userRegister->setRoles(["ROLE_OWNER"]);
+
+    //     $this->entityManager->persist($userRegister);
+    //     $this->entityManager->flush();
+    //     $this->entityManager->clear();
+
+    //         // Second, create the storeOwner's profile
+    //         $storeOwnerProfile = $this->getStoreOwnerProfileByID($request->getUserID());
+            
+    //         if ($storeOwnerProfile == null) {
+    //             $storeOwnerProfile = $this->autoMapping->map(UserRegisterRequest::class, StoreOwnerProfileEntity::class, $request);
+
+    //             $storeOwnerProfile->setStoreOwnerID($userRegister->getId());
+    //             $storeOwnerProfile->setStoreOwnerName($request->getUserName());
+                
+    //             $storeOwnerProfile->setStatus('inactive');
+    //             $storeOwnerProfile->setFree(false);
+    //             $storeOwnerProfile->setIs_best(false);
+
+    //             $this->entityManager->persist($storeOwnerProfile);
+    //             $this->entityManager->flush();
+    //             $this->entityManager->clear();
+    //         }
+    //         return $userRegister;
+    //     }
+    //     else
+    //     {
+    //         $storeOwnerProfile = $this->getClientProfileByClientID($user['id']);
+
+    //         if ($storeOwnerProfile == null)
+    //         {
+    //             $storeOwnerProfile = $this->autoMapping->map(UserRegisterRequest::class, StoreOwnerProfileEntity::class, $request);
+    //             $storeOwnerProfile->setStoreOwnerID($user['id']);
+    //             $storeOwnerProfile->setStoreOwnerName($request->getUserName());
+                
+    //             $this->entityManager->persist($storeOwnerProfile);
+    //             $this->entityManager->flush();
+    //             $this->entityManager->clear();
+    //         }
+
+    //         return true;
+    //     }
+    // }
+
     public function storeOwnerRegister(UserRegisterRequest $request)
     {
         $user = $this->getUserByUserID($request->getUserID());
+
         if ($user == null) {
 
-        $userRegister = $this->autoMapping->map(UserRegisterRequest::class, UserEntity::class, $request);
+            $userRegister = $this->autoMapping->map(UserRegisterRequest::class, UserEntity::class, $request);
 
-        $user = new UserEntity($request->getUserID());
+            $user = new UserEntity($request->getUserID());
 
-        if ($request->getPassword()) {
-            $userRegister->setPassword($this->encoder->encodePassword($user, $request->getPassword()));
-        }
+            if ($request->getPassword()) {
+                $userRegister->setPassword($this->encoder->encodePassword($user, $request->getPassword()));
+            }
 
-        $userRegister->setRoles(["ROLE_OWNER"]);
+            $userRegister->setRoles(["ROLE_OWNER"]);
 
-        $this->entityManager->persist($userRegister);
-        $this->entityManager->flush();
-        $this->entityManager->clear();
+            $this->entityManager->persist($userRegister);
+            $this->entityManager->flush();
+            $this->entityManager->clear();
 
-            // Second, create the storeOwner's profile
-            $storeOwnerProfile = $this->getStoreOwnerProfileByID($request->getUserID());
+            // Second, create the owner's profile
+            $storeOwnerProfile = $this->storeOwnerProfileByStoreID($request->getUserID());
             
             if ($storeOwnerProfile == null) {
                 $storeOwnerProfile = $this->autoMapping->map(UserRegisterRequest::class, StoreOwnerProfileEntity::class, $request);
-
                 $storeOwnerProfile->setStoreOwnerID($userRegister->getId());
                 $storeOwnerProfile->setStoreOwnerName($request->getUserName());
-                
+                            
                 $storeOwnerProfile->setStatus('inactive');
                 $storeOwnerProfile->setFree(false);
                 $storeOwnerProfile->setIs_best(false);
-
+            
                 $this->entityManager->persist($storeOwnerProfile);
                 $this->entityManager->flush();
                 $this->entityManager->clear();
@@ -87,14 +144,18 @@ class UserManager
         }
         else
         {
-            $storeOwnerProfile = $this->getClientProfileByClientID($user['id']);
+            $storeOwnerProfile = $this->storeOwnerProfileByStoreID($user['id']);
 
             if ($storeOwnerProfile == null)
             {
                 $storeOwnerProfile = $this->autoMapping->map(UserRegisterRequest::class, StoreOwnerProfileEntity::class, $request);
                 $storeOwnerProfile->setStoreOwnerID($user['id']);
                 $storeOwnerProfile->setStoreOwnerName($request->getUserName());
-                
+                            
+                $storeOwnerProfile->setStatus('inactive');
+                $storeOwnerProfile->setFree(false);
+                $storeOwnerProfile->setIs_best(false);
+            
                 $this->entityManager->persist($storeOwnerProfile);
                 $this->entityManager->flush();
                 $this->entityManager->clear();
@@ -104,7 +165,7 @@ class UserManager
         }
     }
 
-    public function clientRegister(UserRegisterRequest $request)
+    public function clientRegister(UserRegisterRequest $request, $roomID)
     {
         $user = $this->getUserByUserID($request->getUserID());
 
@@ -132,7 +193,7 @@ class UserManager
 
                 $clientProfile->setClientID($userRegister->getId());
                 $clientProfile->setClientName($request->getUserName());
-                
+                $clientProfile->setRoomID($roomID);
                 $this->entityManager->persist($clientProfile);
                 $this->entityManager->flush();
                 $this->entityManager->clear();
@@ -148,7 +209,7 @@ class UserManager
                 $clientProfile = $this->autoMapping->map(UserRegisterRequest::class, ClientProfileEntity::class, $request);
                 $clientProfile->setClientID($user['id']);
                 $clientProfile->setClientName($request->getUserName());
-                
+                $clientProfile->setRoomID($roomID);
                 $this->entityManager->persist($clientProfile);
                 $this->entityManager->flush();
                 $this->entityManager->clear();
@@ -283,6 +344,12 @@ class UserManager
     public function getremainingOrders($userID)
     {
         return $this->storeOwnerProfileEntityRepository->getremainingOrders($userID);
+    }
+
+    
+    public function storeOwnerProfileByStoreID($storeOwnerID)
+    {
+        return $this->storeOwnerProfileEntityRepository->storeOwnerProfileByStoreID($storeOwnerID);
     }
 
     public function createCaptainProfile(CaptainProfileCreateRequest $request, $roomID)
@@ -543,5 +610,15 @@ class UserManager
             $this->entityManager->clear();
 
             return $userProfile;
+    }
+    
+    public function checkUserType($userType,$userID)
+    {
+        $user = $this->userRepository->find($userID);
+
+        if ($user->getRoles()[0] != $userType){
+            return "no";
+        }
+        return "yes";
     }
 }
