@@ -165,7 +165,7 @@ class UserManager
         }
     }
 
-    public function clientRegister(UserRegisterRequest $request)
+    public function clientRegister(UserRegisterRequest $request, $roomID)
     {
         $user = $this->getUserByUserID($request->getUserID());
 
@@ -193,7 +193,7 @@ class UserManager
 
                 $clientProfile->setClientID($userRegister->getId());
                 $clientProfile->setClientName($request->getUserName());
-                
+                $clientProfile->setRoomID($roomID);
                 $this->entityManager->persist($clientProfile);
                 $this->entityManager->flush();
                 $this->entityManager->clear();
@@ -209,7 +209,7 @@ class UserManager
                 $clientProfile = $this->autoMapping->map(UserRegisterRequest::class, ClientProfileEntity::class, $request);
                 $clientProfile->setClientID($user['id']);
                 $clientProfile->setClientName($request->getUserName());
-                
+                $clientProfile->setRoomID($roomID);
                 $this->entityManager->persist($clientProfile);
                 $this->entityManager->flush();
                 $this->entityManager->clear();
