@@ -23,10 +23,12 @@ class BaseController extends AbstractController
     }
     const STATE_OK = 200;
     const CREATE = ["created ","201"];
-    const UPDATE=["updated","204"];
-    const DELETE=["deleted","401"];
-    const FETCH=["fetched","200"];
-    const ERROR=["error","425"];
+    const UPDATE = ["updated","204"];
+    const DELETE = ["deleted","401"];
+    const FETCH = ["fetched","200"];
+    const ERROR = ["error","425"];
+    const ERROR_USER_CHECK = ["error user check","9000"];
+    const ERROR_USER_FOUND = ["error user found","9001"];
     //const NOTFOUND=["Not found", "404"];
 
 
