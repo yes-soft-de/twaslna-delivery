@@ -40,7 +40,7 @@ class UserController extends BaseController
           }
         if($response == "no"){
             $response ="no not a"." ".$userType;
-            return $this->response($response, self::ERROR); 
+            return $this->response($response, self::ERROR_USER_CHECK); 
           }
     }
 }

@@ -61,7 +61,7 @@ class CaptainProfileController extends BaseController
             $found = isset($response['found']);
         
             if( $found == "yes"){
-                return $this->response($response, self::ERROR); 
+                return $this->response($response, self::ERROR_USER_FOUND); 
           }
         }
         return $this->response($response, self::CREATE);
