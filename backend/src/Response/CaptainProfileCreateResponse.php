@@ -24,15 +24,9 @@ class CaptainProfileCreateResponse
 
     public $status;
 
-    public $countOrdersDeliverd;
-
     public $rating;
-
-    public $state;
     
     public $bounce;
-
-    public $totalBounce;
 
     public $roomID;
 
@@ -53,8 +47,6 @@ class CaptainProfileCreateResponse
     public $stcPay;
 
     public $vacationStatus;
-
-    public $newMessageStatus;
 
     public $mechanicLicense;
 

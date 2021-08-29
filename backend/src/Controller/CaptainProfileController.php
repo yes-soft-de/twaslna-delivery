@@ -176,13 +176,13 @@ class CaptainProfileController extends BaseController
     }
 
     /**
-     * @Route("/captainprofile/{captainProfileId}", name="getCaptainprofileBycaptainProfileId",methods={"GET"})
+     * @Route("/captainProfile/{captainID}", name="getCaptainProfileByCaptainIDForAdmin",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      *  @return JsonResponse
      */
-    public function getCaptainProfileByID($captainProfileId)
+    public function getCaptainProfileByCaptainIDForAdmin($captainID)
     {
-        $response = $this->captainProfileService->getCaptainProfileByID($captainProfileId);
+        $response = $this->captainProfileService->getCaptainProfileByCaptainIDForAdmin($captainID);
 
         return $this->response($response, self::FETCH);
     }
@@ -221,19 +221,6 @@ class CaptainProfileController extends BaseController
     public function getCaptainsInVacation()
     {
         $result = $this->captainProfileService->getCaptainsInVacation();
-
-        return $this->response($result, self::FETCH);
-    }
-
-    /**
-     * @Route("/captainFinancialaccount/{captainProfileId}", name="TotalBounceCaptain",methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function getCaptainFinancialAccountDetailsByCaptainProfileId($captainProfileId)
-    {
-        $result = $this->captainProfileService->getCaptainFinancialAccountDetailsByCaptainProfileId($captainProfileId);
 
         return $this->response($result, self::FETCH);
     }
@@ -327,6 +314,7 @@ class CaptainProfileController extends BaseController
 
         return $this->response($response, self::FETCH);
     }
+
     /**
      * @Route("/captainFinancialAccountInSpecificDate/{fromDate}/{toDate}", name="captainFinancialAccountInSpecificDate",methods={"GET"})
      * @IsGranted("ROLE_CAPTAIN")
@@ -350,4 +338,30 @@ class CaptainProfileController extends BaseController
 
         return $this->response($response, self::FETCH);
     }
+
+    /**
+     * @Route("/captainFinancialAccountForAdmin/{captainID}", name="captainFinancialAccountForAdmin",methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     *  @return JsonResponse
+     */
+    public function getCaptainFinancialAccountDetailsByCaptainIdForAdmin($captainID)
+    {
+        $response = $this->captainProfileService->getCaptainFinancialAccountDetailsByCaptainIdForAdmin($captainID);
+
+        return $this->response($response, self::FETCH);
+    }
+
+     /**
+     * @Route("/captainFinancialAccountInLastMonthForAdmin/{captainID}", name="captainFinancialAccountInLastMonthForAdmin",methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     *  @return JsonResponse
+     */
+    public function captainFinancialAccountInLastMonthForAdmin($captainID)
+    {
+        $response = $this->captainProfileService->captainFinancialAccountInLastMonthForAdmin($captainID);
+
+        return $this->response($response, self::FETCH);
+    }
+    
+
 }
