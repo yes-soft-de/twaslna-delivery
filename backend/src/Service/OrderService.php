@@ -195,15 +195,14 @@ class OrderService
         $orders = $this->orderManager->getPendingOrders();
 
         foreach ($orders as $order) {
-
-            if ($order['branchId']){
-
-                $order['branchId'] = $this->storeOwnerBranchService->getBrancheById($order['branchId']);
+            if ($order['storeOwnerProfileID'] == true) {  
+                $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($order['storeOwnerProfileID']);
+                if( $order['storeOwner'] != null ){
+                    $order['storeOwnerName']=$order['storeOwner']->storeOwnerName;
+                    $order['image']=$order['storeOwner']->image;
+                    $order['branches']=$order['storeOwner']->branches;
                 }
-            if ($order['productID'] == true) {
-                $order['product'] = $this->productService->getProductById($order['productID']);
-                }
-            
+            }
             $response[] = $this->autoMapping->map('array', OrderPendingResponse::class, $order);
         }
         return $response;
@@ -262,22 +261,18 @@ class OrderService
     {
         $response = [];
         $orders = $this->orderManager->getOrders();
-       
         foreach ($orders as $order) {
-
-            if ($order['branchId']){
-                $order['branchId'] = $this->storeOwnerBranchService->getBrancheById($order['branchId']);
+            if ($order['storeOwnerProfileID'] == true) {  
+                $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($order['storeOwnerProfileID']);
+                if( $order['storeOwner'] != null ){
+                    $order['storeOwnerName']=$order['storeOwner']->storeOwnerName;
+                    $order['image']=$order['storeOwner']->image;
+                    $order['branches']=$order['storeOwner']->branches;
                 }
-
-            if ($order['captainID'] == true) {
-                $order['acceptedOrder'] = $this->captainProfileService->getCaptainProfileByCaptainID($order['captainID']);
-                }
-            if ($order['productID'] == true) {
-                    $order['product'] = $this->productService->getProductById($order['productID']);
-                    }
-
-            $response[] = $this->autoMapping->map('array', OrdersResponse::class, $order);
+            }
+            $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
         }
+       
 
         return $response;
     }

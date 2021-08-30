@@ -23,7 +23,13 @@ class DeliveryCompanyFinancialService
     public function createDeliveryCompanyFinancial(DeliveryCompanyFinancialRequest $request)
     {
         $item = $this->deliveryCompanyFinancialManager->createDeliveryCompanyFinancial($request);
-        return $this->autoMapping->map(DeliveryCompanyFinancialEntity::class, DeliveryCompanyFinancialResponse::class, $item);
+        if ($item instanceof DeliveryCompanyFinancialEntity) {
+             return $this->autoMapping->map(DeliveryCompanyFinancialEntity::class, DeliveryCompanyFinancialResponse::class, $item);
+        }
+        if ($item == true) {
+          
+            return $this->getDeliveryCompanyFinancialAll();
+        }
     }
 
     public function updateDeliveryCompanyFinancial($request)

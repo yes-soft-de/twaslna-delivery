@@ -542,9 +542,9 @@ class CaptainProfileService
 
                 if ($captain['total'] < 0 ){
                 $response[] =  $this->autoMapping->map('array', CaptainProfileCreateResponse::class, $captain);
-            }
+                  }
         } 
-        $result['response']=$response;
+        $result['response'] = $response;
         return $result;
     }
 
