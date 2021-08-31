@@ -108,7 +108,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function countOngoingOrders()
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->select('count(OrderEntity.id) as countOngoingOrders')
+            ->select('count(OrderEntity.id) as count')
 
             ->andWhere("OrderEntity.state = 'ongoing' ") 
 
@@ -445,5 +445,14 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->setParameter('captainId', $captainId)
             ->getQuery()
             ->getResult();
+    }
+
+    public function countCompletedOrders()
+    {
+        return  $this->createQueryBuilder('OrderEntity')
+                ->select('count(OrderEntity.id) as count')
+                ->andWhere("OrderEntity.state = 'delivered'")
+                ->getQuery()
+                ->getOneOrNullResult();
     }
 }

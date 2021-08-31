@@ -144,4 +144,8 @@ class StoreOwnerProfileService
             
         return $this->autoMapping->map('array', ClientProfileResponse::class, $item);
     }
+    
+    public function countStores() {
+        return $this->userManager->countStores();
+    }
 }

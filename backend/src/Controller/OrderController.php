@@ -377,6 +377,17 @@ class OrderController extends BaseController
           }
         return $this->response($response, self::UPDATE);
     }
+    
+    /**
+     * @Route("/countReport", name="countReport",methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
+     */
+    public function countReport()
+    {
+        $result = $this->orderService->countReport();
 
+        return $this->response($result, self::FETCH);
+    }
 }
 

@@ -31,7 +31,7 @@ use App\Response\OrderClientSendCreateResponse;
 use App\Response\AcceptedOrderResponse;
 use App\Response\OrdersAndTopOwnerResponse;
 use App\Response\OrdersAndCountResponse;
-use App\Response\OrderClientStatusResponse;
+use App\Response\CountReportResponse;
 use App\Response\OrdersByClientResponse;
 use App\Service\StoreOwnerSubscriptionService;
 use App\Service\RatingService;
@@ -45,6 +45,7 @@ use App\Service\StoreOwnerBranchService;
 use App\Service\ProductService;
 use App\Service\OrderDetailService;
 use App\Service\DeliveryCompanyFinancialService;
+use App\Service\ClientProfileService;
 use App\Constant\ResponseConstant;
 use App\Constant\SubscribeStatusConstant;
 use DateTime;
@@ -67,10 +68,13 @@ class OrderService
     private $productService;
     private $orderDetailService;
     private $deliveryCompanyFinancialService;
+    private $userService;
+    private $clientProfileService;
 
     public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, OrderLogService $orderLogService, StoreOwnerBranchService $storeOwnerBranchService, StoreOwnerSubscriptionService $storeOwnerSubscriptionService, StoreOwnerProfileService $storeOwnerProfileService, ParameterBagInterface $params,  RatingService $ratingService
                                 // , NotificationService $notificationService
-                               , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, CaptainService $captainService, CaptainProfileService $captainProfileService, ProductService $productService, OrderDetailService $orderDetailService, DeliveryCompanyFinancialService $deliveryCompanyFinancialService
+                               , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, CaptainService $captainService, CaptainProfileService $captainProfileService, ProductService $productService, OrderDetailService $orderDetailService, DeliveryCompanyFinancialService $deliveryCompanyFinancialService,
+                               ClientProfileService $clientProfileService
                                 )
     {
         $this->autoMapping = $autoMapping;
@@ -89,6 +93,7 @@ class OrderService
         $this->productService = $productService;
         $this->orderDetailService = $orderDetailService;
         $this->deliveryCompanyFinancialService = $deliveryCompanyFinancialService;
+        $this->clientProfileService = $clientProfileService;
     }
 
     public function createOrder(OrderCreateRequest $request)
@@ -636,4 +641,20 @@ class OrderService
        }
         return $response;
     }
+
+    public function countReport()
+    {
+        $response = [];
+        $item['countCompletedOrders'] = $this->orderManager->countCompletedOrders();
+        $item['countOngoingOrders'] = $this->orderManager->countOngoingOrders();
+        $item['countCaptains'] = $this->captainProfileService->countCaptains();
+        $item['countClients'] = $this->clientProfileService->countClients();
+        $item['countStores'] = $this->storeOwnerProfileService->countStores();
+        $item['countProducts'] = $this->productService->countProducts();
+        
+        $response = $this->autoMapping->map("array", CountReportResponse::class, $item);
+
+        return $response;
+    }
+
 }

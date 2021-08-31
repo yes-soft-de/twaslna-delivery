@@ -579,4 +579,8 @@ class CaptainProfileService
     
        return $response;
    }
+
+   public function countCaptains() {
+    return $this->userManager->countCaptains();
+   }
 }

@@ -377,6 +377,11 @@ class UserManager
         }
     }
 
+    public function countStores()
+    {
+        return $this->storeOwnerProfileEntityRepository->countStores();
+    }
+    
     public function updateCaptainProfile(CaptainProfileUpdateRequest $request)
     {
         $item = $this->captainProfileEntityRepository->getByCaptainIDForUpdate($request->getUserID());
@@ -503,6 +508,11 @@ class UserManager
     {
         return $this->captainProfileEntityRepository->getAllCaptains();
     }
+    
+    public function countCaptains()
+    {
+        return $this->captainProfileEntityRepository->countCaptains();
+    }
 
     public function getcaptainByRoomID($roomID)
     {
@@ -584,6 +594,11 @@ class UserManager
     public function getClientsProfile()
     {
         return $this->clientProfileEntityRepository->getClientsProfile();
+    }
+    
+    public function countClients()
+    {
+        return $this->clientProfileEntityRepository->countClients();
     }
     
     public function getStoreOwnerByCategoryId($storeCategoryId)

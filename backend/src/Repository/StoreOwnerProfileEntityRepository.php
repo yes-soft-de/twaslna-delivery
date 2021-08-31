@@ -125,4 +125,13 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    
+    public function countStores()
+    {
+        return $this->createQueryBuilder('profile')
+        ->select('count(profile.id) as count')
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
 }

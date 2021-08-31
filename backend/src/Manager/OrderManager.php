@@ -319,4 +319,9 @@ class OrderManager
     {
         return $this->orderEntityRepository->getOrderKilometersInThisMonth($captainId, $fromDate, $toDate);
     }
+
+    public function countCompletedOrders()
+    {
+        return $this->orderEntityRepository->countCompletedOrders();
+    }
 }

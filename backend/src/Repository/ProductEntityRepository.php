@@ -213,4 +213,12 @@ class ProductEntityRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
       }
+
+    public function countProducts()
+    {
+        return $this->createQueryBuilder('product')
+        ->select('count(product.id) as count')
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
 }

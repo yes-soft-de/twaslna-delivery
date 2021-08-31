@@ -54,4 +54,11 @@ class ClientProfileEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function countClients()
+    {
+        return $this->createQueryBuilder('clientProfile')
+        ->select('count(clientProfile.id) as count')
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
 }

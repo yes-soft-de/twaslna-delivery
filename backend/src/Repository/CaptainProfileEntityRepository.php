@@ -280,4 +280,12 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function countCaptains()
+    {
+        return  $this->createQueryBuilder('captainProfileEntity')
+                ->select('count(captainProfileEntity.id) as count')
+                ->andWhere("captainProfileEntity.status = 'active'")
+                ->getQuery()
+                ->getOneOrNullResult();
+    }
 }
