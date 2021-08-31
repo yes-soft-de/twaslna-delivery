@@ -19,9 +19,9 @@ class RatingService
         $this->ratingManager = $ratingManager;
     }
 
-    public function create(RatingCreateRequest $request)
+    public function createRatingByCaptainOrClient(RatingCreateRequest $request)
     {
-        $rating = $this->ratingManager->create($request);
+        $rating = $this->ratingManager->createRatingByCaptainOrClient($request);
 
         return $this->autoMapping->map(RatingEntity::class, RatingResponse::class, $rating);
     }

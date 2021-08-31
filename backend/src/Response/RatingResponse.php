@@ -5,9 +5,18 @@ namespace App\Response;
 class RatingResponse
 {
     public $id;
-    public $captainID;
-    public $type;
-    public $orderID;
+
+    public $itemID;
+
+    public $itemType;
+    
+    public $rating;
+    
+    public $userID;
+    
+    public $orderNumber;
+    
+    public $userType;
     
     
 }
