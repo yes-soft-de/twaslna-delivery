@@ -139,7 +139,7 @@ class StoreOwnerProfileController extends BaseController
     }
 
     /**
-     * @Route("/storeowners", name="getAllStoreOwners",methods={"GET"})
+     * @Route("/storeOwners", name="getAllStoreOwners",methods={"GET"})
      * @return JsonResponse
      */
     public function getAllStoreOwners()
