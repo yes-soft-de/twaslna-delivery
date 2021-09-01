@@ -18,74 +18,108 @@ class RatingEntity
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $ownerID;
+    private $itemID;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $captainID;
+    private $itemType;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $type;
+    private $rating;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $orderID;
+    private $userID;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $orderNumber;
+
+    /**
+     * @ORM\Column(type="string", length=100 , nullable=true)
+     */
+    private $userType;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getOwnerID(): ?string
+    public function getItemID(): ?int
     {
-        return $this->ownerID;
+        return $this->itemID;
     }
 
-    public function setOwnerID(string $ownerID): self
+    public function setItemID(int $itemID): self
     {
-        $this->ownerID = $ownerID;
+        $this->itemID = $itemID;
 
         return $this;
     }
 
-    public function getCaptainID(): ?string
+    public function getItemType(): ?string
     {
-        return $this->captainID;
+        return $this->itemType;
     }
 
-    public function setCaptainID(string $captainID): self
+    public function setCaptainID(string $itemType): self
     {
-        $this->captainID = $captainID;
+        $this->itemType = $itemType;
 
         return $this;
     }
 
-    public function getType(): ?string
+    public function getRating(): ?int
     {
-        return $this->type;
+        return $this->rating;
     }
 
-    public function setType(string $type): self
+    public function setRating(int $rating): self
     {
-        $this->type = $type;
+        $this->rating = $rating;
 
         return $this;
     }
 
-    public function getOrderID(): ?string
+    public function getUserID(): ?int
     {
-        return $this->orderID;
+        return $this->userID;
     }
 
-    public function setOrderID(?string $orderID): self
+    public function setUserID(?int $userID): self
     {
-        $this->orderID = $orderID;
+        $this->userID = $userID;
+
+        return $this;
+    }
+
+    public function getOrderNumber(): ?int
+    {
+        return $this->orderNumber;
+    }
+
+    public function setOrderNumber(?int $orderNumber): self
+    {
+        $this->orderNumber = $orderNumber;
+
+        return $this;
+    }
+
+    public function getUserType(): ?string
+    {
+        return $this->userType;
+    }
+
+    public function setUserType(?string $userType): self
+    {
+        $this->userType = $userType;
 
         return $this;
     }

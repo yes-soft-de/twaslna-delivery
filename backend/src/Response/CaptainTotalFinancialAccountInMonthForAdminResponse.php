@@ -14,10 +14,6 @@ class CaptainTotalFinancialAccountInMonthForAdminResponse
  
     public $deliveryCost;
 
-    public $paymentsToCaptain;
-
-    public $paymentsFromCaptain;
-
     public $amountWithCaptain;
 
     public $remainingAmountForCompany;
@@ -26,8 +22,14 @@ class CaptainTotalFinancialAccountInMonthForAdminResponse
     
     public $kilometerBonus;
 
+    public $salary;
+
     public $NetProfit;
 
     public $total;
+
+    public $paymentsToCaptain;
+
+    public $paymentsFromCaptain;
 
 }

@@ -93,4 +93,8 @@ class ClientProfileService
             }        
         return $response;
     }
+
+    public function countClients() {
+        return $this->userManager->countClients();
+    }
 }

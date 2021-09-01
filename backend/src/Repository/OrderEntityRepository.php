@@ -76,12 +76,14 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function getPendingOrders()
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->select('OrderEntity.id', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.deliveryDate', 'OrderEntity.updatedAt', 'OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'OrderEntity.branchId', 'OrderEntity.createdAt', 'OrderEntity.productID')
+        ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.createdAt', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.payment', 'OrderEntity.detail', 'OrderEntity.deliveryCost', 'OrderEntity.orderCost', 'OrderEntity.orderType', 'OrderEntity.destination', 'OrderEntity.note')
+        ->addSelect('orderDetailEntity.id as orderDetailId', 'orderDetailEntity.orderNumber')
 
-            ->andWhere("OrderEntity.state = 'pending'")
-
-            ->getQuery()
-            ->getResult();
+        ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
+        ->andWhere("OrderEntity.state = 'pending' ")
+        ->addGroupBy('OrderEntity.id')
+        ->getQuery()
+        ->getResult();
     }
     public function countAllOrders()
     {
@@ -106,7 +108,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function countOngoingOrders()
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->select('count(OrderEntity.id) as countOngoingOrders')
+            ->select('count(OrderEntity.id) as count')
 
             ->andWhere("OrderEntity.state = 'ongoing' ") 
 
@@ -169,12 +171,14 @@ class OrderEntityRepository extends ServiceEntityRepository
      public function getOrders()
     {
         return $this->createQueryBuilder('OrderEntity')
-            ->select('OrderEntity.id', 'OrderEntity.ownerID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.deliveryDate', 'OrderEntity.updatedAt', 'OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'OrderEntity.branchId', 'userProfileEntity.storeOwnerName', 'OrderEntity.kilometer', 'OrderEntity.captainID', 'OrderEntity.createdAt', 'OrderEntity.productID')
-            
-            ->leftJoin(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.storeOwnerID = OrderEntity.ownerID')
+        ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.createdAt', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.payment', 'OrderEntity.detail', 'OrderEntity.deliveryCost', 'OrderEntity.orderCost', 'OrderEntity.orderType', 'OrderEntity.destination', 'OrderEntity.note')
+        ->addSelect('orderDetailEntity.id as orderDetailId', 'orderDetailEntity.orderNumber')
 
-            ->getQuery()
-            ->getResult();
+        ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
+        ->andWhere("OrderEntity.state != 'pending' ")
+        ->addGroupBy('OrderEntity.id')
+        ->getQuery()
+        ->getResult();
     }
 
     public function countOrdersInMonthForOwner($fromDate, $toDate, $ownerId)
@@ -441,5 +445,14 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->setParameter('captainId', $captainId)
             ->getQuery()
             ->getResult();
+    }
+
+    public function countCompletedOrders()
+    {
+        return  $this->createQueryBuilder('OrderEntity')
+                ->select('count(OrderEntity.id) as count')
+                ->andWhere("OrderEntity.state = 'delivered'")
+                ->getQuery()
+                ->getOneOrNullResult();
     }
 }

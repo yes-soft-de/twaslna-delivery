@@ -21,7 +21,7 @@ class RatingManager
         $this->ratingRepository = $ratingRepository;
     }
 
-    public function create(RatingCreateRequest $request)
+    public function createRatingByCaptainOrClient(RatingCreateRequest $request)
     {
         $entity = $this->autoMapping->map(RatingCreateRequest::class, RatingEntity::class, $request);
 

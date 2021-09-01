@@ -24,13 +24,19 @@ class DeliveryCompanyFinancialManager
 
     public function createDeliveryCompanyFinancial(DeliveryCompanyFinancialRequest $request)
     {
-        $entity = $this->autoMapping->map(DeliveryCompanyFinancialRequest::class, DeliveryCompanyFinancialEntity::class, $request);
+        $isFound = $this->getDeliveryCompanyFinancialAll();
+        if ($isFound == null) {
+            $entity = $this->autoMapping->map(DeliveryCompanyFinancialRequest::class, DeliveryCompanyFinancialEntity::class, $request);
 
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
-        $this->entityManager->clear();
+            $this->entityManager->persist($entity);
+            $this->entityManager->flush();
+            $this->entityManager->clear();
 
-        return $entity;
+            return $entity;
+        }
+        else {
+            return true;
+        }
     }
 
     public function updateDeliveryCompanyFinancial(DeliveryCompanyFinancialUpdateRequest $request)

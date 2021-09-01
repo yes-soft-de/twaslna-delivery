@@ -5,20 +5,18 @@ namespace App\Response;
 class OrderPendingResponse
 {
     public $id;
-    public $storeOwnerProfileID;
-    public $source = [];
-    public $destination;
+    public $source;
     public $deliveryDate;
-    public $updatedAt;
-    public $note;
     public $payment;
-    public $recipientName;
-    public $recipientPhone;
-    public $state;
-    public $branchId;
-    public $roomID;
-    public $owner;
-    public $createdAt;
-    public $productID;
-    public $product;
+    public $orderNumber;
+    public $detail;
+    public $storeOwnerProfileID;
+    public $storeOwnerName;
+    public $branches;
+    public $image;
+    public $deliveryCost;
+    public $orderCost;
+    public $orderType;
+    public $destination;
+    public $note;
 }

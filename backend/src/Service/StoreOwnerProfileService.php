@@ -101,9 +101,9 @@ class StoreOwnerProfileService
     public function getAllStoreOwners()
     {
         $response = [];
-        $owners = $this->userManager->getAllStoreOwners();
-        foreach ($owners as $owner) {
-            $response[] = $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $owner);
+        $items = $this->userManager->getAllStoreOwners();
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', StoreOwnerByCategoryIdResponse::class, $item);
             }        
         return $response;
     }
@@ -143,5 +143,9 @@ class StoreOwnerProfileService
         $item = $this->userManager->storeOwnerProfileByStoreID($storeOwnerID);  
             
         return $this->autoMapping->map('array', ClientProfileResponse::class, $item);
+    }
+    
+    public function countStores() {
+        return $this->userManager->countStores();
     }
 }

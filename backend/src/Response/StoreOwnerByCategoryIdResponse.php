@@ -19,4 +19,6 @@ class StoreOwnerByCategoryIdResponse
     public $privateOrders;
 
     public $hasProducts;
+
+    public $storeCategoryId;
 }

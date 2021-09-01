@@ -29,27 +29,19 @@ class RatingController extends BaseController
     }
 
     /**
-     * @Route("rating", name="createRating", methods={"POST"})
-     * @IsGranted("ROLE_OWNER")
+     * @Route("rating", name="createRatingByCaptainOrClient", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      */
-    public function create(Request $request)
+    public function createRatingByCaptainOrClient(Request $request)
     {
             $data = json_decode($request->getContent(), true);
 
             $request = $this->autoMapping->map(stdClass::class, RatingCreateRequest::class, (object)$data);
 
-            $request->setOwnerID($this->getUserId());
+            $request->setUserID($this->getUserId());
 
-            $violations = $this->validator->validate($request);
-
-            if (\count($violations) > 0) {
-                $violationsString = (string) $violations;
-
-                return new JsonResponse($violationsString, Response::HTTP_OK);
-            }
-            $result = $this->ratingService->create($request);
+            $result = $this->ratingService->createRatingByCaptainOrClient($request);
 
         return $this->response($result, self::CREATE);
     }

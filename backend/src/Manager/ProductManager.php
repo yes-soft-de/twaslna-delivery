@@ -87,4 +87,10 @@ class ProductManager
 
         return $entity;
     }
+
+    public function countProducts()
+    {
+        return $this->productEntityRepository->countProducts();
+    }
+    
 }

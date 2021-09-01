@@ -311,6 +311,9 @@ class CaptainProfileService
     
         $sumPaymentsToCaptain = $this->captainPaymentService->sumPaymentsFromCompany($captainId);
         $sumPaymentsFromCaptain = $this->captainPaymentService->sumPaymentsToCompany($captainId);
+
+        $paymentsToCaptain = $this->captainPaymentService->getCaptainPaymentsFromCompany($captainId);
+        $paymentsFromCaptain = $this->captainPaymentService->getCaptainPaymentsToCompany($captainId);
        
         if ($item) {
              $countOrdersDelivered = $this->captainService->countCaptainOrdersDelivered($item[0]['captainID']);            
@@ -329,9 +332,13 @@ class CaptainProfileService
              
              $item['bounce'] = $item[0]['bounce'] * $item['countOrdersDelivered'];
              $item['salary'] = $item[0]['salary'];
-             $item['netProfit'] = $item['bounce'] + $item['salary'] + $item['kilometerBonus'];
-             $item['total'] = $item['sumPaymentsToCaptain'] - $item['netProfit'];
-            //  $item['payments'] = $payments;
+             $item['NetProfit'] = $item['bounce'] + $item['salary'] + $item['kilometerBonus'];
+             
+             // + Positive: the account is on the captain
+             // - Negative: the account is for the captain
+             $item['total'] = $item['sumPaymentsToCaptain'] - $item['NetProfit'];
+             $item['paymentsToCaptain'] = $paymentsToCaptain;
+             $item['paymentsFromCaptain'] = $paymentsFromCaptain;
 
              $response[] = $this->autoMapping->map('array', CaptainTotalFinancialAccountInMonthForAdminResponse::class,  $item);
             
@@ -426,7 +433,10 @@ class CaptainProfileService
              $item['remainingAmountForCompany'] = (float)$item['amountWithCaptain'] - $item['sumPaymentsFromCaptain'];
              $item['bounce'] = $item[0]['bounce'] * $item['countOrdersDelivered'];
              $item['salary'] = $item[0]['salary'];
-             $item['NetProfit'] = $item[0]['bounce'] + $item[0]['salary'] + $item['kilometerBonus'];;
+             $item['NetProfit'] = $item[0]['bounce'] + $item[0]['salary'] + $item['kilometerBonus'];
+
+             // + Positive: the account is on the captain
+             // - Negative: the account is for the captain
              $item['total'] =  $item['sumPaymentsToCaptain'] - $item['NetProfit'];
              $item['paymentsToCaptain'] = $paymentsToCaptain;
              $item['paymentsFromCaptain'] = $paymentsFromCaptain;
@@ -523,22 +533,18 @@ class CaptainProfileService
         $response = [];
         $result = [];
         $captains = $this->userManager->getAllCaptains();
-      
+     
         foreach ($captains as $captain) {
-         
-                $item = $this->userManager->getCaptainProfileByID($captain['captainID']);
-              
-                 $totalBounce = $this->getCaptainFinancialAccountDetailsByCaptainIdForAdmin($item['captainID']);
-                 dd($totalBounce);
-                 $total=(array)$totalBounce;
-                 $captain['totalBounce'] = $total;
-        
-                if ($captain['totalBounce'] < 0 ){
-                
+                 $totalBounce = $this->getCaptainFinancialAccountDetailsByCaptainIdForAdmin($captain['captainID']);
+
+                 $total=$totalBounce[0]->total;
+                 $captain['total'] = $total;
+
+                if ($captain['total'] < 0 ){
                 $response[] =  $this->autoMapping->map('array', CaptainProfileCreateResponse::class, $captain);
-            }
+                  }
         } 
-        $result['response']=$response;
+        $result['response'] = $response;
         return $result;
     }
 
@@ -572,5 +578,9 @@ class CaptainProfileService
         }
     
        return $response;
+   }
+
+   public function countCaptains() {
+    return $this->userManager->countCaptains();
    }
 }
