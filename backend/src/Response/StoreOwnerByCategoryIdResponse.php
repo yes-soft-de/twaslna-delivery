@@ -21,4 +21,6 @@ class StoreOwnerByCategoryIdResponse
     public $hasProducts;
 
     public $storeCategoryId;
+    
+    public $rating;
 }

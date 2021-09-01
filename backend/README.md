@@ -21,4 +21,4 @@ itemID : The item you will rate.
 itemType : type of The item you will rate (captain or client or product or store).
 rating : 1 - 2 - 3 - 4 - 5.
 userType : Who is the user who rating? if store send (store). For fear of conflict because we rely on the store profile id. 
-note : Only submit this field (userType) if the user who rating it is the store.
+note : only in store app, send this "userType":"store" .

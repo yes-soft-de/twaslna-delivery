@@ -29,7 +29,7 @@ class RatingController extends BaseController
     }
 
     /**
-     * @Route("rating", name="createRatingByCaptainOrClient", methods={"POST"})
+     * @Route("rating", name="createRating", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      */

@@ -19,26 +19,28 @@ class RatingEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, RatingEntity::class);
     }
 
-    public function getRatingByCaptainID($captainID)
+    public function getAvgRating($itemID, $itemType)
     {
         return $this->createQueryBuilder('Rating')
-               ->select('AVG(Rating.type) as rate ')
+               ->select('AVG(Rating.rating) as rate ')
               
-               ->andWhere('Rating.captainID = :captainID')
+               ->andWhere('Rating.itemID = :itemID')
+               ->andWhere('Rating.itemType = :itemType')
 
-               ->setParameter('captainID', $captainID)
+               ->setParameter('itemID', $itemID)
+               ->setParameter('itemType', $itemType)
 
                ->getQuery()
                ->getOneOrNullResult();
     }
-    public function ratingByCaptainID($captainID)
+    public function getAvgOrder($orderNumber)
     {
         return $this->createQueryBuilder('Rating')
-               ->select('AVG(Rating.type) as rate ')
+               ->select('AVG(Rating.rating) as rate ')
               
-               ->andWhere('Rating.captainID = :captainID')
+               ->andWhere('Rating.orderNumber = :orderNumber')
 
-               ->setParameter('captainID', $captainID)
+               ->setParameter('orderNumber', $orderNumber)
 
                ->getQuery()
                ->getResult();

@@ -37,4 +37,6 @@ class StoreOwnerProfileCreateResponse
     public $privateOrders;
 
     public $hasProducts;
+
+    public $rating;
 }
