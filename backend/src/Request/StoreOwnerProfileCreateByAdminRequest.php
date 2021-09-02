@@ -26,6 +26,14 @@ class StoreOwnerProfileCreateByAdminRequest
 
     private $hasProducts;
 
+    private $storeOwnerProfileID;
+
+    private $location = [];
+
+    private $branchName;
+    
+    private $isActive;
+
 
     /**
      * @return mixed
@@ -161,6 +169,54 @@ class StoreOwnerProfileCreateByAdminRequest
     public function setHasProducts($hasProducts)
     {
         $this->hasProducts = $hasProducts;
+
+        return $this;
+    }
+
+    public function getStoreOwnerProfileID()
+    {
+        return $this->storeOwnerProfileID;
+    }
+
+    public function setStoreOwnerProfileID($storeOwnerProfileID)
+    {
+        $this->storeOwnerProfileID = $storeOwnerProfileID;
+
+        return $this;
+    }
+
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    public function setLocation($location)
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    public function getBranchName()
+    {
+        return $this->branchName;
+    }
+
+    public function setBranchName($branchName)
+    {
+        $this->branchName = $branchName;
+
+        return $this;
+    }
+ 
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+ 
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }

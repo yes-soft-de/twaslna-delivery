@@ -83,18 +83,6 @@ class StoreOwnerBranchController extends BaseController
     }
 
     /**
-     * @Route("storeownerbranchs", name="getBranchesByUserId", methods={"GET"})
-     * @IsGranted("ROLE_OWNER")
-     * @return JsonResponse
-     */
-    public function getBranchesByUserId()
-    {
-        $result = $this->storeOwnerBranchService->getBranchesByUserId($this->getUserId());
-
-        return $this->response($result, self::FETCH);
-    }
-
-    /**
      * @Route("storeownerbranchupdatestate", name="updateActiveBranche", methods={"PUT"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
