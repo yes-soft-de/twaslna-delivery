@@ -87,6 +87,19 @@ class StoreOwnerProfileEntity
      */
     private $hasProducts;
 
+    
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getStoreOwnerID(): ?string
     {
         return $this->storeOwnerID;

@@ -7,6 +7,7 @@ use App\Entity\UserEntity;
 use App\Entity\ClientProfileEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\CaptainProfileEntity;
+use App\Entity\StoreOwnerBranchEntity;
 use App\Repository\UserEntityRepository;
 use App\Repository\StoreOwnerProfileEntityRepository;
 use App\Repository\CaptainProfileEntityRepository;
@@ -23,6 +24,7 @@ use App\Request\CaptainProfileUpdateRequest;
 use App\Request\ClientProfileCreateRequest;
 use App\Request\ClientProfileUpdateRequest;
 use App\Request\UserRegisterRequest;
+use App\Manager\StoreOwnerBranchManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -35,8 +37,10 @@ class UserManager
     private $captainProfileEntityRepository;
     private $storeOwnerProfileEntityRepository;
     private $clientProfileEntityRepository;
+    private $storeOwnerBranchManager;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder, UserEntityRepository $userRepository, CaptainProfileEntityRepository $captainProfileEntityRepository, StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository, ClientProfileEntityRepository $clientProfileEntityRepository)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder, UserEntityRepository $userRepository, CaptainProfileEntityRepository $captainProfileEntityRepository, StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository, ClientProfileEntityRepository $clientProfileEntityRepository,StoreOwnerBranchManager $storeOwnerBranchManager
+    )
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
@@ -45,6 +49,7 @@ class UserManager
         $this->captainProfileEntityRepository = $captainProfileEntityRepository;
         $this->storeOwnerProfileEntityRepository = $storeOwnerProfileEntityRepository;
         $this->clientProfileEntityRepository = $clientProfileEntityRepository;
+        $this->storeOwnerBranchManager = $storeOwnerBranchManager;
     }
 
     // public function storeOwnerRegister(UserRegisterRequest $request)
@@ -623,6 +628,25 @@ class UserManager
             $this->entityManager->persist($userProfile);
             $this->entityManager->flush();
             $this->entityManager->clear();
+
+            //create branch
+           $branch = $this->storeOwnerBranchManager->getBranchesByStoreOwnerProfileID($userProfile->getId());
+           if(!$branch){
+                $branch = $this->autoMapping->map(StoreOwnerProfileCreateByAdminRequest::class, StoreOwnerBranchEntity::class, $request);
+                $branch->setIsActive(1);
+                $branch->setStoreOwnerProfileID($userProfile->getId());
+                $branch->setLocation($request->getLocation());
+                if($request->getBranchName() == null) {
+                    $branch->setBranchName("default");
+                }
+                else {
+                    $branch->setBranchName($request->getBranchName());
+                }
+                
+                $this->entityManager->persist($branch);
+                $this->entityManager->flush();
+                $this->entityManager->clear();
+           }
 
             return $userProfile;
     }

@@ -23,8 +23,11 @@ class RatingManager
 
     public function createRatingByCaptainOrClient(RatingCreateRequest $request)
     {
+        if ($request->getUserType() == null) {
+            $request->setUserType("not store");
+        }
         $entity = $this->autoMapping->map(RatingCreateRequest::class, RatingEntity::class, $request);
-
+       
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
         $this->entityManager->clear();
@@ -32,13 +35,13 @@ class RatingManager
         return $entity;
     }
 
-    public function getRatingByCaptainID($captainID)
+    public function getAvgRating($itemID, $itemType)
     {
-        return $this->ratingRepository->getRatingByCaptainID($captainID);
+        return $this->ratingRepository->getAvgRating($itemID, $itemType);
     }
 
-    public function ratingByCaptainID($captainID)
+    public function getAvgOrder($orderNumber)
     {
-        return $this->ratingRepository->ratingByCaptainID($captainID);
+        return $this->ratingRepository->getAvgOrder($orderNumber);
     }
 }

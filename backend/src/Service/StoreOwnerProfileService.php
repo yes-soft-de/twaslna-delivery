@@ -17,6 +17,7 @@ use App\Response\StoreOwnerByCategoryIdResponse;
 use App\Response\UserRegisterResponse;
 use App\Service\RoomIdHelperService;
 use App\Service\StoreOwnerBranchService;
+use App\Service\RatingService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 
@@ -27,6 +28,7 @@ class StoreOwnerProfileService
     private $storeOwnerBranchService;
     private $params;
     private $roomIdHelperService;
+    private $ratingService;
 
     public function __construct(AutoMapping $autoMapping, UserManager $userManager,  RatingService $ratingService, StoreOwnerBranchService $storeOwnerBranchService, ParameterBagInterface $params, RoomIdHelperService $roomIdHelperService)
     {
@@ -93,6 +95,8 @@ class StoreOwnerProfileService
             $item['image'] = $this->params.$item['image'];
             $item['baseURL'] = $this->params;
             $item['branches'] = $this->storeOwnerBranchService->getBranchesByStoreOwnerProfileID($item['id']);
+            $item['rating'] = $this->ratingService->getAvgRating($id, 'store');
+
             $response = $this->autoMapping->map('array', StoreOwnerProfileCreateResponse::class, $item);
         }
         return $response;
@@ -113,6 +117,7 @@ class StoreOwnerProfileService
         $response = [];
         $items = $this->userManager->getStoreOwnerByCategoryId($storeCategoryId);
         foreach ($items as $item) {
+            $item['rating'] = $this->ratingService->getAvgRating($item['id'], 'store');
             $response[] = $this->autoMapping->map('array', StoreOwnerByCategoryIdResponse::class, $item);
             }        
         return $response;

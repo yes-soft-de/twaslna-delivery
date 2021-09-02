@@ -480,7 +480,7 @@ class OrderService
         $response = [];
         $orderDetails = $this->orderDetailService->getOrderIdByOrderNumber($orderNumber);
         $deliveryCost = $this->deliveryCompanyFinancialService->getDeliveryCost();
-        
+        $rate = $this->ratingService->getAvgOrder($orderNumber);
         if($orderDetails) {
             $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
             if ($order[0]['storeOwnerProfileID']) {
@@ -494,6 +494,7 @@ class OrderService
             $response['order'] = $order[0];
             $response['invoice']['invoiceAmount'] = $order[0]['invoiceAmount'];
             $response['invoice']['invoiceImage'] = $order[0]['invoiceImage'];
+            $response['rating'] = $rate;
     }
         return $response;
     }

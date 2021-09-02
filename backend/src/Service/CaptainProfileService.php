@@ -125,8 +125,8 @@ class CaptainProfileService
         $item['drivingLicenceURL'] = $item['drivingLicence'];
         $item['drivingLicence'] = $this->params.$item['drivingLicence'];
         $item['baseURL'] = $this->params;
-        $item['rating'] = $this->ratingService->getRatingByCaptainID($captainID);
-
+        $item['rating'] = $this->ratingService->getAvgRating($captainID, 'captain');
+       
         $response = $this->autoMapping->map('array', CaptainProfileCreateResponse::class, $item);
 
         $response->bounce = $bounce;
@@ -150,7 +150,7 @@ class CaptainProfileService
             $item['baseURL'] = $this->params;
             // $countOrdersDeliverd = $this->captainService->countCaptainOrdersDelivered($item['captainID']);
 
-            $item['rating'] = $this->ratingService->getRatingByCaptainID($item['captainID']);
+            $item['rating'] = $this->ratingService->getAvgRating($item['captainID'], 'captain');
         }
         $response =  $this->autoMapping->map('array', CaptainProfileCreateResponse::class, $item);
         // if($item) {

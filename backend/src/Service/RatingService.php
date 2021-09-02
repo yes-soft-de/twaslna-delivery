@@ -26,13 +26,13 @@ class RatingService
         return $this->autoMapping->map(RatingEntity::class, RatingResponse::class, $rating);
     }
 
-    public function getRatingByCaptainID($captainID)
+    public function getAvgRating($itemID, $itemType)
     {
-        return $this->ratingManager->getRatingByCaptainID($captainID);
+        return $this->ratingManager->getAvgRating($itemID, $itemType);
      }
 
-    public function ratingByCaptainID($captainID)
+    public function getAvgOrder($orderNumber)
     {
-        return $this->ratingManager->ratingByCaptainID($captainID);
+        return $this->ratingManager->getAvgOrder($orderNumber);
      }
 }
