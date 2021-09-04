@@ -46,4 +46,58 @@ class RatingController extends BaseController
         return $this->response($result, self::CREATE);
     }
 
+    /**
+     * @Route("ratingCaptainByClient", name="createCaptainRatingByClient", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createCaptainRatingByClient(Request $request)
+    {
+            $data = json_decode($request->getContent(), true);
+
+            $request = $this->autoMapping->map(stdClass::class, RatingCreateRequest::class, (object)$data);
+
+            $request->setUserID($this->getUserId());
+
+            $result = $this->ratingService->createCaptainRatingByClient($request);
+
+        return $this->response($result, self::CREATE);
+    }
+
+    /**
+     * @Route("ratingStoreByClient", name="createStoreRatingByClient", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createStoreRatingByClient(Request $request)
+    {
+            $data = json_decode($request->getContent(), true);
+
+            $request = $this->autoMapping->map(stdClass::class, RatingCreateRequest::class, (object)$data);
+
+            $request->setUserID($this->getUserId());
+
+            $result = $this->ratingService->createStoreRatingByClient($request);
+
+        return $this->response($result, self::CREATE);
+    }
+
+    /**
+     * @Route("ratingProductByClient", name="createProductRatingByClient", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createProductRatingByClient(Request $request)
+    {
+            $data = json_decode($request->getContent(), true);
+
+            $request = $this->autoMapping->map(stdClass::class, RatingCreateRequest::class, (object)$data);
+
+            $request->setUserID($this->getUserId());
+
+            $result = $this->ratingService->createProductRatingByClient($request);
+
+        return $this->response($result, self::CREATE);
+    }
+
 }

@@ -324,4 +324,10 @@ class OrderManager
     {
         return $this->orderEntityRepository->countCompletedOrders();
     }
+
+    public function getOrdersForSpecificClient($clientID)
+    {
+        return $this->orderEntityRepository->getOrdersForSpecificClient($clientID);
+    }
+
 }

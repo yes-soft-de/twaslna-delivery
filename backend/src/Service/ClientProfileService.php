@@ -11,6 +11,7 @@ use App\Request\UserRegisterRequest;
 use App\Request\ClientProfileUpdateRequest;
 use App\Response\ClientProfileResponse;
 use App\Response\UserRegisterResponse;
+use App\Response\NotificationLocalResponse;
 use App\Service\RoomIdHelperService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -96,5 +97,21 @@ class ClientProfileService
 
     public function countClients() {
         return $this->userManager->countClients();
+    }
+
+    public function getClientLocalNotification($clientID)
+    {
+        $response = [];
+
+        $orders = $this->userManager->getOrdersForSpecificClient($clientID);
+
+        if($orders)
+        {
+            foreach ($orders as $order)
+            {
+                $response['order'][] = $this->autoMapping->map('array', NotificationLocalResponse::class, $order);
+            }
+        }
+        return $response;
     }
 }

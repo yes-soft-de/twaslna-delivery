@@ -16,7 +16,7 @@ https://documenter.getpostman.com/view/11814853/Tzm5GwUe
 
     false : Payment to Company from captain.
 
-- RatingEntity:
+- RatingEntity for (/rating) route :
 itemID : The item you will rate.
 itemType : type of The item you will rate (captain or client or product or store).
 rating : 1 - 2 - 3 - 4 - 5.

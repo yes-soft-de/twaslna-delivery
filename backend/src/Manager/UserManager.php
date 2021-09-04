@@ -25,6 +25,7 @@ use App\Request\ClientProfileCreateRequest;
 use App\Request\ClientProfileUpdateRequest;
 use App\Request\UserRegisterRequest;
 use App\Manager\StoreOwnerBranchManager;
+use App\Manager\OrderManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -38,8 +39,9 @@ class UserManager
     private $storeOwnerProfileEntityRepository;
     private $clientProfileEntityRepository;
     private $storeOwnerBranchManager;
+    private $orderManager;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder, UserEntityRepository $userRepository, CaptainProfileEntityRepository $captainProfileEntityRepository, StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository, ClientProfileEntityRepository $clientProfileEntityRepository,StoreOwnerBranchManager $storeOwnerBranchManager
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder, UserEntityRepository $userRepository, CaptainProfileEntityRepository $captainProfileEntityRepository, StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository, ClientProfileEntityRepository $clientProfileEntityRepository,StoreOwnerBranchManager $storeOwnerBranchManager,OrderManager $orderManager
     )
     {
         $this->autoMapping = $autoMapping;
@@ -50,6 +52,7 @@ class UserManager
         $this->storeOwnerProfileEntityRepository = $storeOwnerProfileEntityRepository;
         $this->clientProfileEntityRepository = $clientProfileEntityRepository;
         $this->storeOwnerBranchManager = $storeOwnerBranchManager;
+        $this->orderManager = $orderManager;
     }
 
     // public function storeOwnerRegister(UserRegisterRequest $request)
@@ -659,5 +662,10 @@ class UserManager
             return "no";
         }
         return "yes";
+    }
+
+    public function getOrdersForSpecificClient($clientID)
+    {
+        return $this->orderManager->getOrdersForSpecificClient($clientID);
     }
 }
