@@ -35,6 +35,45 @@ class RatingManager
         return $entity;
     }
 
+    public function createCaptainRatingByClient(RatingCreateRequest $request)
+    {
+        $request->setItemType("captain");
+        $request->setUserType("not store");
+        $entity = $this->autoMapping->map(RatingCreateRequest::class, RatingEntity::class, $request);
+       
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+        $this->entityManager->clear();
+
+        return $entity;
+    }
+
+    public function createStoreRatingByClient(RatingCreateRequest $request)
+    {
+        $request->setItemType("store");
+        $request->setUserType("not store");
+        $entity = $this->autoMapping->map(RatingCreateRequest::class, RatingEntity::class, $request);
+       
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+        $this->entityManager->clear();
+
+        return $entity;
+    }
+
+    public function createProductRatingByClient(RatingCreateRequest $request)
+    {
+        $request->setItemType("product");
+        $request->setUserType("not store");
+        $entity = $this->autoMapping->map(RatingCreateRequest::class, RatingEntity::class, $request);
+       
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+        $this->entityManager->clear();
+
+        return $entity;
+    }
+
     public function getAvgRating($itemID, $itemType)
     {
         return $this->ratingRepository->getAvgRating($itemID, $itemType);

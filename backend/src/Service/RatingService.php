@@ -26,6 +26,27 @@ class RatingService
         return $this->autoMapping->map(RatingEntity::class, RatingResponse::class, $rating);
     }
 
+    public function createCaptainRatingByClient(RatingCreateRequest $request)
+    {
+        $rating = $this->ratingManager->createCaptainRatingByClient($request);
+
+        return $this->autoMapping->map(RatingEntity::class, RatingResponse::class, $rating);
+    }
+
+    public function createStoreRatingByClient(RatingCreateRequest $request)
+    {
+        $rating = $this->ratingManager->createStoreRatingByClient($request);
+
+        return $this->autoMapping->map(RatingEntity::class, RatingResponse::class, $rating);
+    }
+
+    public function createProductRatingByClient(RatingCreateRequest $request)
+    {
+        $rating = $this->ratingManager->createProductRatingByClient($request);
+
+        return $this->autoMapping->map(RatingEntity::class, RatingResponse::class, $rating);
+    }
+
     public function getAvgRating($itemID, $itemType)
     {
         return $this->ratingManager->getAvgRating($itemID, $itemType);
