@@ -134,4 +134,14 @@ class ClientProfileController extends BaseController
 
         return $this->response($response, self::FETCH);
     }
+
+     /**
+     * @Route("/notificationLocal", name="getClientLocalNotification", methods={"GET"})
+     */
+    public function getClientLocalNotification()
+    {
+        $result = $this->clientProfileService->getClientLocalNotification($this->getUserId());
+
+        return $this->response($result, self::FETCH);
+    }
 }
