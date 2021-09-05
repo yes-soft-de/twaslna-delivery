@@ -360,6 +360,11 @@ class UserManager
         return $this->storeOwnerProfileEntityRepository->storeOwnerProfileByStoreID($storeOwnerID);
     }
 
+    public function getStoresByName($name)
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoresByName($name);
+    }
+
     public function createCaptainProfile(CaptainProfileCreateRequest $request, $roomID)
     {
         $request->setRoomID($roomID);

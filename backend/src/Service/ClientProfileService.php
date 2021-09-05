@@ -12,7 +12,12 @@ use App\Request\ClientProfileUpdateRequest;
 use App\Response\ClientProfileResponse;
 use App\Response\UserRegisterResponse;
 use App\Response\NotificationLocalResponse;
+use App\Response\ClientFilterStoreResponse;
+use App\Response\ClientFilterProductResponse;
 use App\Service\RoomIdHelperService;
+use App\Service\StoreOwnerProfileService;
+use App\Service\ProductService;
+
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 
@@ -20,15 +25,18 @@ class ClientProfileService
 {
     private $autoMapping;
     private $userManager;
-    private $params;
     private $roomIdHelperService;
+    private $storeOwnerProfileService;
+    private $productService;
 
-    public function __construct(AutoMapping $autoMapping, UserManager $userManager,  RatingService $ratingService, ParameterBagInterface $params, RoomIdHelperService $roomIdHelperService)
+    public function __construct(AutoMapping $autoMapping, UserManager $userManager,  RatingService $ratingService, ParameterBagInterface $params, RoomIdHelperService $roomIdHelperService, ProductService $productService, StoreOwnerProfileService $storeOwnerProfileService)
     {
         $this->autoMapping = $autoMapping;
         $this->userManager = $userManager;
         $this->ratingService = $ratingService;
         $this->roomIdHelperService = $roomIdHelperService;
+        $this->productService = $productService;
+        $this->storeOwnerProfileService = $storeOwnerProfileService;
 
         $this->params = $params->get('upload_base_url') . '/';
     }
@@ -112,6 +120,24 @@ class ClientProfileService
                 $response['order'][] = $this->autoMapping->map('array', NotificationLocalResponse::class, $order);
             }
         }
+        return $response;
+    }
+
+    public function clientFilter($itemName)
+    {
+        $response = [];
+
+        $stores = $this->storeOwnerProfileService->getStoresByName($itemName);
+        $products = $this->productService->getProductsByName($itemName);
+
+        foreach ($stores as $store)
+            {
+                $response['stores'][] = $this->autoMapping->map('array', ClientFilterStoreResponse::class, $store);
+            }
+        foreach ($products as $product)
+            {
+                $response['products'][] = $this->autoMapping->map('array', ClientFilterProductResponse::class, $product);
+            }
         return $response;
     }
 }

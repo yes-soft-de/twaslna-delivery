@@ -144,4 +144,14 @@ class ClientProfileController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+     /**
+     * @Route("/clientFilter/{itemName}", name="getStoresAndProducts", methods={"GET"})
+     */
+    public function clientFilter($itemName)
+    {
+        $result = $this->clientProfileService->clientFilter($itemName);
+
+        return $this->response($result, self::FETCH);
+    }
 }

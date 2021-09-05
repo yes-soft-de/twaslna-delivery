@@ -120,5 +120,9 @@ class ProductService
 
    public function countProducts() {
     return $this->productManager->countProducts();
-}
+    }
+
+    public function getProductsByName($name) {
+        return $this->productManager->getProductsByName($name);
+    }
 }

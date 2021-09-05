@@ -221,4 +221,23 @@ class ProductEntityRepository extends ServiceEntityRepository
         ->getQuery()
         ->getOneOrNullResult();
     }
+
+    public function getProductsByName($name)
+    {
+        return $this->createQueryBuilder('product')
+            ->select('product.id', 'product.productName', 'product.productImage', 'product.productImage')
+            ->addSelect('storeProduct.productPrice')
+            ->addSelect('storeOwnerProfile.id as storeOwnerProfileID', 'storeOwnerProfile.storeOwnerName', 'storeOwnerProfile.storeCategoryId')
+
+            ->leftJoin(StoreProductEntity::class, 'storeProduct', Join::WITH, 'storeProduct.productID = product.id')
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = storeProduct.storeOwnerProfileID')
+
+            ->andWhere('storeProduct.storeOwnerProfileID= storeOwnerProfile.id')
+            ->andWhere('product.productName LIKE :productName')
+
+            ->setParameter('productName', '%'.$name.'%')
+            ->setMaxResults(20)
+            ->getQuery()
+            ->getResult();
+    }
 }

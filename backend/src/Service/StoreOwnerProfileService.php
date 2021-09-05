@@ -153,4 +153,8 @@ class StoreOwnerProfileService
     public function countStores() {
         return $this->userManager->countStores();
     }
+
+    public function getStoresByName($name) {
+        return $this->userManager->getStoresByName($name);
+    }
 }
