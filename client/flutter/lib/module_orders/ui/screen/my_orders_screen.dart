@@ -34,15 +34,17 @@ class MyOrdersScreenState extends State<MyOrdersScreen> {
   }
   @override
   void initState() {
-    super.initState();
     currentState = MyOrdersLoadingState(this);
-    widget._stateManager.getOrders(this);
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      widget._stateManager.getOrders(this);
+    });
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
       }
     });
+    super.initState();
   }
 
   @override

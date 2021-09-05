@@ -53,6 +53,7 @@ class OrderDetailsLoadedState extends OrderDetailsState {
               ],
             ),
           ) : Container(color: Theme.of(context).primaryColor,height:height,width:width,),
+          Container(color: Colors.black.withOpacity(0.25),),
           CustomOrderDetailsAppBar(
             editTap:orderDetails.order.state == OrderStatus.WAITING || orderDetails.order.state == OrderStatus.GOT_CAPTAIN ? () {
               screenState.edit = true;
@@ -149,7 +150,7 @@ class OrderDetailsLoadedState extends OrderDetailsState {
                                 ),
                               ),
                             ),
-                            orderDetails.order.roomID.isNotEmpty ? Padding(
+                            orderDetails.order.roomID.isNotEmpty && orderDetails.order.state != OrderStatus.WAITING ? Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: Container(
                                 decoration: BoxDecoration(

@@ -4,6 +4,8 @@ import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_orders/response/orders_logs_response.dart';
 import 'package:twaslna_delivery/utils/helpers/order_status_helper.dart';
 
+
+
 class OrderLogsModel {
   late String orderNumber;
   late OrderStatus state;
@@ -16,10 +18,10 @@ class OrderLogsModel {
 
   OrderLogsModel(
       {required this.orderNumber,
-      required this.state,
-      required this.dateTime,
-      required this.orderDate,
-      required this.completeTime});
+        required this.state,
+        required this.dateTime,
+        required this.orderDate,
+        required this.completeTime});
 
   OrderLogsModel.Empty() {
     this._empty = true;
@@ -30,7 +32,7 @@ class OrderLogsModel {
   OrderLogsModel.Data(OrdersLogsResponse orders) {
     List<Data> data = orders.data ?? [];
     for (var element in data) {
-      if (element.currentStage?.state.toString() != 'delivered' && element.currentStage?.state.toString() != 'cancelled') {
+      if (element.currentStage?.toString() != 'delivered' && element.currentStage?.toString() != 'cancelled') {
         continue;
       }
       String date = DateFormat('dd-MM-yyyy').format(
@@ -43,10 +45,13 @@ class OrderLogsModel {
 
       _models.add(OrderLogsModel(
           orderNumber:element.orderNumber?.toString() ?? S.current.unknown,
-          state: StatusHelper.getStatusEnum(element.currentStage?.state ?? S.current.unknown),
+          state: StatusHelper.getStatusEnum(element.currentStage ?? S.current.unknown),
           dateTime: createdDate,
           orderDate: date,
           completeTime: element.completionTime));
+    }
+    if (_models.isEmpty) {
+      _empty = true;
     }
   }
 
