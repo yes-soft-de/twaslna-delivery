@@ -19,6 +19,10 @@ class StatusCodeHelper {
         return S.current.StatusCodeNotFound;
       case '500':
         return S.current.internalServerError;
+      case '9000':
+        return S.current.invalidCredentials;
+      case '9001':
+        return S.current.accountAlreadyExist;
       case '-1':
         return S.current.dataDecodeError;
       default:

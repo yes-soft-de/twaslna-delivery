@@ -1,13 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:injectable/injectable.dart';
+import 'package:twaslna_delivery/abstracts/global_navigaror.dart';
 import 'package:twaslna_delivery/module_notifications/preferences/notification_preferences/notification_preferences.dart';
 import 'package:twaslna_delivery/module_notifications/repository/notification_repo.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:twaslna_delivery/utils/logger/logger.dart';
-
+import 'package:flutter/material.dart';
 @injectable
 class FireNotificationService {
   final NotificationsPrefsHelper _prefsHelper;
@@ -36,8 +38,6 @@ class FireNotificationService {
     );
     var isActive = await _prefsHelper.getIsActive();
     await refreshNotificationToken();
-    await setCaptainActive(isActive == true);
-
   }
 
   Future<void> refreshNotificationToken() async {
@@ -46,25 +46,28 @@ class FireNotificationService {
       // And Subscribe to the changes
       try {
         _notificationRepo.postToken(token);
-      } catch (e) {}
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        Logger().info('FireNotificationService', 'onMessage: $message');
-        _onNotificationRecieved.add(message);
-      });
-      FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-    }
-  }
+        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+          Logger().info('FireNotificationService', 'onMessage: $message');
+          SchedulerBinding.instance?.addPostFrameCallback((_) {
+            Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+                message.data['navigate_route'].toString(),arguments:message.data['argument']);
+          },);
+        });
+        FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+          _onNotificationRecieved.add(message);
+        });
+        FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
+      } catch (e) {
+       print(e);
+      }
 
-  Future<void> setCaptainActive(bool active) async {
-    await _prefsHelper.setIsActive(active);
-    if (active) {
-      await _fcm.subscribeToTopic('captains');
-    } else {
-      await _fcm.unsubscribeFromTopic('captains');
     }
   }
-  Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-    Logger().info('FireNotificationService', 'onMessage: $message');
+  static Future<dynamic> backgroundMessageHandler(
+      RemoteMessage message) async {
+    print('AppPushs myBackgroundMessageHandler : $message');
+     NotificationsPrefsHelper().setBackgroundMessage(message);
     _onNotificationRecieved.add(message);
+    return Future<void>.value();
   }
 }

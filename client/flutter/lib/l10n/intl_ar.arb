@@ -341,6 +341,7 @@
   "completeTime": "مدة الإنجاز",
   "totalBillCostHint": "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل",
   "invoiceImage": "صورة الفاتورة",
-  "invoiceCost": "تكلفة الفاتورة"
+  "invoiceCost": "تكلفة الفاتورة",
+  "accountAlreadyExist": "لا يمكنك تسجيل هذا الحساب لوجوده مسبقا"
 
 }

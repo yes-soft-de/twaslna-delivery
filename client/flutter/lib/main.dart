@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:injectable/injectable.dart';
+import 'package:twaslna_delivery/abstracts/global_navigaror.dart';
 import 'package:twaslna_delivery/abstracts/module/yes_module.dart';
 import 'package:twaslna_delivery/di/di_config.dart';
 import 'package:twaslna_delivery/hive/hive_init.dart';
@@ -94,7 +95,7 @@ class MyApp extends StatefulWidget {
       this._servicesModule
       );
 
-  @override
+ @override
   State<StatefulWidget> createState() => _MyAppState();
 }
 
@@ -114,8 +115,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    // widget._fireNotificationService.init();
-    // widget._localNotificationService.init();
+    widget._fireNotificationService.init();
+    widget._localNotificationService.init();
     widget._localizationService.localizationStream.listen((event) {
       timeago.setDefaultLocale(event);
       setState(() {});
@@ -124,7 +125,11 @@ class _MyAppState extends State<MyApp> {
       widget._localNotificationService.showNotification(event);
     });
     widget._localNotificationService.onLocalNotificationStream
-        .listen((event) {});
+        .listen((event) {
+      Navigator.pushNamed(
+          GlobalVariable.navState.currentContext!, event.clickAction.toString(),
+          arguments: event?.argument);
+    });
 
     widget._themeDataService.darkModeStream.listen((event) {
       activeTheme = event;
@@ -145,13 +150,13 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorObservers: <NavigatorObserver>[observer],
+      navigatorKey: GlobalVariable.navState,
       locale: Locale.fromSubtags(
         languageCode: activeLanguage,
       ),
       localizationsDelegates: [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
-
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],

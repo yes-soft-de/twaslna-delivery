@@ -1,15 +1,25 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @injectable
 class NotificationsPrefsHelper {
-  Future<void> setIsActive(bool active) async {
-    var prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('captain_active', active);
+  var box = Hive.box('Notification');
+
+  void setIsActive(bool active) {
+    box.put('captain_active', active);
   }
 
-  Future<bool?> getIsActive() async {
-    var prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('captain_active');
+  bool? getIsActive() {
+    return box.get('captain_active');
+  }
+  RemoteMessage getBackgroundMessage(){
+    return box.get('BackgroundMessage');
+  }
+  void setBackgroundMessage(RemoteMessage message){
+
+    box.put('BackgroundMessage',message);
+
   }
 }

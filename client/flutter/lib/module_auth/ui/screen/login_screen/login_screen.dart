@@ -32,7 +32,6 @@ class LoginScreenState extends State<LoginScreen> {
   bool? returnToPreviousScreen;
   @override
   void initState() {
-    super.initState();
     loadingSnapshot = AsyncSnapshot.nothing();
     _currentStates = LoginStateInit(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
@@ -49,6 +48,7 @@ class LoginScreenState extends State<LoginScreen> {
         });
       }
     });
+    super.initState();
   }
   dynamic args;
   @override

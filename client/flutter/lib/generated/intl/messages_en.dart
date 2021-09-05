@@ -30,6 +30,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "accept": MessageLookupByLibrary.simpleMessage("Accept"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("Accept Order"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
+        "accountAlreadyExist":
+            MessageLookupByLibrary.simpleMessage("This account already exist"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("Account Created"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("Account Number"),

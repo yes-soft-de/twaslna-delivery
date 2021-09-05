@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/module_notifications/model/notification_model.dart';
@@ -38,23 +41,37 @@ class LocalNotificationService {
         IOSNotificationDetails();
 
     AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails('${message.messageId}', 'twaslna_delivery', 'delivery app',
-            importance: Importance.max,
-            priority: Priority.high,
-            showWhen: false);
+        AndroidNotificationDetails(
+      'Local_notification',
+      'Local Notification',
+      'Showing notifications while the app running',
+      importance: Importance.max,
+      priority: Priority.max,
+      showWhen: true,
+      playSound: true,
+      channelShowBadge: true,
+      enableLights: true,
+      enableVibration: true,
+      onlyAlertOnce: false,
+      category: 'Locale',
+    );
 
     NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
 
     flutterLocalNotificationsPlugin.show(
-        int.tryParse(message.messageId??'1')??1, notification.title, notification.body, platformChannelSpecifics,
-        payload:null);
+        int.tryParse(message.messageId ?? '1') ?? Random().nextInt(1000000),
+        notification.title,
+        notification.body,
+        platformChannelSpecifics,
+        payload:json.encode(message.data));
   }
 
   Future selectNotification(String? payload) async {
     if (payload != null) {
-      _onNotificationRecieved.add(payload);
+      var data = json.decode(payload);
+      _onNotificationRecieved.add(data);
     }
   }
 }

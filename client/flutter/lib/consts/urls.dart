@@ -19,6 +19,7 @@ class Urls {
   static const GET_PRODUCTS_BY_CATEGORY_API = BASE_API + '/productsbycategoryidandstoreownerprofileid';
   static const GET_BEST_STORES_API = BASE_API + '/storeOwnerBest';
   static const GET_MY_ORDERS = BASE_API + '/ordersbyclientid';
+  static const GET_MY_NOTIFICATION = BASE_API + '/notificationLocal';
   static const GET_ORDER_LOGS = BASE_API + '/orderLogs';
   static const GET_ORDER_DETAILS = BASE_API + '/orderstatusbyordernumber';
   static const POST_CLIENT_ORDER_API = BASE_API + '/clientorder';
@@ -30,6 +31,8 @@ class Urls {
   static const UPDATE_SEND_CLIENT_ORDER_API = BASE_API + '/orderSendUpdateByClient';
   static const GET_PROFILE_API = BASE_API + '/clientProfile';
   static const POST_PROFILE_API = BASE_API + '/clientprofile';
+  static const CHECK_USER_ROLE = BASE_API + '/checkUserType';
+
 
 
 
