@@ -50,10 +50,17 @@ class AuthService {
       throw AuthorizationException(StatusCodeHelper.getStatusCodeMessages(
           loginResult.statusCode ?? '0'));
     }
+    RegisterResponse? response = await _authManager.userTypeCheck('ROLE_CLIENT', loginResult.token??'');
+    if (response?.statusCode != '201') {
+      await logout();
+      _authSubject.addError(StatusCodeHelper.getStatusCodeMessages(
+          response?.statusCode ?? '0'));
+      throw AuthorizationException(StatusCodeHelper.getStatusCodeMessages(
+          response?.statusCode ?? '0'));
+    }
     _prefsHelper.setUsername(username);
     _prefsHelper.setPassword(password);
     _prefsHelper.setToken(loginResult.token);
-
     _authSubject.add(AuthStatus.AUTHORIZED);
   }
 

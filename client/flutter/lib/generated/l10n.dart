@@ -3469,6 +3469,16 @@ class S {
       args: [],
     );
   }
+
+  /// `This account already exist`
+  String get accountAlreadyExist {
+    return Intl.message(
+      'This account already exist',
+      name: 'accountAlreadyExist',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

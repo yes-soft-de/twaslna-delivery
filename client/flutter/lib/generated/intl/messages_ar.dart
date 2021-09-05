@@ -30,6 +30,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "accept": MessageLookupByLibrary.simpleMessage("اقبل"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("قبول الطلب"),
         "account": MessageLookupByLibrary.simpleMessage("الحساب"),
+        "accountAlreadyExist": MessageLookupByLibrary.simpleMessage(
+            "لا يمكنك تسجيل هذا الحساب لوجوده مسبقا"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("تم ارسال الطلب"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("رقم حساب البنك"),

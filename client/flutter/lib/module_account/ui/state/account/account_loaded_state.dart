@@ -9,6 +9,7 @@ import 'package:twaslna_delivery/module_account/ui/widget/account_tile.dart';
 import 'package:twaslna_delivery/module_account/ui/widget/account_unsigned_app_bar.dart';
 import 'package:twaslna_delivery/module_orders/orders_routes.dart';
 import 'package:twaslna_delivery/module_settings/setting_routes.dart';
+import 'package:twaslna_delivery/utils/effect/hidder.dart';
 
 class AccountLoadedState extends AccountState {
   AccountScreenState screenState;
@@ -37,9 +38,12 @@ class AccountLoadedState extends AccountState {
           AccountTile(text:S.of(context).settings,icon:Icons.settings,onTap: (){
             Navigator.of(context).pushNamed(SettingRoutes.ROUTE_SETTINGS);
           },),
-          AccountTile(text:S.of(context).orderLog,icon:Icons.history, onTap: (){
-            Navigator.of(context).pushNamed(OrdersRoutes.ORDER_LOG);
-          },),
+          Hider(
+            active:signIn,
+            child: AccountTile(text:S.of(context).orderLog,icon:Icons.history, onTap: (){
+              Navigator.of(context).pushNamed(OrdersRoutes.ORDER_LOG);
+            },),
+          ),
           Padding(
             padding: const EdgeInsets.only(right: 25.0, left: 25),
             child: Divider(

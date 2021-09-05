@@ -12,4 +12,6 @@ class AuthManager {
   Future<RegisterResponse?> register(RegisterRequest registerRequest) => _authRepository.createUser(registerRequest);
 
   Future<LoginResponse?> login(LoginRequest loginRequest) => _authRepository.getToken(loginRequest);
+  Future<RegisterResponse?> userTypeCheck(String role,String token) =>
+      _authRepository.checkUserType(role,token);
 }

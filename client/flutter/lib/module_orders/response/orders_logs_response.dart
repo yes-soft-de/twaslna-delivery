@@ -32,14 +32,14 @@ class Data {
   int? orderNumber;
   CreatedAt? createdAt;
   String? completionTime;
-  CurrentStage? currentStage;
+  String? currentStage;
 
   Data(
       {this.id,
-      this.orderNumber,
-      this.createdAt,
-      this.completionTime,
-      this.currentStage});
+        this.orderNumber,
+        this.createdAt,
+        this.completionTime,
+        this.currentStage});
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -48,15 +48,7 @@ class Data {
         ? CreatedAt.fromJson(json['createdAt'])
         : null;
     completionTime = json['completionTime'];
-    if (json['currentStage'] != null) {
-      if (json['currentStage'] is List) {
-        if (json['currentStage'].isNotEmpty) {
-          currentStage = CurrentStage.fromJson(json['currentStage'][0]);
-        }
-      } else if (json['currentStage'] is Map) {
-        currentStage = CurrentStage.fromJson(json['currentStage']);
-      }
-    }
+    currentStage = json['currentStage'];
   }
 
   Map<String, dynamic> toJson() {
@@ -106,7 +98,7 @@ class CreatedAt {
 
   CreatedAt.fromJson(dynamic json) {
     timezone =
-        json['timezone'] != null ? Timezone.fromJson(json['timezone']) : null;
+    json['timezone'] != null ? Timezone.fromJson(json['timezone']) : null;
     offset = json['offset'];
     timestamp = json['timestamp'];
   }
@@ -138,7 +130,7 @@ class Timezone {
       });
     }
     location =
-        json['location'] != null ? Location.fromJson(json['location']) : null;
+    json['location'] != null ? Location.fromJson(json['location']) : null;
   }
 
   Map<String, dynamic> toJson() {
