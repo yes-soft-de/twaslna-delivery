@@ -92,5 +92,11 @@ class ProductManager
     {
         return $this->productEntityRepository->countProducts();
     }
+
+    public function getProductsByName($name)
+    {
+        return $this->productEntityRepository->getProductsByName($name);
+    }
+
     
 }
