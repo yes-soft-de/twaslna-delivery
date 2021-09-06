@@ -342,6 +342,12 @@
   "totalBillCostHint": "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل",
   "invoiceImage": "صورة الفاتورة",
   "invoiceCost": "تكلفة الفاتورة",
-  "accountAlreadyExist": "لا يمكنك تسجيل هذا الحساب لوجوده مسبقا"
-
+  "accountAlreadyExist": "لا يمكنك تسجيل هذا الحساب لوجوده مسبقا",
+  "products": "منتجات",
+  "stores": "متاجر",
+  "rateStore": "تقييم المتجر",
+  "rateStoreMessage": "قييم هذا المتجر ",
+  "submit": "إرسال",
+  "storeRated": "تمت تقييم المتجر بنجاح",
+  "rateSubmitting":"جاري إرسال تقييمك"
 }

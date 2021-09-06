@@ -32,11 +32,8 @@ class Urls {
   static const GET_PROFILE_API = BASE_API + '/clientProfile';
   static const POST_PROFILE_API = BASE_API + '/clientprofile';
   static const CHECK_USER_ROLE = BASE_API + '/checkUserType';
-
-
-
-
-
-
+  static const GET_SEARCH_RESULT = BASE_API + '/clientFilter/';
+  static const RATE_STORE = BASE_API + '/ratingStoreByClient';
+  static const RATE_CAPTAIN = BASE_API + '/ratingCaptainByClient';
 
 }

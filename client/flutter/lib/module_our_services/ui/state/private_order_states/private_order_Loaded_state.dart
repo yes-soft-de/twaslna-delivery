@@ -25,7 +25,7 @@ class PrivateOrderLoadedState extends PrivateOrderState {
   late String title;
   late String backgroundImage;
   late int storeId;
-  late double deliveryCost;
+  late num deliveryCost;
   @override
   Widget getUI(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -56,7 +56,7 @@ class PrivateOrderLoadedState extends PrivateOrderState {
                     const EdgeInsets.only(right: 28.0, left: 28, bottom: 16),
                 child: PrivateOrderTitleBar(
                     title: title,
-                    rate: 4.7,
+                    rate: 0,
                     views: 40,
                     deliveryCost: deliveryCost),
               ),

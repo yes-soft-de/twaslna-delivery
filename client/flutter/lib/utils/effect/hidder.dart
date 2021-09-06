@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 class Hider extends StatelessWidget {
   final bool active;
   final Widget child;
-  Hider({required this.active,required this.child});
+  const Hider({required this.active,required this.child});
 
   @override
   Widget build(BuildContext context) {

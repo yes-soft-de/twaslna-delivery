@@ -10,6 +10,7 @@ import 'package:twaslna_delivery/module_our_services/services_routes.dart';
 import 'package:twaslna_delivery/module_stores/store_routes.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_list/order_type.dart';
 import 'package:twaslna_delivery/utils/customIcon/custom_icons.dart';
+import 'package:twaslna_delivery/utils/effect/hidder.dart';
 import 'package:twaslna_delivery/utils/images/images.dart';
 import 'package:twaslna_delivery/utils/models/store.dart';
 import 'package:twaslna_delivery/utils/models/store_category.dart';
@@ -21,14 +22,16 @@ class HomeLoadedState extends HomeState {
   List<StoreCategoryModel> categories;
   List<StoreModel> bestStores;
 
-  HomeLoadedState(this.screenState,{required this.topProducts,required this.categories,
+  HomeLoadedState(this.screenState,
+      {required this.topProducts,
+      required this.categories,
       required this.bestStores})
       : super(screenState);
 
   @override
   Widget getUI(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: (){
+      onRefresh: () {
         return screenState.getHomeData();
       },
       child: ListView(
@@ -38,15 +41,11 @@ class HomeLoadedState extends HomeState {
           ListTile(
             leading: Icon(
               CustomIcon.our_service,
-              color: Theme
-                  .of(context)
-                  .primaryColor,
+              color: Theme.of(context).primaryColor,
               size: 18,
             ),
             title: Text(
-              S
-                  .of(context)
-                  .ourService,
+              S.of(context).ourService,
               style: StyleText.categoryStyle,
             ),
           ),
@@ -54,13 +53,11 @@ class HomeLoadedState extends HomeState {
             height: 125,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              physics:
-              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              physics: BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
               children: [
                 HomeCard(
-                  title: S
-                      .of(context)
-                      .deliverForMe,
+                  title: S.of(context).deliverForMe,
                   image: ImageAsset.SEND_ON_ME,
                   onTap: () {
                     Navigator.of(context).pushNamed(ServicesRoutes.SEND_IT);
@@ -69,126 +66,119 @@ class HomeLoadedState extends HomeState {
               ],
             ),
           ),
-          topProducts.isNotEmpty
-              ? ListTile(
-            leading: Icon(
-              CustomIcon.top_product,
-              color: Theme
-                  .of(context)
-                  .primaryColor,
-              size: 18,
-            ),
-            title: Text(
-              S
-                  .of(context)
-                  .mostSoldProduct,
-              style: StyleText.categoryStyle,
-            ),
-            trailing: showAll(context),
-          )
-              : Container(),
-          topProducts.isNotEmpty
-              ? SizedBox(
-            height: 125,
-            child: ListView(
-              physics: BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics()),
-              scrollDirection: Axis.horizontal,
-              children: _getTopProducts(topProducts),
-            ),
-          )
-              : Container(),
-          bestStores.isNotEmpty
-              ? ListTile(
-            leading: Icon(
-              CustomIcon.top_store,
-              color: Theme
-                  .of(context)
-                  .primaryColor,
-              size: 18,
-            ),
-            title: Text(
-              S
-                  .of(context)
-                  .bestStore,
-              style: StyleText.categoryStyle,
-            ),
-            trailing: showAll(context),
-          )
-              : Container(),
-          bestStores.isNotEmpty
-              ? SizedBox(
-            height: 125,
-            child: ListView(
-              physics: BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics()),
-              scrollDirection: Axis.horizontal,
-              children: getBestStores(bestStores),
-            ),
-          )
-              : Container(),
-          ListTile(
-            leading: Icon(
-              CustomIcon.near_me,
-              color: Theme
-                  .of(context)
-                  .primaryColor,
-              size: 18,
-            ),
-            title: Text(
-              S
-                  .of(context)
-                  .nearbyStore,
-              style: StyleText.categoryStyle,
-            ),
-            trailing: showAll(context),
-          ),
-          SizedBox(
-            height: 125,
-            child: ListView.builder(
-              physics:
-              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              scrollDirection: Axis.horizontal,
-              itemCount: 10,
-              itemBuilder: (_, index) {
-                return HomeCard(
-                    title: 'متجر',
-                    image:
-                    'https://media-cdn.tripadvisor.com/media/photo-s/17/75/3f/d1/restaurant-in-valkenswaard.jpg');
-              },
+          Hider(
+            active: topProducts.isNotEmpty,
+            child: ListTile(
+              leading: Icon(
+                CustomIcon.top_product,
+                color: Theme.of(context).primaryColor,
+                size: 18,
+              ),
+              title: Text(
+                S.of(context).mostSoldProduct,
+                style: StyleText.categoryStyle,
+              ),
+              trailing: showAll(context),
             ),
           ),
-          categories.isNotEmpty
-              ? ListTile(
-            leading: Icon(
-              Icons.sort,
-              color: Theme
-                  .of(context)
-                  .primaryColor,
+          Hider(
+            active: topProducts.isNotEmpty,
+            child: SizedBox(
+              height: 125,
+              child: ListView(
+                physics: BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
+                scrollDirection: Axis.horizontal,
+                children: _getTopProducts(topProducts),
+              ),
             ),
-            title: Text(
-              S
-                  .of(context)
-                  .categories,
-              style: StyleText.categoryStyle,
+          ),
+          Hider(
+            active: bestStores.isNotEmpty,
+            child: ListTile(
+              leading: Icon(
+                CustomIcon.top_store,
+                color: Theme.of(context).primaryColor,
+                size: 18,
+              ),
+              title: Text(
+                S.of(context).bestStore,
+                style: StyleText.categoryStyle,
+              ),
+              trailing: showAll(context),
             ),
-          )
-              : Container(),
-          categories.isNotEmpty
-              ? GridView(
-            physics: ScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 8.0,
-                childAspectRatio:
-                (MediaQuery
-                    .of(context)
-                    .size
-                    .width / 2) / 135),
-            children: getCategories(categories),
-          )
-              : Container(),
+          ),
+          Hider(
+            active: bestStores.isNotEmpty,
+            child: SizedBox(
+              height: 125,
+              child: ListView(
+                physics: BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
+                scrollDirection: Axis.horizontal,
+                children: getBestStores(bestStores),
+              ),
+            ),
+          ),
+          Hider(
+            active: false,
+            child: ListTile(
+              leading: Icon(
+                CustomIcon.near_me,
+                color: Theme.of(context).primaryColor,
+                size: 18,
+              ),
+              title: Text(
+                S.of(context).nearbyStore,
+                style: StyleText.categoryStyle,
+              ),
+              trailing: showAll(context),
+            ),
+          ),
+          Hider(
+            active: false,
+            child: SizedBox(
+              height: 125,
+              child: ListView.builder(
+                physics: BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
+                scrollDirection: Axis.horizontal,
+                itemCount: 10,
+                itemBuilder: (_, index) {
+                  return HomeCard(
+                      title: 'متجر',
+                      image:
+                          'https://media-cdn.tripadvisor.com/media/photo-s/17/75/3f/d1/restaurant-in-valkenswaard.jpg');
+                },
+              ),
+            ),
+          ),
+          Hider(
+            active: categories.isNotEmpty,
+            child: ListTile(
+              leading: Icon(
+                Icons.sort,
+                color: Theme.of(context).primaryColor,
+              ),
+              title: Text(
+                S.of(context).categories,
+                style: StyleText.categoryStyle,
+              ),
+            ),
+          ),
+          Hider(
+            active: categories.isNotEmpty,
+            child: GridView(
+              physics: ScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 8.0,
+                  childAspectRatio:
+                      (MediaQuery.of(context).size.width / 2) / 135),
+              children: getCategories(categories),
+            ),
+          ),
           SizedBox(
             height: 75,
           ),
@@ -206,12 +196,14 @@ class HomeLoadedState extends HomeState {
         image: element.image,
         onTap: () {
           Navigator.of(screenState.context).pushNamed(
-              StoreRoutes.STORE_PRODUCTS, arguments: StoreModel(
-              deliveryCost: element.deliveryCost, id: element.ownerId, storeOwnerName:element.storeName,
-              image: element.storeImage,
-              privateOrders: false,
-              hasProducts: true
-          ));
+              StoreRoutes.STORE_PRODUCTS,
+              arguments: StoreModel(
+                  deliveryCost: element.deliveryCost,
+                  id: element.ownerId,
+                  storeOwnerName: element.storeName,
+                  image: element.storeImage,
+                  privateOrders: false,
+                  hasProducts: true));
         },
       ));
     });
@@ -242,22 +234,22 @@ class HomeLoadedState extends HomeState {
         title: element.storeOwnerName,
         image: element.image,
         onTap: () {
-          if (element.hasProducts && element.privateOrders){
+          if (element.hasProducts && element.privateOrders) {
             // Navigator.of(screenState.context).pushNamed(StoreRoutes.STORE_PRODUCTS,arguments: element);
             showModalBottomSheet(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(10))),
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(10))),
                 context: screenState.context,
                 builder: (context) {
                   return OrderType(element);
                 });
-
-          } else if (element.hasProducts){
-            Navigator.of(screenState.context).pushNamed(StoreRoutes.STORE_PRODUCTS,arguments: element);
-          }
-          else {
-            Navigator.of(screenState.context).pushNamed(ServicesRoutes.PRIVATE_ORDER,arguments: element);
+          } else if (element.hasProducts) {
+            Navigator.of(screenState.context)
+                .pushNamed(StoreRoutes.STORE_PRODUCTS, arguments: element);
+          } else {
+            Navigator.of(screenState.context)
+                .pushNamed(ServicesRoutes.PRIVATE_ORDER, arguments: element);
           }
         },
       ));
