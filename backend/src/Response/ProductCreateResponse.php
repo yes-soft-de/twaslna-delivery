@@ -7,5 +7,7 @@ class ProductCreateResponse
     public $id;
     public $productName;
     public $productImage;
-    public $ProductCategoryID;
+    public $productPrice;
+    public $storeOwnerProfileID;
+    public $storeProductCategoryID;
 }

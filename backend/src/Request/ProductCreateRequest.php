@@ -5,26 +5,13 @@ namespace App\Request;
 class ProductCreateRequest
 {
     private $productName;
+
     private $productImage;
-    private $ProductCategoryID;
 
-    /**
-     * Get the value of ProductCategoryID
-     */ 
-    public function getProductCategoryID()
-    {
-        return $this->ProductCategoryID;
-    }
+    private $productPrice;
 
-    /**
-     * Set the value of ProductCategoryID
-     *
-     * @return  self
-     */ 
-    public function setProductCategoryID($ProductCategoryID)
-    {
-        $this->ProductCategoryID = $ProductCategoryID;
+    private $storeOwnerProfileID;
+    
+    private $storeProductCategoryID;
 
-        return $this;
-    }
 }

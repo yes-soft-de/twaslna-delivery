@@ -462,6 +462,7 @@ class OrderService
         
         if($orderDetails) {
         $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->orderID);
+        
         if ($order[0]['storeOwnerProfileID']) {
             if($orderDetails[0]->storeOwnerProfileID){
                 $storeOwner = $this->storeOwnerProfileService->getStoreOwnerProfileById($orderDetails[0]->storeOwnerProfileID);

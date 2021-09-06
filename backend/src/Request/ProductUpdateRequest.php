@@ -7,7 +7,9 @@ class ProductUpdateRequest
     private $id;
     private $productName;
     private $productImage;
-    private $ProductCategoryID;
+    private $productPrice;
+    private $storeOwnerProfileID;
+    private $storeProductCategoryID;
 
     /**
      * Get the value of ProductCategoryID

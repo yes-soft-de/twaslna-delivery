@@ -5,5 +5,6 @@ namespace App\Response;
 class StoreProductsCategoryResponse
 {
     public $id;
-    public $ProductCategoryName;
+    public $productCategoryName;
+    public $productCategoryImage;
 }

@@ -33,14 +33,14 @@ class ProductManager
         return $entity;
     }
 
-    public function getProductsByProductCategoryId($productCategoryID)
+    public function getProductsByProductCategoryId($storeProductCategoryID)
     {
-        return $this->productEntityRepository->getProductsByProductCategoryId($productCategoryID);
+        return $this->productEntityRepository->getProductsByProductCategoryId($storeProductCategoryID);
     }
 
-    public function getProductsByCategoryIdAndStoreOwnerProfileId($productCategoryID, $storeOwnerProfileId)
+    public function getProductsByCategoryIdAndStoreOwnerProfileId($storeProductCategoryID, $storeOwnerProfileId)
     {
-        return $this->productEntityRepository->getProductsByCategoryIdAndStoreOwnerProfileId($productCategoryID, $storeOwnerProfileId);
+        return $this->productEntityRepository->getProductsByCategoryIdAndStoreOwnerProfileId($storeProductCategoryID, $storeOwnerProfileId);
     }
 
     public function getProducts()
@@ -68,14 +68,13 @@ class ProductManager
         return $this->productEntityRepository->getProductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId);
     }
 
+    public function getStoreProductsByProfileId($storeOwnerProfileId)
+    {
+        return $this->productEntityRepository->getStoreProductsByProfileId($storeOwnerProfileId);
+    }
+
     public function updateProductByAdmin(ProductUpdateRequest $request)
     {
-        $related = $this->productEntityRepository->areThereItemsRelatedToThisProduct($request->getId());
-       
-        if ($related) {
-            return 'has items';
-        }
-
         $entity = $this->productEntityRepository->find($request->getId());
 
         if (!$entity) {
