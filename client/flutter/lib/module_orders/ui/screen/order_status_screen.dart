@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/module_orders/state_manager/order_status_state_manager.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_status/order_status_loading_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_status/order_status_state.dart';
+import 'package:twaslna_delivery/module_stores/request/rate_store_request.dart';
 
 @injectable
 class OrderStatusScreen extends StatefulWidget {
@@ -26,6 +27,10 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
  void getOrderStatus(int id){
    widget._stateManager.getOrderDetails(id, this);
  }
+  void rateCaptain(RateCaptainRequest request){
+    widget._stateManager.rateCaptain(request, this);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -37,11 +42,12 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
       }
     });
   }
-
+  String? orderNumber;
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
     if (flagOrderStatusId && args is String) {
+      orderNumber = args;
       widget._stateManager.getOrderDetails(int.parse(args), this);
       flagOrderStatusId = false;
     }

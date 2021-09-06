@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:twaslna_delivery/module_orders/service/orders_service.dart';
@@ -10,6 +10,9 @@ import 'package:twaslna_delivery/module_orders/ui/state/order_status/order_statu
 import 'package:twaslna_delivery/module_orders/ui/state/order_status/order_status_loading_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_status/order_status_state.dart';
 import 'package:twaslna_delivery/module_orders/ui/state/order_status/orders_status_error_state.dart';
+import 'package:twaslna_delivery/module_stores/request/rate_store_request.dart';
+import 'package:twaslna_delivery/module_stores/ui/screen/store_products_screen.dart';
+import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 import 'package:twaslna_delivery/utils/helpers/fire_store_helper.dart';
 
 @injectable
@@ -52,6 +55,20 @@ class OrderStatusStateManager {
             }
           });
         });
+
   }
 
+  void rateCaptain(RateCaptainRequest request,OrderStatusScreenState screenState) {
+    CustomFlushBarHelper.createSuccess(title: S.current.note, message: S.current.rateSubmitting,background:Theme.of(screenState.context).primaryColor ,).show(screenState.context);
+    _ordersService
+        .rateCaptain(request)
+        .then((value) {
+      if (value.hasError){
+        CustomFlushBarHelper.createError(title: S.current.warnning, message:value.error ?? '',).show(screenState.context);
+      }
+      else {
+        CustomFlushBarHelper.createSuccess(title: S.current.warnning, message:S.current.storeRated).show(screenState.context);
+      }
+    });
+  }
 }

@@ -57,32 +57,33 @@ class _OrderChipState extends State<OrderChip> {
       child:Flex(
         direction: Axis.horizontal,
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  height: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: CustomNetworkImage(
-                   imageSource:products.productsImage??widget.image,
-                    width:double.maxFinite,
-                    height:double.maxFinite ,
-                  ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: CustomNetworkImage(
+                 imageSource:products.productsImage??widget.image,
+                  width:double.maxFinite,
+                  height:double.maxFinite ,
                 ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 26.0),
-            child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Text('${products.price??widget.price} ${widget.currency}',style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                ),overflow: TextOverflow.ellipsis,)),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 26.0),
+              child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text('${products.price??widget.price} ${widget.currency}',style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                  ),overflow: TextOverflow.ellipsis,)),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -95,7 +96,7 @@ class _OrderChipState extends State<OrderChip> {
                   Text(products.productName??widget.title,style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 17
-                  ),overflow: TextOverflow.ellipsis,),
+                  ),overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,),
                   Container(
                     height: 40,
                     decoration: BoxDecoration(

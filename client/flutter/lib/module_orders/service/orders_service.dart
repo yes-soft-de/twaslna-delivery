@@ -12,6 +12,8 @@ import 'package:twaslna_delivery/module_orders/response/client_order_response.da
 import 'package:twaslna_delivery/module_orders/response/my_orders_response.dart';
 import 'package:twaslna_delivery/module_orders/response/order_details_response.dart';
 import 'package:twaslna_delivery/module_orders/response/orders_logs_response.dart';
+import 'package:twaslna_delivery/module_stores/request/rate_response.dart';
+import 'package:twaslna_delivery/module_stores/request/rate_store_request.dart';
 import 'package:twaslna_delivery/utils/helpers/fire_store_helper.dart';
 import 'package:twaslna_delivery/utils/helpers/status_code_helper.dart';
 
@@ -111,4 +113,18 @@ class OrdersService {
     return MyOrderState.error(StatusCodeHelper.getStatusCodeMessages(
         clientOrderResponse.statusCode ?? '0'));
   }
+
+  Future<MyOrderState> rateCaptain(RateCaptainRequest request) async {
+    RateResponse? rateStoreResponse =
+    await _myOrdersManager.rateCaptain(request);
+    if (rateStoreResponse == null) {
+      return MyOrderState.error(S.current.networkError);
+    }
+    if (rateStoreResponse.statusCode != '201') {
+      return MyOrderState.error(StatusCodeHelper.getStatusCodeMessages(
+          rateStoreResponse.statusCode));
+    }
+    return MyOrderState.empty();
+  }
+
 }

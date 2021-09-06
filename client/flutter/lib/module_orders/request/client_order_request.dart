@@ -7,7 +7,7 @@ class ClientOrderRequest {
   List<Products>? products;
   String? deliveryDate;
   double? orderCost;
-  double? deliveryCost;
+  num? deliveryCost;
   String? detail;
   String? recipientName;
   String? recipientPhone;
