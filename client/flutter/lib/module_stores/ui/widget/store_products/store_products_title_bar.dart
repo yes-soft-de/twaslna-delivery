@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/utils/effect/hidder.dart';
 class StoreProductsTitleBar extends StatelessWidget {
  final String title;
- final double rate;
+ final num rate;
  final int views;
- final double deliveryCost;
+ final num deliveryCost;
  StoreProductsTitleBar({required this.title,required this.rate,required this.views,required this.deliveryCost});
 
   @override
@@ -43,15 +44,20 @@ class StoreProductsTitleBar extends StatelessWidget {
                   Container(
                     width: 4,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      '${S.of(context).views} $views',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,),
+                  Hider(
+                    active: false,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        '${S.of(context).views} $views',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,),
+                      ),
                     ),
                   ),
-                  Icon(Icons.circle, size: 8),
+                  Hider(
+                      active: false,
+                      child: Icon(Icons.circle, size: 8)),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(

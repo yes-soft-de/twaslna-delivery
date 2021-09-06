@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_stores/presistance/cart_hive_box_helper.dart';
+import 'package:twaslna_delivery/module_stores/request/rate_store_request.dart';
 import 'package:twaslna_delivery/module_stores/service/store_products_service.dart';
 import 'package:twaslna_delivery/module_stores/ui/screen/store_products_screen.dart';
 import 'package:twaslna_delivery/module_stores/ui/state/store_products/store_products_empty_state.dart';
@@ -71,4 +72,19 @@ class StoreProductsStateManager {
           }
     });
   }
+  void rateStore(RateStoreRequest request,StoreProductsScreenState screenState) {
+    CustomFlushBarHelper.createSuccess(title: S.current.note, message: S.current.rateSubmitting,background:Theme.of(screenState.context).primaryColor ,).show(screenState.context);
+    _storeProductsService
+        .rateStore(request)
+        .then((value) {
+      if (value.hasError){
+        CustomFlushBarHelper.createError(title: S.current.warnning, message:value.error ?? '',).show(screenState.context);
+
+      }
+      else {
+        CustomFlushBarHelper.createSuccess(title: S.current.warnning, message:S.current.storeRated).show(screenState.context);
+      }
+    });
+  }
+
 }

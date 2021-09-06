@@ -1,8 +1,11 @@
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_orders/model/deleted_order_status.dart';
 import 'package:twaslna_delivery/module_stores/manager/store_products.dart';
 import 'package:twaslna_delivery/module_stores/model/category_model.dart';
 import 'package:twaslna_delivery/module_stores/model/store_products_model.dart';
+import 'package:twaslna_delivery/module_stores/request/rate_response.dart';
+import 'package:twaslna_delivery/module_stores/request/rate_store_request.dart';
 import 'package:twaslna_delivery/module_stores/response/products_by_category.dart';
 import 'package:twaslna_delivery/module_stores/response/products_category.dart';
 import 'package:twaslna_delivery/module_stores/response/store_products.dart';
@@ -61,4 +64,20 @@ class StoreProductsService {
     return StoreProductsData.Data(
         topWanted.data, cats.data,errors);
   }
+
+  Future<MyOrderState> rateStore(RateStoreRequest request) async {
+    RateResponse? rateStoreResponse =
+    await _storeProductsManager.rateStore(request);
+    if (rateStoreResponse == null) {
+      return MyOrderState.error(S.current.networkError);
+    }
+    if (rateStoreResponse.statusCode != '201') {
+      return MyOrderState.error(StatusCodeHelper.getStatusCodeMessages(
+          rateStoreResponse.statusCode));
+    }
+    return MyOrderState.empty();
+  }
+
+
+
 }
