@@ -10,9 +10,15 @@ class ClientFilterProductResponse
     
     public $productImage;
 
-    public $storeCategoryId;
+    public $storeProductCategoryID;
 
     public $productPrice;
     
     public $storeOwnerProfileID;
+
+    public $storeOwnerName;
+
+    public $deliveryCost;
+
+    public $storeImage;
 }

@@ -165,15 +165,6 @@ App\Request\AcceptedOrderUpdateRequest:
     orderID:
       - NotBlank: ~
 
-App\Request\RatingCreateRequest:
-  properties:
-    captainID:
-      - NotBlank: ~
-    type:
-      - NotBlank: ~
-    orderID:
-      - NotBlank: ~
-
 App\Request\BankCreateRequest:
   properties:
     userID:

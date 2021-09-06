@@ -4,45 +4,67 @@ namespace App\Request;
 
 class StoreProductCategoryCreateRequest
 {
-    // {
-    //     "items":{
-    //         "item1":{
-    //                 "storeOwnerProfileId": 1,
-    //                 "productCategoryId":2
-    //         },
-    //         "item2":{
-    //                 "storeOwnerProfileId": 1,
-    //                 "productCategoryId":2
-    //         }
-    //     } 
-    // }
-    private $items;
+    private $productCategoryName;
+    private $storeOwnerProfileId;
+    private $productCategoryImage;
 
 
     /**
-     * Get the value of id
+     * Get the value of ProductCategoryName
      */ 
-    public function getId()
+    public function getProductCategoryName()
     {
-        return $this->id;
+        return $this->productCategoryName;
     }
 
     /**
-     * Get the value of items
-     */ 
-    public function getItems()
-    {
-        return $this->items;
-    }
-
-    /**
-     * Set the value of items
+     * Set the value of ProductCategoryName
      *
      * @return  self
      */ 
-    public function setItems($items)
+    public function setProductCategoryName($productCategoryName)
     {
-        $this->items = $items;
+        $this->productCategoryName = $productCategoryName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of storeOwnerProfileId
+     */ 
+    public function getStoreOwnerProfileId()
+    {
+        return $this->storeOwnerProfileId;
+    }
+
+    /**
+     * Set the value of storeOwnerProfileId
+     *
+     * @return  self
+     */ 
+    public function setStoreOwnerProfileId($storeOwnerProfileId)
+    {
+        $this->storeOwnerProfileId = $storeOwnerProfileId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of ProductCategoryImage
+     */ 
+    public function getProductCategoryImage()
+    {
+        return $this->productCategoryImage;
+    }
+
+    /**
+     * Set the value of ProductCategoryImage
+     *
+     * @return  self
+     */ 
+    public function setProductCategoryImage($productCategoryImage)
+    {
+        $this->productCategoryImage = $productCategoryImage;
 
         return $this;
     }

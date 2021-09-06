@@ -17,19 +17,38 @@ class StoreProductCategoryEntity
      */
     private $id;
 
+    
+     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $productCategoryName;
+
     /**
      * @ORM\Column(type="integer")
      */
     private $storeOwnerProfileId;
-
-    /**
-     * @ORM\Column(type="integer")
+    
+     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $productCategoryId;
+    private $productCategoryImage;
+
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+    
+    public function getProductCategoryName(): ?string
+    {
+        return $this->productCategoryName;
+    }
+
+    public function setProductCategoryName(?string $productCategoryName): self
+    {
+        $this->productCategoryName = $productCategoryName;
+
+        return $this;
     }
 
     public function getStoreOwnerProfileId(): ?int
@@ -44,15 +63,16 @@ class StoreProductCategoryEntity
         return $this;
     }
 
-    public function getProductCategoryId(): ?int
+    public function getProductCategoryImage(): ?string
     {
-        return $this->productCategoryId;
+        return $this->productCategoryImage;
     }
 
-    public function setProductCategoryId(int $productCategoryId): self
+    public function setProductCategoryImage(?string $productCategoryImage): self
     {
-        $this->productCategoryId = $productCategoryId;
+        $this->productCategoryImage = $productCategoryImage;
 
         return $this;
     }
+
 }

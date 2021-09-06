@@ -9,7 +9,7 @@ class ProductFullInfoResponse
     public $productImage;
     public $productPrice;
     public $storeOwnerProfileID;
-    public $ProductCategoryID;
+    public $storeProductCategoryID;
     public $storeOwnerName;
     public $image;
     public $phone;

@@ -36,7 +36,6 @@ class StoreProductCategoryController extends BaseController
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, StoreProductCategoryCreateRequest::class, (object)$data);
-        $request->setItems($data['items']);
         $result = $this->storeProductCategoryService->createStoreProductCategory($request);
 
         return $this->response($result, self::CREATE);
@@ -44,7 +43,7 @@ class StoreProductCategoryController extends BaseController
 
     //TODO
     /**
-     * @Route("/createstorecategory", name="updateStoreCategory", methods={"PUT"})
+     * @Route("/updateStoreCategory", name="updateStoreCategory", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse

@@ -42,25 +42,25 @@ class ProductController extends BaseController
     }
 
     /**
-     * @Route("/productscategoryid/{productCategoryID}", name="getProductsByProductCategoryId  ", methods={"GET"})
+     * @Route("/productscategory/{storeProductCategoryID}", name="getProductsByStoreProductCategoryID", methods={"GET"})
      * @param Request $request
      * @return JsonResponse
      */
-    public function getProductsByProductCategoryId($productCategoryID)
+    public function getProductsByProductCategoryId($storeProductCategoryID)
     {
-        $result = $this->productService->getProductsByProductCategoryId($productCategoryID);
+        $result = $this->productService->getProductsByProductCategoryId($storeProductCategoryID);
 
         return $this->response($result, self::FETCH);
     }
 
     /**
-     * @Route("/productsbycategoryidandstoreownerprofileid/{productCategoryID}/{storeOwnerProfileId}", name="getProductsByProductCategoryIdAndStoreOwnerProfileId  ", methods={"GET"})
+     * @Route("/productsbycategoryidandstoreownerprofileid/{storeProductCategoryID}/{storeOwnerProfileId}", name="getProductsByProductCategoryIdAndStoreOwnerProfileId  ", methods={"GET"})
      * @param Request $request
      * @return JsonResponse
      */
-    public function getProductsByCategoryIdAndStoreOwnerProfileId($productCategoryID, $storeOwnerProfileId)
+    public function getProductsByCategoryIdAndStoreOwnerProfileId($storeProductCategoryID, $storeOwnerProfileId)
     {
-        $result = $this->productService->getProductsByCategoryIdAndStoreOwnerProfileId($productCategoryID, $storeOwnerProfileId);
+        $result = $this->productService->getProductsByCategoryIdAndStoreOwnerProfileId($storeProductCategoryID, $storeOwnerProfileId);
 
         return $this->response($result, self::FETCH);
     }
@@ -108,6 +108,19 @@ class ProductController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * @Route("/productsStoreByProfileId/{storeOwnerProfileId}", name="getStoreProductsByProfileId", methods={"GET"})
+     * @return JsonResponse
+     */
+    public function getStoreProductsByProfileId($storeOwnerProfileId)
+    {
+        $result = $this->productService->getStoreProductsByProfileId($storeOwnerProfileId);
+
+        return $this->response($result, self::FETCH);
+    }
+
+    //TODO. this for remove
     /**
      * @Route("/productByProductIdAndStoreOwnerProfileId/{storeOwnerProfileId}/{productId}", name="getProductByProductIdAndStoreOwnerProfileId", methods={"GET"})
      * @return JsonResponse
@@ -119,6 +132,8 @@ class ProductController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
+    //TODO. note in excel file
+    
     /**
      * @Route("/updateProductByAdmin", name="updateProductByAdmin", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
@@ -132,10 +147,6 @@ class ProductController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, ProductUpdateRequest::class, (object)$data);
         $result = $this->productService->updateProductByAdmin($request);
 
-        if(is_string($result)){
-            return $this->response($result, self::ERROR);  
-          }
-          
         return $this->response($result, self::CREATE);
     }
 }
