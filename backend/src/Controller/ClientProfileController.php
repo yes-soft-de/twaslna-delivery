@@ -136,16 +136,6 @@ class ClientProfileController extends BaseController
     }
 
      /**
-     * @Route("/notificationLocal", name="getClientLocalNotification", methods={"GET"})
-     */
-    public function getClientLocalNotification()
-    {
-        $result = $this->clientProfileService->getClientLocalNotification($this->getUserId());
-
-        return $this->response($result, self::FETCH);
-    }
-
-     /**
      * @Route("/clientFilter/{itemName}", name="getStoresAndProducts", methods={"GET"})
      */
     public function clientFilter($itemName)
