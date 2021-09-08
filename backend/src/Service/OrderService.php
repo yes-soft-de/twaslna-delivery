@@ -46,6 +46,7 @@ use App\Service\ProductService;
 use App\Service\OrderDetailService;
 use App\Service\DeliveryCompanyFinancialService;
 use App\Service\ClientProfileService;
+use App\Service\NotificationLocalService;
 use App\Constant\ResponseConstant;
 use App\Constant\SubscribeStatusConstant;
 use DateTime;
@@ -70,11 +71,12 @@ class OrderService
     private $deliveryCompanyFinancialService;
     private $userService;
     private $clientProfileService;
+    private $notificationLocalService;
 
     public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, OrderLogService $orderLogService, StoreOwnerBranchService $storeOwnerBranchService, StoreOwnerSubscriptionService $storeOwnerSubscriptionService, StoreOwnerProfileService $storeOwnerProfileService, ParameterBagInterface $params,  RatingService $ratingService
                                 // , NotificationService $notificationService
                                , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, CaptainService $captainService, CaptainProfileService $captainProfileService, ProductService $productService, OrderDetailService $orderDetailService, DeliveryCompanyFinancialService $deliveryCompanyFinancialService,
-                               ClientProfileService $clientProfileService
+                               ClientProfileService $clientProfileService, NotificationLocalService $notificationLocalService
                                 )
     {
         $this->autoMapping = $autoMapping;
@@ -94,6 +96,7 @@ class OrderService
         $this->orderDetailService = $orderDetailService;
         $this->deliveryCompanyFinancialService = $deliveryCompanyFinancialService;
         $this->clientProfileService = $clientProfileService;
+        $this->notificationLocalService = $notificationLocalService;
     }
 
     public function createOrder(OrderCreateRequest $request)
@@ -220,8 +223,23 @@ class OrderService
         if($orderDetails){
             $request->setId($orderDetails[0]->orderID);
             $item = $this->orderManager->orderUpdateStateByCaptain($request);
-            
+
             $this->orderLogService->createOrderLog($request->getOrderNumber(), $item->getState(), $request->getCaptainID());
+            //create notification local
+            $state ="";
+            if ($request->getState() == "on way to pick order"){
+                $state = "المندوب في طريقه إلى المتجر";
+            }
+            if ($request->getState() == "in store"){
+                $state = "المندوب في المتجر";
+            }
+            if ($request->getState() == "ongoing"){
+                $state = "المندوب في طريقه إليك";
+            }
+            if ($request->getState() == "delivered"){
+                $state = "تم تسليم الطلب";
+            }
+            $this->notificationLocalService->createNotificationLocal($item->getClientID(), "حالة الطلب", $state, $request->getOrderNumber());
 
             $response = $this->autoMapping->map(OrderEntity::class, OrderUpdateStateResponse::class, $item);
         
@@ -407,7 +425,10 @@ class OrderService
                $countProduct = $product['countProduct'];
                $orderDetail = $this->orderDetailService->createOrderDetail($item->getId(), $productID, $countProduct, $orderNumber);
             }
-            $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID());  
+            //create log
+            $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID());
+            //create notification local
+            $this->notificationLocalService->createNotificationLocal($request->getClientID(), "طلب جديد", "تم إنشاء طلب جديد بنجاح", $orderNumber);
             $response = $this->autoMapping->map(OrderEntity::class, OrderCreateClientResponse::class, $item);
             $response->orderDetail = $orderDetail; 
           }            
@@ -425,8 +446,11 @@ class OrderService
         $roomID = $this->roomIdHelperService->roomIdGenerate();
         $item = $this->orderManager->createClientSendOrder($request, $roomID);
         if ($item) {
-            $orderDetail = $this->orderDetailService->createOrderDetail($item->getId(), null, null, $orderNumber);  
+            $orderDetail = $this->orderDetailService->createOrderDetail($item->getId(), null, null, $orderNumber);
+            //create log
             $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID());
+            //create notification local
+            $this->notificationLocalService->createNotificationLocal($request->getClientID(), "طلب جديد", "تم إنشاء طلب جديد بنجاح", $orderNumber);
             $response = $this->autoMapping->map(OrderEntity::class, OrderClientSendCreateResponse::class, $item);
             $response->orderDetail['orderNumber'] = $orderDetail->orderNumber;
             $response->orderDetail['orderDetailId'] = $orderDetail->id;
@@ -445,8 +469,11 @@ class OrderService
         $roomID = $this->roomIdHelperService->roomIdGenerate();
         $item = $this->orderManager->createClientSpecialOrder($request, $roomID);
         if ($item) {
-            $orderDetail = $this->orderDetailService->createOrderDetail($item->getId(), null, null, $orderNumber);  
-            $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID());  
+            $orderDetail = $this->orderDetailService->createOrderDetail($item->getId(), null, null, $orderNumber);
+            //create log
+            $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID());
+            //create notification local
+            $this->notificationLocalService->createNotificationLocal($request->getClientID(), "طلب جديد", "تم إنشاء طلب جديد بنجاح", $orderNumber);
             $response = $this->autoMapping->map(OrderEntity::class, OrderClientSendCreateResponse::class, $item);
             $response->orderDetail['orderNumber'] = $orderDetail->orderNumber;
             $response->orderDetail['orderDetailId'] = $orderDetail->id;
@@ -500,7 +527,7 @@ class OrderService
         return $response;
     }
 
-    public function orderUpdateByClient(OrderUpdateByClientRequest $request)
+    public function orderUpdateByClient(OrderUpdateByClientRequest $request, $clientID)
     {
         $response = "Not updated!!";
         $orderDetails = $this->orderDetailService->getOrderIdWithOutStoreProductByOrderNumber($request->getOrderNumber());
@@ -521,7 +548,10 @@ class OrderService
                             $productID = $product['productID'];
                             $countProduct = $product['countProduct'];
                             $createOrderDetail = $this->orderDetailService->createOrderDetail($orderDetails[0]->getOrderID(), $productID, $countProduct, $request->getOrderNumber());
+                            //notification local
+                            $this->notificationLocalService->createNotificationLocal($clientID, "تعديل طلب", "تم تعديل الطلب بنجاح", $request->getOrderNumber());
                         }
+
                     return $response = $this->getOrderStatusByOrderNumber($request->getOrderNumber());  
                     } 
                 }     
@@ -529,7 +559,7 @@ class OrderService
         return $response;
     }
 
-    public function orderSpecialUpdateByClient(OrderUpdateSpecialByClientRequest $request)
+    public function orderSpecialUpdateByClient(OrderUpdateSpecialByClientRequest $request, $userID)
     {
         $response = "Not updated!!";
         $orderDetails = $this->orderDetailService->getOrderIdWithOutStoreProductByOrderNumber($request->getOrderNumber());
@@ -546,6 +576,8 @@ class OrderService
 
                     if ($orderDetailDelete == "Deleted") {
                         $createOrderDetail = $this->orderDetailService->createOrderDetail($orderDetails[0]->getOrderID(), null, null, $request->getOrderNumber());
+                        //notification local
+                        $this->notificationLocalService->createNotificationLocal($userID, "تعديل طلب", "تم تعديل الطلب بنجاح", $request->getOrderNumber());
                         return $response = $this->getOrderStatusByOrderNumber($request->getOrderNumber());  
                     } 
                 }     
@@ -553,7 +585,7 @@ class OrderService
         return $response;
     }
 
-    public function orderSendUpdateByClient(OrderUpdateSendByClientRequest $request)
+    public function orderSendUpdateByClient(OrderUpdateSendByClientRequest $request, $userID)
     {
         $response = "Not updated!!";
         $orderDetails = $this->orderDetailService->getOrderIdWithOutStoreProductByOrderNumber($request->getOrderNumber());
@@ -570,6 +602,8 @@ class OrderService
 
                     if ($orderDetailDelete == "Deleted") {
                         $createOrderDetail = $this->orderDetailService->createOrderDetail($orderDetails[0]->getOrderID(), null, null, $request->getOrderNumber());
+                        //notification local
+                        $this->notificationLocalService->createNotificationLocal($userID, "تعديل طلب", "تم تعديل الطلب بنجاح", $request->getOrderNumber());
                         return $response = $this->getOrderStatusByOrderNumber($request->getOrderNumber());  
                     } 
                 }     
@@ -588,15 +622,21 @@ class OrderService
             $nowDate = new DateTime('now');
             
             if ( $halfHourLaterTime < $nowDate) {
+                //notification local
+                $this->notificationLocalService->createNotificationLocal($userID, "حذف طلب", "لا يمكن حذف الطلب, لقد تجاوزت الوقت المسموح به للحذف.", $orderNumber);
                 $response="can not remove it, Exceeded time allowed";
             }
             elseif ($order[0]['state'] == 'on way to pick order') {
+                //notification local
+                $this->notificationLocalService->createNotificationLocal($userID, "حذف طلب", "لا يمكن حذف الطلب, الكابتن استلم الطلب.", $orderNumber);
                 $response = "can not remove it, The captain received the order";
             }            
             else {
                 $item = $this->orderManager->orderCancel($orderDetails[0]->orderID);
                 if($item) {
                     $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $userID);
+                    //notification local
+                    $this->notificationLocalService->createNotificationLocal($userID, "حذف طلب", "تم حذف الطلب بنجاح.", $orderNumber);
                 }
                 $response = $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $item);
             }

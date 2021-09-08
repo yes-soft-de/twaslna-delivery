@@ -4,6 +4,12 @@ namespace App\Response;
 
 class NotificationLocalResponse
 {    
-    public $orderNumber;    
-    
+    public $id;
+
+    public $title;
+
+    public $message;
+
+    public $orderNumber;
+
 }

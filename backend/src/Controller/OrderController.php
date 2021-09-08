@@ -271,6 +271,7 @@ class OrderController extends BaseController
 
     /**
      * @Route("/orderUpdatebyclient", name="orderUpdateByClient", methods={"PUT"})
+     * @IsGranted("ROLE_CLIENT")
      * @param Request $request
      * @return JsonResponse
      */
@@ -280,7 +281,7 @@ class OrderController extends BaseController
 
         $request = $this->autoMapping->map(stdClass::class, OrderUpdateByClientRequest::class, (object) $data);
         $request->setProducts($data['products']);
-        $response = $this->orderService->orderUpdateByClient($request);
+        $response = $this->orderService->orderUpdateByClient($request, $this->getUserId());
         if(is_string($response)){
             return $this->response($response, self::ERROR);  
           }
@@ -289,6 +290,7 @@ class OrderController extends BaseController
     
     /**
      * @Route("/orderSpecialUpdateByClient", name="orderSpecialUpdateByClient", methods={"PUT"})
+     * @IsGranted("ROLE_CLIENT")
      * @param Request $request
      * @return JsonResponse
      */
@@ -297,7 +299,7 @@ class OrderController extends BaseController
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, OrderUpdateSpecialByClientRequest::class, (object) $data);
-        $response = $this->orderService->orderSpecialUpdateByClient($request);
+        $response = $this->orderService->orderSpecialUpdateByClient($request, $this->getUserId());
         if(is_string($response)){
             return $this->response($response, self::ERROR);  
           }
@@ -306,6 +308,7 @@ class OrderController extends BaseController
     
     /**
      * @Route("/orderSendUpdateByClient", name="orderSendUpdateByClient", methods={"PUT"})
+     * @IsGranted("ROLE_CLIENT")
      * @param Request $request
      * @return JsonResponse
      */
@@ -314,7 +317,7 @@ class OrderController extends BaseController
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, OrderUpdateSendByClientRequest::class, (object) $data);
-        $response = $this->orderService->orderSendUpdateByClient($request);
+        $response = $this->orderService->orderSendUpdateByClient($request, $this->getUserId());
         if(is_string($response)){
             return $this->response($response, self::ERROR);  
           }

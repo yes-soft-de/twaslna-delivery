@@ -107,22 +107,6 @@ class ClientProfileService
         return $this->userManager->countClients();
     }
 
-    public function getClientLocalNotification($clientID)
-    {
-        $response = [];
-
-        $orders = $this->userManager->getOrdersForSpecificClient($clientID);
-
-        if($orders)
-        {
-            foreach ($orders as $order)
-            {
-                $response['order'][] = $this->autoMapping->map('array', NotificationLocalResponse::class, $order);
-            }
-        }
-        return $response;
-    }
-
     public function clientFilter($itemName)
     {
         $response = [];
