@@ -12,4 +12,6 @@ class NotificationLocalResponse
 
     public $orderNumber;
 
+    public $createdAt;
+
 }
