@@ -172,12 +172,15 @@ class OrderService
         return $response;
     }
 
-    public function closestOrders($userId):?array
+    public function closestOrders($userId)
     {
         $response =[];
-        // $status = $this->userService->captainIsActive($userId);
-       
-        // if ($status->getStatus() == 'active') {
+         $status = $this->captainProfileService->captainIsActive($userId);
+
+        if ($status  == 'inactive') {
+            $response = "inactive";
+        }
+         if ($status  == 'active') {
             $orders = $this->orderManager->closestOrders();
 
             foreach ($orders as $order) {
@@ -191,7 +194,7 @@ class OrderService
                 }
                 $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
             }
-        // }
+         }
         return $response;
     }
     

@@ -252,7 +252,7 @@ class UserManager
         if ($captainProfile == null) {
             $captainProfile = $this->autoMapping->map(UserRegisterRequest::class, CaptainProfileEntity::class, $request);
               //change setStatus to inactive
-            $captainProfile->setStatus('active');
+            $captainProfile->setStatus('inactive');
             $captainProfile->setRoomID($roomID);
             $captainProfile->setCaptainID($userRegister->getId());
             $captainProfile->setCaptainName($request->getUserName());
@@ -273,7 +273,7 @@ class UserManager
         {
             $captainProfile = $this->autoMapping->map(UserRegisterRequest::class, CaptainProfileEntity::class, $request);
              //change setStatus to inactive
-             $captainProfile->setStatus('active');
+             $captainProfile->setStatus('inactive');
              $captainProfile->setRoomID($roomID);
             $captainProfile->setCaptainID($user['id']);
             $captainProfile->setCaptainName($request->getUserName());
