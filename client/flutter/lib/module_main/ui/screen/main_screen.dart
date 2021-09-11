@@ -1,7 +1,9 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:share/share.dart';
 import 'package:twaslna_delivery/di/di_config.dart';
+import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/module_account/ui/screen/account_screen.dart';
 import 'package:twaslna_delivery/module_home/ui/screen/home_screen.dart';
 import 'package:twaslna_delivery/module_my_notifications/ui/screen/my_notifications_screen.dart';
@@ -68,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                     onPressed: () {
-                      
+                      Share.share('${S.current.downloadTwaslnaApp} https://play.google.com/store/apps/details?id=de.yes_soft.twaslna');
                     },
                   ),
                   floatingActionButtonLocation:
