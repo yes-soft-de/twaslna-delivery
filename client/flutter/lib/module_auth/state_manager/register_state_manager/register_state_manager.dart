@@ -16,25 +16,25 @@ class RegisterStateManager {
   final _registerStateSubject = PublishSubject<RegisterState>();
   final _loadingStateSubject = PublishSubject<AsyncSnapshot>();
   late RegisterScreenState _registerScreen;
-
+  bool registered = false;
   RegisterStateManager(this._authService) {
     _authService.authListener.listen((event) {
-      _loadingStateSubject.add(AsyncSnapshot.nothing());
       switch (event) {
         case AuthStatus.AUTHORIZED:
+          _loadingStateSubject.add(AsyncSnapshot.nothing());
           _registerScreen.moveToNext();
           break;
         case AuthStatus.REGISTERED:
-          _registerScreen.userRegistered();
+          registered = true;
           break;
         default:
+          _loadingStateSubject.add(AsyncSnapshot.nothing());
           _registerStateSubject.add(RegisterStateInit(_registerScreen));
           break;
       }
     }).onError((err) {
       _loadingStateSubject.add(AsyncSnapshot.nothing());
-      _registerStateSubject
-          .add(RegisterStateInit(_registerScreen,error: err));
+      _registerStateSubject.add(RegisterStateInit(_registerScreen,error: err,registered: registered));
     });
   }
 
