@@ -30,11 +30,11 @@ class OrderDetailsModel {
         carts: toCartList(response.data?.orderDetails ?? <OrderDetails>[]),
         order: toOrder(response.data?.order),
         storeInfo: StoreOwnerInfo(
+          rating: response.data?.storeOwner?.rating?.rate ?? 0,
           storeOwnerID: response.data?.storeOwner?.storeOwnerID ?? -1,
           storeOwnerName:
               response.data?.storeOwner?.storeOwnerName ?? S.current.storeOwner,
-          image:
-              'https://img.etimg.com/thumb/width-1200,height-900,imgsize-46347,resizemode-1,msid-79150455/news/international/business/pizza-hut-to-offer-pizzas-with-beyond-meat-sausages-in-u-s-uk.jpg',
+          image:response.data?.storeOwner?.image ?? '',
           imageURL:
               'https://img.etimg.com/thumb/width-1200,height-900,imgsize-46347,resizemode-1,msid-79150455/news/international/business/pizza-hut-to-offer-pizzas-with-beyond-meat-sausages-in-u-s-uk.jpg',
         ));
@@ -74,12 +74,13 @@ class StoreOwnerInfo {
   String image = '';
   String imageURL = '';
   bool empty = false;
-
+  num rating = 0;
   StoreOwnerInfo({
     required this.storeOwnerName,
     required this.storeOwnerID,
     required this.image,
     required this.imageURL,
+    required this.rating
   });
 
   StoreOwnerInfo.Empty() {
@@ -143,8 +144,7 @@ List<Item> toCartList(List<OrderDetails> ordersItems) {
         productID: element.productID ?? -1,
         productName: element.productName ?? S.current.product,
         //element.productImage ??
-        productImage:
-            'https://cdn.vox-cdn.com/thumbor/R9xKyUPdU1ZVmGa6EQeh7FcPa_o=/0x0:4047x3035/1200x900/filters:focal(1700x1194:2346x1840):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/62343549/20150915-_Upland_Burger_3.0.0.0.0.jpg',
+        productImage: element.productImage ?? '',
         productPrice: element.productPrice ?? 0,
         countProduct: element.countProduct ?? 1,
         storeOwnerProfileID: element.storeOwnerProfileID ?? -1,

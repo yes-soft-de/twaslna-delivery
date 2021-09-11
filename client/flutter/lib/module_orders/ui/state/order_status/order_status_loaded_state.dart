@@ -27,9 +27,9 @@ class OrderStatusLoadedState extends OrderStatusState {
         ),
         CustomOrderStatusAppBar(
           hide: orderDetails.order.state == OrderStatus.WAITING,
-          onRate: (response){
+          onRate: (rate){
           screenState.rateCaptain(RateCaptainRequest(
-            rating: response.rating,
+            rating: rate,
             itemType: 'captain',
             orderNumber:screenState.orderNumber
           ));

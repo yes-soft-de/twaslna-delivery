@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
-import 'package:rating_dialog/rating_dialog.dart';
+import 'package:twaslna_delivery/utils/components/rate_dialog.dart';
 import 'package:twaslna_delivery/utils/images/images.dart';
 
 class CustomOrderStatusAppBar extends StatelessWidget {
-  final Function(RatingDialogResponse) onRate;
+  final Function(double) onRate;
   final bool hide;
   CustomOrderStatusAppBar({required this.onRate,this.hide = false});
 
@@ -49,14 +49,12 @@ class CustomOrderStatusAppBar extends StatelessWidget {
                   onTap: (){
                     showDialog(
                       context: context,
-                      builder: (context) => RatingDialog(
-                        enableComment: false,
-                        title: S.current.rateStore,
-                        message:S.current.rateStoreMessage,
-                        image: Image.asset(ImageAsset.LOGO,width: 60,height: 60,),
-                        submitButton: S.current.submit,
-                        onSubmitted: (response) {
-                          onRate(response);
+                      builder: (context) => RatingAlertDialog(
+                        title: S.current.rateCaptain,
+                        message:S.current.rateCaptainMessage,
+                        image: ImageAsset.DELIVERY_MOTOR,
+                        onPressed: (rate) {
+                          onRate(rate);
                         },
                       ),
                     );
