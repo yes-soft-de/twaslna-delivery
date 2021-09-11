@@ -54,7 +54,7 @@ class AccountLoadedState extends AccountState {
           AccountTile(text:S.of(context).community,icon:Icons.people,),
           AccountTile(text:S.of(context).termsOfService,icon:Icons.sticky_note_2_rounded,),
           AccountTile(text:S.of(context).about,icon:Icons.info,),
-
+          SizedBox(height: 75,),
         ],
       ),
     );
