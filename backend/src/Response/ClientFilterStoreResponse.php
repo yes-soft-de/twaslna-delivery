@@ -17,4 +17,8 @@ class ClientFilterStoreResponse
     public $privateOrders;
 
     public $hasProducts;
+
+    public $is_best;
+
+    public $rate;
 }
