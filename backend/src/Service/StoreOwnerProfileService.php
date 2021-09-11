@@ -155,6 +155,6 @@ class StoreOwnerProfileService
     }
 
     public function getStoresByName($name) {
-        return $this->userManager->getStoresByName($name);
+       return $this->userManager->getStoresByName($name);
     }
 }

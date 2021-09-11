@@ -116,7 +116,8 @@ class ClientProfileService
 
         foreach ($stores as $store)
             {
-                $response['stores'][] = $this->autoMapping->map('array', ClientFilterStoreResponse::class, $store);
+                $store['rate'] = $this->ratingService->getAvgRating($stores[0]['id'], 'store');
+                $response['stores'][]= $this->autoMapping->map('array', ClientFilterStoreResponse::class, $store);
             }
         foreach ($products as $product)
             {

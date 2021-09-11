@@ -42,7 +42,7 @@ class StoreCategoryController extends BaseController
     }
 
     /**
-     * @Route("/createstorecategory", name="updateStoreCategory", methods={"PUT"})
+     * @Route("/updateStorecategory", name="updateStoreCategory", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse

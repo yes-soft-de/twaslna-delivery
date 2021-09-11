@@ -33,19 +33,19 @@ class StoreProductCategoryManager
         return $entity;
     }
 
-    // public function updateStoreCategory(StoreCategoryUpdateRequest $request)
-    // {
-    //     $entity = $this->storeProductCategoryEntityRepository->find($request->getId());
+     public function updateStoreProductCategory(StoreProductCategoryUpdateRequest $request)
+     {
+         $entity = $this->storeProductCategoryEntityRepository->find($request->getId());
 
-    //     if (!$entity) {
-    //         return null;
-    //     }
-    //     $entity = $this->autoMapping->mapToObject(StoreCategoryUpdateRequest::class, StoreCategoryEntity::class, $request, $entity);
+         if (!$entity) {
+             return null;
+         }
+         $entity = $this->autoMapping->mapToObject(StoreProductCategoryUpdateRequest::class, StoreProductCategoryEntity::class, $request, $entity);
 
-    //     $this->entityManager->flush();
+         $this->entityManager->flush();
 
-    //     return $entity;
-    // }
+         return $entity;
+     }
 
     public function getStoreProductsCategoryForStoreSpecific($storeOwnerProfileId)
     {

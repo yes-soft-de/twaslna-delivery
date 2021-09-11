@@ -41,22 +41,21 @@ class StoreProductCategoryController extends BaseController
         return $this->response($result, self::CREATE);
     }
 
-    //TODO
     /**
-     * @Route("/updateStoreCategory", name="updateStoreCategory", methods={"PUT"})
+     * @Route("/storeProductCategory", name="updateStoreProductCategory", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
      */
-    // public function updateStoreCategory(Request $request)
-    // {
-    //     $data = json_decode($request->getContent(), true);
+     public function updateStoreProductCategory(Request $request)
+     {
+         $data = json_decode($request->getContent(), true);
 
-    //     $request = $this->autoMapping->map(stdClass::class, StoreCategoryUpdateRequest::class, (object)$data);
-    //     $result = $this->storeProductCategoryService->updateStoreCategory($request);
+         $request = $this->autoMapping->map(stdClass::class, StoreProductCategoryUpdateRequest::class, (object)$data);
+         $result = $this->storeProductCategoryService->updateStoreProductCategory($request);
 
-    //     return $this->response($result, self::CREATE);
-    // }
+         return $this->response($result, self::CREATE);
+     }
 
     /**
      * @Route("/storeProductsCategory/{storeOwnerProfileId}", name="getStoreProductsCategoryForStoreSpecific",methods={"GET"})
