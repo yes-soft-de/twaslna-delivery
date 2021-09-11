@@ -15,7 +15,6 @@ class StoreModel {
   bool empty = false;
   num? rating;
   List<StoreModel> models = [];
-
   StoreModel(
       {required this.deliveryCost,
       required this.id,
@@ -26,6 +25,8 @@ class StoreModel {
       this.rating,
       required this.hasProducts,
       required this.privateOrders});
+     StoreModel.none();
+     StoreModel.withData(data);
 
   StoreModel.Empty() {
     this.empty = true;

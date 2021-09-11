@@ -3549,6 +3549,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Download Twaslna App on Play Store`
+  String get downloadTwaslnaApp {
+    return Intl.message(
+      'Download Twaslna App on Play Store',
+      name: 'downloadTwaslnaApp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rate this captain upon your opinion`
+  String get rateCaptainMessage {
+    return Intl.message(
+      'Rate this captain upon your opinion',
+      name: 'rateCaptainMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rate Captain`
+  String get rateCaptain {
+    return Intl.message(
+      'Rate Captain',
+      name: 'rateCaptain',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

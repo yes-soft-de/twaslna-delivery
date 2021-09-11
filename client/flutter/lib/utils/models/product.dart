@@ -39,8 +39,7 @@ class ProductModel {
     productsByCategory.data?.forEach((element) {
       models.add(ProductModel(
           title: element.productName ?? S.current.product,
-          image:
-              'https://images.unsplash.com/photo-1513104890138-7c749659a591?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80',
+          image:element.productImage ?? '',
           price: element.productPrice ?? 0,
           id: element.id ?? -1));
     });
@@ -50,8 +49,7 @@ class ProductModel {
     storeProducts.data?.forEach((element) {
       models.add(ProductModel(
           title: element.productName ?? S.current.product,
-          image:
-              'https://images.unsplash.com/photo-1513104890138-7c749659a591?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80',
+          image:element.productImage ?? 'https://images.unsplash.com/photo-1513104890138-7c749659a591?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80',
           id: element.id ?? -1,
           price: element.productPrice ?? 0));
     });

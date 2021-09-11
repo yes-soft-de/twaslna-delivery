@@ -350,7 +350,11 @@
   "rateStoreMessage": "Rate this store in your opinion",
   "submit": "Submit",
   "storeRated": "stores has been rated",
-  "rateSubmitting":"Your rate has been submitted"
+  "rateSubmitting":"Your rate has been submitted",
+  "downloadTwaslnaApp": "Download Twaslna App on Play Store",
+  "rateCaptainMessage":"Rate this captain upon your opinion" ,
+  "rateCaptain": "Rate Captain"
+
 
 
 }

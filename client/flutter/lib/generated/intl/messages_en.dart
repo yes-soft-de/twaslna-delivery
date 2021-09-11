@@ -150,6 +150,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "destinationAddressHint": MessageLookupByLibrary.simpleMessage(
             "Please place your destination address"),
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
+        "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
+            "Download Twaslna App on Play Store"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),
         "earnCash": MessageLookupByLibrary.simpleMessage("Earn Cash"),
         "editBranchName":
@@ -379,6 +381,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "There is no profile data available"),
         "profileFetchedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Profile Data Fetched Successfully"),
+        "rateCaptain": MessageLookupByLibrary.simpleMessage("Rate Captain"),
+        "rateCaptainMessage": MessageLookupByLibrary.simpleMessage(
+            "Rate this captain upon your opinion"),
         "rateStore": MessageLookupByLibrary.simpleMessage("Rate Store"),
         "rateStoreMessage": MessageLookupByLibrary.simpleMessage(
             "Rate this store in your opinion"),
