@@ -35,16 +35,9 @@ class StoreCategoryManager
 
     public function updateStoreCategory(StoreCategoryUpdateRequest $request)
     {
-        $related = $this->storeCategoryEntityRepository->areThereItemsRelatedToThisStoreCategory($request->getId());
-       
-        if ($related) {
-            return 'has items';
-        }
+
         $entity = $this->storeCategoryEntityRepository->find($request->getId());
 
-        if (!$entity) {
-            return null;
-        }
         $entity = $this->autoMapping->mapToObject(StoreCategoryUpdateRequest::class, StoreCategoryEntity::class, $request, $entity);
 
         $this->entityManager->flush();

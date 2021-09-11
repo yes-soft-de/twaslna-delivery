@@ -31,9 +31,6 @@ class StoreCategoryService
     {
         $item = $this->storeCategoryManager->updateStoreCategory($request);
  
-        if (is_string($item)){ 
-            return $item;
-         }
         return $this->autoMapping->map(StoreCategoryEntity::class, StoreCategoryCreateResponse::class, $item);
     }
 

@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\StoreProductCategoryEntity;
 use App\Manager\StoreProductCategoryManager;
 use App\Request\StoreProductCategoryCreateRequest;
+use App\Request\StoreProductCategoryUpdateRequest;
 use App\Response\StoreProductCategoryCreateResponse;
 use App\Response\StoreProductsCategoryResponse;
 
@@ -26,13 +27,13 @@ class StoreProductCategoryService
          
         return $this->autoMapping->map(StoreProductCategoryEntity::class, StoreProductCategoryCreateResponse::class, $item);
     }
-//TODO
-    // public function updateStoreCategory($request)
-    // {
-    //     $item = $this->storeProductCategoryManager->updateStoreCategory($request);
 
-    //     return $this->autoMapping->map(StoreCategoryEntity::class, StoreCategoryCreateResponse::class, $item);
-    // }
+     public function updateStoreProductCategory(StoreProductCategoryUpdateRequest $request)
+     {
+         $item = $this->storeProductCategoryManager->updateStoreProductCategory($request);
+
+         return $this->autoMapping->map(StoreProductCategoryEntity::class, StoreProductCategoryCreateResponse::class, $item);
+     }
 
     public function getStoreProductsCategoryForStoreSpecific($storeOwnerProfileId)
     {

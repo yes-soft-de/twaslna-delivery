@@ -131,8 +131,6 @@ class ProductController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
-
-    //TODO. note in excel file
     
     /**
      * @Route("/updateProductByAdmin", name="updateProductByAdmin", methods={"PUT"})
