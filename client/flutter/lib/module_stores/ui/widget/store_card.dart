@@ -141,23 +141,26 @@ class StoreCardView extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color:Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment:
-                      MainAxisAlignment.spaceAround,
-                      children: [
-                        Icon(Icons.star,size: 12.5,color: Colors.blue[700]),
-                        Container(width: 2,),
-                        Text('4.7',style: TextStyle(
-                            fontSize: 14
-                        ),),
-                      ],
+                Hider(
+                  active: false,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color:Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceAround,
+                        children: [
+                          Icon(Icons.star,size: 12.5,color: Colors.blue[700]),
+                          Container(width: 2,),
+                          Text('4.7',style: TextStyle(
+                              fontSize: 14
+                          ),),
+                        ],
+                      ),
                     ),
                   ),
                 ),

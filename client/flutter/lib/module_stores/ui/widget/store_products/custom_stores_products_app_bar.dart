@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:rating_dialog/rating_dialog.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/utils/components/rate_dialog.dart';
 import 'package:twaslna_delivery/utils/effect/hidder.dart';
 import 'package:twaslna_delivery/utils/images/images.dart';
 class CustomStoresProductsAppBar extends StatelessWidget {
-  final Function(RatingDialogResponse) onRate;
+  final Function(double) onRate;
   final bool isLogin;
-  CustomStoresProductsAppBar({required this.onRate,required this.isLogin});
+  final String image;
+  CustomStoresProductsAppBar({required this.onRate,required this.isLogin,required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +53,12 @@ class CustomStoresProductsAppBar extends StatelessWidget {
                     // show the dialog
                     showDialog(
                       context: context,
-                      builder: (context) => RatingDialog(
-                        enableComment: false,
+                      builder: (context) => RatingAlertDialog(
+                        image: image,
                         title: S.current.rateStore,
                         message:S.current.rateStoreMessage,
-                        image: Image.asset(ImageAsset.LOGO,width: 60,height: 60,),
-                        submitButton: S.current.submit,
-                        onSubmitted: (response) {
-                          onRate(response);
+                        onPressed: (rate) {
+                          onRate(rate);
                         },
                       ),
                     );

@@ -8,6 +8,7 @@ import 'package:twaslna_delivery/module_stores/request/rate_store_request.dart';
 import 'package:twaslna_delivery/module_stores/response/products_by_category.dart';
 import 'package:twaslna_delivery/module_stores/response/products_category.dart';
 import 'package:twaslna_delivery/module_stores/response/store_products.dart';
+import 'package:twaslna_delivery/module_stores/response/store_profile_response.dart';
 
 @injectable
 class StoreProductsRepository {
@@ -15,6 +16,13 @@ class StoreProductsRepository {
   final AuthService _authService;
 
   StoreProductsRepository(this._apiClient, this._authService);
+
+  Future<StoreProfileResponse?> getStoreProfile(int id) async {
+    dynamic response =
+    await _apiClient.get(Urls.GET_STORE_PROFILE + '$id');
+    if (response == null) return null;
+    return StoreProfileResponse.fromJson(response);
+  }
 
   Future<StoreProducts?> getMostWantedProducts(int id) async {
     dynamic response =

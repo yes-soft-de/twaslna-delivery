@@ -5,6 +5,7 @@ import 'package:twaslna_delivery/module_orders/request/client_order_request.dart
 import 'package:twaslna_delivery/hive/objects/cart_model/cart_model.dart';
 import 'package:twaslna_delivery/module_stores/model/category_model.dart';
 import 'package:twaslna_delivery/module_stores/model/checkout_model.dart';
+import 'package:twaslna_delivery/module_stores/model/store_profile_model.dart';
 import 'package:twaslna_delivery/module_stores/presistance/cart_hive_box_helper.dart';
 import 'package:twaslna_delivery/module_stores/request/rate_store_request.dart';
 import 'package:twaslna_delivery/module_stores/ui/screen/store_products_screen.dart';
@@ -26,9 +27,10 @@ class StoreProductsLoadedState extends StoreProductsState {
   StoreProductsScreenState screenState;
   List<ProductModel> topWantedProducts;
   List<CategoryModel> productsCategory;
+  StoreProfile storeProfile;
   List<CartModel>? orderCart;
   StoreProductsLoadedState(this.screenState,
-      {required this.topWantedProducts, required this.productsCategory,required this.orderCart})
+      {required this.storeProfile,required this.topWantedProducts, required this.productsCategory,required this.orderCart})
       : super(screenState){
     if (orderCart != null ){
       fromEditingOrder = true;
@@ -54,17 +56,13 @@ class StoreProductsLoadedState extends StoreProductsState {
         .of(context)
         .size
         .width;
-    var args = ModalRoute
-        .of(context)
-        ?.settings
-        .arguments;
-    if (args is StoreModel) {
-      title = args.storeOwnerName;
-      backgroundImage = args.image;
-      storeId = args.id;
-      deliveryCost = args.deliveryCost ;
-      rate = args.rating ?? 0;
-    }
+
+      title = storeProfile.storeOwnerName;
+      backgroundImage = storeProfile.image;
+      storeId = storeProfile.id;
+      deliveryCost = storeProfile.deliveryCost ;
+      rate = storeProfile.rating ?? 0;
+
     return Stack(
       children: [
         CustomNetworkImage(
@@ -74,11 +72,12 @@ class StoreProductsLoadedState extends StoreProductsState {
         ),
         CustomStoresProductsAppBar(
           isLogin: screenState.authService.isLoggedIn,
-          onRate: (response){
+          image: backgroundImage,
+          onRate: (rate){
             screenState.rateStore(RateStoreRequest(
               itemID: storeId,
               itemType: 'store',
-              rating: response.rating
+              rating: rate
             ));
           },
         ),

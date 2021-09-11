@@ -49,13 +49,13 @@ class Data {
 
   Data.fromJson(dynamic json) {
     id = json['id'];
-    productCategoryName = json['ProductCategoryName'];
+    productCategoryName = json['productCategoryName'];
   }
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
     map['id'] = id;
-    map['ProductCategoryName'] = productCategoryName;
+    map['productCategoryName'] = productCategoryName;
     return map;
   }
 

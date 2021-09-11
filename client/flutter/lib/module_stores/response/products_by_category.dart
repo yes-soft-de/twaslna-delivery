@@ -61,7 +61,7 @@ class Data {
     productImage = json['productImage'];
     productPrice = json['productPrice']?.toDouble();
     storeOwnerProfileID = json['storeOwnerProfileID'];
-    productCategoryID = json['ProductCategoryID'];
+    productCategoryID = json['storeProductCategoryID'];
   }
 
   Map<String, dynamic> toJson() {

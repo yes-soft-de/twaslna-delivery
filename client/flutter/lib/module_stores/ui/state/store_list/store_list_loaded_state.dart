@@ -29,7 +29,7 @@ class StoreListLoadedState extends StoreListState {
       children: [
         CustomNetworkImage(
           imageSource:ImageAsset.STORE_CATEGORY_SUPER_MARKET,
-          asset: true,
+          assets: true,
           height: height * 0.5,
           width: width,
         ),
