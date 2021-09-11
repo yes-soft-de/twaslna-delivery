@@ -8,21 +8,24 @@ class CustomNetworkImage extends StatelessWidget {
   final double height;
   final double width;
   final String imageSource;
-  bool asset;
+  final bool assets;
   final Color? background;
   CustomNetworkImage({required this.height,
     required this.width,
     required this.imageSource,
-    this.asset = false,
+    this.assets = false,
     this.background,
   });
 
   @override
   Widget build(BuildContext context) {
+    bool asset = assets;
     var image = imageSource;
     if (asset == false && !image.contains('/original-image/')){
       asset = true;
-      image = ImageAsset.PLACEHOLDER;
+      if (!image.contains('assets')){
+        image = ImageAsset.PLACEHOLDER;
+      }
     }
     if (asset) {
       return ProgressiveImage.custom(
