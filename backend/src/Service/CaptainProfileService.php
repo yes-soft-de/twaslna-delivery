@@ -11,6 +11,7 @@ use App\Request\CaptainProfileUpdateRequest;
 use App\Request\CaptainProfileUpdateLocationRequest;
 use App\Request\UserRegisterRequest;
 use App\Request\CaptainProfileUpdateByAdminRequest;
+use App\Response\CaptainIsActiveResponse;
 use App\Response\CaptainProfileCreateResponse;
 use App\Response\CaptainFinancialAccountDetailsResponse;
 use App\Response\CaptainFinancialAccountDetailsForAdminResponse;
@@ -178,11 +179,9 @@ class CaptainProfileService
     public function captainIsActive($captainID)
     {
         $item = $this->userManager->captainIsActive($captainID);
-        if ($item) {
-          return  $item[0]['status'];
-        }
+        return $this->autoMapping->map('array',CaptainIsActiveResponse::class, $item);
 
-        return $item ;
+
      }
 
      public function dashboardCaptains():array
