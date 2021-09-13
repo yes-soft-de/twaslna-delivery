@@ -18,9 +18,11 @@ class OrdersResponse {
       msg = json['msg'];
       if (json['Data'] != null) {
         data = [];
+      if (json['Data'] is List) {
         json['Data'].forEach((v) {
           data?.add(Data.fromJson(v));
         });
+      }
       }
     } catch(e){
       Logger().error('Order Response', e.toString(), StackTrace.current);

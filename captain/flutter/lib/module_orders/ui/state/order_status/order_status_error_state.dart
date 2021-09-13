@@ -42,7 +42,7 @@ class OrderStatusErrorState extends OrderDetailsState {
               Container(height: 24,),
               SvgPicture.asset(
                 SvgAsset.ERROR_SVG,
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: MediaQuery.of(context).size.height * 0.45,
               ),
               Container(height: 32,),
               Center(

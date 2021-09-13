@@ -103,7 +103,7 @@ class OrdersService {
               .collection('twaslna_action')
               .doc('new_action')
               .collection('action_history')
-              .add({'date': DateTime.now().toUtc().toIso8601String()}).timeout(Duration(seconds: 10)).catchError((e){
+              .add({'date': DateTime.now().toUtc().toIso8601String()}).catchError((e){
                 Logger().error('FireStore on action', e.toString(), StackTrace.current);
          });
   }

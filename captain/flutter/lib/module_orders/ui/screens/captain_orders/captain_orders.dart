@@ -33,6 +33,8 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   final advancedController = AdvancedDrawerController();
 
   void getMyOrders() {
+    ordersPageController = PageController(initialPage: currentPage);
+    widget._stateManager.getProfile(this);
     widget._stateManager.getMyOrders(this);
   }
   Future <void> refreshOrders() async {

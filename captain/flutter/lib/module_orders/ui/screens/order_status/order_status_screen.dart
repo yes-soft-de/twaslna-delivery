@@ -1,10 +1,7 @@
 import 'dart:io';
-
-import 'package:device_info/device_info.dart';
-import 'package:edge_detection/edge_detection.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:twaslna_captain/consts/order_status.dart';
 import 'package:twaslna_captain/generated/l10n.dart';
 import 'package:twaslna_captain/module_orders/model/order/order_details_model.dart';
@@ -17,7 +14,6 @@ import 'package:twaslna_captain/module_orders/ui/state/order_status/order_status
 import 'package:twaslna_captain/module_orders/ui/widgets/order_widget/invoice_dialog.dart';
 import 'package:twaslna_captain/utils/components/custom_alert_dialog.dart';
 import 'package:twaslna_captain/utils/components/custom_app_bar.dart';
-import 'package:twaslna_captain/utils/components/twaslna_captain_field.dart';
 import 'package:twaslna_captain/utils/helpers/custom_flushbar.dart';
 import 'package:twaslna_captain/utils/helpers/order_status_helper.dart';
 import 'package:twaslna_captain/utils/logger/logger.dart';
@@ -37,7 +33,6 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
   OrderDetailsState? currentState;
   OrderInvoiceRequest? invoiceRequest;
   bool makeInvoice = false;
-  bool easyPermissions = false;
 
   @override
   void initState() {
@@ -46,15 +41,6 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
       currentState = event;
       if (mounted) {
         setState(() {});
-      }
-      if (makeInvoice) {
-        checkSdkNumber().then((value) {
-
-          if (value < 24) {
-            easyPermissions = true;
-          }
-
-        });
       }
     });
     super.initState();
@@ -198,22 +184,14 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
   Future<void> detectInvoice() async {
     String? imagePath;
     try {
-      await permissionCheck();
-      var cameraStatus = await Permission.camera.status;
-      var manageStorage = await Permission.manageExternalStorage.status;
-      var storage = await Permission.storage.status;
+//        imagePath = await EdgeDetection.detectEdge;
+    await ImagePicker.platform.pickImage(source:ImageSource.camera,imageQuality: 70).then((value){
 
-      if ((cameraStatus.isGranted &&
-          manageStorage.isGranted &&
-          storage.isGranted) || (easyPermissions)) {
-        imagePath = await EdgeDetection.detectEdge;
-      } else {
-        await CustomFlushBarHelper.createError(
-                title: S.current.warnning,
-                message: S.current.thereIsNoPermission)
-            .show(context);
-        return;
+      if (value != null){
+      imagePath = value.path;
       }
+
+    });
     } catch (e) {
       Logger().error('Detect Edge', e.toString(), StackTrace.current);
       await CustomFlushBarHelper.createError(
@@ -250,29 +228,5 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
             );
           });
     }
-  }
-
-  Future<void> permissionCheck() async {
-    var cameraStatus = await Permission.camera.status;
-    var manageStorage = await Permission.manageExternalStorage.status;
-    var storage = await Permission.storage.status;
-    if (!storage.isGranted) {
-      await Permission.storage.request();
-    }
-    if (!manageStorage.isGranted) {
-      await Permission.manageExternalStorage.request();
-    }
-    if (!cameraStatus.isGranted) {
-      await Permission.camera.request();
-      return;
-    }
-  }
-
-  Future<int> checkSdkNumber() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    var androidInfo = await deviceInfo.androidInfo;
-    int sdk = await androidInfo.version.sdkInt;
-    print('API SDK BUILD NUMBER $sdk');
-    return sdk;
   }
 }
