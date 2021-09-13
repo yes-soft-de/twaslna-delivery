@@ -419,5 +419,9 @@
   "hour":"hour",
   "hours":"hours",
   "minutes": "minutes",
-  "minute": "minute"
+  "minute": "minute",
+  "accountAlreadyExist": "This account already exist",
+  "captainAccountInActive": "Captain Account In Active , Please wait the administration to activate your account"
+
+
 }

@@ -32,6 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "acceptOrderDescribtion": MessageLookupByLibrary.simpleMessage(
             "You can accept your mission to deliver package"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
+        "accountAlreadyExist":
+            MessageLookupByLibrary.simpleMessage("This account already exist"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("Account Created"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("Account Number"),
@@ -81,6 +83,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("captain headed to store"),
         "captainAcceptedOrder":
             MessageLookupByLibrary.simpleMessage("Captain Accepted Order"),
+        "captainAccountInActive": MessageLookupByLibrary.simpleMessage(
+            "Captain Account In Active , Please wait the administration to activate your account"),
         "captainGotCash":
             MessageLookupByLibrary.simpleMessage("Captain Got Cash"),
         "captainGotTheCash":

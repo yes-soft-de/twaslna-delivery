@@ -15,12 +15,16 @@ class StatusCodeHelper {
         return S.current.statusCodeBadRequest;
       case '401':
         return S.current.statusCodeUnauthorized;
-      case '403':
-        return S.current.statusCodeUnauthorized;
       case '404':
         return S.current.StatusCodeNotFound;
       case '500':
         return S.current.internalServerError;
+      case '9000':
+        return S.current.invalidCredentials;
+      case '9001':
+        return S.current.accountAlreadyExist;
+      case '9002':
+        return S.current.captainAccountInActive;
       case '-1':
         return S.current.dataDecodeError;
       default:

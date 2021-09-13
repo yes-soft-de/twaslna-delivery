@@ -28,6 +28,9 @@ class Urls {
   static const CAPTAIN_BALANCE_ACCOUNT = BASE_API + '/captainFinancialAccount';
   static const CAPTAIN_BALANCE_LAST_MONTH = BASE_API + '/captainFinancialAccountInLastMonth';
   static const GET_ORDER_LOGS = BASE_API + '/orderLogs';
+  static const CHECK_USER_ROLE = BASE_API + '/checkUserType';
+
+
 
 
 }
