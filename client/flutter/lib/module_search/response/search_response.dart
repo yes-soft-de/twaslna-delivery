@@ -1,3 +1,4 @@
+import 'package:twaslna_delivery/module_stores/response/rating.dart';
 import 'package:twaslna_delivery/utils/logger/logger.dart';
 
 class SearchResponse {
@@ -128,6 +129,7 @@ class Stores {
   int? storeCategoryId;
   bool? privateOrders;
   bool? hasProducts;
+  Rating? rating;
 
   Stores({
       this.id, 
@@ -136,7 +138,9 @@ class Stores {
       this.phone, 
       this.storeCategoryId, 
       this.privateOrders, 
-      this.hasProducts});
+      this.hasProducts,
+      this.rating
+  });
 
   Stores.fromJson(dynamic json) {
     id = json['id'];
@@ -146,6 +150,7 @@ class Stores {
     storeCategoryId = json['storeCategoryId'];
     privateOrders = json['privateOrders'];
     hasProducts = json['hasProducts'];
+    rating = json['rate'] != null ? Rating.fromJson(json['rate']) : null;
   }
 
   Map<String, dynamic> toJson() {

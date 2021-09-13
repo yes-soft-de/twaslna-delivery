@@ -41,7 +41,7 @@ class SearchLoadedState extends SearchState {
   }
 
   List<Widget> getSearchCard() {
-    print(search.store);
+
     if (search.isEmpty) return [];
     List<Widget> searchWidget = [];
     if (search.store.isNotEmpty) {
@@ -64,6 +64,7 @@ class SearchLoadedState extends SearchState {
     }
     search.store.forEach((element) {
       searchWidget.add(StoreCardView(
+        rate: element.rating,
         title: element.storeOwnerName,
         onTap: () {
           if (element.hasProducts && element.privateOrders) {
