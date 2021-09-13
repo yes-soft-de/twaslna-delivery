@@ -84,9 +84,9 @@ class OrderController extends BaseController
     {
         $response = $this->orderService->closestOrders($this->getUserId());
 
-        if ($response == 'inactive' ){
-            return $this->response($response, self::ERROR_CAPTAIN_INACTIVE);
-        }
+        // if ($response == 'inactive' ){
+        //     return $this->response($response, self::ERROR_CAPTAIN_INACTIVE);
+        // }
         return $this->response($response, self::FETCH);
     }
 

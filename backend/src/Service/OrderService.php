@@ -175,10 +175,10 @@ class OrderService
 
     public function closestOrders($userId)
     {
-        $response = $this->captainProfileService->captainIsActive($userId);
-        if ($response->getStatus() == 'inactive') {
-            return 'inactive';
-        }
+        // $response = $this->captainProfileService->captainIsActive($userId);
+        // if ($response->getStatus() == 'inactive') {
+        //     return 'inactive';
+        // }
 
 //        if ($response->getStatus() == 'active') {
             $response =[];
@@ -187,6 +187,7 @@ class OrderService
             foreach ($orders as $order) {
                 if ($order['storeOwnerProfileID'] == true) {  
                     $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($order['storeOwnerProfileID']);
+                    var_dump($order['storeOwner']);
                     if( $order['storeOwner'] != null ){
                         $order['storeOwnerName']=$order['storeOwner']->storeOwnerName;
                         $order['image']=$order['storeOwner']->image;
