@@ -32,4 +32,12 @@ class AuthRepository {
     }
     return LoginResponse.fromJson(result);
   }
+  Future<RegisterResponse?> checkUserType(String role, String token) async {
+    dynamic result = await _apiClient.post(Urls.CHECK_USER_ROLE + '/$role', {},
+        headers: {'Authorization': 'Bearer $token'});
+
+    if (result == null) return null;
+
+    return RegisterResponse.fromJson(result);
+  }
 }
