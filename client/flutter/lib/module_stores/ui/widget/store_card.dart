@@ -99,7 +99,8 @@ class StoreCardView extends StatelessWidget {
   final String title;
   final GestureTapCallback? onTap;
   final String image;
-  StoreCardView({required this.title,this.onTap,required this.image});
+  final num? rate;
+  StoreCardView({required this.title,this.onTap,required this.image,required this.rate});
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +143,7 @@ class StoreCardView extends StatelessWidget {
                   ),
                 ),
                 Hider(
-                  active: false,
+                  active: rate != null,
                   child: Container(
                     decoration: BoxDecoration(
                       color:Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
@@ -156,7 +157,7 @@ class StoreCardView extends StatelessWidget {
                         children: [
                           Icon(Icons.star,size: 12.5,color: Colors.blue[700]),
                           Container(width: 2,),
-                          Text('4.7',style: TextStyle(
+                          Text(rate.toString(),style: TextStyle(
                               fontSize: 14
                           ),),
                         ],
