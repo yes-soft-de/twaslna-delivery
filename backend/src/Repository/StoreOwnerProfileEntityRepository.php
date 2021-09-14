@@ -69,7 +69,8 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
 
             ->leftJoin(StoreOwnerBranchEntity::class, 'StoreOwnerBranchEntity', Join::WITH, 'StoreOwnerBranchEntity.storeOwnerProfileID = profile.id ')
 
-            ->andWhere('profile.is_best = 1')
+            ->andWhere('profile.is_best = :best')
+            ->setParameter('best','best')
             ->groupBy('profile.id')
             ->getQuery()
             ->getResult();

@@ -24,8 +24,8 @@ class DeliveryCompanyPackageEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('package')
             ->select('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, package.status, package.city, package.branch')
 
-            ->andWhere("package.status = 'active'")
-
+            ->andWhere("package.status = :active")
+            ->setParameter('active','active')
             ->getQuery()
             ->getResult();
     }
