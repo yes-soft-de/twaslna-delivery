@@ -78,8 +78,8 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('captainProfile')
             ->addSelect('captainProfile.id', 'captainProfile.captainID', 'captainProfile.captainName', 'captainProfile.image', 'captainProfile.location', 'captainProfile.age', 'captainProfile.car', 'captainProfile.drivingLicence', 'captainProfile.salary', 'captainProfile.status', 'captainProfile.specialLink', 'captainProfile.mechanicLicense', 'captainProfile.identity')
 
-            ->andWhere("captainProfile.status = 'inactive' ")
-
+            ->andWhere("captainProfile.status = :inactive ")
+            ->setParameter('inactive', 'inactive')
             ->getQuery()
             ->getResult();
     }
@@ -130,8 +130,8 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('captainProfile')
             ->select('count (captainProfile.id) as countPendingCaptains')
 
-            ->andWhere("captainProfile.status = 'inactive'")
-
+            ->andWhere("captainProfile.status = :inactive")
+            ->setParameter('inactive', 'inactive')
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -143,8 +143,8 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
 
             ->join(OrderEntity::class, 'OrderEntity')
 
-            ->andWhere("OrderEntity.state = 'ongoing'")
-
+            ->andWhere("OrderEntity.state = :ongoing")
+            ->setParameter('ongoing','ongoing')
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -155,7 +155,7 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
             ->select('count (captainProfile.id) as countDayOfCaptains')
 
             ->andWhere("captainProfile.state = 'vacation'")
-
+            ->setParameter('vacation','vacation')
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -165,8 +165,8 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('captainProfile')
             ->select('captainProfile.id', 'captainProfile.captainID', 'captainProfile.captainName', 'captainProfile.image', 'captainProfile.location', 'captainProfile.age', 'captainProfile.car', 'captainProfile.drivingLicence', 'captainProfile.salary', 'captainProfile.status', 'captainProfile.state', 'captainProfile.specialLink')
 
-            ->andWhere("captainProfile.state = 'vacation'")
-
+            ->andWhere("captainProfile.state = :vacation")
+            ->setParameter('vacation', 'vacation')
             ->getQuery()
             ->getResult();
     }
@@ -243,8 +243,8 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
 
             ->leftJoin(OrderEntity::class, 'OrderEntity', Join::WITH, 'OrderEntity.captainID = captainProfileEntity.captainID')
 
-            // ->andWhere("OrderEntity.state ='deliverd'")
-           
+            // ->andWhere("OrderEntity.state =:deliverd")
+            // ->setParameter('deliverd', 'deliverd')
             ->addGroupBy('OrderEntity.captainID')
             
             ->having('count(OrderEntity.captainID) > 0')
@@ -266,8 +266,8 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
 
              ->where('OrderEntity.date >= :fromDate')
              ->andWhere('OrderEntity.date < :toDate')
-            // ->andWhere("OrderEntity.state ='deliverd'")
-        
+            // ->andWhere("OrderEntity.state = :deliverd")
+            // ->setParameter('deliverd', 'deliverd')
             ->addGroupBy('OrderEntity.captainID')
             
             ->having('count(OrderEntity.captainID) > 0')
@@ -284,7 +284,8 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
     {
         return  $this->createQueryBuilder('captainProfileEntity')
                 ->select('count(captainProfileEntity.id) as count')
-                ->andWhere("captainProfileEntity.status = 'active'")
+                ->andWhere("captainProfileEntity.status = :active")
+                ->setParameter('active', 'active')
                 ->getQuery()
                 ->getOneOrNullResult();
     }
