@@ -187,7 +187,6 @@ class OrderService
             foreach ($orders as $order) {
                 if ($order['storeOwnerProfileID'] == true) {  
                     $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($order['storeOwnerProfileID']);
-                    var_dump($order['storeOwner']);
                     if( $order['storeOwner'] != null ){
                         $order['storeOwnerName']=$order['storeOwner']->storeOwnerName;
                         $order['image']=$order['storeOwner']->image;

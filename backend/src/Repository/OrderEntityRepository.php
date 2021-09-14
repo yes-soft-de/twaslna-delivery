@@ -67,7 +67,8 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('orderDetailEntity.id as orderDetailId', 'orderDetailEntity.orderNumber')
 
             ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
-            ->andWhere("OrderEntity.state = 'pending' ")
+            ->andWhere('OrderEntity.state = :pending ')
+            ->setParameter('pending', 'pending')
             ->addGroupBy('OrderEntity.id')
             ->getQuery()
             ->getResult();
