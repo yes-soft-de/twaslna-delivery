@@ -18,6 +18,7 @@ use App\Response\CaptainFinancialAccountDetailsForAdminResponse;
 use App\Response\CaptainTotalFinancialAccountInMonthResponse;
 use App\Response\CaptainTotalFinancialAccountInMonthForAdminResponse;
 use App\Response\CaptainCountOrdersDeliveredInTodayResponse;
+use App\Response\CaptainsWithUnfinishedPaymentsResponse;
 use App\Response\UserRegisterResponse ;
 use App\Service\CaptainPaymentService;
 use App\Service\RoomIdHelperService;
@@ -529,21 +530,19 @@ class CaptainProfileService
     public function getCaptainsWithUnfinishedPayments()
     {
         $response = [];
-        $result = [];
         $captains = $this->userManager->getAllCaptains();
      
         foreach ($captains as $captain) {
                  $totalBounce = $this->getCaptainFinancialAccountDetailsByCaptainIdForAdmin($captain['captainID']);
 
                  $total=$totalBounce[0]->total;
-                 $captain['total'] = $total;
+                 $captain['remainingAmountForCaptain'] = $total;
 
-                if ($captain['total'] < 0 ){
-                $response[] =  $this->autoMapping->map('array', CaptainProfileCreateResponse::class, $captain);
-                  }
+                if ($captain['remainingAmountForCaptain'] < 0 ){
+                $response[] =  $this->autoMapping->map('array', CaptainsWithUnfinishedPaymentsResponse::class, $captain);
+                }
         } 
-        $result['response'] = $response;
-        return $result;
+        return $response;
     }
 
     public function updateCaptainNewMessageStatus($request, $NewMessageStatus)
