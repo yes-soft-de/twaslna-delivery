@@ -382,7 +382,7 @@ class CaptainProfileService
              $item['remainingAmountForCompany'] = (float)$item['amountYouOwn'] - $item['sumPaymentsToCompany'];
              $item['bounce'] = $item[0]['bounce'] * $item['countOrdersDelivered'];
              $item['salary'] = $item[0]['salary'];
-             $item['NetProfit'] = $item[0]['bounce'] + $item[0]['salary'] + $item['kilometerBonus'];;
+             $item['NetProfit'] = $item['bounce'] + $item[0]['salary'] + $item['kilometerBonus'];;
              $item['total'] = $item['NetProfit'] - $item['sumPaymentsFromCompany'];
              $item['paymentsFromCompany'] = $paymentsFromCompany;
 
@@ -412,9 +412,7 @@ class CaptainProfileService
              }
 
         if ($item) {
-            
-             $countOrdersDelivered = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);           
-            
+             $countOrdersDelivered = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);          
              $paymentsToCaptain = $this->captainPaymentService->getPaymentsFromCompanyInSpecificDate( $item[0]['captainID'] ,$date[0], $date[1]);     
             
              $paymentsFromCaptain = $this->captainPaymentService->getPaymentsToCompanyInSpecificDate( $item[0]['captainID'] ,$date[0], $date[1]);     
@@ -431,9 +429,10 @@ class CaptainProfileService
              $item['sumPaymentsFromCaptain'] = (float)$sumPaymentsFromCaptain[0]['sumPayments'];
              $item['remainingAmountForCompany'] = (float)$item['amountWithCaptain'] - $item['sumPaymentsFromCaptain'];
              $item['bounce'] = $item[0]['bounce'] * $item['countOrdersDelivered'];
-             $item['salary'] = $item[0]['salary'];
-             $item['NetProfit'] = $item[0]['bounce'] + $item[0]['salary'] + $item['kilometerBonus'];
 
+             $item['salary'] = $item[0]['salary'];
+            
+             $item['NetProfit'] = $item['bounce'] + $item[0]['salary'] + $item['kilometerBonus'];
              // + Positive: the account is on the captain
              // - Negative: the account is for the captain
              $item['total'] =  $item['sumPaymentsToCaptain'] - $item['NetProfit'];
