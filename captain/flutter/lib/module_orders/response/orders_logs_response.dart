@@ -32,7 +32,7 @@ class Data {
   int? orderNumber;
   CreatedAt? createdAt;
   String? completionTime;
-  CurrentStage? currentStage;
+  String? currentStage;
 
   Data(
       {this.id,
@@ -48,15 +48,7 @@ class Data {
         ? CreatedAt.fromJson(json['createdAt'])
         : null;
     completionTime = json['completionTime'];
-    if (json['currentStage'] != null) {
-      if (json['currentStage'] is List) {
-        if (json['currentStage'].isNotEmpty) {
-          currentStage = CurrentStage.fromJson(json['currentStage'][0]);
-        }
-      } else if (json['currentStage'] is Map) {
-        currentStage = CurrentStage.fromJson(json['currentStage']);
-      }
-    }
+    currentStage = json['currentStage'];
   }
 
   Map<String, dynamic> toJson() {

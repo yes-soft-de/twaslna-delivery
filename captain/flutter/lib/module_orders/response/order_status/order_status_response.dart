@@ -45,14 +45,16 @@ class Data {
       this.order});
 
   Data.fromJson(dynamic json) {
+
     if (json['orderDetails'] != null) {
       orderDetails = [];
-      json['orderDetails'].forEach((v) {
+      json['orderDetails']?.forEach((v) {
         orderDetails?.add(OrderDetails.fromJson(v));
       });
     }
     storeOwner = json['storeOwner'] != null ? StoreOwner.fromJson(json['storeOwner']) : null;
     order = json['order'] != null ? Order.fromJson(json['order']) : null;
+    //
   }
 
   Map<String, dynamic> toJson() {
@@ -119,7 +121,11 @@ class Order {
         source = GeoJson.fromJson(json['source']);
       }
     }
-    destination = json['destination'] != null ? GeoJson.fromJson(json['destination']) : null;
+    if (json['destination'] != null) {
+      if (json['destination'] is Map){
+        destination = GeoJson.fromJson(json['destination']);
+      }
+    }
     deliveryDate = json['deliveryDate'] != null ? DeliveryDate.fromJson(json['deliveryDate']) : null;
     updatedAt = json['updatedAt'];
     note = json['note'];

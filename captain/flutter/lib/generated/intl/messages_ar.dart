@@ -32,6 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "acceptOrderDescribtion": MessageLookupByLibrary.simpleMessage(
             "يمكنك الموافقة على مهمتك لتوصيل الطلبية"),
         "account": MessageLookupByLibrary.simpleMessage("الحساب"),
+        "accountAlreadyExist": MessageLookupByLibrary.simpleMessage(
+            "لا يمكنك تسجيل هذا الحساب لوجوده مسبقا"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("تم ارسال الطلب"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("رقم حساب البنك"),
@@ -48,8 +50,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "address": MessageLookupByLibrary.simpleMessage("الموقع"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "allcity": MessageLookupByLibrary.simpleMessage("جميع المدن"),
-        "amountYouOwn":
-            MessageLookupByLibrary.simpleMessage("مستحقاتي المالية"),
+        "amountYouOwn": MessageLookupByLibrary.simpleMessage("مستحقات الشركة"),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
         "areYouSureToDisposeThis": MessageLookupByLibrary.simpleMessage(
@@ -68,7 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "bookACar": MessageLookupByLibrary.simpleMessage("احجز سيارة توصيل"),
         "bookACarDescribtion": MessageLookupByLibrary.simpleMessage(
             "تحتاج لحجز سيارة لتوصيل غرضك للوجهة المطلوبة"),
-        "bounce": MessageLookupByLibrary.simpleMessage("لمكافأة"),
+        "bounce": MessageLookupByLibrary.simpleMessage("المكافأة"),
         "branch": MessageLookupByLibrary.simpleMessage("الفرع"),
         "branch01": MessageLookupByLibrary.simpleMessage("الفرع 01"),
         "businessName": MessageLookupByLibrary.simpleMessage("الاسم التجاري"),
@@ -81,6 +82,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إلى المتجر"),
         "captainAcceptedOrder":
             MessageLookupByLibrary.simpleMessage("قبل الكابتن الطلب"),
+        "captainAccountInActive": MessageLookupByLibrary.simpleMessage(
+            "حساب الكابتن غير مفعل الرجاء انتظار الإدارة لتفعيل الحساب"),
         "captainGotCash":
             MessageLookupByLibrary.simpleMessage("حصل الكابتن على الكاش"),
         "captainGotTheCash":
@@ -287,7 +290,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "mechanichLicence": MessageLookupByLibrary.simpleMessage("رخصة السير"),
         "mediumMoreThan20EmployeesLessThan100":
             MessageLookupByLibrary.simpleMessage("21 - 100 موظف"),
-        "minutes": MessageLookupByLibrary.simpleMessage("دقيقة"),
+        "minute": MessageLookupByLibrary.simpleMessage("دقيقة"),
+        "minutes": MessageLookupByLibrary.simpleMessage("دقائق"),
         "mohammad": MessageLookupByLibrary.simpleMessage("محمد"),
         "mostSoldProduct":
             MessageLookupByLibrary.simpleMessage("المنتجات الأكثر مبيعا"),
@@ -298,7 +302,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "myAddressHint": MessageLookupByLibrary.simpleMessage("اكتب عنوانك"),
         "myBalance": MessageLookupByLibrary.simpleMessage("الحساب المالي"),
         "myBalanceHint": MessageLookupByLibrary.simpleMessage(
-            "هنا نستعرض تفاصيل الحساب المالي الخاص بهذا الحساب"),
+            "هنا نستعرض تفاصيل الحساب المالي الخاص بهذا المستخدم"),
         "myOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "myPlan": MessageLookupByLibrary.simpleMessage("باقتي"),
         "myProfile": MessageLookupByLibrary.simpleMessage("معلوماتي"),
@@ -350,7 +354,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderAverage75": MessageLookupByLibrary.simpleMessage(
             "نود تذكيرك لسداد الدفعة الأخيرة من رسوم الباقة وذلك لكي نستمر بخدمتكن . حيث أنهتم استهلاك 75% من رصيد الباقة وشكرا"),
         "orderAverage80": MessageLookupByLibrary.simpleMessage(
-            "تذكير ثاني لسدادالدفعة الأخيرة من رسوم الباقة لتفادي انقطاع الخدمة . حيث أنه تم استهلاك 80% من رصيد الباقة وشكرا"),
+            "تذكير ثاني لسداد الدفعة الأخيرة من رسوم الباقة لتفادي انقطاع الخدمة . حيث أنه تم استهلاك 80% من رصيد الباقة وشكرا"),
         "orderCreatedReturnToOrders":
             MessageLookupByLibrary.simpleMessage("انتهى انشاء الطلب"),
         "orderDate": MessageLookupByLibrary.simpleMessage("تاريخ الطلب"),
@@ -465,7 +469,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "registerSuccessSetupMyProfile": MessageLookupByLibrary.simpleMessage(
             "تم تأكيد الحساب، اتجه للاشتراك"),
         "remainingAmountForCompany":
-            MessageLookupByLibrary.simpleMessage("الدين العام للشركة"),
+            MessageLookupByLibrary.simpleMessage("المبلغ المتبقي للشركة"),
         "renewNewPlan":
             MessageLookupByLibrary.simpleMessage("اشتراك بباقة جديدة"),
         "renewOldPlan":
@@ -551,10 +555,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تجديد الباقة بنجاح"),
         "sum": MessageLookupByLibrary.simpleMessage("المجموع"),
         "sumBalance": MessageLookupByLibrary.simpleMessage("مجموع الدفعات"),
-        "sumPaymentsFromCompany": MessageLookupByLibrary.simpleMessage(
-            "إجمالي الدفعات المأخوذة للشركة"),
-        "sumPaymentsToCompany": MessageLookupByLibrary.simpleMessage(
-            "إجمالي الدفعات المقدمة للشركة"),
+        "sumPaymentsFromCompany":
+            MessageLookupByLibrary.simpleMessage("إجمالي الدفعات من الشركة"),
+        "sumPaymentsToCompany":
+            MessageLookupByLibrary.simpleMessage("إجمالي الدفعات إلى الشركة"),
         "sureForDelete": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من قيامك بحذف هذا الطلب"),
         "syria": MessageLookupByLibrary.simpleMessage("سوريا"),

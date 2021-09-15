@@ -38,7 +38,7 @@ class EmptyStateWidget extends StatelessWidget {
               ),
               SvgPicture.asset(
                 SvgAsset.EMPTY_SVG,
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: MediaQuery.of(context).size.height * 0.45,
               ),
               Container(
                 height: 32,

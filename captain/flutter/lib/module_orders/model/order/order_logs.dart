@@ -31,7 +31,7 @@ class OrderLogsModel {
   OrderLogsModel.Data(OrdersLogsResponse orders) {
     List<Data> data = orders.data ?? [];
     for (var element in data) {
-      if (element.currentStage?.state.toString() != 'delivered' && element.currentStage?.state.toString() != 'cancelled') {
+      if (element.currentStage?.toString() != 'delivered' && element.currentStage?.toString() != 'cancelled') {
         continue;
       }
       String date = DateFormat('dd-MM-yyyy').format(
@@ -44,10 +44,13 @@ class OrderLogsModel {
 
       _models.add(OrderLogsModel(
           orderNumber:element.orderNumber?.toString() ?? S.current.unknown,
-          state: StatusHelper.getStatusEnum(element.currentStage?.state ?? S.current.unknown),
+          state: StatusHelper.getStatusEnum(element.currentStage ?? S.current.unknown),
           dateTime: createdDate,
           orderDate: date,
           completeTime: element.completionTime));
+    }
+    if (_models.isEmpty) {
+      _empty = true;
     }
   }
 

@@ -4229,6 +4229,26 @@ class S {
       args: [],
     );
   }
+
+  /// `This account already exist`
+  String get accountAlreadyExist {
+    return Intl.message(
+      'This account already exist',
+      name: 'accountAlreadyExist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Account In Active , Please wait the administration to activate your account`
+  String get captainAccountInActive {
+    return Intl.message(
+      'Captain Account In Active , Please wait the administration to activate your account',
+      name: 'captainAccountInActive',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
