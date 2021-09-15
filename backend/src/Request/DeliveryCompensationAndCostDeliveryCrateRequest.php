@@ -2,11 +2,12 @@
 
 namespace App\Request;
 
-class DeliveryCompanyFinancialCompensationCreateRequest
+class DeliveryCompensationAndCostDeliveryCrateRequest
 {
     private $kilometers;
     private $maxKilometerBonus;
     private $minKilometerBonus;
+    private $deliveryCost;
 
     /**
      * Get the value of kilometers
@@ -64,6 +65,26 @@ class DeliveryCompanyFinancialCompensationCreateRequest
     public function setMinKilometerBonus($minKilometerBonus)
     {
         $this->minKilometerBonus = $minKilometerBonus;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of deliveryCost
+     */ 
+    public function getDeliveryCost()
+    {
+        return $this->deliveryCost;
+    }
+
+    /**
+     * Set the value of deliveryCost
+     *
+     * @return  self
+     */ 
+    public function setDeliveryCost($deliveryCost)
+    {
+        $this->deliveryCost = $deliveryCost;
 
         return $this;
     }
