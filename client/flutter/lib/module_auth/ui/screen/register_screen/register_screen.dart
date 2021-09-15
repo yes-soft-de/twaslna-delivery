@@ -105,8 +105,8 @@ class RegisterScreenState extends State<RegisterScreen> {
     }
     CustomFlushBarHelper.createSuccess(title:S.current.warnning, message: S.current.loginSuccess).show(context);
   }
-  void userRegistered(){
-    CustomFlushBarHelper.createSuccess(title: S.current.warnning, message:S.current.registerSuccess,timeout: 2).show(context);
+  Future<void> userRegistered() async{
+  await  CustomFlushBarHelper.createSuccess(title: S.current.warnning, message:S.current.registerSuccess,timeout: 2).show(context);
   }
 
   @override

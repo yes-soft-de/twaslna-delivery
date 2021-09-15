@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 class OrderDetailsTitleBar extends StatelessWidget {
   final String title;
-  final double rate;
+  final num rate;
   OrderDetailsTitleBar({required this.title,required this.rate});
 
   @override

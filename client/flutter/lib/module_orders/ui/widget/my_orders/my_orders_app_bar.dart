@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
 import 'package:twaslna_delivery/utils/components/costom_search.dart';
+import 'package:twaslna_delivery/utils/effect/hidder.dart';
 import 'package:twaslna_delivery/utils/text_style/text_style.dart';
 
 class MyOrdersAppBar extends StatelessWidget {
@@ -26,10 +27,13 @@ class MyOrdersAppBar extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 25.0, left: 25, top: 16),
-          child: CustomDeliverySearch(
-            hintText: S.of(context).searchForOrder,
+        Hider(
+          active:false,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 25.0, left: 25, top: 16),
+            child: CustomDeliverySearch(
+              hintText: S.of(context).searchForOrder,
+            ),
           ),
         ),
         Padding(

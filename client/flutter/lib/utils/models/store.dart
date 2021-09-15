@@ -8,13 +8,13 @@ class StoreModel {
   late String image;
   dynamic phone;
   dynamic location;
-  late double deliveryCost;
+  late num deliveryCost;
   late bool hasProducts;
   late bool privateOrders;
   String? error;
   bool empty = false;
+  num? rating;
   List<StoreModel> models = [];
-
   StoreModel(
       {required this.deliveryCost,
       required this.id,
@@ -22,8 +22,11 @@ class StoreModel {
       required this.image,
       this.phone,
       this.location,
+      this.rating,
       required this.hasProducts,
       required this.privateOrders});
+     StoreModel.none();
+     StoreModel.withData(data);
 
   StoreModel.Empty() {
     this.empty = true;
@@ -35,13 +38,14 @@ class StoreModel {
     var data = bestStores.data;
     data!.forEach((element) {
       models.add(StoreModel(
-          id: element.id ?? -1,
-          storeOwnerName: element.storeOwnerName ?? S.current.store,
-          deliveryCost: element.deliveryCost ?? 0,
-          hasProducts: element.hasProducts ?? false,
-          privateOrders: element.privateOrders ?? false,
-          image:
-              'https://www.gannett-cdn.com/media/2020/03/23/USATODAY/usatsports/247WallSt.com-247WS-657876-imageforentry9-vp7.jpg?width=660&height=371&fit=crop&format=pjpg&auto=webp'));
+        id: element.id ?? -1,
+        storeOwnerName: element.storeOwnerName ?? S.current.store,
+        deliveryCost: element.deliveryCost ?? 0,
+        hasProducts: element.hasProducts ?? false,
+        privateOrders: element.privateOrders ?? false,
+        image: element.image ?? '',
+        rating: element.rating?.rate ?? 0
+      ));
     });
   }
 

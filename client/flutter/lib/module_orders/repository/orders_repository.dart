@@ -7,6 +7,8 @@ import 'package:twaslna_delivery/module_orders/response/client_order_response.da
 import 'package:twaslna_delivery/module_orders/response/my_orders_response.dart';
 import 'package:twaslna_delivery/module_orders/response/order_details_response.dart';
 import 'package:twaslna_delivery/module_orders/response/orders_logs_response.dart';
+import 'package:twaslna_delivery/module_stores/request/rate_response.dart';
+import 'package:twaslna_delivery/module_stores/request/rate_store_request.dart';
 
 @injectable
 class MyOrdersRepository {
@@ -72,5 +74,13 @@ class MyOrdersRepository {
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ClientOrderResponse.fromJson(response);
+  }
+  Future<RateResponse?> createRateCaptain(RateCaptainRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+        Urls.RATE_CAPTAIN, request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return RateResponse.fromJson(response);
   }
 }

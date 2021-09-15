@@ -78,7 +78,7 @@ class OrderDetailsLoadedState extends OrderDetailsState {
                       const EdgeInsets.only(right: 28.0, left: 28, bottom: 16),
                   child: OrderDetailsTitleBar(
                     title: orderDetails.storeInfo.storeOwnerName,
-                    rate: 4.7,
+                    rate:orderDetails.storeInfo.rating,
                   ),
                 ) ,
                 Container(

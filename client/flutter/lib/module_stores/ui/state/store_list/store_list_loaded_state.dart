@@ -9,6 +9,8 @@ import 'package:twaslna_delivery/module_stores/ui/state/store_list/store_list_st
 import 'package:twaslna_delivery/module_stores/ui/widget/store_card.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_list/order_type.dart';
 import 'package:twaslna_delivery/utils/components/costom_search.dart';
+import 'package:twaslna_delivery/utils/components/progresive_image.dart';
+import 'package:twaslna_delivery/utils/effect/hidder.dart';
 import 'package:twaslna_delivery/utils/images/images.dart';
 import 'package:twaslna_delivery/utils/models/store.dart';
 import 'package:twaslna_delivery/utils/text_style/text_style.dart';
@@ -25,11 +27,11 @@ class StoreListLoadedState extends StoreListState {
     var width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
-        Image.asset(
-          ImageAsset.STORE_CATEGORY_SUPER_MARKET,
-          height: height,
+        CustomNetworkImage(
+          imageSource:ImageAsset.STORE_CATEGORY_SUPER_MARKET,
+          assets: true,
+          height: height * 0.5,
           width: width,
-          fit: BoxFit.cover,
         ),
         Container(
           height: 100,
@@ -82,12 +84,15 @@ class StoreListLoadedState extends StoreListState {
                           TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.only(right: 12.0, left: 12.0),
-                      child: CustomDeliverySearch(
-                        hintText:
-                            '${S.of(context).searchF} ${screenState.title ?? S.of(context).store}',
-                      )),
+                  Hider(
+                    active:false,
+                    child: Padding(
+                        padding: const EdgeInsets.only(right: 12.0, left: 12.0),
+                        child: CustomDeliverySearch(
+                          hintText:
+                              '${S.of(context).searchF} ${screenState.title ?? S.of(context).store}',
+                        )),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
@@ -129,7 +134,9 @@ class StoreListLoadedState extends StoreListState {
     if (stores.isEmpty) return [];
     List<StoreCard> storeCardList = [] ;
     stores.forEach((element) {
-      storeCardList.add(StoreCard(title:element.storeOwnerName,onTap: (){
+      storeCardList.add(StoreCard(
+        rate: element.rating ?? 0,
+        title:element.storeOwnerName,onTap: (){
         if (element.hasProducts && element.privateOrders){
          // Navigator.of(screenState.context).pushNamed(StoreRoutes.STORE_PRODUCTS,arguments: element);
           showModalBottomSheet(

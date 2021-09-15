@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_search/search_routes.dart';
 import 'package:twaslna_delivery/utils/components/costom_search.dart';
 import 'package:twaslna_delivery/utils/images/images.dart';
 class CustomHomeAppBar extends StatelessWidget {
@@ -32,6 +33,10 @@ class CustomHomeAppBar extends StatelessWidget {
               padding: const EdgeInsets.only(
                   top: 16.0, bottom: 16, left: 25, right: 25),
               child:CustomDeliverySearch(
+                onTap: (){
+                  Navigator.pushNamed(context,SearchRoutes.SEARCH_SCREEN);
+                },
+                readOnly: true,
                 hintText: S.of(context).searchFor,
               ),
             ),

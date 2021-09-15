@@ -3479,6 +3479,106 @@ class S {
       args: [],
     );
   }
+
+  /// `Products`
+  String get products {
+    return Intl.message(
+      'Products',
+      name: 'products',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stores`
+  String get stores {
+    return Intl.message(
+      'Stores',
+      name: 'stores',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rate Store`
+  String get rateStore {
+    return Intl.message(
+      'Rate Store',
+      name: 'rateStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rate this store in your opinion`
+  String get rateStoreMessage {
+    return Intl.message(
+      'Rate this store in your opinion',
+      name: 'rateStoreMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Submit`
+  String get submit {
+    return Intl.message(
+      'Submit',
+      name: 'submit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `stores has been rated`
+  String get storeRated {
+    return Intl.message(
+      'stores has been rated',
+      name: 'storeRated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your rate has been submitted`
+  String get rateSubmitting {
+    return Intl.message(
+      'Your rate has been submitted',
+      name: 'rateSubmitting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download Twaslna App on Play Store`
+  String get downloadTwaslnaApp {
+    return Intl.message(
+      'Download Twaslna App on Play Store',
+      name: 'downloadTwaslnaApp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rate this captain upon your opinion`
+  String get rateCaptainMessage {
+    return Intl.message(
+      'Rate this captain upon your opinion',
+      name: 'rateCaptainMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rate Captain`
+  String get rateCaptain {
+    return Intl.message(
+      'Rate Captain',
+      name: 'rateCaptain',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

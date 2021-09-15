@@ -38,8 +38,7 @@ class TopWantedProductsModel {
     data!.forEach((element) {
       models.add(TopWantedProductsModel(
           title: element.productName ?? S.current.product,
-          image:
-          'https://www.erdeundleben.com/wp-content/uploads/2021/02/folgendes-macht-unser-food-personal-wenn-es-fast-zu-mude-ist-um-zu-kochen-0-Yywyr8ju.jpg',
+          image:element.productImage ?? '',
           price: element.productPrice ?? 0,
           id: element.id ?? -1,
           ownerId: element.storeOwnerProfileID ?? -1,

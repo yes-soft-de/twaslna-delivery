@@ -4,7 +4,7 @@ class CheckoutModel {
   int? ownerId;
   List<Products>? cart;
   double? orderCost;
-  double? deliveryCost;
+  num? deliveryCost;
 
   CheckoutModel({this.ownerId, this.cart, this.orderCost, this.deliveryCost});
 }

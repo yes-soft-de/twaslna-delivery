@@ -5,7 +5,9 @@ import 'package:twaslna_delivery/module_orders/request/client_order_request.dart
 import 'package:twaslna_delivery/hive/objects/cart_model/cart_model.dart';
 import 'package:twaslna_delivery/module_stores/model/category_model.dart';
 import 'package:twaslna_delivery/module_stores/model/checkout_model.dart';
+import 'package:twaslna_delivery/module_stores/model/store_profile_model.dart';
 import 'package:twaslna_delivery/module_stores/presistance/cart_hive_box_helper.dart';
+import 'package:twaslna_delivery/module_stores/request/rate_store_request.dart';
 import 'package:twaslna_delivery/module_stores/ui/screen/store_products_screen.dart';
 import 'package:twaslna_delivery/module_stores/ui/state/store_products/store_products_state.dart';
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/checkout_button.dart';
@@ -16,6 +18,7 @@ import 'package:twaslna_delivery/module_stores/ui/widget/store_products/products
 import 'package:twaslna_delivery/module_stores/ui/widget/store_products/store_products_title_bar.dart';
 import 'package:twaslna_delivery/utils/components/costom_search.dart';
 import 'package:twaslna_delivery/utils/components/progresive_image.dart';
+import 'package:twaslna_delivery/utils/effect/hidder.dart';
 import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 import 'package:twaslna_delivery/utils/models/product.dart';
 import 'package:twaslna_delivery/utils/models/store.dart';
@@ -24,9 +27,10 @@ class StoreProductsLoadedState extends StoreProductsState {
   StoreProductsScreenState screenState;
   List<ProductModel> topWantedProducts;
   List<CategoryModel> productsCategory;
+  StoreProfile storeProfile;
   List<CartModel>? orderCart;
   StoreProductsLoadedState(this.screenState,
-      {required this.topWantedProducts, required this.productsCategory,required this.orderCart})
+      {required this.storeProfile,required this.topWantedProducts, required this.productsCategory,required this.orderCart})
       : super(screenState){
     if (orderCart != null ){
       fromEditingOrder = true;
@@ -39,8 +43,9 @@ class StoreProductsLoadedState extends StoreProductsState {
   List<CartModel> carts = [];
   late int storeId;
   int categoryId = -1;
-  late double deliveryCost;
+  late num deliveryCost;
   bool fromEditingOrder = false;
+  num rate = -1;
   @override
   Widget getUI(BuildContext context) {
     var height = MediaQuery
@@ -51,24 +56,31 @@ class StoreProductsLoadedState extends StoreProductsState {
         .of(context)
         .size
         .width;
-    var args = ModalRoute
-        .of(context)
-        ?.settings
-        .arguments;
-    if (args is StoreModel) {
-      title = args.storeOwnerName;
-      backgroundImage = args.image;
-      storeId = args.id;
-      deliveryCost = args.deliveryCost;
-    }
+
+      title = storeProfile.storeOwnerName;
+      backgroundImage = storeProfile.image;
+      storeId = storeProfile.id;
+      deliveryCost = storeProfile.deliveryCost ;
+      rate = storeProfile.rating ?? 0;
+
     return Stack(
       children: [
         CustomNetworkImage(
           imageSource:backgroundImage,
-          height: height,
+          height: height * 0.5,
           width: width,
         ),
-        CustomStoresProductsAppBar(),
+        CustomStoresProductsAppBar(
+          isLogin: screenState.authService.isLoggedIn,
+          image: backgroundImage,
+          onRate: (rate){
+            screenState.rateStore(RateStoreRequest(
+              itemID: storeId,
+              itemType: 'store',
+              rating: rate
+            ));
+          },
+        ),
         Align(
           alignment: Alignment.bottomCenter,
           child: Flex(
@@ -80,7 +92,7 @@ class StoreProductsLoadedState extends StoreProductsState {
                 const EdgeInsets.only(right: 28.0, left: 28, bottom: 16),
                 child: StoreProductsTitleBar(
                     title: title,
-                    rate: 4.7,
+                    rate: rate,
                     views: 40,
                     deliveryCost: deliveryCost
                 ),
@@ -101,13 +113,16 @@ class StoreProductsLoadedState extends StoreProductsState {
                         physics: BouncingScrollPhysics(
                             parent: AlwaysScrollableScrollPhysics()),
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                right: 28.0, left: 28.0, bottom: 25),
-                            child: CustomDeliverySearch(
-                              hintText: S
-                                  .of(context)
-                                  .searchFor,
+                          Hider(
+                            active:false,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  right: 28.0, left: 28.0, bottom: 25),
+                              child: CustomDeliverySearch(
+                                hintText: S
+                                    .of(context)
+                                    .searchFor,
+                              ),
                             ),
                           ),
                           Padding(
@@ -234,7 +249,7 @@ class StoreProductsLoadedState extends StoreProductsState {
       cats.add(ProductsChips(
         id: element.id,
         title: element.label,
-        active: defaultValue == element.label,
+        active: defaultValue == element.label && categoryId == element.id,
         onChange: (value, id) {
           defaultValue = value;
           categoryId = id;

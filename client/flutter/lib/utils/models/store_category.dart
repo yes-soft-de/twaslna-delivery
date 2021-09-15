@@ -27,8 +27,8 @@ class StoreCategoryModel {
           id: element.id ?? -1,
           storeCategoryName: element.storeCategoryName ?? S.current.category,
           description: element.description ?? '',
-          image:
-              'https://www.gannett-cdn.com/media/2020/03/23/USATODAY/usatsports/247WallSt.com-247WS-657876-imageforentry9-vp7.jpg?width=660&height=371&fit=crop&format=pjpg&auto=webp'));
+          image:element.image??''
+              ));
     });
   }
 

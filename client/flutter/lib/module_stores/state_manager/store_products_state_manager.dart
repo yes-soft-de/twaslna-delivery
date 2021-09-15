@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:twaslna_delivery/generated/l10n.dart';
+import 'package:twaslna_delivery/module_stores/model/store_profile_model.dart';
 import 'package:twaslna_delivery/module_stores/presistance/cart_hive_box_helper.dart';
+import 'package:twaslna_delivery/module_stores/request/rate_store_request.dart';
 import 'package:twaslna_delivery/module_stores/service/store_products_service.dart';
 import 'package:twaslna_delivery/module_stores/ui/screen/store_products_screen.dart';
 import 'package:twaslna_delivery/module_stores/ui/state/store_products/store_products_empty_state.dart';
@@ -29,25 +31,38 @@ class StoreProductsStateManager {
 
   void getStoresProducts(int id, StoreProductsScreenState screenState) {
     _stateSubject.add(StoreProductsLoadingState(screenState));
-    _storeProductsService.getProductsData(id).then((value) {
-      if (value.isEmpty) {
+    _storeProductsService.getStoreProfile(id).then((store){
+      if (store.hasError){
+        _stateSubject
+            .add(StoreProductsErrorState(screenState, [store.error??''], id));
+      }
+      else if (store.isEmpty){
         _stateSubject.add(
             StoreProductsEmptyState(screenState, S.current.homeDataEmpty, id));
-      } else if (value.hasData) {
-        var data = value.data;
-        _stateSubject.add(StoreProductsLoadedState(screenState,
-            topWantedProducts: data.topWanted,
-            productsCategory: data.storeCategories,
-            orderCart: cartHiveHelper.getCart()
-        ));
-        if (value.hasErrors) {
-          CustomFlushBarHelper.createError(
+      }
+      else {
+        _storeProductsService.getProductsData(id).then((value) {
+          if (value.isEmpty) {
+            _stateSubject.add(
+                StoreProductsEmptyState(screenState, S.current.homeDataEmpty, id));
+          } else if (value.hasData) {
+            var data = value.data;
+            StoreProfile storeData = store as StoreProfile;
+            _stateSubject.add(StoreProductsLoadedState(screenState,
+                topWantedProducts: data.topWanted,
+                productsCategory: data.storeCategories,
+                orderCart: cartHiveHelper.getCart(), storeProfile: storeData.profile
+            ));
+            if (value.hasErrors) {
+              CustomFlushBarHelper.createError(
                   title: S.current.warnning, message: value.errors[0])
-              .show(screenState.context);
-        }
-      } else {
-        _stateSubject
-            .add(StoreProductsErrorState(screenState, value.errors, id));
+                  .show(screenState.context);
+            }
+          } else {
+            _stateSubject
+                .add(StoreProductsErrorState(screenState, value.errors, id));
+          }
+        });
       }
     });
   }
@@ -71,4 +86,19 @@ class StoreProductsStateManager {
           }
     });
   }
+  void rateStore(RateStoreRequest request,StoreProductsScreenState screenState) {
+    CustomFlushBarHelper.createSuccess(title: S.current.note, message: S.current.rateSubmitting,background:Theme.of(screenState.context).primaryColor ,).show(screenState.context);
+    _storeProductsService
+        .rateStore(request)
+        .then((value) {
+      if (value.hasError){
+        CustomFlushBarHelper.createError(title: S.current.warnning, message:value.error ?? '',).show(screenState.context);
+
+      }
+      else {
+        CustomFlushBarHelper.createSuccess(title: S.current.warnning, message:S.current.storeRated).show(screenState.context);
+      }
+    });
+  }
+
 }

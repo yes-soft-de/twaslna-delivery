@@ -25,7 +25,7 @@ class HomeCard extends StatelessWidget {
                   width: 200,
                   height: 200,
                   imageSource: image,
-                  asset: image.contains('assets/'),
+                  assets: image.contains('assets/'),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,

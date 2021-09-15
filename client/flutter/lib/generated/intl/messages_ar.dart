@@ -64,29 +64,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancelled": MessageLookupByLibrary.simpleMessage("ملغى"),
         "cancelledHint": MessageLookupByLibrary.simpleMessage(
             "الطلب تم إلغاءه من جهة العميل"),
-        "captain": MessageLookupByLibrary.simpleMessage("كابتن"),
+        "captain": MessageLookupByLibrary.simpleMessage("مندوب"),
         "captainAcceptOrderDescription":
-            MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إلى المتجر"),
+            MessageLookupByLibrary.simpleMessage("المندوب في طريقه إلى المتجر"),
         "captainAcceptedOrder":
-            MessageLookupByLibrary.simpleMessage("قبل الكابتن الطلب"),
+            MessageLookupByLibrary.simpleMessage("قبل المندوب الطلب"),
         "captainGotCash":
-            MessageLookupByLibrary.simpleMessage("حصل الكابتن على الكاش"),
+            MessageLookupByLibrary.simpleMessage("حصل المندوب على الكاش"),
         "captainGotTheCash":
-            MessageLookupByLibrary.simpleMessage("حصل الكابتن على المال"),
+            MessageLookupByLibrary.simpleMessage("حصل المندوب على المال"),
         "captainInStore":
-            MessageLookupByLibrary.simpleMessage("الكابتن في المتجر"),
+            MessageLookupByLibrary.simpleMessage("المندوب في المتجر"),
         "captainInStoreDescription":
-            MessageLookupByLibrary.simpleMessage("الكابتن يقوم بتجهيز طلبك"),
+            MessageLookupByLibrary.simpleMessage("المندوب يقوم بتجهيز طلبك"),
         "captainIsDelivering":
             MessageLookupByLibrary.simpleMessage("جار توصيل الطلب"),
         "captainIsInStore":
-            MessageLookupByLibrary.simpleMessage("الكابتن في المحل"),
+            MessageLookupByLibrary.simpleMessage("المندوب في المحل"),
         "captainIsInTheWay":
-            MessageLookupByLibrary.simpleMessage("الكابتن في الطريق"),
+            MessageLookupByLibrary.simpleMessage("المندوب في الطريق"),
         "captainNotActive": MessageLookupByLibrary.simpleMessage(
-            "لم يتم تفعيل الكابتن من قبل الإدارة بعد الرجاء الانتظار"),
+            "لم يتم تفعيل المندوب من قبل الإدارة بعد الرجاء الانتظار"),
         "captainStartedDelivery":
-            MessageLookupByLibrary.simpleMessage("بدأ الكابتن التوصيل"),
+            MessageLookupByLibrary.simpleMessage("بدأ المندوب التوصيل"),
         "car": MessageLookupByLibrary.simpleMessage("سيارة "),
         "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
         "cash": MessageLookupByLibrary.simpleMessage("نقدا"),
@@ -95,7 +95,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "changeLanguage": MessageLookupByLibrary.simpleMessage("غير لغة"),
         "chatRoom": MessageLookupByLibrary.simpleMessage("غرفة المحادثة"),
         "chatWithCaptain":
-            MessageLookupByLibrary.simpleMessage("التحدث مع الكابتن"),
+            MessageLookupByLibrary.simpleMessage("التحدث مع المندوب"),
         "chatWithStoreOwner":
             MessageLookupByLibrary.simpleMessage("التحدث مع صاحب المحل"),
         "checkOrders": MessageLookupByLibrary.simpleMessage("تاكد من الطلبات"),
@@ -143,12 +143,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverPrice": MessageLookupByLibrary.simpleMessage("التوصيل"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
         "deliveringDescription":
-            MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إليك"),
+            MessageLookupByLibrary.simpleMessage("المندوب في طريقه إليك"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("التوصيل إلى"),
         "destinationAddressHint":
             MessageLookupByLibrary.simpleMessage("اكتب عنوان وجهة الطلب"),
         "directSupport": MessageLookupByLibrary.simpleMessage("دعم مباشر"),
+        "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
+            "حمل تطبيقنا على متجر غوغل عبر الرابط"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("رخصة القيادة"),
         "earnCash": MessageLookupByLibrary.simpleMessage("اكسب المال"),
         "editBranchName":
@@ -264,9 +266,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تاريخ الدفعة القادمة:"),
         "noImage": MessageLookupByLibrary.simpleMessage("لا يوجد صورة"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
-            "لا يمكنك تعديل الطلب لأن الكابتن في المتجر"),
+            "لا يمكنك تعديل الطلب لأن المندوب في المتجر"),
         "notAllowedCaptainReceived": MessageLookupByLibrary.simpleMessage(
-            "لايمكن إزالة الطلب لاستلام الكابتن للطلب"),
+            "لايمكن إزالة الطلب لاستلام المندوب للطلب"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
             "لم تشترك بباقة بعد الرجاء الاشتراك من الإعدادات"),
         "notVerified":
@@ -365,11 +367,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("شروط الخصوصية"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("طلب خاص"),
         "product": MessageLookupByLibrary.simpleMessage("منتج"),
+        "products": MessageLookupByLibrary.simpleMessage("منتجات"),
         "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
         "profileDataEmpty": MessageLookupByLibrary.simpleMessage(
             "لايوجد بيانات شخصية متوفرة بعد"),
         "profileFetchedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "تم جلب بياناتك الشخصية بنجاح"),
+        "rateCaptain": MessageLookupByLibrary.simpleMessage("قييم المندوب"),
+        "rateCaptainMessage":
+            MessageLookupByLibrary.simpleMessage("قم بتقييم المندوب من فضلك"),
+        "rateStore": MessageLookupByLibrary.simpleMessage("تقييم المتجر"),
+        "rateStoreMessage":
+            MessageLookupByLibrary.simpleMessage("قييم هذا المتجر "),
+        "rateSubmitting":
+            MessageLookupByLibrary.simpleMessage("جاري إرسال تقييمك"),
         "reasonIsRequired":
             MessageLookupByLibrary.simpleMessage("الرجاء تزويدنا بسبب الابلاغ"),
         "reasonOfTheReport":
@@ -414,7 +425,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "searchForOrder": MessageLookupByLibrary.simpleMessage(
             "ابحث عن طلب بإدخال رقم الطلب"),
         "searchingForCaptain":
-            MessageLookupByLibrary.simpleMessage("جار البحث عن كابتن"),
+            MessageLookupByLibrary.simpleMessage("جار البحث عن مندوب"),
         "second": MessageLookupByLibrary.simpleMessage("ثانية"),
         "seconds": MessageLookupByLibrary.simpleMessage("ثواني"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("ارسل رمز التأكيد"),
@@ -446,6 +457,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "storePhone": MessageLookupByLibrary.simpleMessage("رقم هاتف المحل"),
         "storeProducts":
             MessageLookupByLibrary.simpleMessage("المنتجات المتاحة"),
+        "storeRated":
+            MessageLookupByLibrary.simpleMessage("تمت تقييم المتجر بنجاح"),
+        "stores": MessageLookupByLibrary.simpleMessage("متاجر"),
+        "submit": MessageLookupByLibrary.simpleMessage("إرسال"),
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("جار حفظ الملف"),
         "subscribe": MessageLookupByLibrary.simpleMessage("اشترك"),
@@ -521,7 +536,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أهلا بك في تطبيق تواصلنا"),
         "welcomeTotwaslna_delivery":
             MessageLookupByLibrary.simpleMessage("اهلا بك في twaslna_delivery"),
-        "whatsappWithCaptain": MessageLookupByLibrary.simpleMessage("الكابتن"),
+        "whatsappWithCaptain": MessageLookupByLibrary.simpleMessage("المندوب"),
         "whatsappWithClient": MessageLookupByLibrary.simpleMessage("الزبون"),
         "whatsappWithStoreOwner":
             MessageLookupByLibrary.simpleMessage("صاحب المحل"),

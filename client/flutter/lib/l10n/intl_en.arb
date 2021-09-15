@@ -343,6 +343,18 @@
   "totalBillCostHint": "The total cost without delivery cost",
   "invoiceImage": "Invoice Image",
   "invoiceCost": "Invoice Cost",
-  "accountAlreadyExist": "This account already exist"
+  "accountAlreadyExist": "This account already exist",
+  "products": "Products",
+  "stores": "Stores",
+  "rateStore": "Rate Store",
+  "rateStoreMessage": "Rate this store in your opinion",
+  "submit": "Submit",
+  "storeRated": "stores has been rated",
+  "rateSubmitting":"Your rate has been submitted",
+  "downloadTwaslnaApp": "Download Twaslna App on Play Store",
+  "rateCaptainMessage":"Rate this captain upon your opinion" ,
+  "rateCaptain": "Rate Captain"
+
+
 
 }

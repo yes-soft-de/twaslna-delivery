@@ -72,7 +72,7 @@ class MyNotificationsLoadedState extends MyNotificationsState {
               height: double.maxFinite,
               child: Padding(
                 padding: const EdgeInsets.only(top:14.0),
-                child: Text('7:00 م'),
+                child: Text(element.date),
               )),
         ),
       ));

@@ -6,6 +6,7 @@ import 'package:twaslna_delivery/module_orders/ui/widget/order_status/custom_ste
 import 'package:twaslna_delivery/module_orders/ui/state/order_status/order_status_state.dart';
 import 'package:flutter/material.dart';
 import 'package:twaslna_delivery/module_orders/ui/widget/order_status/custom_order_status_app_bar.dart';
+import 'package:twaslna_delivery/module_stores/request/rate_store_request.dart';
 import 'package:twaslna_delivery/utils/helpers/order_status_helper.dart';
 
 class OrderStatusLoadedState extends OrderStatusState {
@@ -24,7 +25,16 @@ class OrderStatusLoadedState extends OrderStatusState {
           width: width,
           color: Theme.of(context).primaryColor,
         ),
-        CustomOrderStatusAppBar(),
+        CustomOrderStatusAppBar(
+          hide: orderDetails.order.state == OrderStatus.WAITING,
+          onRate: (rate){
+          screenState.rateCaptain(RateCaptainRequest(
+            rating: rate,
+            itemType: 'captain',
+            orderNumber:screenState.orderNumber
+          ));
+          },
+        ),
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(

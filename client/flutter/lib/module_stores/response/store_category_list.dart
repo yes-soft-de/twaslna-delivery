@@ -1,3 +1,4 @@
+import 'package:twaslna_delivery/module_stores/response/rating.dart';
 import 'package:twaslna_delivery/utils/logger/logger.dart';
 
 class StoreCategoryList {
@@ -34,7 +35,7 @@ class Data {
   double? deliveryCost;
   bool? privateOrders;
   bool? hasProducts;
-
+  Rating? rating;
   Data(
       {this.id,
       this.storeOwnerName,
@@ -43,7 +44,9 @@ class Data {
       this.location,
       this.deliveryCost,
       this.privateOrders,
-      this.hasProducts});
+      this.hasProducts,
+      this.rating,
+      });
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -54,5 +57,6 @@ class Data {
     deliveryCost = json['deliveryCost']?.toDouble();
     privateOrders = json['privateOrders'];
     hasProducts = json['hasProducts'];
+    rating = json['rating'] != null ? Rating.fromJson(json['rating']) : null;
   }
 }

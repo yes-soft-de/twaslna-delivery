@@ -1,3 +1,4 @@
+import 'package:twaslna_delivery/module_stores/response/rating.dart';
 import 'package:twaslna_delivery/utils/logger/logger.dart';
 
 class OrderDetailsResponse {
@@ -341,6 +342,7 @@ class StoreOwner {
   dynamic imageURL;
   dynamic baseURL;
   dynamic bank;
+  Rating? rating;
 
   StoreOwner(
       {this.id,
@@ -354,7 +356,9 @@ class StoreOwner {
       this.phone,
       this.imageURL,
       this.baseURL,
-      this.bank});
+      this.bank,
+      this.rating
+      });
 
   StoreOwner.fromJson(dynamic json) {
     id = json['id'];
@@ -374,6 +378,7 @@ class StoreOwner {
     imageURL = json['imageURL'];
     baseURL = json['baseURL'];
     bank = json['bank'];
+    rating = json['rating'] != null ? Rating.fromJson(json['rating']):null;
   }
 
   Map<String, dynamic> toJson() {

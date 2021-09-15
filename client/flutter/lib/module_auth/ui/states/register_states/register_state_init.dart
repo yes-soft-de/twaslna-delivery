@@ -12,14 +12,24 @@ import 'package:twaslna_delivery/utils/helpers/custom_flushbar.dart';
 import 'package:twaslna_delivery/utils/images/images.dart';
 
 class RegisterStateInit extends RegisterState {
-  RegisterStateInit(RegisterScreenState screen, {String? error})
+  RegisterStateInit(RegisterScreenState screen,
+      {String? error, bool registered = false})
       : super(screen) {
     if (error != null) {
-      CustomFlushBarHelper.createError(
-          title: S.current.warnning, message: error)
-        ..show(screen.context);
+      if (registered) {
+        screen.userRegistered().whenComplete(() {
+          CustomFlushBarHelper.createError(
+              title: S.current.warnning, message: error)
+            ..show(screen.context);
+        });
+      } else {
+        CustomFlushBarHelper.createError(
+            title: S.current.warnning, message: error)
+          ..show(screen.context);
+      }
     }
   }
+
   TextEditingController nameController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -47,10 +57,12 @@ class RegisterStateInit extends RegisterState {
                     )
                   : Container(),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0,left: 85,right: 85,top: 24),
-                child: Text(S.of(context).name,style: TextStyle(
-                    fontWeight: FontWeight.bold
-                ),),
+                padding: const EdgeInsets.only(
+                    bottom: 8.0, left: 85, right: 85, top: 24),
+                child: Text(
+                  S.of(context).name,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
               ListTile(
                 leading: Container(
@@ -152,13 +164,16 @@ class RegisterStateInit extends RegisterState {
             secondButtonTitle: S.of(context).iHaveAnAccount,
             loading: screen.loadingSnapshot.connectionState ==
                 ConnectionState.waiting,
-            secondButtonTab: () => Navigator.of(context)
-                .pushReplacementNamed(AuthorizationRoutes.LOGIN_SCREEN,arguments: screen.args),
+            secondButtonTab: () => Navigator.of(context).pushReplacementNamed(
+                AuthorizationRoutes.LOGIN_SCREEN,
+                arguments: screen.args),
             firstButtonTab: agreed
                 ? () {
                     if (_registerKey.currentState!.validate()) {
-                      screen.registerClient(
-                          RegisterRequest(userID:usernameController.text ,password:passwordController.text,userName: nameController.text));
+                      screen.registerClient(RegisterRequest(
+                          userID: usernameController.text,
+                          password: passwordController.text,
+                          userName: nameController.text));
                     }
                   }
                 : null,

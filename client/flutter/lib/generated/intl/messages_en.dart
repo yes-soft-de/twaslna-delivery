@@ -150,6 +150,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "destinationAddressHint": MessageLookupByLibrary.simpleMessage(
             "Please place your destination address"),
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
+        "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
+            "Download Twaslna App on Play Store"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),
         "earnCash": MessageLookupByLibrary.simpleMessage("Earn Cash"),
         "editBranchName":
@@ -373,11 +375,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("Private Order"),
         "product": MessageLookupByLibrary.simpleMessage("product"),
+        "products": MessageLookupByLibrary.simpleMessage("Products"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "profileDataEmpty": MessageLookupByLibrary.simpleMessage(
             "There is no profile data available"),
         "profileFetchedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Profile Data Fetched Successfully"),
+        "rateCaptain": MessageLookupByLibrary.simpleMessage("Rate Captain"),
+        "rateCaptainMessage": MessageLookupByLibrary.simpleMessage(
+            "Rate this captain upon your opinion"),
+        "rateStore": MessageLookupByLibrary.simpleMessage("Rate Store"),
+        "rateStoreMessage": MessageLookupByLibrary.simpleMessage(
+            "Rate this store in your opinion"),
+        "rateSubmitting": MessageLookupByLibrary.simpleMessage(
+            "Your rate has been submitted"),
         "reasonIsRequired":
             MessageLookupByLibrary.simpleMessage("Reason is Required"),
         "reasonOfTheReport":
@@ -451,6 +462,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeOwner": MessageLookupByLibrary.simpleMessage("Store Owner"),
         "storePhone": MessageLookupByLibrary.simpleMessage("Store Phone"),
         "storeProducts": MessageLookupByLibrary.simpleMessage("Store Products"),
+        "storeRated":
+            MessageLookupByLibrary.simpleMessage("stores has been rated"),
+        "stores": MessageLookupByLibrary.simpleMessage("Stores"),
+        "submit": MessageLookupByLibrary.simpleMessage("Submit"),
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("Submitting Profile"),
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),

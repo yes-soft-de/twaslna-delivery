@@ -4,7 +4,7 @@ class PrivateOrderTitleBar extends StatelessWidget {
  final String title;
  final double rate;
  final int views;
- final double deliveryCost;
+ final num deliveryCost;
  PrivateOrderTitleBar({required this.title,required this.rate,required this.views,required this.deliveryCost});
 
   @override

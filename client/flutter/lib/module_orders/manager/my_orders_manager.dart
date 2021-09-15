@@ -5,6 +5,8 @@ import 'package:twaslna_delivery/module_orders/response/client_order_response.da
 import 'package:twaslna_delivery/module_orders/response/my_orders_response.dart';
 import 'package:twaslna_delivery/module_orders/response/order_details_response.dart';
 import 'package:twaslna_delivery/module_orders/response/orders_logs_response.dart';
+import 'package:twaslna_delivery/module_stores/request/rate_response.dart';
+import 'package:twaslna_delivery/module_stores/request/rate_store_request.dart';
 
 @injectable
 class MyOrdersManager {
@@ -19,5 +21,5 @@ class MyOrdersManager {
   Future <ClientOrderResponse?> postClintOrder(ClientOrderRequest request) => _myOrdersRepository.postClientOrder(request);
   Future <ClientOrderResponse?> deleteClientOrder(int id) => _myOrdersRepository.deleteClientOrder(id);
   Future <ClientOrderResponse?> updateClientOrder(ClientOrderRequest request) => _myOrdersRepository.updateClientOrder(request);
-
+  Future<RateResponse?> rateCaptain(RateCaptainRequest request) => _myOrdersRepository.createRateCaptain(request);
 }
