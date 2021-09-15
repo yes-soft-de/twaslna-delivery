@@ -18,6 +18,7 @@ use App\Response\CaptainFinancialAccountDetailsForAdminResponse;
 use App\Response\CaptainTotalFinancialAccountInMonthResponse;
 use App\Response\CaptainTotalFinancialAccountInMonthForAdminResponse;
 use App\Response\CaptainCountOrdersDeliveredInTodayResponse;
+use App\Response\CaptainsWithUnfinishedPaymentsResponse;
 use App\Response\UserRegisterResponse ;
 use App\Service\CaptainPaymentService;
 use App\Service\RoomIdHelperService;
@@ -382,7 +383,7 @@ class CaptainProfileService
              $item['remainingAmountForCompany'] = (float)$item['amountYouOwn'] - $item['sumPaymentsToCompany'];
              $item['bounce'] = $item[0]['bounce'] * $item['countOrdersDelivered'];
              $item['salary'] = $item[0]['salary'];
-             $item['NetProfit'] = $item[0]['bounce'] + $item[0]['salary'] + $item['kilometerBonus'];;
+             $item['NetProfit'] = $item['bounce'] + $item[0]['salary'] + $item['kilometerBonus'];;
              $item['total'] = $item['NetProfit'] - $item['sumPaymentsFromCompany'];
              $item['paymentsFromCompany'] = $paymentsFromCompany;
 
@@ -412,9 +413,7 @@ class CaptainProfileService
              }
 
         if ($item) {
-            
-             $countOrdersDelivered = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);           
-            
+             $countOrdersDelivered = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);          
              $paymentsToCaptain = $this->captainPaymentService->getPaymentsFromCompanyInSpecificDate( $item[0]['captainID'] ,$date[0], $date[1]);     
             
              $paymentsFromCaptain = $this->captainPaymentService->getPaymentsToCompanyInSpecificDate( $item[0]['captainID'] ,$date[0], $date[1]);     
@@ -431,9 +430,10 @@ class CaptainProfileService
              $item['sumPaymentsFromCaptain'] = (float)$sumPaymentsFromCaptain[0]['sumPayments'];
              $item['remainingAmountForCompany'] = (float)$item['amountWithCaptain'] - $item['sumPaymentsFromCaptain'];
              $item['bounce'] = $item[0]['bounce'] * $item['countOrdersDelivered'];
-             $item['salary'] = $item[0]['salary'];
-             $item['NetProfit'] = $item[0]['bounce'] + $item[0]['salary'] + $item['kilometerBonus'];
 
+             $item['salary'] = $item[0]['salary'];
+            
+             $item['NetProfit'] = $item['bounce'] + $item[0]['salary'] + $item['kilometerBonus'];
              // + Positive: the account is on the captain
              // - Negative: the account is for the captain
              $item['total'] =  $item['sumPaymentsToCaptain'] - $item['NetProfit'];
@@ -530,21 +530,19 @@ class CaptainProfileService
     public function getCaptainsWithUnfinishedPayments()
     {
         $response = [];
-        $result = [];
         $captains = $this->userManager->getAllCaptains();
      
         foreach ($captains as $captain) {
                  $totalBounce = $this->getCaptainFinancialAccountDetailsByCaptainIdForAdmin($captain['captainID']);
 
                  $total=$totalBounce[0]->total;
-                 $captain['total'] = $total;
+                 $captain['remainingAmountForCaptain'] = $total;
 
-                if ($captain['total'] < 0 ){
-                $response[] =  $this->autoMapping->map('array', CaptainProfileCreateResponse::class, $captain);
-                  }
+                if ($captain['remainingAmountForCaptain'] < 0 ){
+                $response[] =  $this->autoMapping->map('array', CaptainsWithUnfinishedPaymentsResponse::class, $captain);
+                }
         } 
-        $result['response'] = $response;
-        return $result;
+        return $response;
     }
 
     public function updateCaptainNewMessageStatus($request, $NewMessageStatus)
