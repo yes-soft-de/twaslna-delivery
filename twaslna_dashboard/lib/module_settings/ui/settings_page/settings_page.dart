@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:injectable/injectable.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
+import 'package:twaslna_dashboard/global_nav_key.dart';
 import 'package:twaslna_dashboard/module_auth/authorization_routes.dart';
 import 'package:twaslna_dashboard/module_notifications/service/fire_notification_service/fire_notification_service.dart';
 import 'package:flutter/material.dart';
@@ -35,11 +36,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomTwaslnaAppBar.appBar(context,
-          title: S.of(context).settings,
-          colorIcon: Theme.of(context).brightness != Brightness.dark
-              ? Theme.of(context).disabledColor
-              : Colors.white,
-          buttonBackground: Theme.of(context).backgroundColor),
+          title: S.of(context).settings, icon: Icons.menu, onTap: () {
+        GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
+      }),
       body: Padding(
         padding: const EdgeInsets.only(right: 8.0, left: 8.0),
         child: ListView(
@@ -51,8 +50,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Theme.of(context).backgroundColor,
+                borderRadius: BorderRadius.circular(25),
+                color: Theme.of(context).primaryColor,
               ),
               child: Flex(
                 direction: Axis.vertical,
@@ -66,32 +65,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     leading: Icon(
                         Theme.of(context).brightness == Brightness.dark
                             ? Icons.nightlight_round_rounded
-                            : Icons.wb_sunny),
+                            : Icons.wb_sunny ,color: Colors.white),
                     onChanged: (mode) {
                       widget._themeDataService.switchDarkMode(mode);
                     },
                     visualDensity: VisualDensity.comfortable,
                     switchType: SwitchType.cupertino,
-                    switchActiveColor: Theme.of(context).primaryColor,
-                    title: Text(S.of(context).darkMode),
+                    switchActiveColor: Theme.of(context).scaffoldBackgroundColor,
+                    title: Text(S.of(context).darkMode,style: TextStyle(color: Colors.white),),
                   ),
                   ListTile(
-                    leading: Icon(Icons.language),
-                    title: Text(S.of(context).language),
+                    leading: Icon(Icons.language,color: Colors.white),
+                    title: Text(S.of(context).language,style:TextStyle(color: Colors.white),),
                     trailing: DropdownButton(
                         value: Localizations.localeOf(context).languageCode,
                         underline: Container(),
                         icon: Padding(
                           padding: const EdgeInsets.all(4.0),
-                          child: Icon(Icons.arrow_drop_down_rounded),
+                          child: Icon(Icons.arrow_drop_down_rounded,color: Colors.white),
                         ),
                         items: [
                           DropdownMenuItem(
-                            child: Text('العربية'),
+                            child: Text('العربية',style: TextStyle(color: Colors.white),),
                             value: 'ar',
                           ),
                           DropdownMenuItem(
-                            child: Text('English'),
+                            child: Text('English',style: TextStyle(color: Colors.white),),
                             value: 'en',
                           ),
                         ],
@@ -101,11 +100,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         }),
                   ),
                   ListTile(
-                    leading: Icon(Icons.person_rounded),
-                    title: Text(S.of(context).signOut),
+                    leading: Icon(Icons.person_rounded,color: Colors.white),
+                    title: Text(S.of(context).signOut,style: TextStyle(color: Colors.white),),
                     trailing: Padding(
                       padding: const EdgeInsets.only(right: 10.0, left: 10.0),
-                      child: Icon(Icons.logout_rounded),
+                      child: Icon(Icons.logout_rounded,color: Colors.white,),
                     ),
                     onTap: () {
                       widget._authService.logout().then((value) {
