@@ -157,8 +157,6 @@ class OrderLogService
           
         $response[] = $this->autoMapping->map("array", OrderLogCaptainResponse::class, $item);
             }
-            return  $response;
-           
+            return  $response;   
     }
-
 }

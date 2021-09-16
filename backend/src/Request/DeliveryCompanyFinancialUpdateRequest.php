@@ -5,6 +5,7 @@ namespace App\Request;
 class DeliveryCompanyFinancialUpdateRequest
 {   
      private $id;
+   
      private $deliveryCost;
  
      public function getId()

@@ -36,7 +36,7 @@ class OrderController extends BaseController
         $this->validator = $validator;
         $this->orderService = $orderService;
     }
-
+//TODO
     /**
      * @Route("order", name="createOrderByStoreOwner", methods={"POST"})
      * @IsGranted("ROLE_OWNER")
@@ -62,7 +62,7 @@ class OrderController extends BaseController
 
         return $this->response($response, self::CREATE);
     }
-
+//TODO
      /**
       * @Route("orders", name="GetOrdersByOwnerID", methods={"GET"})
       * @IsGranted("ROLE_OWNER")
@@ -183,7 +183,6 @@ class OrderController extends BaseController
       public function getAcceptedOrderByCaptainId()
       {
           $result = $this->orderService->getAcceptedOrderByCaptainId($this->getUserId());
-  
           return $this->response($result, self::FETCH);
       }
 
@@ -397,4 +396,3 @@ class OrderController extends BaseController
         return $this->response($result, self::FETCH);
     }
 }
-

@@ -7,6 +7,7 @@ use App\Entity\OrderLogEntity;
 use App\Repository\OrderLogEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class OrderLogManager
 {
     private $autoMapping;

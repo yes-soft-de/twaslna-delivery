@@ -8,6 +8,7 @@ use App\Repository\SupportEntityRepository;
 use App\Request\SupportCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class SupportManager
 {
     private $autoMapping;

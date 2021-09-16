@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
+
 class OrderLogController extends BaseController
 {
     private $orderLogService;
@@ -23,7 +24,6 @@ class OrderLogController extends BaseController
       * @param Request $request
       * @return JsonResponse
       */
-      //getOrderLogByOrderId
       public function getOrderLogByOrderNumber($orderNumber)
       {
           $result = $this->orderLogService->getOrderLogByOrderNumber($orderNumber);

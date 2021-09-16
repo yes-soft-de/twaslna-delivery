@@ -5,13 +5,21 @@ namespace App\Request;
 class OrderUpdateSendByClientRequest
 {
     private $orderNumber;
+   
     private $source;
+   
     private $destination;
+   
     private $deliveryDate;
+   
     private $note;
+   
     private $payment;
+   
     private $recipientName;
+   
     private $recipientPhone;
+   
     private $detail;
 
     

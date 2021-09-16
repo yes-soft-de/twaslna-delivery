@@ -67,7 +67,6 @@ class DeliveryCompanyFinancialService
         foreach ($results as  $result) {
            $response[] = $this->autoMapping->map('array', DeliveryCompanyDeliveryCostResponse::class, $result);
         }
-        return $response;
-       
+        return $response; 
     }
 }

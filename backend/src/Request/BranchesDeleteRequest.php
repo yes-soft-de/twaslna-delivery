@@ -5,6 +5,7 @@ namespace App\Request;
 class BranchesDeleteRequest
 {
     private $id;
+    
     private $isActive;
       
     /**

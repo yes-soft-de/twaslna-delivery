@@ -5,15 +5,25 @@ namespace App\Request;
 class OrderClientCreateRequest
 {
     private $storeOwnerProfileID;
+   
     private $destination;
+   
     private $deliveryDate;
+   
     private $note;
+   
     private $payment;
+   
     private $state;
+   
     private $roomID;
+   
     private $clientID;
+   
     private $products;
+   
     private $orderCost;
+   
     private $deliveryCost;
 
      /**

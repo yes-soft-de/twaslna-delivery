@@ -81,10 +81,8 @@ class StoreOwnerSubscriptionEntityRepository extends ServiceEntityRepository
 
             ->select('subscription.status')
 
-            // ->andWhere("subscription.ownerID = :ownerID")
             ->andWhere("subscription.id = :subscribeId")
 
-            // ->setParameter('ownerID', $ownerID)
             ->setParameter('subscribeId', $subscribeId)
 
             ->getQuery()
@@ -141,7 +139,6 @@ class StoreOwnerSubscriptionEntityRepository extends ServiceEntityRepository
             
             ->andWhere('subscription.ownerID=:ownerID')
             ->andWhere('subscription.id=:id')
-            // ->andWhere("orderEntity.state ='deliverd'")
 
             ->addGroupBy('subscription.id')
             ->setMaxResults(1)
@@ -207,7 +204,6 @@ class StoreOwnerSubscriptionEntityRepository extends ServiceEntityRepository
             ->andWhere('subscription.ownerID=:ownerID')
             ->andWhere('subscription.isFuture= 0')
 
-            // ->addGroupBy('subscription.id')
             ->addGroupBy('subscription.startDate')
             ->setMaxResults(1)
             ->addOrderBy('subscription.startDate','DESC')

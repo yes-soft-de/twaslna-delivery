@@ -3,7 +3,6 @@
 
 namespace App\Service;
 
-
 use App\AutoMapping;
 use App\Entity\NotificationTokenEntity;
 use App\Manager\NotificationManager;
@@ -17,6 +16,7 @@ use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 use App\Constant\MessageConstant;
 use App\Constant\AppNameConstant;
+
 
 class NotificationService
 {
@@ -52,9 +52,6 @@ class NotificationService
         $devicesToken = [];
         $userTokenOne = $this->getNotificationTokenByUserID($request->getUserIdOne());
         $devicesToken[] = $userTokenOne;
-        // $userTokenTwo = $this->getNotificationTokenByUserID($request->getUserIdTwo());
-        // $devicesToken[] = $userTokenTwo;
-
         $message = CloudMessage::new()
             ->withNotification(Notification::create(AppNameConstant::$APP_NAME, MessageConstant::$MESSAGE_CAPTAIN_NEW_ORDER.$request->getOrderID()));
 
@@ -63,7 +60,6 @@ class NotificationService
 
     public function notificationNewChat($request)
     {
-
         $item = $this->roomIdHelperService->getByRoomID($request->getRoomID());
         if($item) {
             $devicesToken = [];

@@ -49,9 +49,8 @@ class SupportController extends BaseController
 
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
-            $result = $this->supportService->createSupport($request);
+        $result = $this->supportService->createSupport($request);
             
-
         return $this->response($result, self::CREATE);
     }
 

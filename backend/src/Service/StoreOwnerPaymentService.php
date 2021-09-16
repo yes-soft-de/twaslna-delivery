@@ -10,6 +10,7 @@ use App\Response\StoreOwnerCreateResponse;
 use App\Service\StoreOwnerSubscriptionService;
 use App\Service\DateFactoryService;
 
+
 class StoreOwnerPaymentService
 {
     private $autoMapping;
@@ -49,8 +50,6 @@ class StoreOwnerPaymentService
         }
         $sumPayments = $sumPayments[0]['sumPayments'];
        
-        
-
         $total = $sumPayments - $totalAmountOfSubscriptions;
         
         if ($admin == "admin"){$total = $totalAmountOfSubscriptions - $sumPayments;}

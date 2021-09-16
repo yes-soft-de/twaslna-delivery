@@ -5,7 +5,9 @@ namespace App\Request;
 class AppointmentCreateRequest
 {
     private $userName;
+
     private $phone;
+
     private $isDone;
 
     /**

@@ -8,6 +8,7 @@ use App\Repository\OrderDetailEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\OrderDetailUpdateByClientRequest;
 
+
 class OrderDetailManager
 {
     private $autoMapping;

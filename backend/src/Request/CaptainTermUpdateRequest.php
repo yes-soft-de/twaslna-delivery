@@ -5,6 +5,7 @@ namespace App\Request;
 class CaptainTermUpdateRequest
 {
     private $id;
+    
     private $content;
 
     /**

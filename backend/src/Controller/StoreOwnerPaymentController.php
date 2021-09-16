@@ -36,18 +36,18 @@ class StoreOwnerPaymentController extends BaseController
      */
     public function createStoreOwnerPayment(Request $request)
     {
-            $data = json_decode($request->getContent(), true);
+        $data = json_decode($request->getContent(), true);
 
-            $request = $this->autoMapping->map(stdClass::class, StoreOwnerPaymentCreateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, StoreOwnerPaymentCreateRequest::class, (object)$data);
 
-            $violations = $this->validator->validate($request);
+        $violations = $this->validator->validate($request);
 
-            if (\count($violations) > 0) {
-                $violationsString = (string) $violations;
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
 
-                return new JsonResponse($violationsString, Response::HTTP_OK);
-            }
-            $result = $this->storeOwnerPaymentService->createStoreOwnerPayment($request);
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+        $result = $this->storeOwnerPaymentService->createStoreOwnerPayment($request);
 
         return $this->response($result, self::CREATE);
     }

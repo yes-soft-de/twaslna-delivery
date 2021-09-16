@@ -79,7 +79,5 @@ class DeliveryCompanyProfileService
            $respons[]= $this->autoMapping->map('array', DeliveryCompanyInfoResponse::class, $result);
         }
         return $respons;
-       
     }
-
 }

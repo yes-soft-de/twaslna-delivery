@@ -8,16 +8,13 @@ use App\Service\RatingService;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class RatingController extends BaseController
 {
     private $autoMapping;
-    private $validator;
     private $ratingService;
 
     public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, RatingService $ratingService)
@@ -35,13 +32,13 @@ class RatingController extends BaseController
      */
     public function createRatingByCaptainOrClient(Request $request)
     {
-            $data = json_decode($request->getContent(), true);
+        $data = json_decode($request->getContent(), true);
 
-            $request = $this->autoMapping->map(stdClass::class, RatingCreateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, RatingCreateRequest::class, (object)$data);
 
-            $request->setUserID($this->getUserId());
+        $request->setUserID($this->getUserId());
 
-            $result = $this->ratingService->createRatingByCaptainOrClient($request);
+        $result = $this->ratingService->createRatingByCaptainOrClient($request);
 
         return $this->response($result, self::CREATE);
     }
@@ -53,13 +50,13 @@ class RatingController extends BaseController
      */
     public function createCaptainRatingByClient(Request $request)
     {
-            $data = json_decode($request->getContent(), true);
+        $data = json_decode($request->getContent(), true);
 
-            $request = $this->autoMapping->map(stdClass::class, RatingCreateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, RatingCreateRequest::class, (object)$data);
 
-            $request->setUserID($this->getUserId());
+        $request->setUserID($this->getUserId());
 
-            $result = $this->ratingService->createCaptainRatingByClient($request);
+        $result = $this->ratingService->createCaptainRatingByClient($request);
 
         return $this->response($result, self::CREATE);
     }
@@ -71,13 +68,13 @@ class RatingController extends BaseController
      */
     public function createStoreRatingByClient(Request $request)
     {
-            $data = json_decode($request->getContent(), true);
+        $data = json_decode($request->getContent(), true);
 
-            $request = $this->autoMapping->map(stdClass::class, RatingCreateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, RatingCreateRequest::class, (object)$data);
 
-            $request->setUserID($this->getUserId());
+        $request->setUserID($this->getUserId());
 
-            $result = $this->ratingService->createStoreRatingByClient($request);
+        $result = $this->ratingService->createStoreRatingByClient($request);
 
         return $this->response($result, self::CREATE);
     }
@@ -89,15 +86,14 @@ class RatingController extends BaseController
      */
     public function createProductRatingByClient(Request $request)
     {
-            $data = json_decode($request->getContent(), true);
+        $data = json_decode($request->getContent(), true);
 
-            $request = $this->autoMapping->map(stdClass::class, RatingCreateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, RatingCreateRequest::class, (object)$data);
 
-            $request->setUserID($this->getUserId());
+        $request->setUserID($this->getUserId());
 
-            $result = $this->ratingService->createProductRatingByClient($request);
+        $result = $this->ratingService->createProductRatingByClient($request);
 
         return $this->response($result, self::CREATE);
     }
-
 }

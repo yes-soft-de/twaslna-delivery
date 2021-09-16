@@ -8,6 +8,7 @@ use App\Manager\RatingManager;
 use App\Request\RatingCreateRequest;
 use App\Response\RatingResponse;
 
+
 class RatingService
 {
     private $autoMapping;

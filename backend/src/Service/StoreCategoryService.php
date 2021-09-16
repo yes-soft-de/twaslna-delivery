@@ -9,6 +9,7 @@ use App\Request\StoreCategoryCreateRequest;
 use App\Response\StoreCategoryCreateResponse;
 use App\Response\StoreCategoryByIdResponse;
 
+
 class StoreCategoryService
 {
     private $autoMapping;

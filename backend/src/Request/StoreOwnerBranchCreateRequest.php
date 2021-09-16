@@ -5,9 +5,13 @@ namespace App\Request;
 class StoreOwnerBranchCreateRequest
 {
     private $storeOwnerProfileID;
+   
     private $location = [];
+   
     private $city;
+   
     private $branchName;
+   
     private $isActive;
       
     /**

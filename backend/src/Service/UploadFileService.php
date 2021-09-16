@@ -3,7 +3,6 @@
 
 namespace App\Service;
 
-
 use App\Request\SettingRequest;
 use App\Response\SettingResponse;
 use DateTime;

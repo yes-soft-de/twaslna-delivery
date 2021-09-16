@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Manager\UserManager;
 
+
 class UserService
 {
     private $userManager;
@@ -18,5 +19,4 @@ class UserService
         return $this->userManager->checkUserType($userType,$userID);
        
     }
-
 }

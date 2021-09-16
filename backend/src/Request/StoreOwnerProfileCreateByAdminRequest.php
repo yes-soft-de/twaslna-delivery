@@ -8,8 +8,6 @@ class StoreOwnerProfileCreateByAdminRequest
 
     private $storeOwnerName;
 
-    // private $story;
-
     private $image;
 
     private $is_best;
@@ -68,22 +66,6 @@ class StoreOwnerProfileCreateByAdminRequest
         $this->storeOwnerName = $storeOwnerName;
     }
 
-    // /**
-    //  * @return mixed
-    //  */
-    // public function getStory()
-    // {
-    //     return $this->story;
-    // }
-
-    // /**
-    //  * @param mixed $story
-    //  */
-    // public function setStory($story): void
-    // {
-    //     $this->story = $story;
-    // }
-
     public function getRoomID(): ?string
     {
         return $this->roomID;
@@ -111,7 +93,6 @@ class StoreOwnerProfileCreateByAdminRequest
     {
         $this->image = $image;
     }
-
 
     /**
      * Get the value of storeCategoryId

@@ -5,8 +5,11 @@ namespace App\Request;
 class StoreCategoryUpdateRequest
 {
     private $id;
+    
     private $storeCategoryName;
+    
     private $description;
+    
     private $image;
 
     /**

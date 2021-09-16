@@ -11,6 +11,7 @@ use App\Response\ProductsResponse;
 use App\Response\ProductFullInfoResponse;
 use App\Response\ProductsByProductCategoryIdResponse;
 
+
 class ProductService
 {
     private $autoMapping;

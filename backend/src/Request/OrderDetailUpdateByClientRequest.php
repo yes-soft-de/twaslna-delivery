@@ -5,11 +5,14 @@ namespace App\Request;
 class OrderDetailUpdateByClientRequest
 {
     private $id;
+    
     private $orderNumber;
+    
     private $orderID;
+    
     private $productID ;
+    
     private $countProduct;
-
     
 
     /**

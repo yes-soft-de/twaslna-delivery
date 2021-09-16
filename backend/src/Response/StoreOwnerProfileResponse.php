@@ -8,11 +8,7 @@ class StoreOwnerProfileResponse
     
     public $storeOwnerName;
 
-    // public $story;
-
     public $image;
-
-    // public $status;
 
     public $branch;
     

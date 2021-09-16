@@ -5,8 +5,11 @@ namespace App\Request;
 class SupportCreateRequest
 {
     private $userId;
+  
     private $orderId;
+  
     private $reason;
+  
     private $roomID;
       
     /**

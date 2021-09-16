@@ -266,8 +266,6 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
 
              ->where('OrderEntity.date >= :fromDate')
              ->andWhere('OrderEntity.date < :toDate')
-            // ->andWhere("OrderEntity.state = :deliverd")
-            // ->setParameter('deliverd', 'deliverd')
             ->addGroupBy('OrderEntity.captainID')
             
             ->having('count(OrderEntity.captainID) > 0')

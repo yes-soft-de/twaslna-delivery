@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\AutoMapping;
-
 use App\Request\CaptainProfileCreateRequest;
 use App\Request\CaptainProfileUpdateRequest;
 use App\Request\CaptainProfileUpdateLocationRequest;
@@ -24,8 +23,7 @@ class CaptainProfileController extends BaseController
 {
     private $autoMapping;
     private $validator;
-    private $captainProfileService;
-   
+    private $captainProfileService;   
 
     public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, CaptainProfileService $captainProfileService)
     {
@@ -45,7 +43,6 @@ class CaptainProfileController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
         
-
         $request = $this->autoMapping->map(stdClass::class, UserRegisterRequest::class, (object)$data);
 
         $violations = $this->validator->validate($request);
@@ -68,36 +65,6 @@ class CaptainProfileController extends BaseController
     }
 
     /**
-     * @Route("/captainprofile", name="createCaptainProfile", methods={"POST"})
-     * @IsGranted("ROLE_CAPTAIN")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function createCaptainProfile(Request $request)
-    {
-        $response="error lon or lat";
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class, CaptainProfileCreateRequest::class, (object)$data);
-
-        $lon = isset($request->getLocation()["lon"]);
-        $lat = isset($request->getLocation()["lat"]);
-        if( $lon == true && $lat == true) {
-
-            $request->setCaptainID($this->getUserId());
-
-            $violations = $this->validator->validate($request);
-            if (\count($violations) > 0) {
-                $violationsString = (string) $violations;
-                return new JsonResponse($violationsString, Response::HTTP_OK);
-            }
-            $response = $this->captainProfileService->createCaptainProfile($request);
-            return $this->response($response, self::CREATE);
-        }
-        return $this->response($response, self::ERROR);
-    }
-
-    /**
      * @Route("/captainprofile", name="captainProfileUpdate", methods={"PUT"})
      * @IsGranted("ROLE_CAPTAIN")
      * @param Request $request
@@ -110,8 +77,7 @@ class CaptainProfileController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, CaptainProfileUpdateRequest::class, (object)$data);
         $request->setUserID($this->getUserId());
         $response = $this->captainProfileService->updateCaptainProfile($request);
-        return $this->response($response, self::UPDATE);
-        
+        return $this->response($response, self::UPDATE);  
     }
 
     /**
@@ -161,7 +127,6 @@ class CaptainProfileController extends BaseController
 
         return $this->response($response, self::UPDATE);
     }
-
     
     /**
      * @Route("/captainprofile", name="getCaptainprofileByCaptainID",methods={"GET"})
@@ -362,6 +327,4 @@ class CaptainProfileController extends BaseController
 
         return $this->response($response, self::FETCH);
     }
-    
-
 }

@@ -7,7 +7,7 @@ use App\Entity\OrderDetailEntity;
 use App\Manager\OrderDetailManager;
 use App\Response\OrderCreateDetailResponse;
 use App\Response\OrderDetailResponse;
-use App\Request\OrderDetailUpdateByClientRequest;
+
 
 class OrderDetailService
 {

@@ -4,8 +4,6 @@ namespace App\Request;
 
 class ClientProfileUpdateRequest
 {
-    // private $id;
-
     private $clientID;
 
     private $clientName;
@@ -16,14 +14,7 @@ class ClientProfileUpdateRequest
 
     private $location;
 
-    /**
-     * @return mixed
-     */
-    // public function getId()
-    // {
-    //     return $this->id;
-    // }
-
+   
     /**
      * @return mixed
      */
@@ -55,22 +46,6 @@ class ClientProfileUpdateRequest
     {
         $this->clientName = $clientName;
     }
-
-    // /**
-    //  * @return mixed
-    //  */
-    // public function getStory()
-    // {
-    //     return $this->story;
-    // }
-
-    // /**
-    //  * @param mixed $story
-    //  */
-    // public function setStory($story): void
-    // {
-    //     $this->story = $story;
-    // }
 
     /**
      * @return mixed

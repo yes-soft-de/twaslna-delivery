@@ -8,6 +8,7 @@ use App\Manager\StoreOwnerBranchManager;
 use App\Request\StoreOwnerBranchCreateRequest;
 use App\Response\StoreOwnerBranchResponse;
 
+
 class StoreOwnerBranchService
 {
     private $autoMapping;

@@ -9,6 +9,7 @@ use App\Repository\NotificationLocalEntityRepository;
 use App\Request\NotificationLocalCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class NotificationLocalManager
 {
     /**

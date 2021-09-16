@@ -5,11 +5,17 @@ namespace App\Request;
 class OrderUpdateSpecialByClientRequest
 {
     private $orderNumber;
+    
     private $storeOwnerProfileID;
+    
     private $destination = [];
+    
     private $deliveryDate;
+    
     private $note;
+    
     private $payment;
+    
     private $detail;
 
     

@@ -1,7 +1,7 @@
 <?php
 
-
 namespace App\Controller;
+
 use App\AutoMapping;
 use App\Request\AppointmentCreateRequest;
 use App\Request\AppointmentUpdateIsDoneRequest;

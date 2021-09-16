@@ -5,19 +5,33 @@ namespace App\Request;
 class OrderCreateRequest
 {
     private $ownerID;
+  
     private $source = [];
+  
     private $destination = [];
+  
     private $deliveryDate;
+  
     private $note;
+  
     private $payment;
+  
     private $recipientName;
+  
     private $recipientPhone;
+  
     private $state;
+  
     private $branchId;
+  
     private $roomID;
+  
     private $subscribeId;
+  
     private $clientID;
+  
     private $productID;
+  
     private $countProduct;
 
      /**

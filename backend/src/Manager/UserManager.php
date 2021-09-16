@@ -29,6 +29,7 @@ use App\Manager\OrderManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+
 class UserManager
 {
     private $autoMapping;
@@ -54,7 +55,7 @@ class UserManager
         $this->storeOwnerBranchManager = $storeOwnerBranchManager;
         $this->orderManager = $orderManager;
     }
-
+//TODO
     // public function storeOwnerRegister(UserRegisterRequest $request)
     // {
     //     $user = $this->getUserByUserID($request->getUserID());
@@ -272,9 +273,9 @@ class UserManager
         if ($captainProfile == null)
         {
             $captainProfile = $this->autoMapping->map(UserRegisterRequest::class, CaptainProfileEntity::class, $request);
-             //change setStatus to inactive
-             $captainProfile->setStatus('inactive');
-             $captainProfile->setRoomID($roomID);
+             
+            $captainProfile->setStatus('inactive');
+            $captainProfile->setRoomID($roomID);
             $captainProfile->setCaptainID($user['id']);
             $captainProfile->setCaptainName($request->getUserName());
             $captainProfile->setSalary(0);
@@ -363,31 +364,6 @@ class UserManager
     public function getStoresByName($name)
     {
         return $this->storeOwnerProfileEntityRepository->getStoresByName($name);
-    }
-
-    public function createCaptainProfile(CaptainProfileCreateRequest $request, $roomID)
-    {
-        $request->setRoomID($roomID);
-        $isCaptainProfile = $this->captainProfileEntityRepository->getcaptainprofileByCaptainID($request->getCaptainID());
-
-        if ($isCaptainProfile == null) {
-
-            $captainProfile = $this->autoMapping->map(CaptainProfileCreateRequest::class, CaptainProfileEntity::class, $request);
-            
-            //change setStatus to inactive
-            $captainProfile->setStatus('active');
-
-            $captainProfile->setIsOnline('active');
-            
-            $this->entityManager->persist($captainProfile);
-            $this->entityManager->flush();
-            $this->entityManager->clear();
-
-            return $captainProfile;
-        }
-        else {
-            return true;
-        }
     }
 
     public function countStores()
@@ -501,16 +477,6 @@ class UserManager
     {
         return $this->captainProfileEntityRepository->getCaptainAsArrayByCaptainId($captainID);
     }
-//لا داعي له ولكن تركته لتأكد
-    public function getOwners()
-    {
-        return $this->storeOwnerProfileEntityRepository->getOwners();
-    }
-//لا داعي له ولكن تركته لتأكد
-    public function getCaptains($userID)
-    {
-        return $this->captainProfileEntityRepository->getCaptains($userID);
-    }
 
     public function getAllStoreOwners()
     {
@@ -562,25 +528,6 @@ class UserManager
         return $this->captainProfileEntityRepository->getTopCaptainsInLastMonthDate($fromDate, $toDate);
     }
 
-//User section 
-    public function createClientProfile(ClientProfileCreateRequest $request, $roomID)
-    {
-        $request->setRoomID($roomID);
-        $userProfile = $this->getClientProfileByClientID($request->getClientID());
-        if ($userProfile == null) {
-            $userProfile = $this->autoMapping->map(ClientProfileCreateRequest::class, ClientProfileEntity::class, $request);
-
-            $this->entityManager->persist($userProfile);
-            $this->entityManager->flush();
-            $this->entityManager->clear();
-
-            return $userProfile;
-        }
-        else {
-            return true;
-        }
-    }
-
     public function getClientProfileByClientID($clientID)
     {
         return $this->clientProfileEntityRepository->getClientProfileByClientID($clientID);
@@ -629,7 +576,6 @@ class UserManager
             $userProfile = $this->autoMapping->map(StoreOwnerProfileCreateByAdminRequest::class, StoreOwnerProfileEntity::class, $request);
 
             $userProfile->setStatus('active');
-            // $userProfile->setStoreOwnerID($request->getUserID());
             $userProfile->setFree(false);
             $userProfile->setIs_best(false);
             $userProfile->setOpeningTime( $userProfile->getOpeningTime());
@@ -658,7 +604,7 @@ class UserManager
                 $this->entityManager->clear();
            }
 
-            return $userProfile;
+        return $userProfile;
     }
     
     public function checkUserType($userType,$userID)

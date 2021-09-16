@@ -29,6 +29,7 @@ use App\Manager\UserManager;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use DateTime;
 
+
 class CaptainProfileService
 {
     private $autoMapping;
@@ -68,20 +69,6 @@ class CaptainProfileService
             $user = $this->userManager->getUserByUserID($request->getUserID());
             $user['found']="yes";
             return $user;
-        }
-    }
-
-    public function createCaptainProfile(CaptainProfileCreateRequest $request)
-    { 
-        $roomID = $this->roomIdHelperService->roomIdGenerate();
-        $captainProfile = $this->userManager->createCaptainProfile($request, $roomID);
-        
-        if ($captainProfile instanceof CaptainProfileEntity) {
-           
-            return $this->autoMapping->map(CaptainProfileEntity::class, CaptainProfileCreateResponse::class, $captainProfile);
-        }
-        if ($captainProfile == true) {
-            return $this->getCaptainProfileByCaptainID($request->getCaptainID());
         }
     }
 
@@ -140,8 +127,6 @@ class CaptainProfileService
     public function getCaptainProfileByCaptainIDForAdmin($captainID)
     {
         $response=[];
-        $totalBounce=[];
-        $countOrdersDeliverd=[];
         $item = $this->userManager->getCaptainProfileByCaptainID($captainID);
         if($item) {
             // $totalBounce = $this->getCaptainFinancialAccountDetailsByCaptainProfileId($item['id']);
@@ -155,10 +140,7 @@ class CaptainProfileService
             $item['rating'] = $this->ratingService->getAvgRating($item['captainID'], 'captain');
         }
         $response =  $this->autoMapping->map('array', CaptainProfileCreateResponse::class, $item);
-        // if($item) {
-            // $response->totalBounce = $totalBounce;
-            // $response->countOrdersDeliverd = $countOrdersDeliverd;
-        // }
+    
         return $response;
     }
 

@@ -3,10 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\StoreProductCategoryEntity;
-use App\Entity\StoreProductEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method StoreProductCategoryEntity|null find($id, $lockMode = null, $lockVersion = null)

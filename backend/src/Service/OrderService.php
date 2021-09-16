@@ -16,16 +16,13 @@ use App\Request\OrderUpdateByClientRequest;
 use App\Request\OrderUpdateSpecialByClientRequest;
 use App\Request\OrderUpdateSendByClientRequest;
 use App\Request\SendNotificationRequest;
-use App\Request\OrderDetailUpdateByClientRequest;
 use App\Response\OrderCreateResponse;
 use App\Response\OrderResponse;
 use App\Response\OrdersongoingResponse;
-use App\Response\OrderByIdResponse;
 use App\Response\OrdersByOwnerResponse;
 use App\Response\OrderClosestResponse;
 use App\Response\OrderPendingResponse;
 use App\Response\OrderUpdateStateResponse;
-use App\Response\OrdersResponse;
 use App\Response\OrderUpdateInvoiceByCaptainResponse;
 use App\Response\OrderCreateClientResponse;
 use App\Response\OrderClientSendCreateResponse;
@@ -70,7 +67,6 @@ class OrderService
     private $productService;
     private $orderDetailService;
     private $deliveryCompanyFinancialService;
-    private $userService;
     private $clientProfileService;
     private $notificationLocalService;
 
@@ -197,7 +193,6 @@ class OrderService
         return $response;
     }
     
-
     public function getPendingOrders():?array
     {
         $response = [];
@@ -297,8 +292,6 @@ class OrderService
             }
             $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
         }
-       
-
         return $response;
     }
 
@@ -384,7 +377,6 @@ class OrderService
            
             $response[] = $this->autoMapping->map('array', OrdersAndTopOwnerResponse::class, $topOwner);
         }
-    
        return $response;
    }
 
@@ -705,5 +697,4 @@ class OrderService
 
         return $response;
     }
-
 }

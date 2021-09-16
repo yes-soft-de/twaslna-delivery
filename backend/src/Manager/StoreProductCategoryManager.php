@@ -9,6 +9,7 @@ use App\Request\StoreProductCategoryCreateRequest;
 use App\Request\StoreProductCategoryUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class StoreProductCategoryManager
 {
     private $autoMapping;

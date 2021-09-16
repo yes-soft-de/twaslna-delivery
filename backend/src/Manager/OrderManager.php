@@ -16,6 +16,7 @@ use App\Request\OrderUpdateSpecialByClientRequest;
 use App\Request\OrderUpdateSendByClientRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class OrderManager
 {
     private $autoMapping;
@@ -329,5 +330,4 @@ class OrderManager
     {
         return $this->orderEntityRepository->getOrdersForSpecificClient($clientID);
     }
-
 }

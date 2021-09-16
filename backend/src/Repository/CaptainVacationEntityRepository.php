@@ -18,5 +18,4 @@ class CaptainVacationEntityRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, CaptainVacationEntity::class);
     }
-
 }

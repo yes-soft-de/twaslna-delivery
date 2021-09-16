@@ -9,6 +9,7 @@ use App\Request\AppointmentCreateRequest;
 use App\Request\AppointmentUpdateIsDoneRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class AppointmentManager
 {
     private $autoMapping;
@@ -51,5 +52,4 @@ class AppointmentManager
 
         return $entity;
     }
-
 }

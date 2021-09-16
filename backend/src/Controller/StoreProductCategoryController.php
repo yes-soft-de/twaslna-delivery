@@ -49,12 +49,12 @@ class StoreProductCategoryController extends BaseController
      */
      public function updateStoreProductCategory(Request $request)
      {
-         $data = json_decode($request->getContent(), true);
+        $data = json_decode($request->getContent(), true);
 
-         $request = $this->autoMapping->map(stdClass::class, StoreProductCategoryUpdateRequest::class, (object)$data);
-         $result = $this->storeProductCategoryService->updateStoreProductCategory($request);
+        $request = $this->autoMapping->map(stdClass::class, StoreProductCategoryUpdateRequest::class, (object)$data);
+        $result = $this->storeProductCategoryService->updateStoreProductCategory($request);
 
-         return $this->response($result, self::CREATE);
+        return $this->response($result, self::CREATE);
      }
 
     /**
@@ -63,9 +63,8 @@ class StoreProductCategoryController extends BaseController
      */
       public function getStoreProductsCategoryForStoreSpecific($storeOwnerProfileId)
       {
-          $result = $this->storeProductCategoryService->getStoreProductsCategoryForStoreSpecific($storeOwnerProfileId);
+        $result = $this->storeProductCategoryService->getStoreProductsCategoryForStoreSpecific($storeOwnerProfileId);
   
-          return $this->response($result, self::FETCH);
+        return $this->response($result, self::FETCH);
       }
-
 }

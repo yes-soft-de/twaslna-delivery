@@ -14,6 +14,7 @@ use App\Response\StoreOwnerSubscriptionBalanceResponse;
 use App\Service\DateFactoryService;
 use dateTime;
 
+
 class StoreOwnerSubscriptionService
 {
     private $autoMapping;
@@ -230,7 +231,6 @@ class StoreOwnerSubscriptionService
         if ($items ) {
             return array_sum($result);
         }
-        return 0;
-            
+        return 0;    
     }  
 }

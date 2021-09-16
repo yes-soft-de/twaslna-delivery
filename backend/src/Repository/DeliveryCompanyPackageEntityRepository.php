@@ -30,21 +30,6 @@ class DeliveryCompanyPackageEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    // get Packages User Compatible
-    // public function getPackages($user)
-    // {
-    //     return $this->createQueryBuilder('package')
-    //         ->select('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, package.status, package.city, package.branch')
-    //         ->join(UserProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.userID = :user')
-    //         ->where("package.status = 'active'")
-            
-    //         ->andWhere('userProfileEntity.city = package.city')
-    //         ->setParameter('user', $user)
-    //         ->groupBy('package.id')
-    //         ->getQuery()
-    //         ->getResult();
-    // }
-
     public function getCompanyPackages()
     {
         return $this->createQueryBuilder('package')
