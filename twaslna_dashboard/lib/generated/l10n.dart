@@ -2680,10 +2680,10 @@ class S {
     );
   }
 
-  /// `deliver price`
+  /// `Deliver Price`
   String get deliverPrice {
     return Intl.message(
-      'deliver price',
+      'Deliver Price',
       name: 'deliverPrice',
       desc: '',
       args: [],
@@ -4030,10 +4030,10 @@ class S {
     );
   }
 
-  /// `Here we are showing your balance status`
+  /// `Here we are showing captain balance status`
   String get myBalanceHint {
     return Intl.message(
-      'Here we are showing your balance status',
+      'Here we are showing captain balance status',
       name: 'myBalanceHint',
       desc: '',
       args: [],
@@ -4055,6 +4055,26 @@ class S {
     return Intl.message(
       'Total Payments From Company',
       name: 'sumPaymentsFromCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Payments To Captain`
+  String get sumPaymentsToCaptain {
+    return Intl.message(
+      'Total Payments To Captain',
+      name: 'sumPaymentsToCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Payments From Captain`
+  String get sumPaymentsFromCaptain {
+    return Intl.message(
+      'Total Payments From Captain',
+      name: 'sumPaymentsFromCaptain',
       desc: '',
       args: [],
     );
@@ -4235,6 +4255,426 @@ class S {
     return Intl.message(
       'This account already exist',
       name: 'accountAlreadyExist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stores Categories`
+  String get storeCategories {
+    return Intl.message(
+      'Stores Categories',
+      name: 'storeCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Category`
+  String get addNewCategory {
+    return Intl.message(
+      'Add Category',
+      name: 'addNewCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CategoryName`
+  String get categoryName {
+    return Intl.message(
+      'CategoryName',
+      name: 'categoryName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category created successfully`
+  String get categoryCreatedSuccessfully {
+    return Intl.message(
+      'Category created successfully',
+      name: 'categoryCreatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stores List`
+  String get storesList {
+    return Intl.message(
+      'Stores List',
+      name: 'storesList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Stores`
+  String get addStore {
+    return Intl.message(
+      'Add Stores',
+      name: 'addStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product Category`
+  String get productCategory {
+    return Intl.message(
+      'Product Category',
+      name: 'productCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product Categories`
+  String get productCategories {
+    return Intl.message(
+      'Product Categories',
+      name: 'productCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose Category`
+  String get chooseCategory {
+    return Intl.message(
+      'Choose Category',
+      name: 'chooseCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Info`
+  String get storeInfo {
+    return Intl.message(
+      'Store Info',
+      name: 'storeInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Don't Serve`
+  String get notServe {
+    return Intl.message(
+      'Don\'t Serve',
+      name: 'notServe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Serve`
+  String get serve {
+    return Intl.message(
+      'Serve',
+      name: 'serve',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Management`
+  String get storeManagment {
+    return Intl.message(
+      'Store Management',
+      name: 'storeManagment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product Name`
+  String get productName {
+    return Intl.message(
+      'Product Name',
+      name: 'productName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product Price`
+  String get productPrice {
+    return Intl.message(
+      'Product Price',
+      name: 'productPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `In Active Captains`
+  String get inActiveCaptains {
+    return Intl.message(
+      'In Active Captains',
+      name: 'inActiveCaptains',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Salary`
+  String get salary {
+    return Intl.message(
+      'Salary',
+      name: 'salary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Account Status`
+  String get captainStatus {
+    return Intl.message(
+      'Captain Account Status',
+      name: 'captainStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Online Status`
+  String get status {
+    return Intl.message(
+      'Online Status',
+      name: 'status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Activated Successfully`
+  String get captainActivated {
+    return Intl.message(
+      'Captain Activated Successfully',
+      name: 'captainActivated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Category Updated Successfully`
+  String get updateStoreCategory {
+    return Intl.message(
+      'Store Category Updated Successfully',
+      name: 'updateStoreCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `update`
+  String get update {
+    return Intl.message(
+      'update',
+      name: 'update',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Store`
+  String get updateStore {
+    return Intl.message(
+      'Update Store',
+      name: 'updateStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Product Category`
+  String get updateProductCategory {
+    return Intl.message(
+      'Update Product Category',
+      name: 'updateProductCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Product`
+  String get updateProduct {
+    return Intl.message(
+      'Update Product',
+      name: 'updateProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone`
+  String get phone {
+    return Intl.message(
+      'Phone',
+      name: 'phone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone 2`
+  String get phone2 {
+    return Intl.message(
+      'Phone 2',
+      name: 'phone2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fax`
+  String get fax {
+    return Intl.message(
+      'Fax',
+      name: 'fax',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `STC`
+  String get stc {
+    return Intl.message(
+      'STC',
+      name: 'stc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company Info`
+  String get companyInfo {
+    return Intl.message(
+      'Company Info',
+      name: 'companyInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captains`
+  String get captains {
+    return Intl.message(
+      'Captains',
+      name: 'captains',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stores`
+  String get stores {
+    return Intl.message(
+      'Stores',
+      name: 'stores',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Completed Orders`
+  String get countCompletedOrders {
+    return Intl.message(
+      'Completed Orders',
+      name: 'countCompletedOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count Ongoing Orders`
+  String get countOngoingOrders {
+    return Intl.message(
+      'Count Ongoing Orders',
+      name: 'countOngoingOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clients Count`
+  String get countClients {
+    return Intl.message(
+      'Clients Count',
+      name: 'countClients',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captains Count`
+  String get countCaptains {
+    return Intl.message(
+      'Captains Count',
+      name: 'countCaptains',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Products Count`
+  String get countProducts {
+    return Intl.message(
+      'Products Count',
+      name: 'countProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stores Count`
+  String get countStores {
+    return Intl.message(
+      'Stores Count',
+      name: 'countStores',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captains Balance`
+  String get captainPayments {
+    return Intl.message(
+      'Captains Balance',
+      name: 'captainPayments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Image`
+  String get invoiceImage {
+    return Intl.message(
+      'Invoice Image',
+      name: 'invoiceImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Cost`
+  String get invoiceCost {
+    return Intl.message(
+      'Invoice Cost',
+      name: 'invoiceCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending Orders`
+  String get orderPending {
+    return Intl.message(
+      'Pending Orders',
+      name: 'orderPending',
       desc: '',
       args: [],
     );

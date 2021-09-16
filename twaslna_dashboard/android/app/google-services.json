@@ -1,0 +1,627 @@
+{
+  "project_info": {
+    "project_number": "396882908080",
+    "firebase_url": "https://yes-soft-6866a.firebaseio.com",
+    "project_id": "yes-soft-6866a",
+    "storage_bucket": "yes-soft-6866a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396882908080:android:e6fd4c9c63c0e9e1fabc75",
+        "android_client_info": {
+          "package_name": "com.example.c4d"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLHkZeCajquez0m1-a0Fg43MOTtbKqq1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "396882908080-1v902d7cvq3ne69ne1j3m1r01c9rlrbq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "de.yes-soft.c4d"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396882908080:android:73acef18db622a91fabc75",
+        "android_client_info": {
+          "package_name": "com.example.swaptime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396882908080-4n4vh5l39m7elu8rahc3l5deke959954.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.swaptime",
+            "certificate_hash": "6c97905b11842062490f89599094b6ccd4a2a174"
+          }
+        },
+        {
+          "client_id": "396882908080-sq3gp7f4tuhtarvfh8ku4qu4q390ib8n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.swaptime",
+            "certificate_hash": "530c83858145b859d6171ac83460e8248c3554bc"
+          }
+        },
+        {
+          "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLHkZeCajquez0m1-a0Fg43MOTtbKqq1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "396882908080-1v902d7cvq3ne69ne1j3m1r01c9rlrbq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "de.yes-soft.c4d"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396882908080:android:bab18b9d942cfa6bfabc75",
+        "android_client_info": {
+          "package_name": "com.example.turksell"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLHkZeCajquez0m1-a0Fg43MOTtbKqq1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "396882908080-1v902d7cvq3ne69ne1j3m1r01c9rlrbq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "de.yes-soft.c4d"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396882908080:android:01a0ca29a3fbd4e5fabc75",
+        "android_client_info": {
+          "package_name": "com.fast_prog.soyah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396882908080-22grsjhkbbp78qed8hamrie7vcu1ah48.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fast_prog.soyah",
+            "certificate_hash": "e6798498b0972106c798095adbbaddcab024a01f"
+          }
+        },
+        {
+          "client_id": "396882908080-gvn99lpcnkd8rj5bji1h9n1eqhrrjc75.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fast_prog.soyah",
+            "certificate_hash": "6c97905b11842062490f89599094b6ccd4a2a174"
+          }
+        },
+        {
+          "client_id": "396882908080-v7kunjlu3fefk7omdr8kbssmjngcghr2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fast_prog.soyah",
+            "certificate_hash": "239726c81c3477cb773ea36ebfc35c52134c72b8"
+          }
+        },
+        {
+          "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLHkZeCajquez0m1-a0Fg43MOTtbKqq1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "396882908080-1v902d7cvq3ne69ne1j3m1r01c9rlrbq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "de.yes-soft.c4d"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396882908080:android:2a57fd6cc27ef206fabc75",
+        "android_client_info": {
+          "package_name": "de.yes_soft.anime_galaxy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396882908080-5bj3ogui8f35nvmspo78hupict0sbcci.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yes_soft.anime_galaxy",
+            "certificate_hash": "530c83858145b859d6171ac83460e8248c3554bc"
+          }
+        },
+        {
+          "client_id": "396882908080-6o1in8ltja9tgmipsppu5lajll03of3q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yes_soft.anime_galaxy",
+            "certificate_hash": "6c97905b11842062490f89599094b6ccd4a2a174"
+          }
+        },
+        {
+          "client_id": "396882908080-j0ntmh5epr9cdhurq6irjjng7spmhqcs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yes_soft.anime_galaxy",
+            "certificate_hash": "d94896cc691d8162eff8fb40e5647aca890c0cb8"
+          }
+        },
+        {
+          "client_id": "396882908080-tpno2vq2tuo8hvoign9e3mvj4cbfldnh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yes_soft.anime_galaxy",
+            "certificate_hash": "fc672d1da5cecc0492d04d3d29c39b79845baab6"
+          }
+        },
+        {
+          "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLHkZeCajquez0m1-a0Fg43MOTtbKqq1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "396882908080-1v902d7cvq3ne69ne1j3m1r01c9rlrbq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "de.yes-soft.c4d"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396882908080:android:414ec51a383d92c0fabc75",
+        "android_client_info": {
+          "package_name": "de.yes_soft.c4d"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396882908080-283jvfqga7dc3lpsdt2fkpv28f8vi7of.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yes_soft.c4d",
+            "certificate_hash": "6c97905b11842062490f89599094b6ccd4a2a174"
+          }
+        },
+        {
+          "client_id": "396882908080-300eebk1ddmovn9rd04cm1r6koja9gq9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yes_soft.c4d",
+            "certificate_hash": "239726c81c3477cb773ea36ebfc35c52134c72b8"
+          }
+        },
+        {
+          "client_id": "396882908080-kbr8anva37tar1nho40i4vc5evn7sci1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yes_soft.c4d",
+            "certificate_hash": "5d0ea43a4853a8b5a5b545feb3861abbc3b221f4"
+          }
+        },
+        {
+          "client_id": "396882908080-ko329a4kfqpe4up9j285a068almgnfm0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yes_soft.c4d",
+            "certificate_hash": "cf19253d03de3b6c173fca234d60f47d2be23129"
+          }
+        },
+        {
+          "client_id": "396882908080-nod853mdt98adftmcrqf21ll863i543f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yes_soft.c4d",
+            "certificate_hash": "30a308f99f0fdc473b689c64cd939ef1eb19874e"
+          }
+        },
+        {
+          "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLHkZeCajquez0m1-a0Fg43MOTtbKqq1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "396882908080-1v902d7cvq3ne69ne1j3m1r01c9rlrbq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "de.yes-soft.c4d"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396882908080:android:19255c014d26cd5afabc75",
+        "android_client_info": {
+          "package_name": "de.yes_soft.soyah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLHkZeCajquez0m1-a0Fg43MOTtbKqq1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "396882908080-1v902d7cvq3ne69ne1j3m1r01c9rlrbq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "de.yes-soft.c4d"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396882908080:android:1a05e66570d8c962fabc75",
+        "android_client_info": {
+          "package_name": "de.yes_soft.swaptime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396882908080-e97mncvaeo926ik78q9j8t7o3tgf1kks.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yes_soft.swaptime",
+            "certificate_hash": "9b616fa96ef7e7e75b10abe3bc605b26912d1a65"
+          }
+        },
+        {
+          "client_id": "396882908080-eou3o6rbst3n8vcprbsalc66fj803rbg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yes_soft.swaptime",
+            "certificate_hash": "530c83858145b859d6171ac83460e8248c3554bc"
+          }
+        },
+        {
+          "client_id": "396882908080-hno1cn76g8asf8sd4gu8kcdn01cco267.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yes_soft.swaptime",
+            "certificate_hash": "d94896cc691d8162eff8fb40e5647aca890c0cb8"
+          }
+        },
+        {
+          "client_id": "396882908080-tesbnq38ejqh8v510ssg5rv42pep33u0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yes_soft.swaptime",
+            "certificate_hash": "6c97905b11842062490f89599094b6ccd4a2a174"
+          }
+        },
+        {
+          "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLHkZeCajquez0m1-a0Fg43MOTtbKqq1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "396882908080-1v902d7cvq3ne69ne1j3m1r01c9rlrbq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "de.yes-soft.c4d"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396882908080:android:028f019adf8f8115fabc75",
+        "android_client_info": {
+          "package_name": "de.yes_soft.twaslna"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396882908080-c0b4ckpjlnh7ss459j9r7j40em3hk2u0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yes_soft.twaslna",
+            "certificate_hash": "5d0ea43a4853a8b5a5b545feb3861abbc3b221f4"
+          }
+        },
+        {
+          "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLHkZeCajquez0m1-a0Fg43MOTtbKqq1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "396882908080-1v902d7cvq3ne69ne1j3m1r01c9rlrbq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "de.yes-soft.c4d"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396882908080:android:93d47c98a614d986fabc75",
+        "android_client_info": {
+          "package_name": "de.yes_soft.twaslna_captain"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396882908080-ovrgc0g7se1tdnu8u1kaevtackb6bpsp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yes_soft.twaslna_captain",
+            "certificate_hash": "5d0ea43a4853a8b5a5b545feb3861abbc3b221f4"
+          }
+        },
+        {
+          "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLHkZeCajquez0m1-a0Fg43MOTtbKqq1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "396882908080-1v902d7cvq3ne69ne1j3m1r01c9rlrbq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "de.yes-soft.c4d"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396882908080:android:7ac892c7dbfeb1cbfabc75",
+        "android_client_info": {
+          "package_name": "de.yessoft.hersay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396882908080-6r58ffba8gjffbgps25fr2blcc9aqhmd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yessoft.hersay",
+            "certificate_hash": "6c97905b11842062490f89599094b6ccd4a2a174"
+          }
+        },
+        {
+          "client_id": "396882908080-fkna0kfrdccusgbmjjh5pkej77vtu8nj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yessoft.hersay",
+            "certificate_hash": "239726c81c3477cb773ea36ebfc35c52134c72b8"
+          }
+        },
+        {
+          "client_id": "396882908080-me1n27jcc0q8repajieh3ps3i993mdgu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.yessoft.hersay",
+            "certificate_hash": "85f3a6839bf9baa876c6cac345f2b023fd980a7a"
+          }
+        },
+        {
+          "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLHkZeCajquez0m1-a0Fg43MOTtbKqq1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "396882908080-1v902d7cvq3ne69ne1j3m1r01c9rlrbq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "de.yes-soft.c4d"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396882908080:android:349d7c5cb5bf9a1efabc75",
+        "android_client_info": {
+          "package_name": "de.yessoft.twaslna_dashboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLHkZeCajquez0m1-a0Fg43MOTtbKqq1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396882908080-e2sqckt5bofta5morqb93ufs8u9ea02a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "396882908080-1v902d7cvq3ne69ne1j3m1r01c9rlrbq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "de.yes-soft.c4d"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

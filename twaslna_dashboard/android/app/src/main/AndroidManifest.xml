@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.yessoft.twaslna_dashboard">
    <application
-        android:label="twaslna_dashboard"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Twaslna Dashboard"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
