@@ -54,7 +54,5 @@ class FileUploadController extends AbstractController
 
             return new JsonResponse($filePath, Response::HTTP_OK);
         }
-
     }
-
 }

@@ -3,12 +3,12 @@
 
 namespace App\Service;
 
-
 use App\AutoMapping;
 use App\Entity\SettingEntity;
 use App\Manager\SettingManager;
 use App\Request\SettingRequest;
 use App\Response\SettingResponse;
+
 
 class SettingService
 {

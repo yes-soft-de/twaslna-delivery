@@ -9,6 +9,7 @@ use App\Request\DeliveryCompanyFinancialCompensationCreateRequest;
 use App\Request\DeliveryCompanyFinancialCompensationUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class DeliveryCompanyFinancialCompensationManager
 {
     private $autoMapping;

@@ -6,13 +6,21 @@ class OrderClientSpecialCreateRequest
 {
     
     private $storeOwnerProfileID;
+   
     private $destination;
+   
     private $deliveryDate;
+   
     private $note;
+   
     private $payment;
+   
     private $state;
+   
     private $roomID;
+   
     private $clientID;
+   
     private $detail;
 
      /**

@@ -26,5 +26,4 @@ class AppointmentEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
 }

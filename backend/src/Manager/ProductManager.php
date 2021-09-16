@@ -9,6 +9,7 @@ use App\Request\ProductCreateRequest;
 use App\Request\ProductUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class ProductManager
 {
     private $autoMapping;
@@ -95,7 +96,5 @@ class ProductManager
     public function getProductsByName($name)
     {
         return $this->productEntityRepository->getProductsByName($name);
-    }
-
-    
+    } 
 }

@@ -5,6 +5,7 @@ namespace App\Request;
 class AppointmentUpdateIsDoneRequest
 {
     private $id;
+
     private $isDone;
 
       /**

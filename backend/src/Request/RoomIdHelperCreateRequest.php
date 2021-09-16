@@ -5,8 +5,11 @@ namespace App\Request;
 class RoomIdHelperCreateRequest
 {
     private $id;
+  
     private $captainID;
+  
     private $ownerID;
+  
     private $roomID;
 
     /**

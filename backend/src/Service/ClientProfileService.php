@@ -58,21 +58,6 @@ class ClientProfileService
         }
     }
 
-    public function createClientProfile(ClientProfileCreateRequest $request)
-    {  
-       $roomID = $this->roomIdHelperService->roomIdGenerate();
-    
-       $userProfile = $this->userManager->createclientProfile($request, $roomID);
-      
-        if ($userProfile instanceof ClientProfileEntity) {
-
-            return $this->autoMapping->map(ClientProfileEntity::class,ClientProfileResponse::class, $userProfile);
-       }
-        if ($userProfile == true) {
-            return $this->getClientProfileByClientID($request->getClientID());
-       }
-    }
-
     public function updateClientProfile(ClientProfileUpdateRequest $request)
     {
         $item = $this->userManager->updateClientProfile($request);

@@ -23,7 +23,6 @@ class ClientProfileController extends BaseController
     private $validator;
     private $clientProfileService;
    
-
     public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, ClientProfileService $clientProfileService)
     {
         parent::__construct($serializer);
@@ -54,30 +53,10 @@ class ClientProfileController extends BaseController
         $isArray = is_array($response);
         if($isArray){
             $found = isset($response['found']);
-        
             if( $found == "yes"){
                 return $this->response($response, self::ERROR_USER_FOUND); 
           }
         }
-        return $this->response($response, self::CREATE);
-    }
-
-    /**
-     * @Route("/clientprofile", name="createClientProfile", methods={"POST"})
-     * @IsGranted("ROLE_CLIENT")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function createClientProfile(Request $request)
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class, ClientProfileCreateRequest::class, (object)$data);
-       
-        $request->setClientID($this->getUserId());
-       
-        $response = $this->clientProfileService->createClientProfile($request);
-
         return $this->response($response, self::CREATE);
     }
 

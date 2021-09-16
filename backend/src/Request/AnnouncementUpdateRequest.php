@@ -5,7 +5,9 @@ namespace App\Request;
 class AnnouncementUpdateRequest
 {
     private $id;
+
     private $title;
+    
     private $content;
 
     /**

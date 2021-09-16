@@ -7,6 +7,7 @@ use App\Entity\RoomIdHelperEntity;
 use App\Repository\RoomIdHelperEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class RoomIdHelperManager
 {
     private $autoMapping;

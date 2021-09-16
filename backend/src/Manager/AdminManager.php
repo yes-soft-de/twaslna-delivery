@@ -4,24 +4,22 @@ namespace App\Manager;
 
 use App\AutoMapping;
 use App\Entity\UserEntity;
-use App\Repository\UserEntityRepository;
 use App\Request\AdminCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 class AdminManager
 {
     private $autoMapping;
     private $entityManager;
     private $encoder;
-    private $userRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder, UserEntityRepository $userRepository)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->encoder = $encoder;
-        $this->userRepository = $userRepository;
     }
 
     public function createAdmin(AdminCreateRequest $request)

@@ -5,7 +5,9 @@ namespace App\Request;
 class StoreProductCategoryCreateRequest
 {
     private $productCategoryName;
+   
     private $storeOwnerProfileId;
+   
     private $productCategoryImage;
 
 

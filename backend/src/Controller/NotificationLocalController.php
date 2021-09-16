@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 use App\AutoMapping;
-use App\Request\NotificationLocalCreateRequest;
 use App\Service\NotificationLocalService;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -15,8 +13,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class NotificationLocalController extends BaseController
 {
-    private $autoMapping;
-    private $validator;
     private $notificationLocalService;
 
     public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, NotificationLocalService $notificationLocalService)
@@ -50,5 +46,4 @@ class NotificationLocalController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
-
 }

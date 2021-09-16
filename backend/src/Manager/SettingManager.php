@@ -10,9 +10,9 @@ use App\Repository\SettingEntityRepository;
 use App\Request\SettingRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class SettingManager
 {
-
     private $autoMapping;
     private $entityManager;
     private $settingRepository;

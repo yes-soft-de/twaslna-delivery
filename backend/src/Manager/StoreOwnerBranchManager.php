@@ -10,6 +10,7 @@ use App\Request\StoreOwnerBranchUpdateRequest;
 use App\Request\BranchesDeleteRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class StoreOwnerBranchManager
 {
     private $autoMapping;

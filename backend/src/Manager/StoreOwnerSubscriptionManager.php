@@ -12,6 +12,8 @@ use App\Request\StoreOwnerSubscriptionUpdateStateRequest;
 use App\Request\StoreOwnerUpdateSubscribeStatusRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use DateTime;
+
+//TODO this for remove
 class StoreOwnerSubscriptionManager
 {
     private $autoMapping;

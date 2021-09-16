@@ -27,10 +27,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
      public function getStoreOwnerProfileByID($id)
     {
         return $this->createQueryBuilder('profile')
-            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.story', 'profile.free', 'profile.status', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts')
-            // ->addSelect('DeliveryCompanyFinancialEntity.deliveryCost')
-
-            // ->leftJoin(DeliveryCompanyFinancialEntity::class, 'DeliveryCompanyFinancialEntity', Join::WITH, 'profile.id = profile.id')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.story', 'profile.free', 'profile.status', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts', 'profile.openingTime', 'profile.closingTime')
             ->andWhere('profile.id = :id')
 
             ->setParameter('id', $id)

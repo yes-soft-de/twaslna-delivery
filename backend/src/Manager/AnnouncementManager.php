@@ -9,6 +9,7 @@ use App\Request\AnnouncementCreateRequest;
 use App\Request\AnnouncementUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class AnnouncementManager
 {
     private $autoMapping;
@@ -56,5 +57,4 @@ class AnnouncementManager
     {
        return $this->announcementEntityRepository->getAnnouncements();
     }
-
 }

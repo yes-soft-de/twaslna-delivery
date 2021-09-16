@@ -25,7 +25,6 @@ class StoreOwnerProfileController extends BaseController
     private $validator;
     private $storeOwnerProfileService;
    
-
     public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, StoreOwnerProfileService $storeOwnerProfileService)
     {
         parent::__construct($serializer);
@@ -44,7 +43,6 @@ class StoreOwnerProfileController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
         
-
         $request = $this->autoMapping->map(stdClass::class, UserRegisterRequest::class, (object)$data);
 
         $violations = $this->validator->validate($request);

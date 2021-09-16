@@ -53,7 +53,5 @@ class NotificationLocalService
             $response[] = $this->autoMapping->map("array", NotificationLocalResponse::class, $item);
         }
         return $response;
-
     }
-
 }

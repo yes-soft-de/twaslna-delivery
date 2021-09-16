@@ -8,6 +8,7 @@ use App\Repository\RatingEntityRepository;
 use App\Request\RatingCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class RatingManager
 {
     private $autoMapping;

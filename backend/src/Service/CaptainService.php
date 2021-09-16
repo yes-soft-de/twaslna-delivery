@@ -4,14 +4,11 @@ namespace App\Service;
 
 use App\AutoMapping;
 use App\Manager\OrderManager;
-use App\Response\OrderResponse;
 use App\Service\OrderLogService;
 
 class CaptainService
 {
-    private $autoMapping;
     private $orderManager;
-    private $orderLogService;
 
     public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, OrderLogService $orderLogService)
     {
@@ -59,5 +56,4 @@ class CaptainService
     {
         return $this->orderManager->getOrderKilometersInThisMonth($captainId, $fromDate, $toDate);
     }
-    
 }

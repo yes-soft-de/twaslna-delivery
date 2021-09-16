@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 use App\AutoMapping;
 use App\Request\AnnouncementCreateRequest;
 use App\Request\AnnouncementUpdateRequest;
@@ -100,5 +101,4 @@ class AnnouncementController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
-
 }

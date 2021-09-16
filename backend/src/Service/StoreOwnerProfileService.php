@@ -50,7 +50,6 @@ class StoreOwnerProfileService
 
         }
         if ($userRegister == true) {
-          
             $user = $this->userManager->getUserByUserID($request->getUserID());
             $user['found']="yes";
             return $user;

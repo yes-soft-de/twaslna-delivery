@@ -10,6 +10,7 @@ use App\Request\StoreProductCategoryUpdateRequest;
 use App\Response\StoreProductCategoryCreateResponse;
 use App\Response\StoreProductsCategoryResponse;
 
+
 class StoreProductCategoryService
 {
     private $autoMapping;

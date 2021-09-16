@@ -5,8 +5,11 @@ namespace App\Request;
 class ClientPaymentCreateRequest
 {
     private $captainID;
+   
     private $clientID;
+   
     private $orderID;
+   
     private $amount;
 
    

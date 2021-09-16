@@ -5,8 +5,11 @@ namespace App\Request;
 class StoreProductCategoryUpdateRequest
 {
     private $id;
+  
     private $productCategoryName;
+  
     private $storeOwnerProfileId;
+  
     private $productCategoryImage;
 
 

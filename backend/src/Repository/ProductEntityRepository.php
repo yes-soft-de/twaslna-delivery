@@ -80,7 +80,6 @@ class ProductEntityRepository extends ServiceEntityRepository
             ->groupBy('product.id')
             ->getQuery()
             ->getOneOrNullResult();
-            // ->getResult();
     }
 
     public function getProductsTopWanted()

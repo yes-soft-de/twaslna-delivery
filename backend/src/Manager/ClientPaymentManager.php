@@ -7,7 +7,7 @@ use App\Entity\ClientPaymentEntity;
 use App\Repository\ClientPaymentEntityRepository;
 use App\Request\ClientPaymentCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
-
+//TODO this class for future
 class ClientPaymentManager
 {
     private $autoMapping;

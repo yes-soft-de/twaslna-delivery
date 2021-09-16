@@ -8,8 +8,6 @@ class StoreOwnerProfileCreateRequest
 
     private $storeOwnerName;
 
-    // private $story;
-
     private $image;
 
     private $is_best;
@@ -58,37 +56,6 @@ class StoreOwnerProfileCreateRequest
         $this->storeOwnerName = $storeOwnerName;
     }
 
-    // /**
-    //  * @return mixed
-    //  */
-    // public function getStory()
-    // {
-    //     return $this->story;
-    // }
-
-    // /**
-    //  * @param mixed $story
-    //  */
-    // public function setStory($story): void
-    // {
-    //     $this->story = $story;
-    // }
-
-    // /**
-    //  * @return mixed
-    //  */
-    // public function getImage()
-    // {
-    //     return $this->image;
-    // }
-
-    // /**
-    //  * @param mixed $image
-    //  */
-    // public function setImage($image): void
-    // {
-    //     $this->image = $image;
-    // }
 
     public function getRoomID(): ?string
     {

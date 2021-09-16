@@ -28,6 +28,4 @@ class NotificationLocalEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-
 }

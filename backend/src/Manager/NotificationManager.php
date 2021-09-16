@@ -3,7 +3,6 @@
 
 namespace App\Manager;
 
-
 use App\AutoMapping;
 use App\Entity\NotificationTokenEntity;
 use App\Repository\NotificationTokenEntityRepository;

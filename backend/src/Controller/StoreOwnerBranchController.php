@@ -51,9 +51,8 @@ class StoreOwnerBranchController extends BaseController
 
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
-            $result = $this->storeOwnerBranchService->createBranches($request);
+        $result = $this->storeOwnerBranchService->createBranches($request);
             
-
         return $this->response($result, self::CREATE);
     }
 
@@ -126,9 +125,9 @@ class StoreOwnerBranchController extends BaseController
 
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
-            $result = $this->storeOwnerBranchService->createBranchesByAdmin($request);
+        
+        $result = $this->storeOwnerBranchService->createBranchesByAdmin($request);
             
-
         return $this->response($result, self::CREATE);
     }
 }

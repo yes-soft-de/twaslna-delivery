@@ -9,6 +9,7 @@ use App\Request\DeliveryCompanyInfoRequest;
 use App\Request\DeliveryCompanyInfoUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class DeliveryCompanyProfileManager
 {
     private $autoMapping;

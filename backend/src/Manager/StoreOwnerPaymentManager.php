@@ -8,6 +8,7 @@ use App\Repository\StoreOwnerPaymentEntityRepository;
 use App\Request\StoreOwnerPaymentCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class StoreOwnerPaymentManager
 {
     private $autoMapping;
