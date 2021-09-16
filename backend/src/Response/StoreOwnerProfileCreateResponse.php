@@ -39,4 +39,8 @@ class StoreOwnerProfileCreateResponse
     public $hasProducts;
 
     public $rating;
+
+    public $openingTime;
+
+    public $closingTime;
 }

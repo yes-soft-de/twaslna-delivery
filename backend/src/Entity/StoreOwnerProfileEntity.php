@@ -87,6 +87,16 @@ class StoreOwnerProfileEntity
      */
     private $hasProducts;
 
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $openingTime;
+
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $closingTime;
+
     
     public function getId(): ?int
     {
@@ -264,6 +274,30 @@ class StoreOwnerProfileEntity
     public function setHasProducts(?bool $hasProducts): self
     {
         $this->hasProducts = $hasProducts;
+
+        return $this;
+    }
+
+    public function getOpeningTime()
+    {
+        return $this->openingTime;
+    }
+
+    public function setOpeningTime( $openingTime): self
+    {
+        $this->openingTime = new \DateTime ($openingTime);
+
+        return $this;
+    }
+
+    public function getClosingTime()
+    {
+        return $this->closingTime;
+    }
+
+    public function setClosingTime( $closingTime): self
+    {
+        $this->closingTime = new \DateTime ($closingTime);
 
         return $this;
     }

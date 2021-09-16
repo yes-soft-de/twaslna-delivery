@@ -632,6 +632,8 @@ class UserManager
             // $userProfile->setStoreOwnerID($request->getUserID());
             $userProfile->setFree(false);
             $userProfile->setIs_best(false);
+            $userProfile->setOpeningTime( $userProfile->getOpeningTime());
+            $userProfile->setClosingTime( $userProfile->getClosingTime());
 
             $this->entityManager->persist($userProfile);
             $this->entityManager->flush();

@@ -33,6 +33,10 @@ class StoreOwnerProfileCreateByAdminRequest
     private $branchName;
     
     private $isActive;
+    
+    private $openingTime;
+
+    private $closingTime;
 
 
     /**
