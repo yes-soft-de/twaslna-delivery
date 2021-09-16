@@ -16,7 +16,7 @@ class FadedButtonBar extends StatelessWidget {
             color: Theme.of(context).cardColor.withOpacity(0.95),
             offset: Offset(0,1),
             spreadRadius: 2,
-            blurRadius: 10
+            blurRadius: 25
           ),
         ],
         gradient: LinearGradient(
@@ -41,7 +41,7 @@ class FadedButtonBar extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   primary: Theme.of(context).primaryColor,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
+                      borderRadius: BorderRadius.circular(25)
                   )
               ),
               onPressed:onPressed,

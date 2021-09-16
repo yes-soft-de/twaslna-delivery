@@ -33,7 +33,7 @@ class LoginStateInit extends LoginState {
             children: [
               MediaQuery.of(context).viewInsets.bottom == 0
                   ? SvgPicture.asset(
-                      SvgAsset.WE_DELIVER,
+                      SvgAsset.AUTH_SVG,
                       width: 150,
                     )
                   : Container(),

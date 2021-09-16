@@ -1,5 +1,6 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:injectable/injectable.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 @injectable
 @singleton
@@ -17,9 +18,11 @@ class Logger {
   void error(String tag, String msg, StackTrace? trace) {
     String time = DateTime.now().toString();
     print('$time: \t $tag \t $msg');
-   FirebaseCrashlytics.instance
-       .recordError('$time: \t $tag \t $msg', trace);
-   FirebaseCrashlytics.instance.log('$time: \t $tag \t $msg');
-   FirebaseCrashlytics.instance.sendUnsentReports();
+    if (!kIsWeb) {
+      FirebaseCrashlytics.instance.recordError('$time: \t $tag \t $msg', trace);
+      FirebaseCrashlytics.instance.log('$time: \t $tag \t $msg');
+      FirebaseCrashlytics.instance.sendUnsentReports();
+    }
   }
+
 }

@@ -1,0 +1,120 @@
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import 'package:twaslna_dashboard/abstracts/states/state.dart';
+import 'package:twaslna_dashboard/generated/l10n.dart';
+import 'package:twaslna_dashboard/module_main/model/report_model.dart';
+import 'package:twaslna_dashboard/module_main/sceen/home_screen.dart';
+import 'package:twaslna_dashboard/module_main/widget/animation.dart';
+import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
+import 'package:twaslna_dashboard/utils/components/empty_screen.dart';
+import 'package:twaslna_dashboard/utils/components/error_screen.dart';
+import 'package:flutter/material.dart';
+
+class HomeLoadedState extends States {
+  final HomeScreenState screenState;
+  final String? error;
+  final bool empty;
+  final ReportModel? model;
+
+  HomeLoadedState(this.screenState, this.model,
+      {this.empty = false, this.error})
+      : super(screenState);
+
+  String? id;
+
+  @override
+  Widget getUI(BuildContext context) {
+    if (error != null) {
+      return ErrorStateWidget(
+        onRefresh: () {
+          screenState.getReport();
+        },
+        error: error,
+      );
+    } else if (empty) {
+      return EmptyStateWidget(
+          empty: S.current.emptyStaff,
+          onRefresh: () {
+                    screenState.getReport();
+          });
+    }
+    return ListView(
+        physics:
+        BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        children: [
+      widgetTile(model?.countCompletedOrders.toString() ?? '',S.current.countCompletedOrders),
+      Padding(
+        padding: const EdgeInsets.only(right:32,left: 32),
+        child: Divider(
+          thickness: 2.5,
+          color: Theme.of(context).primaryColor.withOpacity(0.3),
+        ),
+      ),
+      widgetTile(model?.countOngoingOrders.toString() ?? '',S.current.countOngoingOrders),
+      Padding(
+        padding: const EdgeInsets.only(right:32,left: 32),
+        child: Divider(
+          thickness: 2.5,
+          color: Theme.of(context).primaryColor.withOpacity(0.3),
+        ),
+      ),
+      widgetTile(model?.countClients.toString() ?? '',S.current.countClients),
+      Padding(
+        padding: const EdgeInsets.only(right:32,left: 32),
+        child: Divider(
+          thickness: 2.5,
+          color: Theme.of(context).primaryColor.withOpacity(0.3),
+        ),
+      ),
+      widgetTile(model?.countCaptains.toString() ?? '',S.current.countCaptains),
+      Padding(
+        padding: const EdgeInsets.only(right:32,left: 32),
+        child: Divider(
+          thickness: 2.5,
+          color: Theme.of(context).primaryColor.withOpacity(0.3),
+        ),
+      ),
+      widgetTile(model?.countStores.toString() ?? '',S.current.countStores),
+      Padding(
+        padding: const EdgeInsets.only(right:32,left: 32),
+        child: Divider(
+          thickness: 2.5,
+          color: Theme.of(context).primaryColor.withOpacity(0.3),
+        ),
+      ),
+      widgetTile(model?.countProducts.toString() ?? '',S.current.countProducts),
+    ]);
+  }
+
+  Widget widgetTile(String count,String title) {
+    return Flex(
+      direction: Axis.vertical,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 16.0),
+          child: AnimatedLiquidCircularProgressIndicator(ValueKey(title),int.parse(count)),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            constraints: BoxConstraints(
+              maxWidth: 180
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Theme.of(screenState.context).primaryColor,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: Text(title,style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                    color: Colors.white
+                ),),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

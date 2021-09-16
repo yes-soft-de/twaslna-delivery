@@ -7,6 +7,7 @@ import 'package:twaslna_dashboard/module_auth/state_manager/register_state_manag
 import 'package:twaslna_dashboard/module_auth/ui/states/register_states/register_state.dart';
 import 'package:twaslna_dashboard/module_auth/ui/states/register_states/register_state_init.dart';
 import 'package:flutter/material.dart';
+import 'package:twaslna_dashboard/module_main/main_routes.dart';
 import 'package:twaslna_dashboard/utils/components/custom_app_bar.dart';
 import 'package:twaslna_dashboard/utils/helpers/custom_flushbar.dart';
 
@@ -82,7 +83,8 @@ class RegisterScreenState extends State<RegisterScreen> {
   }
 
   void moveToNext() {
-// navigate
+    Navigator.of(context).pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN,(route) => false);
+
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.loginSuccess)
         .show(context);
@@ -101,4 +103,5 @@ class RegisterScreenState extends State<RegisterScreen> {
     _stateSubscription.cancel();
     super.dispose();
   }
+
 }

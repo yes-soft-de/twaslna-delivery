@@ -1,15 +1,24 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:injectable/injectable.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:twaslna_dashboard/abstracts/module/yes_module.dart';
 import 'package:twaslna_dashboard/di/di_config.dart';
+import 'package:twaslna_dashboard/global_nav_key.dart';
 import 'package:twaslna_dashboard/hive/hive_init.dart';
 import 'package:twaslna_dashboard/module_auth/authoriazation_module.dart';
+import 'package:twaslna_dashboard/module_captain/captains_module.dart';
+import 'package:twaslna_dashboard/module_categories/categories_module.dart';
 import 'package:twaslna_dashboard/module_chat/chat_module.dart';
+import 'package:twaslna_dashboard/module_company/company_module.dart';
 import 'package:twaslna_dashboard/module_localization/service/localization_service/localization_service.dart';
+import 'package:twaslna_dashboard/module_main/main_module.dart';
 import 'package:twaslna_dashboard/module_notifications/service/fire_notification_service/fire_notification_service.dart';
+import 'package:twaslna_dashboard/module_orders/model/order_model.dart';
+import 'package:twaslna_dashboard/module_orders/orders_module.dart';
 import 'package:twaslna_dashboard/module_settings/settings_module.dart';
 import 'package:twaslna_dashboard/module_splash/splash_module.dart';
+import 'package:twaslna_dashboard/module_stores/stores_module.dart';
 import 'package:twaslna_dashboard/module_theme/service/theme_service/theme_service.dart';
 import 'package:twaslna_dashboard/utils/logger/logger.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -24,6 +33,7 @@ import 'module_notifications/service/local_notification_service/local_notificati
 import 'module_splash/splash_routes.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:feature_discovery/feature_discovery.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,11 +41,15 @@ void main() async {
   timeago.setLocaleMessages('en', timeago.EnMessages());
   await HiveSetUp.init();
   await Firebase.initializeApp();
-  await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
-  FlutterError.onError = (FlutterErrorDetails details) {
-    FirebaseCrashlytics.instance.recordFlutterError(details);
-  };
+  if (kIsWeb) {
 
+  }
+  else {
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+    FlutterError.onError = (FlutterErrorDetails details) {
+      FirebaseCrashlytics.instance.recordFlutterError(details);
+    };
+  }
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((_) async {
@@ -63,17 +77,28 @@ class MyApp extends StatefulWidget {
   final AuthorizationModule _authorizationModule;
   final SettingsModule _settingsModule;
   final ChatModule _chatModule;
-
+  final MainModule _mainModule;
+  final CategoriesModule _categoriesModule;
+  final StoresModule _storesModule;
+  final CaptainsModule _productsModule;
+  final CompanyModule _companyModule;
+  final OrdersModule _ordersModule;
   MyApp(
-      this._themeDataService,
-      this._localizationService,
-      this._fireNotificationService,
-      this._localNotificationService,
-      this._splashModule,
-      this._authorizationModule,
-      this._chatModule,
-      this._settingsModule,
-      );
+    this._themeDataService,
+    this._localizationService,
+    this._fireNotificationService,
+    this._localNotificationService,
+    this._splashModule,
+    this._authorizationModule,
+    this._chatModule,
+    this._settingsModule,
+    this._mainModule,
+    this._categoriesModule,
+    this._storesModule,
+    this._productsModule,
+    this._companyModule,
+    this._ordersModule
+  );
 
   @override
   State<StatefulWidget> createState() => _MyAppState();
@@ -94,8 +119,8 @@ class _MyAppState extends State<MyApp> {
     activeTheme = widget._themeDataService.getActiveTheme();
     timeago.setDefaultLocale(lang);
     Moment.setLocaleGlobally(lang == 'en' ? LocaleEn() : LocaleAr());
-    // widget._fireNotificationService.init();
-    // widget._localNotificationService.init();
+    //widget._fireNotificationService.init();
+    //widget._localNotificationService.init();
     widget._localizationService.localizationStream.listen((event) {
       timeago.setDefaultLocale(event);
       Moment.setLocaleGlobally(event == 'en' ? LocaleEn() : LocaleAr());
@@ -107,7 +132,6 @@ class _MyAppState extends State<MyApp> {
     // });
     // widget._localNotificationService.onLocalNotificationStream
     //     .listen((event) {});
-
     widget._themeDataService.darkModeStream.listen((event) {
       activeTheme = event;
       setState(() {});
@@ -126,6 +150,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         navigatorObservers: <NavigatorObserver>[observer],
+        navigatorKey: GlobalVariable.navState,
         locale: Locale.fromSubtags(
           languageCode: lang,
         ),

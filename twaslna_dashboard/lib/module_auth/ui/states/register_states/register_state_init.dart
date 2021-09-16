@@ -6,7 +6,6 @@ import 'package:twaslna_dashboard/module_auth/ui/screen/register_screen/register
 import 'package:twaslna_dashboard/module_auth/ui/states/register_states/register_state.dart';
 import 'package:twaslna_dashboard/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:flutter/material.dart';
-import 'package:twaslna_dashboard/module_auth/ui/widget/rigester/custom_register_app_bar.dart';
 import 'package:twaslna_dashboard/utils/components/auth_buttons.dart';
 import 'package:twaslna_dashboard/utils/helpers/custom_flushbar.dart';
 import 'package:twaslna_dashboard/utils/images/images.dart';
@@ -52,27 +51,7 @@ class RegisterStateInit extends RegisterState {
                       SvgAsset.EMAIL,
                       width: 150,
                     )
-                  : Container(),
-              Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 4.0, left: 32, right: 32, top: 8),
-                child: Text(
-                  S.of(context).name,
-                  style: tileStyle,
-                ),
-              ),
-              ListTile(
-                title: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomLoginFormField(
-                    contentPadding:
-                        EdgeInsets.only(left: 0, right: 0, top: 15, bottom: 0),
-                    controller: nameController,
-                    hintText: S.of(context).nameHint,
-                    preIcon: Icon(Icons.person),
-                  ),
-                ),
-              ),
+                  : SizedBox(),
               Padding(
                 padding: const EdgeInsets.only(
                     bottom: 4.0, left: 32, right: 32, top: 8),

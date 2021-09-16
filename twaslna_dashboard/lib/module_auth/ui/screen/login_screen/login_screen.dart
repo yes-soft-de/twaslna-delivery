@@ -5,6 +5,7 @@ import 'package:twaslna_dashboard/module_auth/state_manager/login_state_manager/
 import 'package:twaslna_dashboard/module_auth/ui/states/login_states/login_state.dart';
 import 'package:twaslna_dashboard/module_auth/ui/states/login_states/login_state_init.dart';
 import 'package:flutter/material.dart';
+import 'package:twaslna_dashboard/module_main/main_routes.dart';
 import 'package:twaslna_dashboard/utils/components/custom_app_bar.dart';
 import 'package:twaslna_dashboard/utils/helpers/custom_flushbar.dart';
 
@@ -22,7 +23,6 @@ class LoginScreenState extends State<LoginScreen> {
   late LoginState _currentStates;
   late AsyncSnapshot loadingSnapshot;
   late StreamSubscription _stateSubscription;
-  bool deepLinkChecked = false;
 
   void refresh() {
     if (mounted) setState(() {});
@@ -89,7 +89,7 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   void moveToNext() {
-// navigate
+    Navigator.of(context).pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN,(route) => false);
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.loginSuccess)
         .show(context);
