@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:progressive_image/progressive_image.dart';
 import 'package:twaslna_dashboard/consts/urls.dart';
@@ -8,19 +10,18 @@ class CustomNetworkImage extends StatelessWidget {
   final double height;
   final double width;
   final String imageSource;
-  final bool asset;
   final Color? background;
   CustomNetworkImage({
     required this.height,
     required this.width,
     required this.imageSource,
-    this.asset = false,
     this.background,
   });
 
   @override
   Widget build(BuildContext context) {
     var image = imageSource;
+    bool asset = image.contains('assets');
     if (asset) {
       return ProgressiveImage.custom(
         height: height,
@@ -29,7 +30,7 @@ class CustomNetworkImage extends StatelessWidget {
           return Container(
             width: double.maxFinite,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(25),
                 color: background ?? Theme.of(context).backgroundColor),
             child: Flex(
               direction: Axis.vertical,
@@ -75,7 +76,7 @@ class CustomNetworkImage extends StatelessWidget {
             width: width,
             height: height,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(25),
                 color: background ?? Theme.of(context).backgroundColor),
             child: Flex(
               direction: Axis.vertical,

@@ -12,7 +12,7 @@ class CustomFlushBarHelper {
       ),
       backgroundColor:background??Colors.green,
       duration: Duration(seconds: timeout),
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(25),
       flushbarStyle: FlushbarStyle.FLOATING,
       margin:margin ?? EdgeInsets.all(8),
       padding:padding ?? EdgeInsets.all(16),
@@ -30,7 +30,7 @@ class CustomFlushBarHelper {
       ),
       backgroundColor: Colors.red,
       duration: Duration(seconds: timeout),
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(25),
       flushbarStyle: FlushbarStyle.FLOATING,
       margin: EdgeInsets.all(8),
     );
