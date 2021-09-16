@@ -8,16 +8,20 @@ use App\Manager\DeliveryCompanyFinancialCompensationManager;
 use App\Request\DeliveryCompanyFinancialCompensationCreateRequest;
 use App\Request\DeliveryCompanyFinancialCompensationUpdateRequest;
 use App\Response\DeliveryCompanyFinancialCompensationResponse;
+use App\Response\CompensationAndDeliveryCostResponse;
+use App\Service\DeliveryCompanyFinancialService;
 
 class DeliveryCompanyFinancialCompensationService
 {
     private $autoMapping;
     private $deliveryCompanyFinancialCompensationManager;
+    private $deliveryCompanyFinancialService;
 
-    public function __construct(AutoMapping $autoMapping, deliveryCompanyFinancialCompensationManager $deliveryCompanyFinancialCompensationManager)
+    public function __construct(AutoMapping $autoMapping, deliveryCompanyFinancialCompensationManager $deliveryCompanyFinancialCompensationManager, DeliveryCompanyFinancialService $deliveryCompanyFinancialService)
     {
         $this->autoMapping = $autoMapping;
         $this->deliveryCompanyFinancialCompensationManager = $deliveryCompanyFinancialCompensationManager;
+        $this->deliveryCompanyFinancialService = $deliveryCompanyFinancialService;
     }
 
     public function createFinancialCompensation(DeliveryCompanyFinancialCompensationCreateRequest $request)
@@ -56,6 +60,16 @@ class DeliveryCompanyFinancialCompensationService
            $response[] = $this->autoMapping->map('array', DeliveryCompanyFinancialCompensationResponse::class, $result);
         }
         return $response;
-       
+    }
+
+    public function  getCompensationsAndDeliveryCost()
+    {
+        $response = [];
+        $compensation = $this->deliveryCompanyFinancialCompensationManager->getFinancialCompensations();
+        $deliveryCost = $this->deliveryCompanyFinancialService->getDeliveryCompanyFinancialAll();
+        $arr['compensation'] = $compensation;
+        $arr['deliveryCost'] = $deliveryCost;
+        $response = $this->autoMapping->map('array', CompensationAndDeliveryCostResponse::class, $arr);
+        return $response;  
     }
 }

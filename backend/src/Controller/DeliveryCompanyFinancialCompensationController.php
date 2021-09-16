@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
@@ -65,6 +64,28 @@ class DeliveryCompanyFinancialCompensationController extends BaseController
     public function getFinancialCompensationById($id)
     {
         $result = $this->deliveryCompanyFinancialCompensationService->getFinancialCompensationById($id);
+
+        return $this->response($result, self::FETCH);
+    }
+
+     /**
+     * @Route("financialCompensations", name="getFinancialCompensations", methods={"GET"})
+     * @return JsonResponse
+     */
+    public function getFinancialCompensations()
+    {
+        $result = $this->deliveryCompanyFinancialCompensationService->getFinancialCompensations();
+
+        return $this->response($result, self::FETCH);
+    }
+
+     /**
+     * @Route("compensationsAndDeliveryCost", name="getCompensationsAndDeliveryCost", methods={"GET"})
+     * @return JsonResponse
+     */
+    public function getCompensationsAndDeliveryCost()
+    {
+        $result = $this->deliveryCompanyFinancialCompensationService->getCompensationsAndDeliveryCost();
 
         return $this->response($result, self::FETCH);
     }
