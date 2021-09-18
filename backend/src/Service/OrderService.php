@@ -277,10 +277,10 @@ class OrderService
         return $response;
     }
 
-    public function getOrders():?array
+    public function getOrdersWithOutPending():?array
     {
         $response = [];
-        $orders = $this->orderManager->getOrders();
+        $orders = $this->orderManager->getOrdersWithOutPending();
         foreach ($orders as $order) {
             if ($order['storeOwnerProfileID'] == true) {  
                 $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($order['storeOwnerProfileID']);

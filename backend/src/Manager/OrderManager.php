@@ -117,9 +117,9 @@ class OrderManager
         return $this->orderEntityRepository->getLogsForCaptain($user);
     }
 
-    public function getOrders()
+    public function getOrdersWithOutPending()
     {
-        return $this->orderEntityRepository->getOrders();
+        return $this->orderEntityRepository->getOrdersWithOutPending();
     }
 
     public function countOrdersInMonthForOwner($fromDate, $toDate, $ownerId)

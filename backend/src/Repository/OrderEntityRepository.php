@@ -180,7 +180,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-     public function getOrders()
+     public function getOrdersWithOutPending()
     {
         return $this->createQueryBuilder('OrderEntity')
         ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.createdAt', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.payment', 'OrderEntity.detail', 'OrderEntity.deliveryCost', 'OrderEntity.orderCost', 'OrderEntity.orderType', 'OrderEntity.destination', 'OrderEntity.note')
