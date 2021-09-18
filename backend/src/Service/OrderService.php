@@ -295,6 +295,24 @@ class OrderService
         return $response;
     }
 
+    public function getOrdersOngoing():?array
+    {
+        $response = [];
+        $orders = $this->orderManager->getOrdersOngoing();
+        foreach ($orders as $order) {
+            if ($order['storeOwnerProfileID'] == true) {  
+                $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($order['storeOwnerProfileID']);
+                if( $order['storeOwner'] != null ){
+                    $order['storeOwnerName']=$order['storeOwner']->storeOwnerName;
+                    $order['image']=$order['storeOwner']->image;
+                    $order['branches']=$order['storeOwner']->branches;
+                }
+            }
+            $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
+        }
+        return $response;
+    }
+
      public function getAllOrdersAndCount($year, $month, $userId, $userType):?array
      {
         $response = [];

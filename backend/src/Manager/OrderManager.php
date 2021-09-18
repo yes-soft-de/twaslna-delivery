@@ -122,6 +122,11 @@ class OrderManager
         return $this->orderEntityRepository->getOrdersWithOutPending();
     }
 
+    public function getOrdersOngoing()
+    {
+        return $this->orderEntityRepository->getOrdersOngoing();
+    }
+
     public function countOrdersInMonthForOwner($fromDate, $toDate, $ownerId)
     {
         return $this->orderEntityRepository->countOrdersInMonthForOwner($fromDate, $toDate, $ownerId);

@@ -149,6 +149,18 @@ class OrderController extends BaseController
           return $this->response($result, self::FETCH);
       }
 
+    /**
+      * @Route("/getOrdersOngoing", name="getOrdersOngoingForAdmin", methods={"GET"})
+      * @IsGranted("ROLE_ADMIN")
+      * @return JsonResponse
+      */
+      public function getOrdersOngoing()
+      {
+          $result = $this->orderService->getOrdersOngoing();
+  
+          return $this->response($result, self::FETCH);
+      }
+
      /**
      * @Route("/getAllOrdersAndCount/{year}/{month}/{userId}/{userType}", name="getAllOrdersAndCountInMonthForOwner",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")

@@ -180,7 +180,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-     public function getOrdersWithOutPending()
+    public function getOrdersWithOutPending()
     {
         return $this->createQueryBuilder('OrderEntity')
         ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.createdAt', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.payment', 'OrderEntity.detail', 'OrderEntity.deliveryCost', 'OrderEntity.orderCost', 'OrderEntity.orderType', 'OrderEntity.destination', 'OrderEntity.note')
@@ -189,6 +189,22 @@ class OrderEntityRepository extends ServiceEntityRepository
         ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
         ->andWhere("OrderEntity.state != :pending ")
         ->setParameter('pending', self::PENDING)
+        ->addGroupBy('OrderEntity.id')
+        ->getQuery()
+        ->getResult();
+    }
+
+    public function getOrdersOngoing()
+    {
+        return $this->createQueryBuilder('OrderEntity')
+        ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.createdAt', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.payment', 'OrderEntity.detail', 'OrderEntity.deliveryCost', 'OrderEntity.orderCost', 'OrderEntity.orderType', 'OrderEntity.destination', 'OrderEntity.note')
+        ->addSelect('orderDetailEntity.id as orderDetailId', 'orderDetailEntity.orderNumber')
+
+        ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
+        ->andWhere("OrderEntity.state != :pending ")
+        ->andWhere("OrderEntity.state != :cancel ")
+        ->setParameter('pending', self::PENDING)
+        ->setParameter('cancel', self::CANCEL)
         ->addGroupBy('OrderEntity.id')
         ->getQuery()
         ->getResult();
