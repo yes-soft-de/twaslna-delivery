@@ -715,4 +715,36 @@ class OrderService
 
         return $response;
     }
+
+    public function getOrdersAndCountByStoreProfileId($storeProfileId)
+    {
+        $response = [];
+        $countOrders = $this->orderManager->countStoreOrders($storeProfileId);
+        $orders = $this->orderManager->getOrdersByStoreProfileId($storeProfileId);
+        
+        $response['ordersCount'] = $countOrders;
+        foreach ($orders as $order) {
+            $order['amount'] = $order['deliveryCost'] + $order['orderCost'];
+            
+            $item[] = $this->autoMapping->map('array', OrdersByClientResponse::class, $order);
+        }
+        $response['orders'] = $item;
+        return $response;
+    }
+
+    public function getOrdersAndCountByCaptainId($captainId)
+    {
+        $response = [];
+        $countOrders = $this->orderManager->countCaptainOrders($captainId);
+        $orders = $this->orderManager->getOrdersByCaptainId($captainId);
+        
+        $response['ordersCount'] = $countOrders;
+        foreach ($orders as $order) {
+            $order['amount'] = $order['deliveryCost'] + $order['orderCost'];
+            
+            $item[] = $this->autoMapping->map('array', OrdersByClientResponse::class, $order);
+        }
+        $response['orders'] = $item;
+        return $response;
+    }
 }

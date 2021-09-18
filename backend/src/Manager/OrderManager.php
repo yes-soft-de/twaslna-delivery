@@ -335,4 +335,24 @@ class OrderManager
     {
         return $this->orderEntityRepository->getOrdersForSpecificClient($clientID);
     }
+
+    public function countStoreOrders($storeProfileId)
+    {
+        return $this->orderEntityRepository->countStoreOrders($storeProfileId);
+    }
+
+    public function getOrdersByStoreProfileId($storeProfileId)
+    {
+        return $this->orderEntityRepository->getOrdersByStoreProfileId($storeProfileId);
+    }
+
+    public function countCaptainOrders($captainId)
+    {
+        return $this->orderEntityRepository->countCaptainOrders($captainId);
+    }
+
+    public function getOrdersByCaptainId($captainId)
+    {
+        return $this->orderEntityRepository->getOrdersByCaptainId($captainId);
+    }
 }

@@ -514,4 +514,54 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    
+    public function countStoreOrders($storeProfileId)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+            ->select('count(OrderEntity.id) as ordersCount')
+            ->andWhere('OrderEntity.storeOwnerProfileID = :storeOwnerProfileID')
+            ->setParameter('storeOwnerProfileID', $storeProfileId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getOrdersByStoreProfileId($storeProfileId)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+            ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.state', 'OrderEntity.createdAt','OrderEntity.deliveryCost', 'OrderEntity.orderCost','OrderEntity.orderType')
+            ->addSelect('orderDetailEntity.id as orderDetailId', 'orderDetailEntity.orderNumber')
+
+            ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
+
+            ->andWhere('OrderEntity.storeOwnerProfileID = :storeOwnerProfileID')
+            ->setParameter('storeOwnerProfileID', $storeProfileId)
+            ->addGroupBy('OrderEntity.id')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countCaptainOrders($captainId)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+            ->select('count(OrderEntity.id) as ordersCount')
+            ->andWhere('OrderEntity.captainID = :captainID')
+            ->setParameter('captainID', $captainId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getOrdersByCaptainId($captainId)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+            ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.state', 'OrderEntity.createdAt','OrderEntity.deliveryCost', 'OrderEntity.orderCost','OrderEntity.orderType')
+            ->addSelect('orderDetailEntity.id as orderDetailId', 'orderDetailEntity.orderNumber')
+
+            ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
+
+            ->andWhere('OrderEntity.captainID = :captainID')
+            ->setParameter('captainID', $captainId)
+            ->addGroupBy('OrderEntity.id')
+            ->getQuery()
+            ->getResult();
+    }
 }

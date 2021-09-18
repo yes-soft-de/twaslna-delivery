@@ -407,4 +407,28 @@ class OrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+      * @Route("ordersAndCountByStoreProfileId/{storeProfileId}", name="getOrdersAndCountByStoreProfileIdForAdmin", methods={"GET"})
+      * @IsGranted("ROLE_ADMIN")
+      * @return JsonResponse
+      */
+      public function getOrdersAndCountByStoreProfileId($storeProfileId)
+      {
+          $result = $this->orderService->getOrdersAndCountByStoreProfileId($storeProfileId);
+  
+          return $this->response($result, self::FETCH);
+      }
+
+    /**
+      * @Route("ordersAndCountByCaptainId/{captainId}", name="getOrdersAndCountByCaptainIdForAdmin", methods={"GET"})
+      * @IsGranted("ROLE_ADMIN")
+      * @return JsonResponse
+      */
+      public function getOrdersAndCountByCaptainId($captainId)
+      {
+          $result = $this->orderService->getOrdersAndCountByCaptainId($captainId);
+  
+          return $this->response($result, self::FETCH);
+      }
 }
