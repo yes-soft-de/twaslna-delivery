@@ -49,6 +49,6 @@ class DeliveryCompanyPaymentsFromCaptainManager
 
     public function deliveryCompanyPaymentsFromCaptainInSpecificDate($captainId, $fromDate, $toDate)
     {
-        return $this->deliveryCompanyPaymentsFromCaptainEntityRepository->gdeliveryCompanyPaymentsFromCaptainInSpecificDate($captainId, $fromDate, $toDate);
+        return $this->deliveryCompanyPaymentsFromCaptainEntityRepository->deliveryCompanyPaymentsFromCaptainInSpecificDate($captainId, $fromDate, $toDate);
     }
 }
