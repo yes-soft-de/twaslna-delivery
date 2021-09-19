@@ -58,7 +58,7 @@ class Urls {
   static const GET_ACCOUNT_BALANCE_CAPTAIN_LAST_MONTH = BASE_API + '/captainFinancialAccountInLastMonthForAdmin/';
   static const GET_UNFINISHED_PAYMENT = BASE_API + '/captainsUnfinishedPayments';
   static const GET_UNFINISHED_ORDER = BASE_API + '/getPendingOrders';
-  static const GET_ONGOING_ORDERS = BASE_API + '/getOrders';
+  static const GET_ONGOING_ORDERS = BASE_API + '/getOrdersOngoing';
   static const GET_ORDER_DETAILS = BASE_API + '/orderDetailsForAdmin/';
 
 
