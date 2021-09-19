@@ -451,7 +451,7 @@
   "fax": "الفاكس",
   "stc": "س ت سي",
   "companyInfo": "معلومات الشركة",
-  "captains": "قائمة مندوبين",
+  "captains": "المندوبين",
   "stores": "متاجر",
   "countCompletedOrders": "الطلبات المكتملة",
   "countOngoingOrders": "الطلبات الجارية",
@@ -465,5 +465,9 @@
   "orderPending": "الطلبات قيد الانتظار",
   "companyFinance": "التفاصيل المالية",
   "financeProfileUpdateSuccessfully": "تم التحديث بنجاح",
-  "company": "الشركة"
+  "company": "الشركة",
+  "twaslnaDashboard": "لوحة تحكم تواصلنا",
+  "ongoingOrders": "الطلبات الجارية",
+  "storeImage": "صورة متجر"
+
 }

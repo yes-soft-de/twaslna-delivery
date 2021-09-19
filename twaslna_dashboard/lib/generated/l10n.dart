@@ -4709,6 +4709,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Twaslna Dashboard`
+  String get twaslnaDashboard {
+    return Intl.message(
+      'Twaslna Dashboard',
+      name: 'twaslnaDashboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OnGoing Orders`
+  String get ongoingOrders {
+    return Intl.message(
+      'OnGoing Orders',
+      name: 'ongoingOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Image`
+  String get storeImage {
+    return Intl.message(
+      'Store Image',
+      name: 'storeImage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -383,6 +383,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please place your order notes"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+        "ongoingOrders": MessageLookupByLibrary.simpleMessage("OnGoing Orders"),
         "online": MessageLookupByLibrary.simpleMessage("online"),
         "openChatRoom": MessageLookupByLibrary.simpleMessage("Open Chat Room"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
@@ -599,6 +600,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "store": MessageLookupByLibrary.simpleMessage("Store"),
         "storeCategories":
             MessageLookupByLibrary.simpleMessage("Stores Categories"),
+        "storeImage": MessageLookupByLibrary.simpleMessage("Store Image"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("Store Info"),
         "storeLocation": MessageLookupByLibrary.simpleMessage("Store location"),
         "storeManagment":
@@ -648,6 +650,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "The total cost without delivery cost"),
         "totalBonus": MessageLookupByLibrary.simpleMessage("Total Salary"),
+        "twaslnaDashboard":
+            MessageLookupByLibrary.simpleMessage("Twaslna Dashboard"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "Your request not accepted from administration you can contact us to get info"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),

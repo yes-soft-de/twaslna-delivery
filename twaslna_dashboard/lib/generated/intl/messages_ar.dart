@@ -110,7 +110,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainStateInactive": MessageLookupByLibrary.simpleMessage("غير نشط"),
         "captainStatus":
             MessageLookupByLibrary.simpleMessage("حالة حساب الكابتن"),
-        "captains": MessageLookupByLibrary.simpleMessage("قائمة مندوبين"),
+        "captains": MessageLookupByLibrary.simpleMessage("المندوبين"),
         "car": MessageLookupByLibrary.simpleMessage("سيارة "),
         "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
         "cash": MessageLookupByLibrary.simpleMessage("نقدا"),
@@ -371,6 +371,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),
         "notes": MessageLookupByLibrary.simpleMessage("ملاحظات"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
+        "ongoingOrders":
+            MessageLookupByLibrary.simpleMessage("الطلبات الجارية"),
         "online": MessageLookupByLibrary.simpleMessage("مدفوع"),
         "openChatRoom":
             MessageLookupByLibrary.simpleMessage("افتح غرفة المحادثة"),
@@ -586,6 +588,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "store": MessageLookupByLibrary.simpleMessage("المتجر"),
         "storeCategories":
             MessageLookupByLibrary.simpleMessage("أصناف المتاجر"),
+        "storeImage": MessageLookupByLibrary.simpleMessage("صورة متجر"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("معلومات المتجر"),
         "storeLocation": MessageLookupByLibrary.simpleMessage("موقع المتجر"),
         "storeManagment": MessageLookupByLibrary.simpleMessage("إدارة المتجر"),
@@ -635,6 +638,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),
         "totalBonus": MessageLookupByLibrary.simpleMessage("الراتب"),
+        "twaslnaDashboard":
+            MessageLookupByLibrary.simpleMessage("لوحة تحكم تواصلنا"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "لم يتم الموافقة على اشتراكك من قبل الإدارة يمكنك التواصل معنا للحصول على المزيد من التفاصيل"),
         "unknown": MessageLookupByLibrary.simpleMessage("غير معروف"),
