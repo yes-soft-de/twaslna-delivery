@@ -4679,6 +4679,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Company Finance`
+  String get companyFinance {
+    return Intl.message(
+      'Company Finance',
+      name: 'companyFinance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Updated Successfully`
+  String get financeProfileUpdateSuccessfully {
+    return Intl.message(
+      'Updated Successfully',
+      name: 'financeProfileUpdateSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company`
+  String get company {
+    return Intl.message(
+      'Company',
+      name: 'company',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

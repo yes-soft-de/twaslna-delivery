@@ -464,6 +464,9 @@
   "captainPayments":"Captains Balance",
   "invoiceImage": "Invoice Image",
   "invoiceCost": "Invoice Cost",
-  "orderPending": "Pending Orders"
+  "orderPending": "Pending Orders",
+  "companyFinance": "Company Finance",
+  "financeProfileUpdateSuccessfully": "Updated Successfully",
+  "company": "Company",
 
 }

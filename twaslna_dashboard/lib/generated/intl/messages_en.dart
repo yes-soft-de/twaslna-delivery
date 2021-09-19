@@ -150,6 +150,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("choose your state"),
         "city": MessageLookupByLibrary.simpleMessage("City"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
+        "company": MessageLookupByLibrary.simpleMessage("Company"),
+        "companyFinance":
+            MessageLookupByLibrary.simpleMessage("Company Finance"),
         "companyInfo": MessageLookupByLibrary.simpleMessage("Company Info"),
         "completeTime": MessageLookupByLibrary.simpleMessage("Completion Time"),
         "completedOrders":
@@ -243,6 +246,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your renew has been failed please try again"),
         "fax": MessageLookupByLibrary.simpleMessage("Fax"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
+        "financeProfileUpdateSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Updated Successfully"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "Finish Order, Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(

@@ -145,6 +145,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
         "community":
             MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),
+        "company": MessageLookupByLibrary.simpleMessage("الشركة"),
+        "companyFinance":
+            MessageLookupByLibrary.simpleMessage("التفاصيل المالية"),
         "companyInfo": MessageLookupByLibrary.simpleMessage("معلومات الشركة"),
         "completeTime": MessageLookupByLibrary.simpleMessage("مدة الإنجاز"),
         "completedOrders":
@@ -235,6 +238,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "externalOrder": MessageLookupByLibrary.simpleMessage("طلبية خارجية"),
         "fax": MessageLookupByLibrary.simpleMessage("الفاكس"),
         "female": MessageLookupByLibrary.simpleMessage("أنثى"),
+        "financeProfileUpdateSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم التحديث بنجاح"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "انهاء الطلب، المسافة المقطوعة"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(

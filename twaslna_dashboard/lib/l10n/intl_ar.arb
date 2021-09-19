@@ -462,5 +462,8 @@
   "captainPayments":"حسابات المندوبين",
   "invoiceImage": "صورة الفاتورة",
   "invoiceCost": "تكلفة الفاتورة",
-  "orderPending": "الطلبات قيد الانتظار"
+  "orderPending": "الطلبات قيد الانتظار",
+  "companyFinance": "التفاصيل المالية",
+  "financeProfileUpdateSuccessfully": "تم التحديث بنجاح",
+  "company": "الشركة"
 }

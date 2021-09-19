@@ -108,7 +108,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               customListTile(
                   4, S.current.inActiveCaptains, Icons.delivery_dining_rounded),
               customListTile(
-                  8, S.current.captains, Icons.delivery_dining_rounded),
+                  8, S.current.captainPayments, Icons.delivery_dining_rounded),
             ],
           ),
         ),
@@ -135,8 +135,29 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             ],
           ),
         ),
+        Theme(
+          data: Theme.of(context).copyWith(brightness: Brightness.dark),
+          child: ExpansionTile(
+            initiallyExpanded:
+            widget.currentIndex == 5 || widget.currentIndex == 11 ,
+            leading: Icon(
+              Icons.info,
+              color: Colors.white,
+            ),
+            collapsedIconColor: Colors.white,
+            title: Text(
+              S.current.companyInfo,
+              style:
+              TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+            ),
+            children: <Widget>[
+              customListTile(5, S.current.companyInfo, Icons.info),
+              customListTile(
+                  11, S.current.companyFinance, Icons.account_balance_wallet_rounded),
+            ],
+          ),
+        ),
 
-        customListTile(5, S.current.companyInfo, Icons.info),
         customListTile(6, S.current.settings, Icons.settings_rounded),
       ]),
     ));
