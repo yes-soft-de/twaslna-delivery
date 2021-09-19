@@ -180,7 +180,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-     public function getOrders()
+    public function getOrdersWithOutPending()
     {
         return $this->createQueryBuilder('OrderEntity')
         ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.createdAt', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.payment', 'OrderEntity.detail', 'OrderEntity.deliveryCost', 'OrderEntity.orderCost', 'OrderEntity.orderType', 'OrderEntity.destination', 'OrderEntity.note')
@@ -189,6 +189,22 @@ class OrderEntityRepository extends ServiceEntityRepository
         ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
         ->andWhere("OrderEntity.state != :pending ")
         ->setParameter('pending', self::PENDING)
+        ->addGroupBy('OrderEntity.id')
+        ->getQuery()
+        ->getResult();
+    }
+
+    public function getOrdersOngoing()
+    {
+        return $this->createQueryBuilder('OrderEntity')
+        ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.createdAt', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.payment', 'OrderEntity.detail', 'OrderEntity.deliveryCost', 'OrderEntity.orderCost', 'OrderEntity.orderType', 'OrderEntity.destination', 'OrderEntity.note')
+        ->addSelect('orderDetailEntity.id as orderDetailId', 'orderDetailEntity.orderNumber')
+
+        ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
+        ->andWhere("OrderEntity.state != :pending ")
+        ->andWhere("OrderEntity.state != :cancel ")
+        ->setParameter('pending', self::PENDING)
+        ->setParameter('cancel', self::CANCEL)
         ->addGroupBy('OrderEntity.id')
         ->getQuery()
         ->getResult();
@@ -494,6 +510,56 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->andWhere('OrderEntity.clientID = :clientID')
             ->setParameter('clientID', $clientID)
+            ->addGroupBy('OrderEntity.id')
+            ->getQuery()
+            ->getResult();
+    }
+    
+    public function countStoreOrders($storeProfileId)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+            ->select('count(OrderEntity.id) as ordersCount')
+            ->andWhere('OrderEntity.storeOwnerProfileID = :storeOwnerProfileID')
+            ->setParameter('storeOwnerProfileID', $storeProfileId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getOrdersByStoreProfileId($storeProfileId)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+            ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.state', 'OrderEntity.createdAt','OrderEntity.deliveryCost', 'OrderEntity.orderCost','OrderEntity.orderType')
+            ->addSelect('orderDetailEntity.id as orderDetailId', 'orderDetailEntity.orderNumber')
+
+            ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
+
+            ->andWhere('OrderEntity.storeOwnerProfileID = :storeOwnerProfileID')
+            ->setParameter('storeOwnerProfileID', $storeProfileId)
+            ->addGroupBy('OrderEntity.id')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countCaptainOrders($captainId)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+            ->select('count(OrderEntity.id) as ordersCount')
+            ->andWhere('OrderEntity.captainID = :captainID')
+            ->setParameter('captainID', $captainId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getOrdersByCaptainId($captainId)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+            ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.state', 'OrderEntity.createdAt','OrderEntity.deliveryCost', 'OrderEntity.orderCost','OrderEntity.orderType')
+            ->addSelect('orderDetailEntity.id as orderDetailId', 'orderDetailEntity.orderNumber')
+
+            ->leftJoin(OrderDetailEntity::class, 'orderDetailEntity', Join::WITH, 'orderDetailEntity.orderID = OrderEntity.id')
+
+            ->andWhere('OrderEntity.captainID = :captainID')
+            ->setParameter('captainID', $captainId)
             ->addGroupBy('OrderEntity.id')
             ->getQuery()
             ->getResult();

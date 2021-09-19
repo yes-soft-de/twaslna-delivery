@@ -117,9 +117,14 @@ class OrderManager
         return $this->orderEntityRepository->getLogsForCaptain($user);
     }
 
-    public function getOrders()
+    public function getOrdersWithOutPending()
     {
-        return $this->orderEntityRepository->getOrders();
+        return $this->orderEntityRepository->getOrdersWithOutPending();
+    }
+
+    public function getOrdersOngoing()
+    {
+        return $this->orderEntityRepository->getOrdersOngoing();
     }
 
     public function countOrdersInMonthForOwner($fromDate, $toDate, $ownerId)
@@ -329,5 +334,25 @@ class OrderManager
     public function getOrdersForSpecificClient($clientID)
     {
         return $this->orderEntityRepository->getOrdersForSpecificClient($clientID);
+    }
+
+    public function countStoreOrders($storeProfileId)
+    {
+        return $this->orderEntityRepository->countStoreOrders($storeProfileId);
+    }
+
+    public function getOrdersByStoreProfileId($storeProfileId)
+    {
+        return $this->orderEntityRepository->getOrdersByStoreProfileId($storeProfileId);
+    }
+
+    public function countCaptainOrders($captainId)
+    {
+        return $this->orderEntityRepository->countCaptainOrders($captainId);
+    }
+
+    public function getOrdersByCaptainId($captainId)
+    {
+        return $this->orderEntityRepository->getOrdersByCaptainId($captainId);
     }
 }

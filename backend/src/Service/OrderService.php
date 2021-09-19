@@ -277,10 +277,28 @@ class OrderService
         return $response;
     }
 
-    public function getOrders():?array
+    public function getOrdersWithOutPending():?array
     {
         $response = [];
-        $orders = $this->orderManager->getOrders();
+        $orders = $this->orderManager->getOrdersWithOutPending();
+        foreach ($orders as $order) {
+            if ($order['storeOwnerProfileID'] == true) {  
+                $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($order['storeOwnerProfileID']);
+                if( $order['storeOwner'] != null ){
+                    $order['storeOwnerName']=$order['storeOwner']->storeOwnerName;
+                    $order['image']=$order['storeOwner']->image;
+                    $order['branches']=$order['storeOwner']->branches;
+                }
+            }
+            $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
+        }
+        return $response;
+    }
+
+    public function getOrdersOngoing():?array
+    {
+        $response = [];
+        $orders = $this->orderManager->getOrdersOngoing();
         foreach ($orders as $order) {
             if ($order['storeOwnerProfileID'] == true) {  
                 $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($order['storeOwnerProfileID']);
@@ -695,6 +713,38 @@ class OrderService
         
         $response = $this->autoMapping->map("array", CountReportResponse::class, $item);
 
+        return $response;
+    }
+
+    public function getOrdersAndCountByStoreProfileId($storeProfileId)
+    {
+        $response = [];
+        $countOrders = $this->orderManager->countStoreOrders($storeProfileId);
+        $orders = $this->orderManager->getOrdersByStoreProfileId($storeProfileId);
+        
+        $response['ordersCount'] = $countOrders;
+        foreach ($orders as $order) {
+            $order['amount'] = $order['deliveryCost'] + $order['orderCost'];
+            
+            $item[] = $this->autoMapping->map('array', OrdersByClientResponse::class, $order);
+        }
+        $response['orders'] = $item;
+        return $response;
+    }
+
+    public function getOrdersAndCountByCaptainId($captainId)
+    {
+        $response = [];
+        $countOrders = $this->orderManager->countCaptainOrders($captainId);
+        $orders = $this->orderManager->getOrdersByCaptainId($captainId);
+        
+        $response['ordersCount'] = $countOrders;
+        foreach ($orders as $order) {
+            $order['amount'] = $order['deliveryCost'] + $order['orderCost'];
+            
+            $item[] = $this->autoMapping->map('array', OrdersByClientResponse::class, $order);
+        }
+        $response['orders'] = $item;
         return $response;
     }
 }
