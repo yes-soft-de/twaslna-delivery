@@ -77,15 +77,12 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: GlobalVariable.mainScreenScaffold,
-      drawer: Container(
-        color: Theme.of(context).primaryColor,
-        child: NavigatorMenu(
-          currentIndex: selectedPage,
-          onTap: (index) {
-            selectedPage = index;
-            setState(() {});
-          },
-        ),
+      drawer: NavigatorMenu(
+        currentIndex: selectedPage,
+        onTap: (index) {
+          selectedPage = index;
+          setState(() {});
+        },
       ),
       body: AnimatedSwitcher(
         duration: Duration(milliseconds: 50),
