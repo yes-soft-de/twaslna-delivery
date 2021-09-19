@@ -42,20 +42,20 @@ class _AnimatedLiquidCircularProgressIndicatorState extends State<AnimatedLiquid
     final cnt = (widget.count * percentage) / 100;
     return Center(
       child: SizedBox(
-        width: 150.0,
-        height: 150.0,
+        width: 100.0,
+        height: 100.0,
         child: LiquidCircularProgressIndicator(
           key: widget.key,
           value: _animationController.value,
           valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor.withOpacity(0.4),), // Defaults to the current Theme's accentColor.
           backgroundColor: Theme.of(context).scaffoldBackgroundColor, // Defaults to the current Theme's backgroundColor.
           borderColor: Theme.of(context).primaryColor,
-          borderWidth: 2.5,
+          borderWidth: 2,
           direction: Axis.vertical, //
           center: Center(
             child: Text(cnt.toStringAsFixed(0),style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 40
+              fontSize: 28
             ),),
           ),
         ),
