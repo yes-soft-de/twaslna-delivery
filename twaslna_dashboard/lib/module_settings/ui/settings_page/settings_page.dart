@@ -78,7 +78,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     leading: Icon(Icons.language,color: Colors.white),
                     title: Text(S.of(context).language,style:TextStyle(color: Colors.white),),
                     trailing: DropdownButton(
+                      dropdownColor: Theme.of(context).primaryColor,
                         value: Localizations.localeOf(context).languageCode,
+                        style: TextStyle(color: Colors.white),
                         underline: Container(),
                         icon: Padding(
                           padding: const EdgeInsets.all(4.0),
@@ -86,11 +88,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         items: [
                           DropdownMenuItem(
-                            child: Text('العربية',style: TextStyle(color: Colors.white),),
+                            child: Text('العربية',style: TextStyle(),),
                             value: 'ar',
                           ),
                           DropdownMenuItem(
-                            child: Text('English',style: TextStyle(color: Colors.white),),
+                            child: Text('English',style: TextStyle(),),
                             value: 'en',
                           ),
                         ],
