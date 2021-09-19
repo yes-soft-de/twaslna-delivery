@@ -72,7 +72,7 @@ class StoresStateManager {
           }
           else {
             getStores(screenState);
-            CustomFlushBarHelper.createSuccess(title:S.current.warnning, message:S.current.categoryCreatedSuccessfully)..show(screenState.context);
+            CustomFlushBarHelper.createSuccess(title:S.current.warnning, message:S.current.storeCreatedSuccessfully)..show(screenState.context);
           }
         });
 
@@ -95,7 +95,7 @@ class StoresStateManager {
         else {
 
           getStores(screenState);
-          CustomFlushBarHelper.createSuccess(title:S.current.warnning, message:S.current.updateStoreCategory)..show(screenState.context);
+          CustomFlushBarHelper.createSuccess(title:S.current.warnning, message:S.current.storeUpdatedSuccessfully)..show(screenState.context);
 
         }
       });
@@ -122,7 +122,7 @@ class StoresStateManager {
             else {
 
               getStores(screenState);
-              CustomFlushBarHelper.createSuccess(title:S.current.warnning, message:S.current.updateStoreCategory)..show(screenState.context);
+              CustomFlushBarHelper.createSuccess(title:S.current.warnning, message:S.current.storeUpdatedSuccessfully)..show(screenState.context);
 
             }
 

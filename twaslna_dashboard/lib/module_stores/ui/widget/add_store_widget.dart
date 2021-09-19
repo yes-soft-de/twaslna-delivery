@@ -155,7 +155,10 @@ class _AddStoreWidgetState extends State<AddStoreWidget> {
                     ),
                   ),
                 ),
-                SizedBox(height: 32),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Center(child: Text(S.current.storeImage,style: TextStyle(fontWeight: FontWeight.bold),)),
+                ),
                 InkWell(
                   onTap: () {
                     ImagePicker.platform
@@ -184,6 +187,12 @@ class _AddStoreWidgetState extends State<AddStoreWidget> {
                   ),
                 ),
                 Padding(
+                  padding: const EdgeInsets.only(top:32.0,left: 16,right: 16),
+                  child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(S.current.storeService + ' : ',style: TextStyle(fontWeight: FontWeight.bold),)),
+                ),
+                Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: CheckboxListTile(
                       value: products,
@@ -194,7 +203,7 @@ class _AddStoreWidgetState extends State<AddStoreWidget> {
                       }),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
+                  padding: const EdgeInsets.only(bottom: 16.0),
                   child: CheckboxListTile(
                       value: privateOrder,
                       title: Text(S.of(context).privateOrder),
@@ -338,7 +347,11 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                     ),
                   ),
                 ),
-                SizedBox(height: 32),
+                SizedBox(height: 16,),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Center(child: Text(S.current.storeImage,style: TextStyle(fontWeight: FontWeight.bold),)),
+                ),
                 InkWell(
                   onTap: () {
                     ImagePicker.platform
@@ -367,7 +380,13 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
+                  padding: const EdgeInsets.only(top:32.0,left: 16,right: 16),
+                  child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(S.current.storeService + ' : ',style: TextStyle(fontWeight: FontWeight.bold),)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
                   child: CheckboxListTile(
                       value: products,
                       title: Text(S.of(context).products),
@@ -377,7 +396,7 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                       }),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
+                  padding: const EdgeInsets.only(bottom: 16),
                   child: CheckboxListTile(
                       value: privateOrder,
                       title: Text(S.of(context).privateOrder),

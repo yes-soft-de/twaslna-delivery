@@ -37,84 +37,72 @@ class HomeLoadedState extends States {
                     screenState.getReport();
           });
     }
-    return ListView(
-        physics:
-        BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        children: [
-      widgetTile(model?.countCompletedOrders.toString() ?? '',S.current.countCompletedOrders),
-      Padding(
-        padding: const EdgeInsets.only(right:32,left: 32),
-        child: Divider(
-          thickness: 2.5,
-          color: Theme.of(context).primaryColor.withOpacity(0.3),
-        ),
+    return SingleChildScrollView(
+      physics:
+      BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: Wrap(
+          direction: Axis.horizontal,
+            children: [
+          widgetTile(model?.countCompletedOrders.toString() ?? '',S.current.countCompletedOrders),
+          widgetTile(model?.countOngoingOrders.toString() ?? '',S.current.countOngoingOrders),
+          Padding(
+            padding: const EdgeInsets.only(right:32,left: 32),
+            child: Divider(
+              thickness: 2.5,
+              color: Theme.of(context).primaryColor.withOpacity(0.3),
+            ),
+          ),
+          widgetTile(model?.countClients.toString() ?? '',S.current.countClients),
+          widgetTile(model?.countCaptains.toString() ?? '',S.current.countCaptains),
+          Padding(
+            padding: const EdgeInsets.only(right:32,left: 32),
+            child: Divider(
+              thickness: 2.5,
+              color: Theme.of(context).primaryColor.withOpacity(0.3),
+            ),
+          ),
+          widgetTile(model?.countStores.toString() ?? '',S.current.countStores),
+          widgetTile(model?.countProducts.toString() ?? '',S.current.countProducts),
+        ]),
       ),
-      widgetTile(model?.countOngoingOrders.toString() ?? '',S.current.countOngoingOrders),
-      Padding(
-        padding: const EdgeInsets.only(right:32,left: 32),
-        child: Divider(
-          thickness: 2.5,
-          color: Theme.of(context).primaryColor.withOpacity(0.3),
-        ),
-      ),
-      widgetTile(model?.countClients.toString() ?? '',S.current.countClients),
-      Padding(
-        padding: const EdgeInsets.only(right:32,left: 32),
-        child: Divider(
-          thickness: 2.5,
-          color: Theme.of(context).primaryColor.withOpacity(0.3),
-        ),
-      ),
-      widgetTile(model?.countCaptains.toString() ?? '',S.current.countCaptains),
-      Padding(
-        padding: const EdgeInsets.only(right:32,left: 32),
-        child: Divider(
-          thickness: 2.5,
-          color: Theme.of(context).primaryColor.withOpacity(0.3),
-        ),
-      ),
-      widgetTile(model?.countStores.toString() ?? '',S.current.countStores),
-      Padding(
-        padding: const EdgeInsets.only(right:32,left: 32),
-        child: Divider(
-          thickness: 2.5,
-          color: Theme.of(context).primaryColor.withOpacity(0.3),
-        ),
-      ),
-      widgetTile(model?.countProducts.toString() ?? '',S.current.countProducts),
-    ]);
+    );
   }
 
   Widget widgetTile(String count,String title) {
-    return Flex(
-      direction: Axis.vertical,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: AnimatedLiquidCircularProgressIndicator(ValueKey(title),int.parse(count)),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            constraints: BoxConstraints(
-              maxWidth: 180
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Theme.of(screenState.context).primaryColor,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
-                child: Text(title,style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                    color: Colors.white
-                ),),
+    return Container(
+      width: MediaQuery.of(screenState.context).size.width * 0.5,
+      child: Flex(
+        direction: Axis.vertical,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: AnimatedLiquidCircularProgressIndicator(ValueKey(title),int.parse(count)),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: 180
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Theme.of(screenState.context).primaryColor,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Center(
+                  child: Text(title,style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                      color: Colors.white
+                  ),),
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

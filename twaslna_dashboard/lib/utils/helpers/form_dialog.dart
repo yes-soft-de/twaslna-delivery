@@ -111,7 +111,10 @@ class _InsertFormState extends State<InsertForm> {
               hintText: widget.hintText,
               last: true,
             ),
-            SizedBox(height: 32),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(child: Text(S.current.storeImage,style: TextStyle(fontWeight: FontWeight.bold),)),
+            ),
             InkWell(
               onTap: () {
                 ImagePicker.platform

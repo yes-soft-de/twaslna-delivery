@@ -6,6 +6,7 @@ import 'package:twaslna_dashboard/module_captain/ui/screen/captains_list_screen.
 import 'package:twaslna_dashboard/module_captain/ui/screen/catpains_payment_screen.dart';
 import 'package:twaslna_dashboard/module_captain/ui/screen/in_active_captains_screen.dart';
 import 'package:twaslna_dashboard/module_categories/ui/screen/store_categories_screen.dart';
+import 'package:twaslna_dashboard/module_company/ui/screen/company_finance_screen.dart';
 import 'package:twaslna_dashboard/module_company/ui/screen/company_profile_screen.dart';
 import 'package:twaslna_dashboard/module_main/sceen/home_screen.dart';
 import 'package:twaslna_dashboard/module_orders/ui/screen/OngoingOrdersScreen.dart';
@@ -27,6 +28,7 @@ class MainScreen extends StatefulWidget {
   final CaptainsPaymentsScreen _captainsPaymentsScreen;
   final OrdersScreen _myOrdersScreen;
   final OnGoingOrdersScreen _onGoingOrdersScreen;
+  final CompanyFinanceScreen _companyFinanceScreen;
   final List<Widget> pages = [];
 
   MainScreen(
@@ -40,7 +42,9 @@ class MainScreen extends StatefulWidget {
       this._captainBalanceScreen,
       this._captainsPaymentsScreen,
       this._myOrdersScreen,
-      this._onGoingOrdersScreen) {
+      this._onGoingOrdersScreen,
+      this._companyFinanceScreen
+      ) {
     pages.add(_homeScreen);
     pages.add(_storeCategoriesScreen);
     pages.add(_storesScreen);
@@ -52,6 +56,7 @@ class MainScreen extends StatefulWidget {
     pages.add(_captainsPaymentsScreen);
     pages.add(_myOrdersScreen);
     pages.add(_onGoingOrdersScreen);
+    pages.add(_companyFinanceScreen);
   }
 
   @override
@@ -72,15 +77,12 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: GlobalVariable.mainScreenScaffold,
-      drawer: Container(
-        color: Theme.of(context).primaryColor,
-        child: NavigatorMenu(
-          currentIndex: selectedPage,
-          onTap: (index) {
-            selectedPage = index;
-            setState(() {});
-          },
-        ),
+      drawer: NavigatorMenu(
+        currentIndex: selectedPage,
+        onTap: (index) {
+          selectedPage = index;
+          setState(() {});
+        },
       ),
       body: AnimatedSwitcher(
         duration: Duration(milliseconds: 50),

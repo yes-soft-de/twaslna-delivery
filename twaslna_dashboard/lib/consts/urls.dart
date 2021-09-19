@@ -47,6 +47,10 @@ class Urls {
   static const UPDATE_PRODUCT_CATEGORY = BASE_API + '/storeProductCategory';
   static const UPDATE_PRODUCT = BASE_API + '/updateProductByAdmin';
   static const GET_PROFILE_COMPANY = BASE_API + '/companyinfoall';
+  static const GET_FINANCIAL_COMPANY = BASE_API + '/financialCompensations';
+  static const UPDATE_FINANCIAL_COMPANY = BASE_API + '/financialCompensation';
+  static const GET_DELIVERY_PRICE_COMPANY = BASE_API + '/getDeliveryCompanyFinancialById/1';
+  static const UPDATE_DELIVERY_PRICE_COMPANY = BASE_API + '/deliveryCompanyFinancial';
   static const CREATE_COMPANY_PROFILE = BASE_API + '/companyinfo';
   static const GET_CAPTAINS_LIST = BASE_API + '/captains';
   static const GET_REPORT = BASE_API + '/countReport';
@@ -54,7 +58,7 @@ class Urls {
   static const GET_ACCOUNT_BALANCE_CAPTAIN_LAST_MONTH = BASE_API + '/captainFinancialAccountInLastMonthForAdmin/';
   static const GET_UNFINISHED_PAYMENT = BASE_API + '/captainsUnfinishedPayments';
   static const GET_UNFINISHED_ORDER = BASE_API + '/getPendingOrders';
-  static const GET_ONGOING_ORDERS = BASE_API + '/getOrders';
+  static const GET_ONGOING_ORDERS = BASE_API + '/getOrdersOngoing';
   static const GET_ORDER_DETAILS = BASE_API + '/orderDetailsForAdmin/';
 
 

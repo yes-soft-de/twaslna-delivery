@@ -150,6 +150,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("choose your state"),
         "city": MessageLookupByLibrary.simpleMessage("City"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
+        "company": MessageLookupByLibrary.simpleMessage("Company"),
+        "companyFinance":
+            MessageLookupByLibrary.simpleMessage("Company Finance"),
         "companyInfo": MessageLookupByLibrary.simpleMessage("Company Info"),
         "completeTime": MessageLookupByLibrary.simpleMessage("Completion Time"),
         "completedOrders":
@@ -243,6 +246,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your renew has been failed please try again"),
         "fax": MessageLookupByLibrary.simpleMessage("Fax"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
+        "financeProfileUpdateSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Updated Successfully"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "Finish Order, Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -378,6 +383,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please place your order notes"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+        "ongoingOrders": MessageLookupByLibrary.simpleMessage("OnGoing Orders"),
         "online": MessageLookupByLibrary.simpleMessage("online"),
         "openChatRoom": MessageLookupByLibrary.simpleMessage("Open Chat Room"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
@@ -594,6 +600,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "store": MessageLookupByLibrary.simpleMessage("Store"),
         "storeCategories":
             MessageLookupByLibrary.simpleMessage("Stores Categories"),
+        "storeImage": MessageLookupByLibrary.simpleMessage("Store Image"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("Store Info"),
         "storeLocation": MessageLookupByLibrary.simpleMessage("Store location"),
         "storeManagment":
@@ -643,6 +650,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "The total cost without delivery cost"),
         "totalBonus": MessageLookupByLibrary.simpleMessage("Total Salary"),
+        "twaslnaDashboard":
+            MessageLookupByLibrary.simpleMessage("Twaslna Dashboard"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "Your request not accepted from administration you can contact us to get info"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),

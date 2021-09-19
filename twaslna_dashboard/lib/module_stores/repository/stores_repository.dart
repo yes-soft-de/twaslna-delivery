@@ -7,6 +7,7 @@ import 'package:twaslna_dashboard/module_categories/response/response.dart';
 import 'package:twaslna_dashboard/module_categories/response/store_categories_response.dart';
 import 'package:twaslna_dashboard/module_network/http_client/http_client.dart';
 import 'package:twaslna_dashboard/module_stores/request/create_store_request.dart';
+import 'package:twaslna_dashboard/module_stores/response/store_profile_response.dart';
 import 'package:twaslna_dashboard/module_stores/response/stores_response.dart';
 
 @injectable
@@ -23,6 +24,13 @@ class StoresRepository {
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return StoresResponse.fromJson(response);
+  }
+  Future<StoreProfileResponse?> getStoreProfile(int id) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(Urls.GET_STORE_PROFILE + '$id',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return StoreProfileResponse.fromJson(response);
   }
 
   Future<ActionResponse?> addStore(CreateStoreRequest request) async {

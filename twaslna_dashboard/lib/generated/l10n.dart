@@ -4679,6 +4679,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Company Finance`
+  String get companyFinance {
+    return Intl.message(
+      'Company Finance',
+      name: 'companyFinance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Updated Successfully`
+  String get financeProfileUpdateSuccessfully {
+    return Intl.message(
+      'Updated Successfully',
+      name: 'financeProfileUpdateSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company`
+  String get company {
+    return Intl.message(
+      'Company',
+      name: 'company',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Twaslna Dashboard`
+  String get twaslnaDashboard {
+    return Intl.message(
+      'Twaslna Dashboard',
+      name: 'twaslnaDashboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OnGoing Orders`
+  String get ongoingOrders {
+    return Intl.message(
+      'OnGoing Orders',
+      name: 'ongoingOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Image`
+  String get storeImage {
+    return Intl.message(
+      'Store Image',
+      name: 'storeImage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

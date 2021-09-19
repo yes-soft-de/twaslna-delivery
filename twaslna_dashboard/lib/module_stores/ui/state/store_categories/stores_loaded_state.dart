@@ -140,12 +140,12 @@ class StoresLoadedState extends StoresState {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(25),
                     child: SizedBox(
-                      height: 100,
-                      width: 100,
+                      height: 75,
+                      width: 75,
                       child: CustomNetworkImage(
                         imageSource: element.image,
-                        width: 100,
-                        height: 100,
+                        width: 75,
+                        height: 75,
                       ),
                     ),
                   ),
