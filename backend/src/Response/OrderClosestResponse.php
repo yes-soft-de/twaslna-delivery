@@ -19,4 +19,5 @@ class OrderClosestResponse
     public $orderType;
     public $destination;
     public $note;
+    public $state;
 }
