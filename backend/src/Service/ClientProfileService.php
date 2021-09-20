@@ -6,7 +6,6 @@ use App\AutoMapping;
 use App\Entity\ClientProfileEntity;
 use App\Entity\UserEntity;
 use App\Manager\UserManager;
-use App\Request\ClientProfileCreateRequest;
 use App\Request\UserRegisterRequest;
 use App\Request\ClientProfileUpdateRequest;
 use App\Response\ClientProfileResponse;

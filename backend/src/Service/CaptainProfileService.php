@@ -5,7 +5,6 @@ namespace App\Service;
 use App\AutoMapping;
 use App\Entity\CaptainProfileEntity;
 use App\Entity\UserEntity;
-use App\Request\CaptainProfileCreateRequest;
 use App\Request\CaptainVacationCreateRequest;
 use App\Request\CaptainProfileUpdateRequest;
 use App\Request\CaptainProfileUpdateLocationRequest;
@@ -21,6 +20,8 @@ use App\Response\CaptainCountOrdersDeliveredInTodayResponse;
 use App\Response\CaptainsWithUnfinishedPaymentsResponse;
 use App\Response\UserRegisterResponse ;
 use App\Service\CaptainPaymentService;
+use App\Service\DeliveryCompanyPaymentsFromCaptainService;
+use App\Service\DeliveryCompanyPaymentsToCaptainService;
 use App\Service\RoomIdHelperService;
 use App\Service\CaptainService;
 use App\Service\RatingService;
@@ -37,11 +38,13 @@ class CaptainProfileService
     private $ratingService;
     private $params;
     private $captainPaymentService;
+    private $deliveryCompanyPaymentsFromCaptainService;
+    private $deliveryCompanyPaymentsToCaptainService;
     private $roomIdHelperService;
     private $dateFactoryService;
     private $captainService;
 
-    public function __construct(AutoMapping $autoMapping, ParameterBagInterface $params, CaptainPaymentService $captainPaymentService,  RoomIdHelperService $roomIdHelperService, UserManager $userManager,
+    public function __construct(AutoMapping $autoMapping, ParameterBagInterface $params, CaptainPaymentService $captainPaymentService, DeliveryCompanyPaymentsFromCaptainService $deliveryCompanyPaymentsFromCaptainService, DeliveryCompanyPaymentsToCaptainService $deliveryCompanyPaymentsToCaptainService,   RoomIdHelperService $roomIdHelperService, UserManager $userManager,
       RatingService $ratingService, DateFactoryService $dateFactoryService, CaptainService $captainService)
     {
         $this->autoMapping = $autoMapping;
@@ -51,6 +54,8 @@ class CaptainProfileService
         $this->ratingService = $ratingService;
         $this->dateFactoryService = $dateFactoryService;
         $this->captainService = $captainService;
+        $this->deliveryCompanyPaymentsFromCaptainService = $deliveryCompanyPaymentsFromCaptainService;
+        $this->deliveryCompanyPaymentsToCaptainService = $deliveryCompanyPaymentsToCaptainService;
 
         $this->params = $params->get('upload_base_url') . '/';
     }
@@ -255,9 +260,9 @@ class CaptainProfileService
 
         $item = $this->userManager->getCaptainAsArrayByCaptainId($captainId);
     
-        $sumPaymentsFromCompany = $this->captainPaymentService->sumPaymentsFromCompany($captainId);
-        $sumPaymentsToCompany = $this->captainPaymentService->sumPaymentsToCompany($captainId);
-       
+        $sumPaymentsFromCaptainToCompany = $this->deliveryCompanyPaymentsFromCaptainService->deliveryCompanySumPaymentsFromCaptain($captainId);
+        $sumPaymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanySumPaymentsToCaptain($captainId);
+      
         if ($item) {
              $countOrdersDelivered = $this->captainService->countCaptainOrdersDelivered($item[0]['captainID']);            
              $sumKilometerBonus = $this->getOrderKilometers($captainId);
@@ -269,8 +274,8 @@ class CaptainProfileService
              $item['deliveryCost'] = (float)$countOrdersDelivered[0]['deliveryCost'];
              $item['amountYouOwn'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
 
-             $item['sumPaymentsFromCompany'] = (float)$sumPaymentsFromCompany[0]['sumPaymentsFromCompany'];
-             $item['sumPaymentsToCompany'] = (float)$sumPaymentsToCompany[0]['sumPaymentsToCompany'];
+             $item['sumPaymentsFromCompany'] = (float)$sumPaymentsToCaptainFromCompany[0]['sumPaymentsFromCompany'];
+             $item['sumPaymentsToCompany'] = (float)$sumPaymentsFromCaptainToCompany[0]['sumPaymentsToCompany'];
              $item['remainingAmountForCompany'] = (float)$item['amountYouOwn'] - $item['sumPaymentsToCompany'];
              
              $item['bounce'] = $item[0]['bounce'] * $item['countOrdersDelivered'];
@@ -290,12 +295,12 @@ class CaptainProfileService
         $response=[];
 
         $item = $this->userManager->getCaptainAsArrayByCaptainId($captainId);
-    
-        $sumPaymentsToCaptain = $this->captainPaymentService->sumPaymentsFromCompany($captainId);
-        $sumPaymentsFromCaptain = $this->captainPaymentService->sumPaymentsToCompany($captainId);
+        
+        $sumPaymentsFromCaptainToCompany = $this->deliveryCompanyPaymentsFromCaptainService->deliveryCompanySumPaymentsFromCaptain($captainId);
+        $sumPaymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanySumPaymentsToCaptain($captainId);
 
-        $paymentsToCaptain = $this->captainPaymentService->getCaptainPaymentsFromCompany($captainId);
-        $paymentsFromCaptain = $this->captainPaymentService->getCaptainPaymentsToCompany($captainId);
+        $paymentsFromCaptainToCompany = $this->deliveryCompanyPaymentsFromCaptainService->deliveryCompanyPaymentsFromCaptain($captainId);
+        $paymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanyPaymentsToCaptain($captainId);
        
         if ($item) {
              $countOrdersDelivered = $this->captainService->countCaptainOrdersDelivered($item[0]['captainID']);            
@@ -308,8 +313,8 @@ class CaptainProfileService
              $item['deliveryCost'] = (float)$countOrdersDelivered[0]['deliveryCost'];
              $item['amountWithCaptain'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
 
-             $item['sumPaymentsToCaptain'] = (float)$sumPaymentsToCaptain[0]['sumPaymentsFromCompany'];
-             $item['sumPaymentsFromCaptain'] = (float)$sumPaymentsFromCaptain[0]['sumPaymentsToCompany'];
+             $item['sumPaymentsToCaptain'] = (float)$sumPaymentsToCaptainFromCompany[0]['sumPaymentsFromCompany'];
+             $item['sumPaymentsFromCaptain'] = (float)$sumPaymentsFromCaptainToCompany[0]['sumPaymentsToCompany'];
              $item['remainingAmountForCompany'] = (float)$item['amountWithCaptain'] - $item['sumPaymentsFromCaptain'];
              
              $item['bounce'] = $item[0]['bounce'] * $item['countOrdersDelivered'];
@@ -319,8 +324,8 @@ class CaptainProfileService
              // + Positive: the account is on the captain
              // - Negative: the account is for the captain
              $item['total'] = $item['sumPaymentsToCaptain'] - $item['NetProfit'];
-             $item['paymentsToCaptain'] = $paymentsToCaptain;
-             $item['paymentsFromCaptain'] = $paymentsFromCaptain;
+             $item['paymentsToCaptain'] = $paymentsToCaptainFromCompany;
+             $item['paymentsFromCaptain'] = $paymentsFromCaptainToCompany;
 
              $response[] = $this->autoMapping->map('array', CaptainTotalFinancialAccountInMonthForAdminResponse::class,  $item);
             
@@ -338,19 +343,20 @@ class CaptainProfileService
 
         $item = $this->userManager->getCaptainAsArrayByCaptainId($captainId);
     
-        $sumPaymentsFromCompany = $this->captainPaymentService->getSumPaymentsFromCompanyInSpecificDate($captainId, $date[0], $date[1]);
-        $sumPaymentsToCompany = $this->captainPaymentService->getSumPaymentsToCompanyInSpecificDate($captainId, $date[0], $date[1]);
-        if( $sumPaymentsFromCompany[0]['sumPayments'] == null) { 
+        $sumPaymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanySumPaymentsToCaptainInSpecificDate($captainId, $date[0], $date[1]);
+        $sumPaymentsFromCaptainToCompany = $this->deliveryCompanyPaymentsFromCaptainService->deliveryCompanySumPaymentsFromCaptainInSpecificDate($captainId, $date[0], $date[1]);
+        if( $sumPaymentsToCaptainFromCompany[0]['sumPayments'] == null) { 
             $sumPaymentsFromCompany[0]['sumPayments'] = (float)0; 
              }
-        if( $sumPaymentsToCompany[0]['sumPayments'] == null) { 
-            $sumPaymentsToCompany[0]['sumPayments'] = (float)0; 
+        if( $sumPaymentsFromCaptainToCompany[0]['sumPayments'] == null) { 
+            $sumPaymentsFromCaptainToCompany[0]['sumPayments'] = (float)0; 
              }
 
         if ($item) {
             
              $countOrdersDelivered = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);           
-             $paymentsFromCompany = $this->captainPaymentService->getPaymentsFromCompanyInSpecificDate( $item[0]['captainID'] ,$date[0], $date[1]);     
+             $paymentsFromCompany = $this->captainPaymentService->getPaymentsFromCompanyInSpecificDate( $item[0]['captainID'] ,$date[0], $date[1]); 
+                 
 
              $sumKilometerBonus = $this->getOrderKilometersInThisMonth($captainId, $date[0], $date[1]);
              $item['kilometerBonus'] = $sumKilometerBonus;
@@ -360,8 +366,8 @@ class CaptainProfileService
              $item['deliveryCost'] = (float)$countOrdersDelivered[0]['deliveryCost'];
              $item['amountYouOwn'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
 
-             $item['sumPaymentsFromCompany'] = (float)$sumPaymentsFromCompany[0]['sumPayments'];
-             $item['sumPaymentsToCompany'] = (float)$sumPaymentsToCompany[0]['sumPayments'];
+             $item['sumPaymentsFromCompany'] = (float)$sumPaymentsToCaptainFromCompany[0]['sumPayments'];
+             $item['sumPaymentsToCompany'] = (float)$sumPaymentsFromCaptainToCompany[0]['sumPayments'];
              $item['remainingAmountForCompany'] = (float)$item['amountYouOwn'] - $item['sumPaymentsToCompany'];
              $item['bounce'] = $item[0]['bounce'] * $item['countOrdersDelivered'];
              $item['salary'] = $item[0]['salary'];
@@ -385,20 +391,21 @@ class CaptainProfileService
 
         $item = $this->userManager->getCaptainAsArrayByCaptainId($captainID);
     
-        $sumPaymentsToCaptain = $this->captainPaymentService->getSumPaymentsFromCompanyInSpecificDate($captainID, $date[0], $date[1]);
-        $sumPaymentsFromCaptain = $this->captainPaymentService->getSumPaymentsToCompanyInSpecificDate($captainID, $date[0], $date[1]);
-        if( $sumPaymentsToCaptain[0]['sumPayments'] == null) { 
-            $sumPaymentsToCaptain[0]['sumPayments'] = (float)0; 
+        // $sumPaymentsToCaptain = $this->captainPaymentService->getSumPaymentsFromCompanyInSpecificDate($captainID, $date[0], $date[1]);
+        $sumPaymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanySumPaymentsToCaptainInSpecificDate($captainID, $date[0], $date[1]);
+        $sumPaymentsFromCaptainToCompany = $this->deliveryCompanyPaymentsFromCaptainService->deliveryCompanySumPaymentsFromCaptainInSpecificDate($captainID, $date[0], $date[1]);
+        if( $sumPaymentsToCaptainFromCompany[0]['sumPayments'] == null) { 
+            $sumPaymentsToCaptainFromCompany[0]['sumPayments'] = (float)0; 
              }
-        if( $sumPaymentsFromCaptain[0]['sumPayments'] == null) { 
+        if( $sumPaymentsFromCaptainToCompany[0]['sumPayments'] == null) { 
             $sumPaymentsFromCaptain[0]['sumPayments'] = (float)0; 
              }
 
         if ($item) {
-             $countOrdersDelivered = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);          
-             $paymentsToCaptain = $this->captainPaymentService->getPaymentsFromCompanyInSpecificDate( $item[0]['captainID'] ,$date[0], $date[1]);     
-            
-             $paymentsFromCaptain = $this->captainPaymentService->getPaymentsToCompanyInSpecificDate( $item[0]['captainID'] ,$date[0], $date[1]);     
+             $countOrdersDelivered = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);
+             $paymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanyPaymentsToCaptainInSpecificDate($item[0]['captainID'] ,$date[0], $date[1]);
+
+             $paymentsFromCaptainToCompany = $this->deliveryCompanyPaymentsFromCaptainService->deliveryCompanyPaymentsFromCaptainInSpecificDate($item[0]['captainID'] ,$date[0], $date[1]);
 
              $sumKilometerBonus = $this->getOrderKilometersInThisMonth($captainID, $date[0], $date[1]);
              $item['kilometerBonus'] = $sumKilometerBonus;
@@ -408,8 +415,8 @@ class CaptainProfileService
              $item['deliveryCost'] = (float)$countOrdersDelivered[0]['deliveryCost'];
              $item['amountWithCaptain'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
 
-             $item['sumPaymentsToCaptain'] = (float)$sumPaymentsToCaptain[0]['sumPayments'];
-             $item['sumPaymentsFromCaptain'] = (float)$sumPaymentsFromCaptain[0]['sumPayments'];
+             $item['sumPaymentsToCaptain'] = (float)$sumPaymentsToCaptainFromCompany[0]['sumPayments'];
+             $item['sumPaymentsFromCaptain'] = (float)$sumPaymentsFromCaptainToCompany[0]['sumPayments'];
              $item['remainingAmountForCompany'] = (float)$item['amountWithCaptain'] - $item['sumPaymentsFromCaptain'];
              $item['bounce'] = $item[0]['bounce'] * $item['countOrdersDelivered'];
 
@@ -419,8 +426,8 @@ class CaptainProfileService
              // + Positive: the account is on the captain
              // - Negative: the account is for the captain
              $item['total'] =  $item['sumPaymentsToCaptain'] - $item['NetProfit'];
-             $item['paymentsToCaptain'] = $paymentsToCaptain;
-             $item['paymentsFromCaptain'] = $paymentsFromCaptain;
+             $item['paymentsToCaptain'] = $paymentsToCaptainFromCompany;
+             $item['paymentsFromCaptain'] = $paymentsFromCaptainToCompany;
 
              $response[] = $this->autoMapping->map('array', CaptainTotalFinancialAccountInMonthForAdminResponse::class,  $item);
             
@@ -436,13 +443,15 @@ class CaptainProfileService
 
         $item = $this->userManager->getCaptainAsArrayByCaptainId($captainId);
     
-        $sumPaymentsFromCompany = $this->captainPaymentService->getSumPaymentsFromCompanyInSpecificDate($captainId, $date[0], $date[1]);
-        $sumPaymentsToCompany = $this->captainPaymentService->getSumPaymentsToCompanyInSpecificDate($captainId, $date[0], $date[1]);
-        if( $sumPaymentsFromCompany[0]['sumPayments'] == null) { 
-            $sumPaymentsFromCompany[0]['sumPayments'] = (float)0; 
+        // $sumPaymentsFromCompany = $this->captainPaymentService->getSumPaymentsFromCompanyInSpecificDate($captainId, $date[0], $date[1]);
+        $sumPaymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanySumPaymentsToCaptainInSpecificDate($captainId, $date[0], $date[1]);
+        $sumPaymentsFromCaptainToCompany = $this->deliveryCompanyPaymentsFromCaptainService->deliveryCompanySumPaymentsFromCaptainInSpecificDate($captainId, $date[0], $date[1]);
+
+        if( $sumPaymentsToCaptainFromCompany[0]['sumPayments'] == null) { 
+            $sumPaymentsToCaptainFromCompany[0]['sumPayments'] = (float)0; 
              }
-        if( $sumPaymentsToCompany[0]['sumPayments'] == null) { 
-            $sumPaymentsToCompany[0]['sumPayments'] = (float)0; 
+        if( $sumPaymentsFromCaptainToCompany[0]['sumPayments'] == null) { 
+            $sumPaymentsFromCaptainToCompany[0]['sumPayments'] = (float)0; 
              }
 
         if ($item) {
@@ -458,8 +467,8 @@ class CaptainProfileService
              $item['deliveryCost'] = (float)$countOrdersDelivered[0]['deliveryCost'];
              $item['amountYouOwn'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
 
-             $item['sumPaymentsFromCompany'] = (float)$sumPaymentsFromCompany[0]['sumPayments'];
-             $item['sumPaymentsToCompany'] = (float)$sumPaymentsToCompany[0]['sumPayments'];
+             $item['sumPaymentsFromCompany'] = (float)$sumPaymentsToCaptainFromCompany[0]['sumPayments'];
+             $item['sumPaymentsToCompany'] = (float)$sumPaymentsFromCaptainToCompany[0]['sumPayments'];
              $item['remainingAmountForCompany'] = (float)$item['amountYouOwn'] - $item['sumPaymentsToCompany'];
              $item['bounce'] = $item[0]['bounce'] * $item['countOrdersDelivered'];
              $item['salary'] = $item[0]['salary'];
