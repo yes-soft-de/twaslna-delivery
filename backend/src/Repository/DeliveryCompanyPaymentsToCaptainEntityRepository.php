@@ -35,7 +35,7 @@ class DeliveryCompanyPaymentsToCaptainEntityRepository extends ServiceEntityRepo
     public function deliveryCompanySumPaymentsToCaptain($captainId)
     {
         return $this->createQueryBuilder('paymentsToCaptain')
-               ->select('sum(paymentsToCaptain.amount) as sumPaymentsToCompany')
+               ->select('sum(paymentsToCaptain.amount) as sumPaymentsFromCompany')
                ->andWhere('paymentsToCaptain.captainId = :captainId')
                ->setParameter('captainId', $captainId)
 
