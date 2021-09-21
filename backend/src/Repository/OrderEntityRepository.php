@@ -25,6 +25,9 @@ class OrderEntityRepository extends ServiceEntityRepository
     const ONGOING="ongoing";
     const CANCEL="cancelled";
     const DELIVERED="delivered";
+    const ON_WAY="on way to pick order";
+    const IN_STORE="in store";
+    const PICKED="picked";
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -119,8 +122,15 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('OrderEntity')
             ->select('count(OrderEntity.id) as count')
 
-            ->andWhere("OrderEntity.state = :ongoing ") 
+            ->where("OrderEntity.state = :on_way ")
+            ->orWhere("OrderEntity.state = :in_store ")
+            ->orWhere("OrderEntity.state = :picked ")
+            ->orWhere("OrderEntity.state = :ongoing ")
+            ->setParameter('on_way', self::ON_WAY)
+            ->setParameter('in_store', self::IN_STORE)
+            ->setParameter('picked', self::PICKED)
             ->setParameter('ongoing', self::ONGOING)
+
             ->getQuery()
             ->getOneOrNullResult();
     }
