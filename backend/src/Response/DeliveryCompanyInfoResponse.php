@@ -7,7 +7,7 @@ class DeliveryCompanyInfoResponse
     public $id;
     public $phone;
     public $phone2;
-    public $whatspp;
+    public $whatsapp;
     public $fax;
     public $bank;
     public $stc;
