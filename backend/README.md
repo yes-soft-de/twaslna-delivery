@@ -10,12 +10,6 @@ https://documenter.getpostman.com/view/11814853/Tzm5GwUe
 
     3: send order
 
-- in 'CaptainPaymentEntity' table we have 'paymentFromCompany' field of type boolean:
-
-    true  : Payment from Company to captain.
-
-    false : Payment to Company from captain.
-
 - RatingEntity for (/rating) route :
 itemID : The item you will rate.
 itemType : type of The item you will rate (captain or client or product or store).

@@ -19,7 +19,6 @@ use App\Response\CaptainTotalFinancialAccountInMonthForAdminResponse;
 use App\Response\CaptainCountOrdersDeliveredInTodayResponse;
 use App\Response\CaptainsWithUnfinishedPaymentsResponse;
 use App\Response\UserRegisterResponse ;
-use App\Service\CaptainPaymentService;
 use App\Service\DeliveryCompanyPaymentsFromCaptainService;
 use App\Service\DeliveryCompanyPaymentsToCaptainService;
 use App\Service\RoomIdHelperService;
@@ -37,18 +36,16 @@ class CaptainProfileService
     private $userManager;
     private $ratingService;
     private $params;
-    private $captainPaymentService;
     private $deliveryCompanyPaymentsFromCaptainService;
     private $deliveryCompanyPaymentsToCaptainService;
     private $roomIdHelperService;
     private $dateFactoryService;
     private $captainService;
 
-    public function __construct(AutoMapping $autoMapping, ParameterBagInterface $params, CaptainPaymentService $captainPaymentService, DeliveryCompanyPaymentsFromCaptainService $deliveryCompanyPaymentsFromCaptainService, DeliveryCompanyPaymentsToCaptainService $deliveryCompanyPaymentsToCaptainService,   RoomIdHelperService $roomIdHelperService, UserManager $userManager,
+    public function __construct(AutoMapping $autoMapping, ParameterBagInterface $params, DeliveryCompanyPaymentsFromCaptainService $deliveryCompanyPaymentsFromCaptainService, DeliveryCompanyPaymentsToCaptainService $deliveryCompanyPaymentsToCaptainService,   RoomIdHelperService $roomIdHelperService, UserManager $userManager,
       RatingService $ratingService, DateFactoryService $dateFactoryService, CaptainService $captainService)
     {
         $this->autoMapping = $autoMapping;
-        $this->captainPaymentService = $captainPaymentService;
         $this->roomIdHelperService = $roomIdHelperService;
         $this->userManager = $userManager;
         $this->ratingService = $ratingService;
@@ -391,7 +388,6 @@ class CaptainProfileService
 
         $item = $this->userManager->getCaptainAsArrayByCaptainId($captainID);
     
-        // $sumPaymentsToCaptain = $this->captainPaymentService->getSumPaymentsFromCompanyInSpecificDate($captainID, $date[0], $date[1]);
         $sumPaymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanySumPaymentsToCaptainInSpecificDate($captainID, $date[0], $date[1]);
         $sumPaymentsFromCaptainToCompany = $this->deliveryCompanyPaymentsFromCaptainService->deliveryCompanySumPaymentsFromCaptainInSpecificDate($captainID, $date[0], $date[1]);
         if( $sumPaymentsToCaptainFromCompany[0]['sumPayments'] == null) { 
@@ -443,7 +439,6 @@ class CaptainProfileService
 
         $item = $this->userManager->getCaptainAsArrayByCaptainId($captainId);
     
-        // $sumPaymentsFromCompany = $this->captainPaymentService->getSumPaymentsFromCompanyInSpecificDate($captainId, $date[0], $date[1]);
         $sumPaymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanySumPaymentsToCaptainInSpecificDate($captainId, $date[0], $date[1]);
         $sumPaymentsFromCaptainToCompany = $this->deliveryCompanyPaymentsFromCaptainService->deliveryCompanySumPaymentsFromCaptainInSpecificDate($captainId, $date[0], $date[1]);
 
