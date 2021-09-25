@@ -337,7 +337,8 @@ class UserManager
 
         if ($item) {
             $item = $this->autoMapping->mapToObject(StoreOwnerUpdateByAdminRequest::class, StoreOwnerProfileEntity::class, $request, $item);
-
+            $item->setOpeningTime( $request->getOpeningTime());
+            $item->setClosingTime( $request->getClosingTime());
             $this->entityManager->flush();
             $this->entityManager->clear();
 

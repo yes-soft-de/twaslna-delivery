@@ -40,14 +40,15 @@ class DeliveryCompanyProfileManager
         }
     }
 
-    public function updateCompanyInfo(DeliveryCompanyInfoUpdateRequest $request)
+    public function updateCompanyInfo(DeliveryCompanyInfoRequest $request)
     {
-        $entity = $this->deliveryCompanyProfileEntityRepository->find($request->getId());
-
+        // $entity = $this->deliveryCompanyProfileEntityRepository->find($request->getId());
+        $profile = $this->getcompanyinfoAll();
+        $entity = $this->deliveryCompanyProfileEntityRepository->find($profile[0]['id']);
         if (!$entity) {
             return null;
         }
-        $entity = $this->autoMapping->mapToObject(DeliveryCompanyInfoUpdateRequest::class, DeliveryCompanyProfileEntity::class, $request, $entity);
+        $entity = $this->autoMapping->mapToObject(DeliveryCompanyInfoRequest::class, DeliveryCompanyProfileEntity::class, $request, $entity);
 
         $this->entityManager->flush();
 

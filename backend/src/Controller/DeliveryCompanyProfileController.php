@@ -56,7 +56,7 @@ class DeliveryCompanyProfileController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(\stdClass::class, DeliveryCompanyInfoUpdateRequest::class, (object) $data);
+        $request = $this->autoMapping->map(\stdClass::class, DeliveryCompanyInfoRequest::class, (object) $data);
 
         $violations = $this->validator->validate($request);
 
