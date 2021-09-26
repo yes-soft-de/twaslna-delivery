@@ -19,6 +19,7 @@ use App\Response\CaptainTotalFinancialAccountInMonthForAdminResponse;
 use App\Response\CaptainCountOrdersDeliveredInTodayResponse;
 use App\Response\CaptainsWithUnfinishedPaymentsResponse;
 use App\Response\UserRegisterResponse ;
+use App\Response\CaptainProfileFilterResponse ;
 use App\Service\DeliveryCompanyPaymentsFromCaptainService;
 use App\Service\DeliveryCompanyPaymentsToCaptainService;
 use App\Service\RoomIdHelperService;
@@ -564,5 +565,17 @@ class CaptainProfileService
 
    public function countCaptains() {
     return $this->userManager->countCaptains();
+   }
+
+   public function captainFilter($name)
+   {
+       $response = [];
+
+       $captains = $this->userManager->captainFilter($name);
+       foreach ($captains as $captain)
+           {
+               $response['stores'][]= $this->autoMapping->map('array', CaptainProfileFilterResponse::class, $captain);
+           }
+       return $response;
    }
 }

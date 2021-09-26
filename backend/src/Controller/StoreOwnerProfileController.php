@@ -204,4 +204,15 @@ class StoreOwnerProfileController extends BaseController
 
         return $this->response($response, self::FETCH);
     }
+
+    /**
+     * @Route("/storeFilter/{name}", name="getStoresByName", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function getStoresByName($name)
+    {
+        $result = $this->storeOwnerProfileService->getStoresByName($name);
+
+        return $this->response($result, self::FETCH);
+    }
 }

@@ -37,4 +37,8 @@ class StoreOwnerProfileCreateResponse
     public $openingTime;
 
     public $closingTime;
+    
+    public $storeCategoryId;
+
+    public $storeCategoryName;
 }

@@ -287,4 +287,17 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getOneOrNullResult();
     }
+
+    public function captainFilter($name)
+    {
+        return $this->createQueryBuilder('captainProfileEntity')
+        ->select('captainProfileEntity.id','captainProfileEntity.captainID','captainProfileEntity.captainName', 'captainProfileEntity.image',)
+
+            ->andWhere('captainProfileEntity.captainName LIKE :name')
+
+            ->setParameter('name', '%'.$name.'%')
+            ->setMaxResults(20)
+            ->getQuery()
+            ->getResult();
+    }
 }
