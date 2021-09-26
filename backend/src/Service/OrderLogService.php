@@ -7,6 +7,7 @@ use App\Entity\OrderLogEntity;
 use App\Manager\OrderLogManager;
 use App\Response\OrderLogResponse;
 use App\Response\OrderLogCaptainResponse;
+use App\Response\OrderLogsForAdminResponse;
 use App\Service\DateFactoryService;
 
 
@@ -67,6 +68,28 @@ class OrderLogService
             $response['log'] = $log ;
             }
         return  $response;
+    }
+
+    public function orderLogsByCaptainId($captainId)
+    {
+        $response=[];
+        $items = $this->orderLogManager->orderLogsByCaptainId($captainId);
+   
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', OrderLogsForAdminResponse::class, $item);
+        }
+        return $response;
+    }
+
+    public function orderLogsByStoreProfileId($storeProfileId)
+    {
+        $response=[];
+        $items = $this->orderLogManager->orderLogsByStoreProfileId($storeProfileId);
+   
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', OrderLogsForAdminResponse::class, $item);
+        }
+        return $response;
     }
 
     public function getFirstDate($orderNumber)

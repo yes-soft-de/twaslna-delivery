@@ -42,6 +42,16 @@ class OrderLogManager
         return $this->orderLogEntityRepository->getOrderLogsByOrderNumber($orderNumber);
     }
 
+    public function orderLogsByCaptainId($captainId)
+    {
+        return $this->orderLogEntityRepository->orderLogsByCaptainId($captainId);
+    }
+
+    public function orderLogsByStoreProfileId($storeProfileId)
+    {
+        return $this->orderLogEntityRepository->orderLogsByStoreProfileId($storeProfileId);
+    }
+
     public function getFirstDate($orderNumber)
     {
         return $this->orderLogEntityRepository->getFirstDate($orderNumber);

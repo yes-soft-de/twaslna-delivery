@@ -43,6 +43,29 @@ class OrderLogController extends BaseController
           return $this->response($result, self::FETCH);
       }
 
+    /**
+      * @Route("/orderLogsByCaptainId/{captainId}", name="getOrderLogsByCaptainId", methods={"GET"})
+      * @param Request $request
+      * @return JsonResponse
+      */
+      public function orderLogsByCaptainId($captainId)
+      {
+          $result = $this->orderLogService->orderLogsByCaptainId($captainId);
+  
+          return $this->response($result, self::FETCH);
+      }
+    /**
+      * @Route("/orderLogsByStoreProfileId/{storeProfileId}", name="getOrderLogsByStoreProfileId", methods={"GET"})
+      * @param Request $request
+      * @return JsonResponse
+      */
+      public function orderLogsByStoreProfileId($storeProfileId)
+      {
+          $result = $this->orderLogService->orderLogsByStoreProfileId($storeProfileId);
+  
+          return $this->response($result, self::FETCH);
+      }
+
      /**
       * @Route("/orderLogs", name="GetLogsByUserId", methods={"GET"})
       * @param Request $request

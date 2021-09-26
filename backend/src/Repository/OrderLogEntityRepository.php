@@ -44,6 +44,30 @@ class OrderLogEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
     
+    public function orderLogsByCaptainId($captainId)
+    {
+        return $this->createQueryBuilder('OrderLogEntity')
+            ->select('OrderLogEntity.id, OrderLogEntity.orderNumber')
+            
+            ->andWhere("OrderLogEntity.userID =:userID")
+            ->setParameter('userID', $captainId)
+            ->groupBy('OrderLogEntity.orderNumber')
+            ->getQuery()
+            ->getResult();
+    }
+    
+    public function orderLogsByStoreProfileId($storeProfileId)
+    {
+        return $this->createQueryBuilder('OrderLogEntity')
+            ->select('OrderLogEntity.id, OrderLogEntity.orderNumber')
+            
+            ->andWhere("OrderLogEntity.storeOwnerProfileID =:storeProfileId")
+            ->setParameter('storeProfileId', $storeProfileId)
+            ->groupBy('OrderLogEntity.orderNumber')
+            ->getQuery()
+            ->getResult();
+    }
+    
     public function getFirstDate($orderNumber)
     {
         return $this->createQueryBuilder('OrderLogEntity')
