@@ -23,4 +23,8 @@ class StoreOwnerByCategoryIdResponse
     public $storeCategoryId;
     
     public $rating;
+
+    public $closingTime;
+
+    public $openingTime;
 }

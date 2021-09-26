@@ -24,7 +24,6 @@ class OrderLogManager
     public function createOrderLog($log)
     {
         $orderLogEntity = $this->autoMapping->map('array', OrderLogEntity::class, $log);
-        // $orderLogEntity->setCreatedAt($orderLogEntity->getCreatedAt());
         
         $this->entityManager->persist($orderLogEntity);
         $this->entityManager->flush();
@@ -41,6 +40,16 @@ class OrderLogManager
     public function getOrderLogsByOrderNumber($orderNumber)
     {
         return $this->orderLogEntityRepository->getOrderLogsByOrderNumber($orderNumber);
+    }
+
+    public function orderLogsByCaptainId($captainId)
+    {
+        return $this->orderLogEntityRepository->orderLogsByCaptainId($captainId);
+    }
+
+    public function orderLogsByStoreProfileId($storeProfileId)
+    {
+        return $this->orderLogEntityRepository->orderLogsByStoreProfileId($storeProfileId);
     }
 
     public function getFirstDate($orderNumber)

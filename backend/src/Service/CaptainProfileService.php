@@ -19,6 +19,7 @@ use App\Response\CaptainTotalFinancialAccountInMonthForAdminResponse;
 use App\Response\CaptainCountOrdersDeliveredInTodayResponse;
 use App\Response\CaptainsWithUnfinishedPaymentsResponse;
 use App\Response\UserRegisterResponse ;
+use App\Response\CaptainProfileFilterResponse ;
 use App\Service\DeliveryCompanyPaymentsFromCaptainService;
 use App\Service\DeliveryCompanyPaymentsToCaptainService;
 use App\Service\RoomIdHelperService;
@@ -352,8 +353,7 @@ class CaptainProfileService
         if ($item) {
             
              $countOrdersDelivered = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);           
-             $paymentsFromCompany = $this->captainPaymentService->getPaymentsFromCompanyInSpecificDate( $item[0]['captainID'] ,$date[0], $date[1]); 
-                 
+             $paymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanyPaymentsToCaptainInSpecificDate( $item[0]['captainID'] ,$date[0], $date[1]); 
 
              $sumKilometerBonus = $this->getOrderKilometersInThisMonth($captainId, $date[0], $date[1]);
              $item['kilometerBonus'] = $sumKilometerBonus;
@@ -370,7 +370,7 @@ class CaptainProfileService
              $item['salary'] = $item[0]['salary'];
              $item['NetProfit'] = $item['bounce'] + $item[0]['salary'] + $item['kilometerBonus'];;
              $item['total'] = $item['NetProfit'] - $item['sumPaymentsFromCompany'];
-             $item['paymentsFromCompany'] = $paymentsFromCompany;
+             $item['paymentsFromCompany'] = $paymentsToCaptainFromCompany;
 
              $response[] = $this->autoMapping->map('array', CaptainTotalFinancialAccountInMonthResponse::class,  $item);
             
@@ -565,5 +565,17 @@ class CaptainProfileService
 
    public function countCaptains() {
     return $this->userManager->countCaptains();
+   }
+
+   public function captainFilter($name)
+   {
+       $response = [];
+
+       $captains = $this->userManager->captainFilter($name);
+       foreach ($captains as $captain)
+           {
+               $response['stores'][]= $this->autoMapping->map('array', CaptainProfileFilterResponse::class, $captain);
+           }
+       return $response;
    }
 }

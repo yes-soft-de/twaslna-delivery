@@ -9,4 +9,6 @@ class DeliveryCompanyPaymentsToCaptainCreateRequest
     private $amount;
     
     private $date;
+
+    private $note;
 }

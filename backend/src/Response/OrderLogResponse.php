@@ -17,4 +17,6 @@ class OrderLogResponse
     public $completionTime;
 
     public $currentStage;
+    
+    public $storeOwnerProfileID;
 }

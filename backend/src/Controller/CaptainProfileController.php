@@ -327,4 +327,15 @@ class CaptainProfileController extends BaseController
 
         return $this->response($response, self::FETCH);
     }
+
+    /**
+     * @Route("/captainFilter/{name}", name="getCaptainsByName", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function captainFilter($name)
+    {
+        $result = $this->captainProfileService->captainFilter($name);
+
+        return $this->response($result, self::FETCH);
+    }
 }

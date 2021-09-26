@@ -221,7 +221,7 @@ class OrderService
             $request->setId($orderDetails[0]->orderID);
             $item = $this->orderManager->orderUpdateStateByCaptain($request);
 
-            $this->orderLogService->createOrderLog($request->getOrderNumber(), $item->getState(), $request->getCaptainID());
+            $this->orderLogService->createOrderLog($request->getOrderNumber(), $item->getState(), $request->getCaptainID(), $item->getStoreOwnerProfileID());
             //create notification local
             $state ="";
             if ($request->getState() == "on way to pick order"){
@@ -438,7 +438,7 @@ class OrderService
                $orderDetail = $this->orderDetailService->createOrderDetail($item->getId(), $productID, $countProduct, $orderNumber);
             }
             //create log
-            $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID());
+            $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID(), $request->getStoreOwnerProfileID());
             //create notification local
             $this->notificationLocalService->createNotificationLocal($request->getClientID(), NotificationLocalConstant::$NEW_ORDER_TITLE, NotificationLocalConstant::$CREATE_ORDER_SUCCESS, $orderNumber);
             $response = $this->autoMapping->map(OrderEntity::class, OrderCreateClientResponse::class, $item);
@@ -483,7 +483,7 @@ class OrderService
         if ($item) {
             $orderDetail = $this->orderDetailService->createOrderDetail($item->getId(), null, null, $orderNumber);
             //create log
-            $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID());
+            $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID(), $request->getStoreOwnerProfileID());
             //create notification local
             $this->notificationLocalService->createNotificationLocal($request->getClientID(), NotificationLocalConstant::$NEW_ORDER_TITLE, NotificationLocalConstant::$CREATE_ORDER_SUCCESS, $orderNumber);
             $response = $this->autoMapping->map(OrderEntity::class, OrderClientSendCreateResponse::class, $item);
@@ -651,7 +651,7 @@ class OrderService
             else {
                 $item = $this->orderManager->orderCancel($orderDetails[0]->orderID);
                 if($item) {
-                    $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $userID);
+                    $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $userID, $item->getStoreOwnerProfileID());
                     //notification local
                     $this->notificationLocalService->createNotificationLocal($userID, NotificationLocalConstant::$CANCEL_ORDER_TITLE, NotificationLocalConstant::$CANCEL_ORDER_SUCCESS, $orderNumber);
                 }

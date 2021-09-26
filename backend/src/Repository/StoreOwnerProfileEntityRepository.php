@@ -7,6 +7,7 @@ use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainProfileEntity;
 use App\Entity\DeliveryCompanyFinancialEntity;
+use App\Entity\StoreCategoryEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
@@ -27,7 +28,10 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
      public function getStoreOwnerProfileByID($id)
     {
         return $this->createQueryBuilder('profile')
-            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.story', 'profile.free', 'profile.status', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts', 'profile.openingTime', 'profile.closingTime')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.story', 'profile.free', 'profile.status', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts', 'profile.openingTime', 'profile.closingTime', 'profile.storeCategoryId')
+            ->addSelect('storeCategoryEntity.storeCategoryName')
+            ->leftJoin(StoreCategoryEntity::class, 'storeCategoryEntity', Join::WITH, 'storeCategoryEntity.id = profile.storeCategoryId ')
+            
             ->andWhere('profile.id = :id')
 
             ->setParameter('id', $id)
@@ -105,7 +109,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('profile')
 
-            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts', 'profile.openingTime', 'profile.closingTime')
             ->addSelect('StoreOwnerBranchEntity.location')
             ->addSelect('DeliveryCompanyFinancialEntity.deliveryCost', 'profile.storeCategoryId')
 
