@@ -23,11 +23,12 @@ class OrderLogService
         $this->dateFactoryService = $dateFactoryService;
     }
 
-    public function createOrderLog($orderNumber, $state, $userID)
+    public function createOrderLog($orderNumber, $state, $userID, $storeOwnerProfileID)
     {
         $item['orderNumber'] = $orderNumber;
         $item['state'] = $state;
         $item['userID'] = $userID;
+        $item['storeOwnerProfileID'] = $storeOwnerProfileID;
         
         $result = $this->orderLogManager->createOrderLog($item);
 

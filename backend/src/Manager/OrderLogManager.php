@@ -24,7 +24,6 @@ class OrderLogManager
     public function createOrderLog($log)
     {
         $orderLogEntity = $this->autoMapping->map('array', OrderLogEntity::class, $log);
-        // $orderLogEntity->setCreatedAt($orderLogEntity->getCreatedAt());
         
         $this->entityManager->persist($orderLogEntity);
         $this->entityManager->flush();

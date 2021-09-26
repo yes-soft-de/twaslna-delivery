@@ -98,4 +98,16 @@ class OrderClientSpecialCreateRequest
 
         return $this;
     }
+
+    public function getStoreOwnerProfileID()
+    {
+        return $this->storeOwnerProfileID;
+    }
+ 
+    public function setStoreOwnerProfileID($storeOwnerProfileID)
+    {
+        $this->storeOwnerProfileID = $storeOwnerProfileID;
+
+        return $this;
+    }
 }
