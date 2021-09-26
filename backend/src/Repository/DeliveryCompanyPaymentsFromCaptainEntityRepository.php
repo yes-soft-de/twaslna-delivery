@@ -22,7 +22,7 @@ class DeliveryCompanyPaymentsFromCaptainEntityRepository extends ServiceEntityRe
     public function  deliveryCompanyPaymentsFromCaptain($captainId)
     {
         return $this->createQueryBuilder('paymentsFromCaptain')
-               ->select('paymentsFromCaptain.id, paymentsFromCaptain.captainId, paymentsFromCaptain.amount, paymentsFromCaptain.date')
+               ->select('paymentsFromCaptain.id, paymentsFromCaptain.captainId, paymentsFromCaptain.amount, paymentsFromCaptain.date, paymentsFromCaptain.note')
 
                ->andWhere('paymentsFromCaptain.captainId = :captainId')
                
@@ -62,7 +62,7 @@ class DeliveryCompanyPaymentsFromCaptainEntityRepository extends ServiceEntityRe
     public function deliveryCompanyPaymentsFromCaptainInSpecificDate($captainId, $fromDate, $toDate)
     {
         return $this->createQueryBuilder('paymentsFromCaptain')
-               ->select('paymentsFromCaptain.id, paymentsFromCaptain.captainId, paymentsFromCaptain.amount, paymentsFromCaptain.date')
+               ->select('paymentsFromCaptain.id, paymentsFromCaptain.captainId, paymentsFromCaptain.amount, paymentsFromCaptain.date, paymentsFromCaptain.note')
 
                ->where('paymentsFromCaptain.captainId = :captainId')
                ->andWhere('paymentsFromCaptain.date >= :fromDate')
