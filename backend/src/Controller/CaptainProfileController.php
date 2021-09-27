@@ -203,13 +203,25 @@ class CaptainProfileController extends BaseController
     }
 
      /**
-     * @Route("/captainsUnfinishedPayments", name="getCaptainsWithUnfinishedPayments",methods={"GET"})
+     * @Route("/captainsRemainingForItAmount", name="captainsRemainingForItAmount",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
-    public function getCaptainsWithUnfinishedPayments()
+    public function captainsRemainingForItAmount()
     {
-        $response = $this->captainProfileService->getCaptainsWithUnfinishedPayments();
+        $response = $this->captainProfileService->captainsRemainingForItAmount();
+
+        return $this->response($response, self::FETCH);
+    }
+
+     /**
+     * @Route("/captainsRemainingOnItAmount ", name="captainsRemainingOnItAmount",methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
+     */
+    public function captainsRemainingOnItAmount()
+    {
+        $response = $this->captainProfileService->captainsRemainingOnItAmount();
 
         return $this->response($response, self::FETCH);
     }
