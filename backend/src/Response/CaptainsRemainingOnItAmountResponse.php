@@ -2,7 +2,7 @@
 
 namespace App\Response;
 
-class CaptainsWithUnfinishedPaymentsResponse
+class CaptainsRemainingOnItAmountResponse
 {
     public $id;
 
@@ -16,6 +16,6 @@ class CaptainsWithUnfinishedPaymentsResponse
     
     public $phone;
 
-    public $remainingAmountForCaptain;
+    public $remainingAmountForCompany;
 
 }

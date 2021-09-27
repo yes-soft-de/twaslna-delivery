@@ -17,9 +17,10 @@ use App\Response\CaptainFinancialAccountDetailsForAdminResponse;
 use App\Response\CaptainTotalFinancialAccountInMonthResponse;
 use App\Response\CaptainTotalFinancialAccountInMonthForAdminResponse;
 use App\Response\CaptainCountOrdersDeliveredInTodayResponse;
-use App\Response\CaptainsWithUnfinishedPaymentsResponse;
+use App\Response\CaptainsRemainingForItAmountResponse;
 use App\Response\UserRegisterResponse ;
 use App\Response\CaptainProfileFilterResponse ;
+use App\Response\CaptainsRemainingOnItAmountResponse ;
 use App\Service\DeliveryCompanyPaymentsFromCaptainService;
 use App\Service\DeliveryCompanyPaymentsToCaptainService;
 use App\Service\RoomIdHelperService;
@@ -513,19 +514,36 @@ class CaptainProfileService
         }
     }
 
-    public function getCaptainsWithUnfinishedPayments()
+    public function captainsRemainingForItAmount()
     {
         $response = [];
         $captains = $this->userManager->getAllCaptains();
      
         foreach ($captains as $captain) {
-                 $totalBounce = $this->getCaptainFinancialAccountDetailsByCaptainIdForAdmin($captain['captainID']);
+                 $financialAccount = $this->getCaptainFinancialAccountDetailsByCaptainIdForAdmin($captain['captainID']);
 
-                 $total=$totalBounce[0]->total;
+                 $total=$financialAccount[0]->total;
                  $captain['remainingAmountForCaptain'] = $total;
 
                 if ($captain['remainingAmountForCaptain'] < 0 ){
-                $response[] =  $this->autoMapping->map('array', CaptainsWithUnfinishedPaymentsResponse::class, $captain);
+                    $response[] =  $this->autoMapping->map('array', CaptainsRemainingForItAmountResponse::class, $captain);
+                }
+        } 
+        return $response;
+    }
+
+    public function captainsRemainingOnItAmount()
+    {
+        $response = [];
+        $captains = $this->userManager->getAllCaptains();
+     
+        foreach ($captains as $captain) {
+                 $financialAccount = $this->getCaptainFinancialAccountDetailsByCaptainIdForAdmin($captain['captainID']);
+                 $remainingAmountOnCaptain =$financialAccount[0]->remainingAmountForCompany;
+                 $captain['remainingAmountForCompany'] = $remainingAmountOnCaptain;
+
+                if ($captain['remainingAmountForCompany'] > 0 ){
+                    $response[] =  $this->autoMapping->map('array', CaptainsRemainingOnItAmountResponse::class, $captain);
                 }
         } 
         return $response;
