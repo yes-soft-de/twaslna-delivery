@@ -693,7 +693,7 @@ class OrderService
             $request->setId($orderDetails[0]->orderID);
             $item = $this->orderManager->orderUpdateInvoiceByCaptain($request);
             
-            $this->orderLogService->createOrderLog($request->getOrderNumber(), $item->getState(), $request->getCaptainID());
+            $this->orderLogService->createOrderLog($request->getOrderNumber(), $item->getState(), $request->getCaptainID(), $item->getStoreOwnerProfileID());
 
             $response = $this->autoMapping->map(OrderEntity::class, OrderUpdateInvoiceByCaptainResponse::class, $item);
       
