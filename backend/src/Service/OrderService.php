@@ -221,7 +221,17 @@ class OrderService
             $request->setId($orderDetails[0]->orderID);
             $item = $this->orderManager->orderUpdateStateByCaptain($request);
 
-            $this->orderLogService->createOrderLog($request->getOrderNumber(), $item->getState(), $request->getCaptainID(), $item->getStoreOwnerProfileID());
+            //----> start create log
+            // if order type is product order or special order
+            if ($item->getOrderType() == 1 ||  $item->getOrderType() == 2) {
+                $this->orderLogService->createOrderLog($request->getOrderNumber(), $item->getState(), $request->getCaptainID(), $item->getStoreOwnerProfileID());
+            }
+            // if order type is send order
+            if ($item->getOrderType() == 3) {
+                $this->orderLogService->createOrderLog($request->getOrderNumber(), $item->getState(), $request->getCaptainID());
+            }
+            //----> end create log
+
             //create notification local
             $state ="";
             if ($request->getState() == "on way to pick order"){
@@ -651,7 +661,15 @@ class OrderService
             else {
                 $item = $this->orderManager->orderCancel($orderDetails[0]->orderID);
                 if($item) {
-                    $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $userID, $item->getStoreOwnerProfileID());
+                    //----> start create log
+                    // if order type is product order or special order
+                    if ($item->getOrderType() == 1 ||  $item->getOrderType() == 2) {
+                        $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $userID, $item->getStoreOwnerProfileID());
+                    }
+                    //----> if order type is send order
+                    if ($item->getOrderType() == 3) {
+                        $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $userID);
+                    }
                     //notification local
                     $this->notificationLocalService->createNotificationLocal($userID, NotificationLocalConstant::$CANCEL_ORDER_TITLE, NotificationLocalConstant::$CANCEL_ORDER_SUCCESS, $orderNumber);
                 }
@@ -692,11 +710,7 @@ class OrderService
         if($orderDetails){
             $request->setId($orderDetails[0]->orderID);
             $item = $this->orderManager->orderUpdateInvoiceByCaptain($request);
-            
-            $this->orderLogService->createOrderLog($request->getOrderNumber(), $item->getState(), $request->getCaptainID());
-
             $response = $this->autoMapping->map(OrderEntity::class, OrderUpdateInvoiceByCaptainResponse::class, $item);
-      
        }
         return $response;
     }
