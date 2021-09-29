@@ -260,8 +260,28 @@ class OrderEntityRepository extends ServiceEntityRepository
           ->setParameter('ownerId', $ownerId)
           ->setParameter('cancelled', self::CANCEL)
           ->getQuery()
-          ->getResult();
-       
+          ->getResult(); 
+    }
+
+    public function getOrdersInSpecificDate($fromDate, $toDate)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+
+          ->select('OrderEntity.id')
+          ->addSelect('OrderDetailEntity.orderNumber')
+
+           ->leftJoin(OrderDetailEntity::class, 'OrderDetailEntity', Join::WITH, 'OrderDetailEntity.orderID = OrderEntity.id')
+
+          ->where('OrderEntity.createdAt >= :fromDate')
+          ->andWhere('OrderEntity.createdAt < :toDate')
+          ->andWhere("OrderEntity.state != :cancelled")
+
+          ->setParameter('fromDate', $fromDate)
+          ->setParameter('toDate', $toDate)
+          ->setParameter('cancelled', self::CANCEL)
+          ->addGroupBy('OrderEntity.id')
+          ->getQuery()
+          ->getResult(); 
     }
 
     public function getTopOwners($fromDate, $toDate)
@@ -311,6 +331,24 @@ class OrderEntityRepository extends ServiceEntityRepository
           ->addOrderBy('countOrdersInDay','DESC')
 
           ->setParameter('ownerID', $ownerID)
+          ->setParameter('fromDate', $fromDate)
+          ->setParameter('toDate', $toDate)
+          ->setParameter('cancelled', self::CANCEL)
+          
+          ->getQuery()
+          ->getResult();
+    }
+
+    public function countOrdersInToday($fromDate, $toDate)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+
+          ->select('count(OrderEntity.id) as count')
+        
+          ->andWhere("OrderEntity.state != :cancelled")
+          ->andWhere('OrderEntity.createdAt >= :fromDate')
+          ->andWhere('OrderEntity.createdAt < :toDate')
+
           ->setParameter('fromDate', $fromDate)
           ->setParameter('toDate', $toDate)
           ->setParameter('cancelled', self::CANCEL)
