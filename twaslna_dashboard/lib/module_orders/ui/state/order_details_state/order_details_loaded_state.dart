@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:twaslna_dashboard/module_orders/ui/widget/invoice.dart';
 import 'package:twaslna_dashboard/module_orders/ui/widget/order_details/bill.dart';
 import 'package:twaslna_dashboard/module_orders/ui/widget/order_details/order_chip.dart';
+import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
 import 'package:twaslna_dashboard/utils/components/progresive_image.dart';
 import 'package:twaslna_dashboard/utils/effect/hidder.dart';
 import 'package:twaslna_dashboard/utils/helpers/order_status_helper.dart';
@@ -24,7 +25,7 @@ class OrderDetailsLoadedState extends OrderDetailsState {
   Widget getUI(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    return ListView(
+    return FixedContainer(child: ListView(
       physics: BouncingScrollPhysics(
           parent: AlwaysScrollableScrollPhysics()),
       children: [
@@ -50,12 +51,12 @@ class OrderDetailsLoadedState extends OrderDetailsState {
           ),
         ),
         Hider(
-             active:orderDetails.order.invoiceImage != null && orderDetails.order.invoiceAmount != null,
-             child: CustomInvoiceAlert(
-          image:orderDetails.order.invoiceImage.toString(),
-          cost: orderDetails.order.invoiceAmount.toString(),
+          active:orderDetails.order.invoiceImage != null && orderDetails.order.invoiceAmount != null,
+          child: CustomInvoiceAlert(
+            image:orderDetails.order.invoiceImage.toString(),
+            cost: orderDetails.order.invoiceAmount.toString(),
+          ),
         ),
-           ),
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: Container(
@@ -125,7 +126,7 @@ class OrderDetailsLoadedState extends OrderDetailsState {
           height: 35,
         ),
       ],
-    );
+    ),);
   }
 
   Widget getOrderTypeWidget(int orderType) {

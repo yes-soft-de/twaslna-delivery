@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:simple_moment/simple_moment.dart';
+import 'package:intl/intl.dart';
 import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/module_orders/model/order_model.dart';
 import 'package:twaslna_dashboard/module_orders/ui/screen/my_orders_screen.dart';
-import 'package:twaslna_dashboard/module_orders/ui/state/my_orders/my_orders_state.dart';
 import 'package:twaslna_dashboard/module_orders/ui/widget/my_orders/order_card.dart';
+import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
 
 class MyOrdersLoadedState extends States {
   OrdersScreenState screenState;
@@ -17,7 +17,7 @@ class MyOrdersLoadedState extends States {
       onRefresh: (){
         return screenState.getOrders();
       },
-      child: ListView(
+      child:FixedContainer(child: ListView(
         physics:
         BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         children: [
@@ -33,7 +33,7 @@ class MyOrdersLoadedState extends States {
             height: 75,
           ),
         ],
-      ),
+      )),
     );
   }
 
@@ -45,7 +45,7 @@ class MyOrdersLoadedState extends States {
         orderId: element.orderId,
         orderCost: element.orderCost.toString(),
         orderStatus: element.orderStatus,
-        orderDate:Moment.fromDate(element.dateTime).fromNow(),
+        orderDate:DateFormat.jm().format(element.dateTime) + '   ' + DateFormat.yMd().format(element.dateTime),
       ));
     });
     return ordersCard;
