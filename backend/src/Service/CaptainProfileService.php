@@ -432,6 +432,56 @@ class CaptainProfileService
         return $response;
     }
 
+    public function captainFinancialAccountInSpecificDateForAdmin($captainID, $fromDate, $toDate):array
+    {
+        $response = [];
+        $date = $this->dateFactoryService->returnSpecificDate($fromDate, $toDate);
+
+        $item = $this->userManager->getCaptainAsArrayByCaptainId($captainID);
+    
+        $sumPaymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanySumPaymentsToCaptainInSpecificDate($captainID, $date[0], $date[1]);
+        $sumPaymentsFromCaptainToCompany = $this->deliveryCompanyPaymentsFromCaptainService->deliveryCompanySumPaymentsFromCaptainInSpecificDate($captainID, $date[0], $date[1]);
+        if( $sumPaymentsToCaptainFromCompany[0]['sumPayments'] == null) { 
+            $sumPaymentsToCaptainFromCompany[0]['sumPayments'] = (float)0; 
+             }
+        if( $sumPaymentsFromCaptainToCompany[0]['sumPayments'] == null) { 
+            $sumPaymentsFromCaptain[0]['sumPayments'] = (float)0; 
+             }
+
+        if ($item) {
+             $countOrdersDelivered = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);
+             $paymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanyPaymentsToCaptainInSpecificDate($item[0]['captainID'] ,$date[0], $date[1]);
+
+             $paymentsFromCaptainToCompany = $this->deliveryCompanyPaymentsFromCaptainService->deliveryCompanyPaymentsFromCaptainInSpecificDate($item[0]['captainID'] ,$date[0], $date[1]);
+
+             $sumKilometerBonus = $this->getOrderKilometersInThisMonth($captainID, $date[0], $date[1]);
+             $item['kilometerBonus'] = $sumKilometerBonus;
+
+             $item['countOrdersDelivered'] = (float)$countOrdersDelivered[0]['countOrdersInMonth'];
+             $item['sumInvoiceAmount'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'];
+             $item['deliveryCost'] = (float)$countOrdersDelivered[0]['deliveryCost'];
+             $item['amountWithCaptain'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
+
+             $item['sumPaymentsToCaptain'] = (float)$sumPaymentsToCaptainFromCompany[0]['sumPayments'];
+             $item['sumPaymentsFromCaptain'] = (float)$sumPaymentsFromCaptainToCompany[0]['sumPayments'];
+             $item['remainingAmountForCompany'] = (float)$item['amountWithCaptain'] - $item['sumPaymentsFromCaptain'];
+             $item['bounce'] = $item[0]['bounce'] * $item['countOrdersDelivered'];
+
+             $item['salary'] = $item[0]['salary'];
+            
+             $item['NetProfit'] = $item['bounce'] + $item[0]['salary'] + $item['kilometerBonus'];
+             // + Positive: the account is on the captain
+             // - Negative: the account is for the captain
+             $item['total'] =  $item['sumPaymentsToCaptain'] - $item['NetProfit'];
+             $item['paymentsToCaptain'] = $paymentsToCaptainFromCompany;
+             $item['paymentsFromCaptain'] = $paymentsFromCaptainToCompany;
+
+             $response[] = $this->autoMapping->map('array', CaptainTotalFinancialAccountInMonthForAdminResponse::class,  $item);
+            
+        }
+        return $response;
+    }
+
     public function captainFinancialAccountInSpecificDate($captainId, $fromDate, $toDate):array
     {
         $response = [];
