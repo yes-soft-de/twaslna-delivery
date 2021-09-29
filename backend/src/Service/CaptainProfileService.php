@@ -591,8 +591,8 @@ class CaptainProfileService
 
        $captains = $this->userManager->captainFilter($name);
        foreach ($captains as $captain)
-           {
-               $response['stores'][]= $this->autoMapping->map('array', CaptainProfileFilterResponse::class, $captain);
+        {
+            $response['captains'][]= $this->autoMapping->map('array', CaptainProfileFilterResponse::class, $captain);
            }
        return $response;
    }
