@@ -11,12 +11,14 @@ import 'package:twaslna_dashboard/module_captain/ui/state/captain_list/captains_
 class CaptainsStateManager {
   final CaptainsService _captainsService;
   final PublishSubject<States> _stateSubject = PublishSubject();
-
+  CaptainsScreenState? _captainsScreenState;
   Stream<States> get stateStream => _stateSubject.stream;
+  CaptainsScreenState? get state => _captainsScreenState;
 
   CaptainsStateManager(this._captainsService);
 
   void getCaptains(CaptainsScreenState screenState){
+    _captainsScreenState = screenState;
     _stateSubject.add(LoadingState(screenState));
     _captainsService.getCaptains().then((value){
       if (value.hasError){

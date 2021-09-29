@@ -10,6 +10,7 @@ import 'package:twaslna_dashboard/utils/components/custom_feild.dart';
 import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/components/stacked_form.dart';
 import 'package:twaslna_dashboard/utils/effect/checked.dart';
+import 'package:twaslna_dashboard/utils/global/screen_type.dart';
 import 'package:twaslna_dashboard/utils/helpers/custom_flushbar.dart';
 
 AlertDialog formDialog(BuildContext context, String title, String textHint,
@@ -46,7 +47,7 @@ AlertDialog formDialog(BuildContext context, String title, String textHint,
     ),
     content: Container(
       height: 250,
-      width: 250,
+      width:ScreenType.isDesktop() ? 450 : ScreenType.isTablet() ? 350 : 250,
       child: image
           ? InsertForm(
               add: (name, image) {
@@ -113,7 +114,7 @@ class _InsertFormState extends State<InsertForm> {
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Center(child: Text(S.current.storeImage,style: TextStyle(fontWeight: FontWeight.bold),)),
+              child: Center(child: Text(S.current.categoryImage,style: TextStyle(fontWeight: FontWeight.bold),)),
             ),
             InkWell(
               onTap: () {

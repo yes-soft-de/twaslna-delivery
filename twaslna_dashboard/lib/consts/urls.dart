@@ -28,11 +28,13 @@ class Urls {
   static const CAPTAIN_BALANCE_ACCOUNT = BASE_API + '/captainFinancialAccount';
   static const CAPTAIN_BALANCE_LAST_MONTH = BASE_API + '/captainFinancialAccountInLastMonth';
   static const GET_ORDER_LOGS = BASE_API + '/orderLogs';
+  static const GET_CAPTAINS_LOGS = BASE_API + '/ordersAndCountByCaptainId/';
   static const CHECK_USER_ROLE = BASE_API + '/checkUserType';
   static const STORE_CATEGORIES = BASE_API + '/storecategories';
   static const CREATE_STORE_CATEGORIES = BASE_API + '/createstorecategory';
   static const GET_STORES_BY_CATEGORY = BASE_API + '/storeownerbycategoryid';
   static const GET_STORES = BASE_API + '/storeOwners';
+  static const GET_STORE_PROFILE = BASE_API + '/storeownerprofilebyid/';
   static const CREATE_STORES = BASE_API + '/storeownercreatbyadmin';
   static const GET_PRODUCTS_CATEGORY = BASE_API + '/storeProductsCategory/';
   static const GET_PRODUCTS = BASE_API + '/productsStoreByProfileId/';
@@ -40,7 +42,11 @@ class Urls {
   static const CREATE_PRODUCTS = BASE_API + '/createproductbyadmin';
   static const CREATE_PRODUCTS_CATEGORY_FOR_STORE = '/StoreProductCategory';
   static const GET_IN_ACTIVE_CAPTAINS = BASE_API + '/getcaptainsinactive';
+  static const CAPTAIN_FILTER = BASE_API + '/captainFilter/';
+  static const STORE_FILTER = BASE_API + '/captainFilter/';
   static const ACTIVATE_CAPTAIN = BASE_API + '/captainprofileupdatebyadmin';
+  static const PAYMENTS_FROM_CAPTAIN = BASE_API + '/deliveryCompanyPaymentsFromCaptain';
+  static const PAYMENTS_TO_CAPTAIN = BASE_API + '/deliveryCompanyPaymentsToCaptain';
   static const GET_CAPTAIN_PROFILE = BASE_API +'/captainProfile/';
   static const UPDATE_STORE_CATEGORY = BASE_API + '/updateStorecategory';
   static const UPDATE_STORE = BASE_API + '/storeownerprofileupdatebyadmin';
@@ -56,7 +62,8 @@ class Urls {
   static const GET_REPORT = BASE_API + '/countReport';
   static const GET_ACCOUNT_BALANCE_CAPTAIN = BASE_API + '/captainFinancialAccountForAdmin/';
   static const GET_ACCOUNT_BALANCE_CAPTAIN_LAST_MONTH = BASE_API + '/captainFinancialAccountInLastMonthForAdmin/';
-  static const GET_UNFINISHED_PAYMENT = BASE_API + '/captainsUnfinishedPayments';
+  static const GET_UNFINISHED_PAYMENT = BASE_API + '/captainsRemainingForItAmount';
+  static const GET_REMAINING_PAYMENT = BASE_API + '/captainsRemainingOnItAmount';
   static const GET_UNFINISHED_ORDER = BASE_API + '/getPendingOrders';
   static const GET_ONGOING_ORDERS = BASE_API + '/getOrdersOngoing';
   static const GET_ORDER_DETAILS = BASE_API + '/orderDetailsForAdmin/';

@@ -57,7 +57,7 @@ class Data {
     id = json['id'];
     phone = json['phone'];
     phone2 = json['phone2'];
-    whatspp = json['whatspp'];
+    whatspp = json['whatsapp'];
     fax = json['fax'];
     bank = json['bank'];
     stc = json['stc'];
@@ -70,7 +70,7 @@ class Data {
     map['id'] = id;
     map['phone'] = phone;
     map['phone2'] = phone2;
-    map['whatspp'] = whatspp;
+    map['whatsapp'] = whatspp;
     map['fax'] = fax;
     map['bank'] = bank;
     map['stc'] = stc;

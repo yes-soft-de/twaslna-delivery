@@ -24,15 +24,6 @@ class CaptainAccountBalanceResponse {
 
   }
 
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['status_code'] = statusCode;
-    map['msg'] = msg;
-    if (data != null) {
-      map['Data'] = data?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
 }
 
 class Data {
@@ -48,8 +39,8 @@ class Data {
   num? salary;
   num? netProfit;
   num? total;
-  List<dynamic>? paymentsToCaptain;
-  List<dynamic>? paymentsFromCaptain;
+  List<PaymentsFromCaptain>? paymentsToCaptain;
+  List<PaymentsFromCaptain>? paymentsFromCaptain;
 
   Data(
       {this.sumPaymentsToCaptain,
@@ -83,39 +74,172 @@ class Data {
     if (json['paymentsToCaptain'] != null) {
       paymentsToCaptain = [];
       json['paymentsToCaptain'].forEach((v) {
-        //paymentsToCaptain?.add(dynamic.fromJson(v));
+        paymentsToCaptain?.add(PaymentsFromCaptain.fromJson(v));
       });
     }
     if (json['paymentsFromCaptain'] != null) {
       paymentsFromCaptain = [];
       json['paymentsFromCaptain'].forEach((v) {
-        //  paymentsFromCaptain?.add(dynamic.fromJson(v));
+       paymentsFromCaptain?.add(PaymentsFromCaptain.fromJson(v));
       });
     }
   }
 
+}
+class PaymentsFromCaptain {
+  int? id;
+  String? captainId;
+  num? amount;
+  Date? date;
+
+  PaymentsFromCaptain({
+    this.id,
+    this.captainId,
+    this.amount,
+    this.date});
+
+  PaymentsFromCaptain.fromJson(dynamic json) {
+    id = json['id'];
+    captainId = json['captainId'];
+    amount = json['amount'];
+    date = json['date'] != null ? Date.fromJson(json['date']) : null;
+  }
+
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
-    map['sumPaymentsToCaptain'] = sumPaymentsToCaptain;
-    map['sumPaymentsFromCaptain'] = sumPaymentsFromCaptain;
-    map['countOrdersDelivered'] = countOrdersDelivered;
-    map['sumInvoiceAmount'] = sumInvoiceAmount;
-    map['deliveryCost'] = deliveryCost;
-    map['amountWithCaptain'] = amountWithCaptain;
-    map['remainingAmountForCompany'] = remainingAmountForCompany;
-    map['bounce'] = bounce;
-    map['kilometerBonus'] = kilometerBonus;
-    map['salary'] = salary;
-    map['NetProfit'] = netProfit;
-    map['total'] = total;
-    if (paymentsToCaptain != null) {
-      map['paymentsToCaptain'] =
-          paymentsToCaptain?.map((v) => v.toJson()).toList();
-    }
-    if (paymentsFromCaptain != null) {
-      map['paymentsFromCaptain'] =
-          paymentsFromCaptain?.map((v) => v.toJson()).toList();
+    map['id'] = id;
+    map['captainId'] = captainId;
+    map['amount'] = amount;
+    if (date != null) {
+      map['date'] = date?.toJson();
     }
     return map;
   }
+
+}
+class Date {
+  Timezone? timezone;
+  int? offset;
+  int? timestamp;
+
+  Date({
+    this.timezone,
+    this.offset,
+    this.timestamp});
+
+  Date.fromJson(dynamic json) {
+    timezone = json['timezone'] != null ? Timezone.fromJson(json['timezone']) : null;
+    offset = json['offset'];
+    timestamp = json['timestamp'];
+  }
+
+  Map<String, dynamic> toJson() {
+    var map = <String, dynamic>{};
+    if (timezone != null) {
+      map['timezone'] = timezone?.toJson();
+    }
+    map['offset'] = offset;
+    map['timestamp'] = timestamp;
+    return map;
+  }
+
+}
+
+class Timezone {
+  String? name;
+  List<Transitions>? transitions;
+  Location? location;
+
+  Timezone({
+    this.name,
+    this.transitions,
+    this.location});
+
+  Timezone.fromJson(dynamic json) {
+    name = json['name'];
+    if (json['transitions'] != null) {
+      transitions = [];
+      json['transitions'].forEach((v) {
+        transitions?.add(Transitions.fromJson(v));
+      });
+    }
+    location = json['location'] != null ? Location.fromJson(json['location']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    var map = <String, dynamic>{};
+    map['name'] = name;
+    if (transitions != null) {
+      map['transitions'] = transitions?.map((v) => v.toJson()).toList();
+    }
+    if (location != null) {
+      map['location'] = location?.toJson();
+    }
+    return map;
+  }
+
+}
+
+class Location {
+  String? countryCode;
+  int? latitude;
+  int? longitude;
+  String? comments;
+
+  Location({
+    this.countryCode,
+    this.latitude,
+    this.longitude,
+    this.comments});
+
+  Location.fromJson(dynamic json) {
+    countryCode = json['country_code'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
+    comments = json['comments'];
+  }
+
+  Map<String, dynamic> toJson() {
+    var map = <String, dynamic>{};
+    map['country_code'] = countryCode;
+    map['latitude'] = latitude;
+    map['longitude'] = longitude;
+    map['comments'] = comments;
+    return map;
+  }
+
+}
+
+class Transitions {
+  int? ts;
+  String? time;
+  int? offset;
+  bool? isdst;
+  String? abbr;
+
+  Transitions({
+    this.ts,
+    this.time,
+    this.offset,
+    this.isdst,
+    this.abbr});
+
+  Transitions.fromJson(dynamic json) {
+    ts = json['ts'];
+    time = json['time'];
+    offset = json['offset'];
+    isdst = json['isdst'];
+    abbr = json['abbr'];
+  }
+
+  Map<String, dynamic> toJson() {
+    var map = <String, dynamic>{};
+    map['ts'] = ts;
+    map['time'] = time;
+    map['offset'] = offset;
+    map['isdst'] = isdst;
+    map['abbr'] = abbr;
+    return map;
+  }
+
 }

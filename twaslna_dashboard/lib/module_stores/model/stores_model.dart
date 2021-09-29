@@ -1,8 +1,10 @@
 import 'dart:math';
 
+import 'package:intl/intl.dart';
 import 'package:twaslna_dashboard/abstracts/data_model/data_model.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/module_stores/response/stores_response.dart';
+import 'package:twaslna_dashboard/utils/helpers/date_converter.dart';
 import 'package:twaslna_dashboard/utils/images/images.dart';
 
 
@@ -15,12 +17,14 @@ class StoresModel extends DataModel {
   String image = '';
   bool privateOrders = false;
   bool hasProducts = false;
+  DateTime? closingTime;
+  DateTime? openingTime;
 
   List<StoresModel> _models = [];
 
   StoresModel({required this.id, required this.storeOwnerName,
       required this.phone, required this.deliveryCost, required this.image, required this.privateOrders,
-      required this.hasProducts,required this.categoryId});
+      required this.hasProducts,required this.categoryId,this.openingTime,this.closingTime});
 
   StoresModel.withData(List<Data> data) : super.withData() {
     _models = [];
@@ -37,7 +41,10 @@ class StoresModel extends DataModel {
           deliveryCost: element.deliveryCost ?? 0,
           hasProducts: element.hasProducts ?? false,
           privateOrders: element.privateOrders ?? false,
-          image:element.image ?? ImageAsset.PLACEHOLDER ,phone:element.phone??''));
+          image:element.image ?? ImageAsset.PLACEHOLDER ,phone:element.phone??'',
+        openingTime:DateHelper.convert(element.openingTime?.timestamp),
+        closingTime:DateHelper.convert(element.closingTime?.timestamp),
+      ));
     }
   }
 

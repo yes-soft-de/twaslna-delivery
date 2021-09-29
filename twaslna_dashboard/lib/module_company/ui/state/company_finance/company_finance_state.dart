@@ -12,6 +12,7 @@ import 'package:twaslna_dashboard/module_company/ui/screen/company_profile_scree
 import 'package:twaslna_dashboard/utils/components/custom_feild.dart';
 import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/components/error_screen.dart';
+import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
 import 'package:twaslna_dashboard/utils/components/stacked_form.dart';
 import 'package:twaslna_dashboard/utils/helpers/custom_flushbar.dart';
 
@@ -64,74 +65,76 @@ class CompanyFinanceLoadedState extends States {
     return StackedForm(
         child: Form(
           key: _key,
-          child: CustomListView.custom(
-              padding: EdgeInsets.only(right: 16, left: 16),
-              children: [
-                // delivery price
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 12.0, bottom: 8, right: 12, top: 16.0),
-                  child: Text(
-                    S.current.deliverPrice,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.start,
+          child: FixedContainer(
+            child:CustomListView.custom(
+                padding: EdgeInsets.only(right: 16, left: 16),
+                children: [
+                  // delivery price
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 12.0, bottom: 8, right: 12, top: 16.0),
+                    child: Text(
+                      S.current.deliverPrice,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.start,
+                    ),
                   ),
-                ),
-                CustomFormField(
-                  numbers: true,
-                  controller: deliveryCostController,
-                  hintText: S.current.deliverPrice,
-                ),
-                // kilometer
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 12.0, bottom: 8, right: 12, top: 16.0),
-                  child: Text(
-                    S.current.kilometerLimt,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.start,
+                  CustomFormField(
+                    numbers: true,
+                    controller: deliveryCostController,
+                    hintText: S.current.deliverPrice,
                   ),
-                ),
-                CustomFormField(
-                  controller: kilometerController,
-                  hintText: S.current.kilometerLimt,
-                  numbers: true,
-                ),
-                // max kilo
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 12.0, bottom: 8, right: 12, top: 16.0),
-                  child: Text(
-                    S.current.kilometerLimtMax,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.start,
+                  // kilometer
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 12.0, bottom: 8, right: 12, top: 16.0),
+                    child: Text(
+                      S.current.kilometerLimt,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.start,
+                    ),
                   ),
-                ),
-                CustomFormField(
-                  numbers: true,
-                  controller: maxKilometerBonusController,
-                  hintText: S.current.kilometerLimtMax,
-                ),
-                // min kilo
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 12.0, bottom: 8, right: 12, top: 16.0),
-                  child: Text(
-                    S.current.kilometerLimtMin,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.start,
+                  CustomFormField(
+                    controller: kilometerController,
+                    hintText: S.current.kilometerLimt,
+                    numbers: true,
                   ),
-                ),
-                CustomFormField(
-                  numbers: true,
-                  controller: minKilometerBonusController,
-                  hintText: S.current.kilometerLimtMin,
-                  last: true,
-                ),
-                SizedBox(
-                  height: 100,
-                ),
-              ]),
+                  // max kilo
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 12.0, bottom: 8, right: 12, top: 16.0),
+                    child: Text(
+                      S.current.kilometerLimtMax,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  CustomFormField(
+                    numbers: true,
+                    controller: maxKilometerBonusController,
+                    hintText: S.current.kilometerLimtMax,
+                  ),
+                  // min kilo
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 12.0, bottom: 8, right: 12, top: 16.0),
+                    child: Text(
+                      S.current.kilometerLimtMin,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  CustomFormField(
+                    numbers: true,
+                    controller: minKilometerBonusController,
+                    hintText: S.current.kilometerLimtMin,
+                    last: true,
+                  ),
+                  SizedBox(
+                    height: 100,
+                  ),
+                ])
+          ),
         ),
         label: S.current.update,
         onTap: () {

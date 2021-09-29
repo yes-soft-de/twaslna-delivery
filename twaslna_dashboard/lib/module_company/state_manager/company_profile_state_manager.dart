@@ -50,7 +50,7 @@ class CompanyProfileStateManager {
           }
           else {
             getCompanyProfile(screenState);
-            CustomFlushBarHelper.createSuccess(title:S.current.warnning, message:S.current.categoryCreatedSuccessfully)..show(screenState.context);
+            CustomFlushBarHelper.createSuccess(title:S.current.warnning, message:S.current.companyProfileCreatedSuccessfully)..show(screenState.context);
           }
         });
   }
@@ -65,7 +65,7 @@ class CompanyProfileStateManager {
       }
       else {
         getCompanyProfile(screenState);
-        CustomFlushBarHelper.createSuccess(title:S.current.warnning, message:S.current.categoryCreatedSuccessfully)..show(screenState.context);
+        CustomFlushBarHelper.createSuccess(title:S.current.warnning, message:S.current.companyProfileUpdatedSuccessfully)..show(screenState.context);
       }
     });
   }

@@ -6,14 +6,16 @@ class CustomDeliverySearch extends StatefulWidget {
   final double height;
   final EdgeInsetsGeometry contentPadding;
   final String hintText;
-
+  final ValueChanged<String>? onChanged;
   @override
   _CustomDeliverySearchState createState() => _CustomDeliverySearchState();
 
   CustomDeliverySearch(
       {this.height = 50,
       this.contentPadding = const EdgeInsets.fromLTRB(0, 13.5, 0, 0),
-      required this.hintText});
+      required this.hintText,
+      this.onChanged
+      });
 }
 
 class _CustomDeliverySearchState extends State<CustomDeliverySearch> {
@@ -22,10 +24,11 @@ class _CustomDeliverySearchState extends State<CustomDeliverySearch> {
     return Container(
       height: widget.height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: Theme.of(context).scaffoldBackgroundColor,
+        borderRadius: BorderRadius.circular(25),
+        color: Theme.of(context).backgroundColor,
       ),
       child: TextField(
+        onChanged:widget.onChanged,
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: widget.hintText,

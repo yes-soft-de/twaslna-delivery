@@ -8,6 +8,7 @@ import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/components/empty_screen.dart';
 import 'package:twaslna_dashboard/utils/components/error_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:twaslna_dashboard/utils/global/screen_type.dart';
 
 class HomeLoadedState extends States {
   final HomeScreenState screenState;
@@ -43,6 +44,7 @@ class HomeLoadedState extends States {
       child: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Wrap(
+          alignment: WrapAlignment.center,
           direction: Axis.horizontal,
             children: [
           widgetTile(model?.countCompletedOrders.toString() ?? '',S.current.countCompletedOrders),
@@ -69,10 +71,9 @@ class HomeLoadedState extends States {
       ),
     );
   }
-
   Widget widgetTile(String count,String title) {
     return Container(
-      width: MediaQuery.of(screenState.context).size.width * 0.5,
+      width:!ScreenType.isDesktop() ? MediaQuery.of(screenState.context).size.width * 0.5 :  MediaQuery.of(screenState.context).size.width * 0.25,
       child: Flex(
         direction: Axis.vertical,
         children: [

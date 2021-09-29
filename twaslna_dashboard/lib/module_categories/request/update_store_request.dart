@@ -7,16 +7,19 @@ class UpdateStoreRequest {
   int? storeCategoryId;
   int? privateOrders;
   int? hasProducts;
-
-  UpdateStoreRequest({
-      this.id, 
-      this.status, 
-      this.isBest, 
-      this.storeOwnerName, 
-      this.image, 
-      this.storeCategoryId, 
-      this.privateOrders, 
-      this.hasProducts});
+  String? closingTime;
+  String? openingTime;
+  UpdateStoreRequest(
+      {this.id,
+      this.status,
+      this.isBest,
+      this.storeOwnerName,
+      this.image,
+      this.storeCategoryId,
+      this.privateOrders,
+      this.hasProducts,
+      this.closingTime,
+      this.openingTime});
 
   UpdateStoreRequest.fromJson(dynamic json) {
     id = json['id'];
@@ -39,7 +42,8 @@ class UpdateStoreRequest {
     map['storeCategoryId'] = storeCategoryId;
     map['privateOrders'] = privateOrders;
     map['hasProducts'] = hasProducts;
+    map['closingTime'] = closingTime;
+    map['openingTime'] = openingTime;
     return map;
   }
-
 }

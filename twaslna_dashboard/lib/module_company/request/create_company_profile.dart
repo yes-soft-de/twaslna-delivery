@@ -26,7 +26,6 @@ class CreateCompanyProfile {
     bank = json['bank'];
     stc = json['stc'];
     email = json['email'];
-    deliveryCost = json['deliveryCost'];
   }
 
   Map<String, dynamic> toJson() {
@@ -38,7 +37,6 @@ class CreateCompanyProfile {
     map['bank'] = bank;
     map['stc'] = stc;
     map['email'] = email;
-    map['deliveryCost'] = deliveryCost;
     return map;
   }
 

@@ -8,6 +8,7 @@ import 'package:twaslna_dashboard/module_stores/stores_routes.dart';
 import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/components/empty_screen.dart';
 import 'package:twaslna_dashboard/utils/components/error_screen.dart';
+import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
 import 'package:twaslna_dashboard/utils/helpers/form_dialog.dart';
 
 class ProductCategoriesLoadedState extends ProductCategoriesState {
@@ -41,7 +42,9 @@ class ProductCategoriesLoadedState extends ProductCategoriesState {
             screenState.getStoreCategories();
           });
     }
-    return CustomListView.custom(children: getCategories());
+    return FixedContainer(
+      child: CustomListView.custom(children: getCategories()),
+    );
   }
 
   List<Widget> getCategories() {

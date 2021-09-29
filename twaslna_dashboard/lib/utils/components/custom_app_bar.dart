@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
+import 'package:twaslna_dashboard/utils/global/screen_type.dart';
 
 class CustomTwaslnaAppBar {
   static PreferredSizeWidget appBar(
@@ -11,6 +12,11 @@ class CustomTwaslnaAppBar {
     IconData? icon,
     bool canGoBack = true, List<Widget>? actions
   }) {
+    if (icon == Icons.menu && ScreenType.isDesktop() ){
+      icon = null;
+      onTap = null;
+      canGoBack = false;
+    }
     return AppBar(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       centerTitle: true,

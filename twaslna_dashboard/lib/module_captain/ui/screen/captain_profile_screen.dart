@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_dashboard/abstracts/states/loading_state.dart';
 import 'package:twaslna_dashboard/abstracts/states/state.dart';
@@ -6,6 +7,7 @@ import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/module_captain/captains_routes.dart';
 import 'package:twaslna_dashboard/module_captain/request/accept_captain_request.dart';
 import 'package:twaslna_dashboard/module_captain/state_manager/captain_profile_state_manager.dart';
+import 'package:twaslna_dashboard/module_payments/payments_routes.dart';
 import 'package:twaslna_dashboard/utils/components/custom_app_bar.dart';
 
 @injectable

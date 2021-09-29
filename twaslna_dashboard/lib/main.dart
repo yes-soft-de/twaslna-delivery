@@ -11,11 +11,14 @@ import 'package:twaslna_dashboard/module_captain/captains_module.dart';
 import 'package:twaslna_dashboard/module_categories/categories_module.dart';
 import 'package:twaslna_dashboard/module_chat/chat_module.dart';
 import 'package:twaslna_dashboard/module_company/company_module.dart';
+import 'package:twaslna_dashboard/module_filters/filters_module.dart';
 import 'package:twaslna_dashboard/module_localization/service/localization_service/localization_service.dart';
+import 'package:twaslna_dashboard/module_logs/logs_module.dart';
 import 'package:twaslna_dashboard/module_main/main_module.dart';
 import 'package:twaslna_dashboard/module_notifications/service/fire_notification_service/fire_notification_service.dart';
 import 'package:twaslna_dashboard/module_orders/model/order_model.dart';
 import 'package:twaslna_dashboard/module_orders/orders_module.dart';
+import 'package:twaslna_dashboard/module_payments/payments_module.dart';
 import 'package:twaslna_dashboard/module_settings/settings_module.dart';
 import 'package:twaslna_dashboard/module_splash/splash_module.dart';
 import 'package:twaslna_dashboard/module_stores/stores_module.dart';
@@ -83,6 +86,9 @@ class MyApp extends StatefulWidget {
   final CaptainsModule _productsModule;
   final CompanyModule _companyModule;
   final OrdersModule _ordersModule;
+  final PaymentsModule _paymentsModule;
+  final FiltersModule _filtersModule;
+  final LogsModule _logsModule;
   MyApp(
     this._themeDataService,
     this._localizationService,
@@ -97,7 +103,10 @@ class MyApp extends StatefulWidget {
     this._storesModule,
     this._productsModule,
     this._companyModule,
-    this._ordersModule
+    this._ordersModule,
+    this._paymentsModule,
+    this._filtersModule,
+    this._logsModule
   );
 
   @override

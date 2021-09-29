@@ -66,6 +66,14 @@ class CaptainRepository {
     if (response == null) return null;
     return CaptainUnfinishedPaymentsResponse.fromJson(response);
   }
+  Future<CaptainUnfinishedPaymentsResponse?> captainRemainingPayments() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(
+        Urls.GET_REMAINING_PAYMENT,
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptainUnfinishedPaymentsResponse.fromJson(response);
+  }
 
   Future<ActionResponse?> enableCaptain(AcceptCaptainRequest request) async {
     var token = await _authService.getToken();

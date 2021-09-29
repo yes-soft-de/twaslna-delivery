@@ -49,42 +49,52 @@ class StoresLoadedState extends StoresState {
             screenState.getStores();
           });
     }
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Container(
-            width: double.maxFinite,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                //color: Theme.of(context).backgroundColor,
-                border: Border.all(
-                    color: Theme.of(context).primaryColor, width: 4)),
-            child: Center(
-              child: DropdownButton(
-                value: id,
-                items: getChoices(),
-                onChanged: (v) {
-                  id = v.toString();
-                  screenState.refresh();
-                },
-                hint: Text(
-                  S.current.chooseCategory,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                underline: SizedBox(),
-                icon: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Icon(Icons.arrow_drop_down_rounded),
+    return Container(
+      width: double.maxFinite,
+      child: Center(
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: 600
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      //color: Theme.of(context).backgroundColor,
+                      border: Border.all(
+                          color: Theme.of(context).primaryColor, width: 4)),
+                  child: Center(
+                    child: DropdownButton(
+                      value: id,
+                      items: getChoices(),
+                      onChanged: (v) {
+                        id = v.toString();
+                        screenState.refresh();
+                      },
+                      hint: Text(
+                        S.current.chooseCategory,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      underline: SizedBox(),
+                      icon: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Icon(Icons.arrow_drop_down_rounded),
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
+              Expanded(
+                child: CustomListView.custom(children: getStores()),
+              )
+            ],
           ),
         ),
-        Expanded(
-          child: CustomListView.custom(children: getStores()),
-        )
-      ],
+      ),
     );
   }
 
@@ -177,9 +187,11 @@ class StoresLoadedState extends StoresState {
                                   hasProducts: element.hasProducts ? 1 : 0,
                                   privateOrders: element.privateOrders ? 1 : 0,
                                   image: element.image,
+                                  openingTime:element.openingTime?.toIso8601String(),
+                                  closingTime:element.closingTime?.toIso8601String(),
                                 ),
                                 updateStore:
-                                    (id,name,image,products, privateOrder) {
+                                    (id,name,image,products, privateOrder,open,close) {
                                   Navigator.of(context).pop();
                                   screenState.updateStore(UpdateStoreRequest(
                                     status: 'active',
@@ -188,7 +200,10 @@ class StoresLoadedState extends StoresState {
                                       storeCategoryId: int.parse(element.categoryId),
                                       image: image,
                                       hasProducts: products ? 1 : 0,
-                                      privateOrders: privateOrder ? 1 : 0));
+                                      privateOrders: privateOrder ? 1 : 0,
+                                      openingTime: open,
+                                      closingTime: close,
+                                  ));
                                 },
                               ),
                             ),

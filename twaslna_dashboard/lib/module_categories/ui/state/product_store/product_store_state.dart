@@ -9,6 +9,7 @@ import 'package:twaslna_dashboard/module_categories/ui/widget/add_product_form.d
 import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/components/empty_screen.dart';
 import 'package:twaslna_dashboard/utils/components/error_screen.dart';
+import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
 import 'package:twaslna_dashboard/utils/components/progresive_image.dart';
 
 class ProductStoreState extends States {
@@ -41,7 +42,7 @@ class ProductStoreState extends States {
             screenState.getProductsCategories();
           });
     }
-    return Column(
+    return FixedContainer(child: Column(
       children: [
         Padding(
           padding: const EdgeInsets.all(10.0),
@@ -77,7 +78,7 @@ class ProductStoreState extends States {
           child: CustomListView.custom(children:getProducts()),
         )
       ],
-    );
+    ));
   }
   List<Widget> getProducts() {
     List<Widget> widgets = [];
