@@ -141,10 +141,15 @@ class OrderManager
     {
         return $this->orderEntityRepository->getTopOwners($fromDate, $toDate);
     }
-
+//
     public function countOrdersInDay($ownerID, $fromDate, $toDate)
     {
         return $this->orderEntityRepository->countOrdersInDay($ownerID, $fromDate, $toDate);
+    }
+
+    public function countOrdersInToday($fromDate, $toDate)
+    {
+        return $this->orderEntityRepository->countOrdersInToday($fromDate, $toDate);
     }
 
     public function getAcceptedOrderByCaptainId($captainID)

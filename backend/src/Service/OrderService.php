@@ -724,10 +724,16 @@ class OrderService
         $item['countClients'] = $this->clientProfileService->countClients();
         $item['countStores'] = $this->storeOwnerProfileService->countStores();
         $item['countProducts'] = $this->productService->countProducts();
+        $item['countOrdersInToday'] = $this->countOrdersInToday();
         
         $response = $this->autoMapping->map("array", CountReportResponse::class, $item);
 
         return $response;
+    }
+
+    public function countOrdersInToday() { 
+       $date = $this->dateFactoryService->returnTodayDate();
+       return $this->orderManager->countOrdersInToday($date[0], $date[1]);
     }
 
     public function getOrdersAndCountByStoreProfileId($storeProfileId)

@@ -15,4 +15,6 @@ class CountReportResponse
     public $countStores;
 
     public $countProducts;
+    
+    public $countOrdersInToday;
 }

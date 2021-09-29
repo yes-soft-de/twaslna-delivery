@@ -319,6 +319,24 @@ class OrderEntityRepository extends ServiceEntityRepository
           ->getResult();
     }
 
+    public function countOrdersInToday($fromDate, $toDate)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+
+          ->select('count(OrderEntity.id) as count')
+        
+          ->andWhere("OrderEntity.state != :cancelled")
+          ->andWhere('OrderEntity.createdAt >= :fromDate')
+          ->andWhere('OrderEntity.createdAt < :toDate')
+
+          ->setParameter('fromDate', $fromDate)
+          ->setParameter('toDate', $toDate)
+          ->setParameter('cancelled', self::CANCEL)
+          
+          ->getQuery()
+          ->getResult();
+    }
+
     public function countCaptainOrdersDelivered($captainId)
     {
         return $this->createQueryBuilder('OrderEntity')
