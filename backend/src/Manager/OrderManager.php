@@ -137,9 +137,9 @@ class OrderManager
         return $this->orderEntityRepository->getOrdersInMonthForOwner($fromDate, $toDate, $ownerId);
     }
 
-    public function getTopOwners($fromDate, $toDate)
+    public function getCountOrdersEveryStoreInLastMonth($fromDate, $toDate)
     {
-        return $this->orderEntityRepository->getTopOwners($fromDate, $toDate);
+        return $this->orderEntityRepository->getCountOrdersEveryStoreInLastMonth($fromDate, $toDate);
     }
 
     public function getOrdersInSpecificDate($fromDate, $toDate)

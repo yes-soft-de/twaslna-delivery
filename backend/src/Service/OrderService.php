@@ -32,6 +32,7 @@ use App\Response\OrdersAndTopOwnerResponse;
 use App\Response\OrdersAndCountResponse;
 use App\Response\CountReportResponse;
 use App\Response\OrdersByClientResponse;
+use App\Response\CountOrdersInLastMonthForStoreResponse;
 use App\Service\StoreOwnerSubscriptionService;
 use App\Service\RatingService;
 use App\Service\StoreOwnerProfileService;
@@ -401,22 +402,14 @@ class OrderService
         return $response;
     }
 
-    public function getCountOrdersInDayAndTopOwnersInThisMonth():?array
+    public function getCountOrdersEveryStoreInLastMonth():?array
     {
        $response=[];
        $date = $this->dateFactoryService->returnLastMonthDate();
  
-       $topOwners = $this->orderManager->getTopOwners($date[0],$date[1]);
-     
-        foreach ($topOwners as $topOwner) {
-         
-            $topOwner['imageURL'] = $topOwner['image'];
-            $topOwner['image'] = $this->params.$topOwner['image'];
-            $topOwner['baseURL'] = $this->params;
-
-            $topOwner['countOrdersInDay'] = $this->orderManager->countOrdersInDay($topOwner['storeOwnerProfileID'], $date[0],$date[1]);
-           
-            $response[] = $this->autoMapping->map('array', OrdersAndTopOwnerResponse::class, $topOwner);
+       $items = $this->orderManager->getCountOrdersEveryStoreInLastMonth($date[0],$date[1]);
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', CountOrdersInLastMonthForStoreResponse::class, $item);
         }
        return $response;
    }

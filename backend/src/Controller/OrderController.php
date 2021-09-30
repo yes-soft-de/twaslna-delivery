@@ -175,14 +175,14 @@ class OrderController extends BaseController
     }
 
    /**
-     * @Route("/countordersandtopowner", name="getTopOwnersInThisMonthAndCountOrdersForOwnerInDay",methods={"GET"})
+     * @Route("/countOrdersEveryStoreInLastMonth", name="getCountOrdersEveryStoreInLastMonth",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
      */
-    public function getCountOrdersInDayAndTopOwnersInThisMonth()
+    public function getCountOrdersEveryStoreInLastMonth()
     {
-        $result = $this->orderService->getCountOrdersInDayAndTopOwnersInThisMonth();
+        $result = $this->orderService->getCountOrdersEveryStoreInLastMonth();
 
         return $this->response($result, self::FETCH);
     }

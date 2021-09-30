@@ -284,30 +284,28 @@ class OrderEntityRepository extends ServiceEntityRepository
           ->getResult(); 
     }
 
-    public function getTopOwners($fromDate, $toDate)
+    public function getCountOrdersEveryStoreInLastMonth($fromDate, $toDate)
     {
         return $this->createQueryBuilder('OrderEntity')
-       // countOrdersInMonth = countOrdersForOwnerInMonth
-          ->select('OrderEntity.ownerID','OrderEntity.ownerID', 'count(OrderEntity.ownerID) as countOrdersInMonth')
-          ->addSelect('userProfileEntity.storeOwnerName', 'userProfileEntity.image')
-          ->leftJoin(StoreOwnerProfileEntity::class, 'userProfileEntity', Join::WITH, 'userProfileEntity.storeOwnerID = OrderEntity.ownerID')
+          ->select('OrderEntity.storeOwnerProfileID', 'count(OrderEntity.storeOwnerProfileID) as countOrdersInMonth')
+          ->addSelect('StoreOwnerProfileEntity.storeOwnerName', 'StoreOwnerProfileEntity.image')
+          ->leftJoin(StoreOwnerProfileEntity::class, 'StoreOwnerProfileEntity', Join::WITH, 'StoreOwnerProfileEntity.id = OrderEntity.storeOwnerProfileID')
         
-          ->where('OrderEntity.deliveryDate >= :fromDate')
-          ->andWhere('OrderEntity.deliveryDate < :toDate')
-          ->andWhere("OrderEntity.state != cancelled")
+          ->where('OrderEntity.createdAt >= :fromDate')
+          ->andWhere('OrderEntity.createdAt < :toDate')
+          ->andWhere("OrderEntity.state != :cancelled")
+          ->andWhere("OrderEntity.state != :pending")
 
-          ->addGroupBy('OrderEntity.ownerID')
-          
-          ->addGroupBy('userProfileEntity.storeOwnerName')
-          ->addGroupBy('userProfileEntity.image')
+          ->addGroupBy('OrderEntity.storeOwnerProfileID')
 
-          ->having('count(OrderEntity.ownerID) > 0')
+          ->having('count(OrderEntity.storeOwnerProfileID) > 0')
           ->setMaxResults(15)
           ->addOrderBy('countOrdersInMonth','DESC')
          
           ->setParameter('fromDate', $fromDate)
           ->setParameter('toDate', $toDate)
           ->setParameter('cancelled', self::CANCEL)
+          ->setParameter('pending', self::PENDING)
           ->getQuery()
           ->getResult();
     }
