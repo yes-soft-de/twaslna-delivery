@@ -101,6 +101,19 @@ class CaptainsService {
     if (_paymentResponse.data == null) return DataModel.empty();
     return CaptainPaymentModel.withData(_paymentResponse.data!);
   }
+  Future<DataModel> getRemainingPayments() async {
+
+    CaptainUnfinishedPaymentsResponse? _paymentResponse = await _captainManager.getCaptainRemainingPayments();
+    if (_paymentResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (_paymentResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(_paymentResponse.statusCode));
+    }
+    if (_paymentResponse.data == null) return DataModel.empty();
+    return CaptainPaymentModel.withData(_paymentResponse.data!);
+  }
 
   Future<DataModel> enableCaptain(AcceptCaptainRequest request) async {
     ActionResponse? actionResponse = await _captainManager.enableCaptain(request);

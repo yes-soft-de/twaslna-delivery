@@ -8,8 +8,8 @@ import 'package:twaslna_dashboard/utils/customIcon/custom_icons.dart';
 class NavigatorMenu extends StatefulWidget {
   final Function(int) onTap;
   final int currentIndex;
-
-  NavigatorMenu({required this.onTap, required this.currentIndex});
+  final double? width;
+  NavigatorMenu({this.width,required this.onTap, required this.currentIndex});
 
   @override
   _NavigatorMenuState createState() => _NavigatorMenuState();
@@ -57,7 +57,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
       ),
     );
     return Container(
-        width: MediaQuery.of(context).size.width * 0.75,
+        width: widget.width,
         decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: Localizations.localeOf(context).languageCode == 'ar'
@@ -69,11 +69,11 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             thickness: 2.5,
             color: Theme.of(context).backgroundColor,
           ),
-          customListTile(0, S.current.home, Icons.home_rounded),
+          customListTile(0, S.current.home, FontAwesomeIcons.home),
           // Store
           customExpansionTile(
               title: S.current.stores,
-              icon: Icons.store,
+              icon: FontAwesomeIcons.store,
               children: [
                 customListTile(
                     1, S.current.storeCategories, Icons.category_rounded,true),
@@ -101,23 +101,35 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               children: [
                 customListTile(9, S.current.orderPending, FontAwesomeIcons.solidClock,true),
                 customListTile(10, S.current.ongoingOrders, FontAwesomeIcons.play,true),
+                customListTile(12, S.current.ordersAccount, FontAwesomeIcons.cashRegister,true),
               ],
               index: widget.currentIndex),
           customExpansionTile(
               title: S.current.company,
               icon: FontAwesomeIcons.solidCopyright,
               children: [
-                customListTile(11, S.current.companyFinance,
-                    FontAwesomeIcons.moneyCheckAlt),
-                customListTile(5, S.current.companyInfo, Icons.info),
+                customListTile(11, S.current.companyFinance, FontAwesomeIcons.moneyCheckAlt,true),
+                customListTile(5, S.current.companyInfo, Icons.info,true),
               ],
               index: widget.currentIndex),
-          customListTile(6, S.current.settings, Icons.settings_rounded),
+          customExpansionTile(
+              title: S.current.Logs,
+              icon: FontAwesomeIcons.solidFlag,
+              children: [
+                customListTile(13, S.current.captainLogs, FontAwesomeIcons.history,true),
+              ],
+              index: widget.currentIndex),
+          customListTile(6, S.current.settings, FontAwesomeIcons.cog),
         ]));
   }
 
   Widget customListTile(int index, String title, IconData icon,[bool subtitle = false]) {
     bool selected = index == widget.currentIndex;
+    double? size = icon.fontPackage == 'font_awesome_flutter' ? (subtitle ? 18 : 22) : 26;
+    if (size == 26 && subtitle){
+      size = 20;
+    }
+
     return InkWell(
       key: ValueKey(index),
       onTap: () {
@@ -133,10 +145,13 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               borderRadius: BorderRadius.circular(25)),
           child: ListTile(
             minLeadingWidth:subtitle?4:null,
+            visualDensity: VisualDensity(
+             vertical: -2
+            ),
             leading: Icon(
               icon,
               color: selected ? Colors.white : null,
-              size: subtitle ? 20 : null,
+              size: size
             ),
             title: Text(
               title,
@@ -163,6 +178,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
         break;
       }
     }
+    double? size = icon.fontPackage == 'font_awesome_flutter' ? 22 : 26;
+
     return Padding(
       padding: const EdgeInsets.only(left:8.0,right: 8.0),
       child: Theme(
@@ -170,7 +187,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
         child: ExpansionTile(
           initiallyExpanded: extended,
           title: Text(title),
-          leading: Icon(icon),
+          leading: Icon(icon,size: size,),
           children: children,
         ),
       ),

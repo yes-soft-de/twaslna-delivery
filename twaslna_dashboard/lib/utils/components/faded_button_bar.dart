@@ -9,7 +9,9 @@ class FadedButtonBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 62,
-      width: double.maxFinite,
+      constraints: BoxConstraints(
+        maxWidth: 600
+      ),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(

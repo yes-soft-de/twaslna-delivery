@@ -4,9 +4,11 @@ import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/module_captain/captains_routes.dart';
 import 'package:twaslna_dashboard/module_captain/model/inActiveModel.dart';
 import 'package:twaslna_dashboard/module_captain/ui/screen/in_active_captains_screen.dart';
+import 'package:twaslna_dashboard/utils/components/costom_search.dart';
 import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/components/empty_screen.dart';
 import 'package:twaslna_dashboard/utils/components/error_screen.dart';
+import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
 import 'package:twaslna_dashboard/utils/components/progresive_image.dart';
 
 class InCaptainActiveLoadedState extends States {
@@ -23,6 +25,7 @@ class InCaptainActiveLoadedState extends States {
     }
   }
   String? id ;
+  String? search;
   @override
   Widget getUI(BuildContext context) {
     if (error != null) {
@@ -39,14 +42,19 @@ class InCaptainActiveLoadedState extends States {
             screenState.getCaptains();
           });
     }
-    return CustomListView.custom(children:getCaptains(context));
+    return FixedContainer(child: CustomListView.custom(children:getCaptains(context)));
   }
 
   List<Widget> getCaptains(BuildContext context) {
     List<Widget> widgets = [];
-    model?.forEach((element) {
+    for (var element in model ?? <InActiveModel>[]) {
+
+      if (!element.captainName.contains(search ?? '') && search != null) {
+        continue;
+      }
+
       widgets.add(Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(left:16.0,right: 16.0,bottom: 8.0,top: 8.0),
         child: InkWell(
           borderRadius: BorderRadius.circular(50),
           onTap: (){
@@ -104,7 +112,26 @@ class InCaptainActiveLoadedState extends States {
           ),
         ),
       ));
-    });
+    }
+    if (model != null ) {
+      widgets.insert(
+          0,
+          Padding(
+            padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16),
+            child: CustomDeliverySearch(
+              hintText: S.current.searchingForCaptain,
+              onChanged: (s) {
+                if (s == '' || s.isEmpty) {
+                  search = null;
+                  screenState.refresh();
+                } else {
+                  search = s;
+                  screenState.refresh();
+                }
+              },
+            ),
+          ));
+    }
     return widgets;
   }
 

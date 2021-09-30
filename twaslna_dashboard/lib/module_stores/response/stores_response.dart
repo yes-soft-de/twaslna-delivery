@@ -1,3 +1,4 @@
+import 'package:twaslna_dashboard/module_captain/response/captain_account_balance_response.dart';
 import 'package:twaslna_dashboard/utils/logger/logger.dart';
 
 class StoresResponse {
@@ -34,7 +35,8 @@ class Data {
   bool? privateOrders;
   bool? hasProducts;
   num? categoryId;
-
+  Date? closingTime;
+  Date? openingTime;
   Data(
       {this.id,
       this.storeOwnerName,
@@ -44,7 +46,9 @@ class Data {
       this.deliveryCost,
       this.privateOrders,
       this.hasProducts,
-      this.categoryId});
+      this.categoryId,
+        this.closingTime,
+        this.openingTime});
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -56,6 +60,8 @@ class Data {
     deliveryCost = json['deliveryCost']?.toDouble();
     privateOrders = json['privateOrders'];
     hasProducts = json['hasProducts'];
+    closingTime = json['closingTime'] != null ? Date.fromJson(json['closingTime']) : null;
+    openingTime = json['openingTime'] != null ? Date.fromJson(json['openingTime']) : null;
   }
 }
 

@@ -7,6 +7,7 @@ import 'package:twaslna_dashboard/module_company/ui/screen/company_profile_scree
 import 'package:twaslna_dashboard/utils/components/custom_feild.dart';
 import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/components/error_screen.dart';
+import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
 import 'package:twaslna_dashboard/utils/components/stacked_form.dart';
 import 'package:twaslna_dashboard/utils/helpers/custom_flushbar.dart';
 
@@ -29,7 +30,6 @@ class CompanyLoadedState extends States {
       whatsappController.text = model?.whatsapp ?? '';
       faxController.text = model?.fax ?? '';
       emailController.text = model?.email ?? '';
-      deliveryCostController.text = '';
       stcController.text = model?.stc ?? '';
       bankController.text = model?.bank ?? '';
       screenState.refresh();
@@ -43,7 +43,6 @@ class CompanyLoadedState extends States {
   var whatsappController = TextEditingController();
   var faxController = TextEditingController();
   var emailController = TextEditingController();
-  var deliveryCostController = TextEditingController();
   var stcController = TextEditingController();
   var bankController = TextEditingController();
 
@@ -57,10 +56,11 @@ class CompanyLoadedState extends States {
         error: error,
       );
     }
+    print(model?.whatsapp);
     return StackedForm(
         child: Form(
           key: _key,
-          child: CustomListView.custom(
+          child: FixedContainer(child:CustomListView.custom(
               padding: EdgeInsets.only(right: 16, left: 16),
               children: [
                 // phone
@@ -104,6 +104,8 @@ class CompanyLoadedState extends States {
                 CustomFormField(
                   controller: whatsappController,
                   hintText: S.current.whatsapp,
+                  numbers: true,
+                  phone:true,
                 ),
                 // fax
                 Padding(
@@ -161,25 +163,10 @@ class CompanyLoadedState extends States {
                   controller: emailController,
                   hintText: S.current.email,
                 ),
-                // delivery cost
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 12.0, bottom: 8, right: 12, top: 16.0),
-                  child: Text(
-                    S.current.deliverPrice,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-                CustomFormField(
-                  controller: deliveryCostController,
-                  hintText: S.current.deliverPrice,
-                ),
-
                 SizedBox(
                   height: 100,
                 ),
-              ]),
+              ])),
         ),
         label: S.current.update,
         onTap: () {
@@ -193,7 +180,6 @@ class CompanyLoadedState extends States {
                 bank: bankController.text.trim(),
                 stc: stcController.text.trim(),
                 email: emailController.text.trim(),
-                deliveryCost: double.parse(deliveryCostController.text.trim()),
               ));
             } else {
               screenState.updateProfile(CreateCompanyProfile(
@@ -204,7 +190,6 @@ class CompanyLoadedState extends States {
                 bank: bankController.text.trim(),
                 stc: stcController.text.trim(),
                 email: emailController.text.trim(),
-                deliveryCost: double.parse(deliveryCostController.text.trim()),
               ));
             }
           } else {

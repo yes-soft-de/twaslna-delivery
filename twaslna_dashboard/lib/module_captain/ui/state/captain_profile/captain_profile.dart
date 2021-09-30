@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
@@ -9,6 +10,7 @@ import 'package:twaslna_dashboard/utils/components/custom_app_bar.dart';
 import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/components/empty_screen.dart';
 import 'package:twaslna_dashboard/utils/components/error_screen.dart';
+import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
 import 'package:twaslna_dashboard/utils/components/progresive_image.dart';
 import 'package:twaslna_dashboard/utils/components/stacked_form.dart';
 import 'package:twaslna_dashboard/utils/helpers/form_dialog.dart';
@@ -45,6 +47,7 @@ class CaptainProfileLoadedState extends States {
     }
     return StackedForm(
         child: CustomListView.custom(
+          // padding: EdgeInsets.only(left: 8,right: 8),
           children: [
             Center(
               child: Container(
@@ -58,13 +61,13 @@ class CaptainProfileLoadedState extends States {
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Container(
-                          width: double.maxFinite,
+                          width: 175,
                           height: 175,
                           child: Center(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(25),
+                            child: ClipOval(
+                              //   borderRadius: BorderRadius.circular(25),
                               child: Container(
-                                width: double.maxFinite,
+                                width: 175,
                                 height: 175,
                                 child: CustomNetworkImage(
                                   imageSource: model?.image ?? '',
@@ -76,18 +79,67 @@ class CaptainProfileLoadedState extends States {
                           ),
                         ),
                       ),
-                      customListTile(
-                          title: S.of(context).name,
-                          subTitle: model?.name,
-                          iconData: Icons.person_rounded),
-                      customListTile(
-                          title: S.of(context).age,
-                          subTitle: model?.age?.toString(),
-                          iconData: Icons.date_range_rounded),
-                      customListTile(
-                          title: S.of(context).phoneNumber,
-                          subTitle: model?.phone,
-                          iconData: Icons.phone),
+                      ListTile(
+                        leading:Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(Icons.person_rounded, color:Theme.of(context).primaryColor),
+                            )),
+                        title: Text(S.of(context).name,style: TextStyle(
+                            color: Colors.white
+                        ),) ,
+                        subtitle: Text(model?.name ?? S.current.unknown,style: TextStyle(
+                            color: Colors.white
+                        ),) ,
+                        trailing: customMiniTile(title: S.of(context).status,
+                            subTitle: model?.isOnline,
+                            iconData: Icons.wifi_rounded),
+                      ),
+                      ListTile(
+                        leading:Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(Icons.calendar_today_rounded, color:Theme.of(context).primaryColor),
+                            )),
+                        title: Text(S.of(context).age,style: TextStyle(
+                            color: Colors.white
+                        ),) ,
+                        subtitle: Text(model?.age?.toString() ?? S.current.unknown,style: TextStyle(
+                            color: Colors.white
+                        ),) ,
+                        trailing: customMiniTile(title: S.of(context).captainStatus,
+                            subTitle: model?.status,
+                            iconData: Icons.account_box_rounded),
+                      ),
+                      ListTile(
+                        leading:Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(Icons.phone, color:Theme.of(context).primaryColor),
+                            )),
+                        title: Text(S.of(context).phoneNumber,style: TextStyle(
+                            color: Colors.white
+                        ),) ,
+                        subtitle: Text(model?.phone ?? S.current.unknown,style: TextStyle(
+                            color: Colors.white
+                        ),) ,
+                        trailing: customMiniTile(
+                            title: S.of(context).car,
+                            subTitle: model?.car,
+                            iconData: Icons.local_taxi_rounded),
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Container(
@@ -103,13 +155,12 @@ class CaptainProfileLoadedState extends States {
                       Padding(
                         padding: const EdgeInsets.only(right:16.0,left: 16,bottom: 16),
                         child: Container(
-                          width: double.maxFinite,
+                          width: 175,
                           height: 175,
                           child: Center(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(25),
+                            child: ClipOval(
                               child: Container(
-                                width: double.maxFinite,
+                                width: 175,
                                 height: 175,
                                 child: CustomNetworkImage(
                                   imageSource: model?.identity ?? '',
@@ -121,10 +172,6 @@ class CaptainProfileLoadedState extends States {
                           ),
                         ),
                       ),
-                      customListTile(
-                          title: S.of(context).car,
-                          subTitle: model?.car,
-                          iconData: Icons.local_taxi_rounded),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Container(
@@ -140,13 +187,12 @@ class CaptainProfileLoadedState extends States {
                       Padding(
                         padding: const EdgeInsets.only(right:16.0,left: 16,bottom: 16),
                         child: Container(
-                          width: double.maxFinite,
+                          width: 175,
                           height: 175,
                           child: Center(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(25),
+                            child: ClipOval(
                               child: Container(
-                                width: double.maxFinite,
+                                width: 175,
                                 height: 175,
                                 child: CustomNetworkImage(
                                   imageSource: model?.mechanicLicense ?? '',
@@ -173,13 +219,12 @@ class CaptainProfileLoadedState extends States {
                       Padding(
                         padding: const EdgeInsets.only(right:16.0,left: 16,bottom: 16),
                         child: Container(
-                          width: double.maxFinite,
+                          width: 175,
                           height: 175,
                           child: Center(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(25),
+                            child: ClipOval(
                               child: Container(
-                                width: double.maxFinite,
+                                width: 175,
                                 height: 175,
                                 child: CustomNetworkImage(
                                   imageSource: model?.drivingLicence ?? '',
@@ -211,14 +256,6 @@ class CaptainProfileLoadedState extends States {
                           title: S.of(context).bounce,
                           subTitle: model?.bounce?.toString(),
                           iconData: Icons.wallet_giftcard_rounded),
-                      customListTile(
-                          title: S.of(context).captainStatus,
-                          subTitle: model?.status,
-                          iconData: Icons.account_box_rounded),
-                      customListTile(
-                          title: S.of(context).status,
-                          subTitle: model?.isOnline,
-                          iconData: Icons.wifi_rounded),
                     ]),
               ),
             ),
@@ -291,5 +328,57 @@ class CaptainProfileLoadedState extends States {
       ),
     );
   }
-
+Widget customMiniTile({required String title, String? subTitle, required IconData iconData}){
+    var context = screenState.context;
+    Widget? icon;
+    if (title == S.current.captainStatus || title == S.current.status) {
+      icon = PhysicalModel(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          elevation: 5,
+          shape: BoxShape.circle,
+          child: Icon(
+            Icons.circle,
+            color: subTitle == 'active' ? Colors.green : Colors.red,
+            size: 30,
+          ));
+      subTitle = subTitle == 'active'
+          ? S.current.captainStateActive
+          : S.current.captainStateInactive;
+    }
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.5,
+      child: Row(
+        crossAxisAlignment:CrossAxisAlignment.center,
+        children: [
+          Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(iconData, color:Theme.of(context).primaryColor),
+              )),
+          SizedBox(width: 16,),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title,style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18
+              ),overflow:TextOverflow.ellipsis,),
+              Text('${subTitle}',style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),),
+            ],
+          ),
+          Spacer(flex: 1,),
+          SizedBox(child: icon,)
+        ],
+      ),
+    );
+}
 }

@@ -1,0 +1,30 @@
+import 'package:injectable/injectable.dart';
+import 'package:twaslna_dashboard/abstracts/data_model/data_model.dart';
+import 'package:twaslna_dashboard/generated/l10n.dart';
+import 'package:twaslna_dashboard/module_filters/manager/filters_manager.dart';
+import 'package:twaslna_dashboard/module_filters/model/captain_filter_model.dart';
+import 'package:twaslna_dashboard/module_filters/response/captain_filter_response.dart';
+import 'package:twaslna_dashboard/utils/helpers/status_code_helper.dart';
+
+@injectable
+class FiltersService {
+
+  final FiltersManager _filtersManager;
+
+  FiltersService(this._filtersManager);
+
+  Future<DataModel> getCaptainFilter(String key) async {
+
+    CaptainFilterResponse? _captainFilter = await _filtersManager.getCaptainFilter(key);
+    if (_captainFilter == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (_captainFilter.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(_captainFilter.statusCode));
+    }
+    if (_captainFilter.data == null) return DataModel.empty();
+    return CaptainFilterModel.withData(_captainFilter.data!);
+  }
+
+}

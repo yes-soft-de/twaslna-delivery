@@ -3,25 +3,42 @@ import 'package:twaslna_dashboard/abstracts/data_model/data_model.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/module_captain/response/captain_account_balance_response.dart';
 
-class BalanceModel extends DataModel{
+class BalanceModel extends DataModel {
 
   AccountBalance? _models;
+
   BalanceModel();
 
   BalanceModel.withData(Data data) {
+    List<PaymentModel> paymentsFromCaptain = [];
+    List<PaymentModel> paymentsToCaptain = [];
+    data.paymentsFromCaptain?.forEach((element) {
+      paymentsFromCaptain.add(PaymentModel(
+          paymentDate: DateTime.fromMillisecondsSinceEpoch(
+              (element.date?.timestamp ?? 0) * 1000), amount:element.amount));
+    });
+    data.paymentsToCaptain?.forEach((element) {
+      paymentsToCaptain.add(PaymentModel(
+          paymentDate: DateTime.fromMillisecondsSinceEpoch(
+              (element.date?.timestamp ?? 0) * 1000), amount:element.amount));
+    });
     _models = AccountBalance(
-      sumPaymentsFromCaptain: data.sumPaymentsFromCaptain ?? 0,
-      sumPaymentsToCaptain: data.sumPaymentsToCaptain ?? 0,
-      countOrdersDelivered: data.countOrdersDelivered ?? 0,
-      sumInvoiceAmount: data.sumInvoiceAmount ?? 0,
-      deliveryCost: data.deliveryCost ?? 0,
-      amountYouOwn: data.amountWithCaptain ?? 0,
-      remainingAmountForCompany: data.remainingAmountForCompany ?? 0,
-      salary: data.salary ?? 0,
-      bounce: data.bounce ?? 0,
-      kilometerBonus: data.kilometerBonus ?? 0,
-      netProfit: data.netProfit ?? 0,
-      total: data.total ?? 0,
+        sumPaymentsFromCaptain: data.sumPaymentsFromCaptain ?? 0,
+        sumPaymentsToCaptain: data.sumPaymentsToCaptain ?? 0,
+        countOrdersDelivered: data.countOrdersDelivered ?? 0,
+        sumInvoiceAmount: data.sumInvoiceAmount ?? 0,
+        deliveryCost: data.deliveryCost ?? 0,
+        amountYouOwn: data.amountWithCaptain ?? 0,
+        remainingAmountForCompany: data.remainingAmountForCompany ?? 0,
+        salary: data.salary ?? 0,
+        bounce: data.bounce ?? 0,
+        kilometerBonus: data.kilometerBonus ?? 0,
+        netProfit: data.netProfit ?? 0,
+        total: data.total ?? 0,
+        paymentsFromCaptain:paymentsFromCaptain,
+        paymentsToCaptain:paymentsToCaptain,
+
+
     );
   }
 
@@ -35,7 +52,7 @@ class PaymentModel {
   DateTime paymentDate;
   var amount;
 
-  PaymentModel(this.paymentDate, this.amount);
+  PaymentModel({required this.paymentDate, required this.amount});
 }
 
 class AccountBalance extends BalanceModel {
@@ -51,20 +68,24 @@ class AccountBalance extends BalanceModel {
   num kilometerBonus;
   num netProfit;
   num total;
+  List<PaymentModel> paymentsFromCaptain = [];
+  List<PaymentModel> paymentsToCaptain = [];
 
-  AccountBalance(
-      {required this.sumPaymentsFromCaptain,
-        required this.sumPaymentsToCaptain,
-        required this.countOrdersDelivered,
-        required this.sumInvoiceAmount,
-        required this.deliveryCost,
-        required this.amountYouOwn,
-        required this.remainingAmountForCompany,
-        required this.salary,
-        required this.bounce,
-        required this.kilometerBonus,
-        required this.netProfit,
-        required this.total});
+  AccountBalance({required this.sumPaymentsFromCaptain,
+    required this.sumPaymentsToCaptain,
+    required this.countOrdersDelivered,
+    required this.sumInvoiceAmount,
+    required this.deliveryCost,
+    required this.amountYouOwn,
+    required this.remainingAmountForCompany,
+    required this.salary,
+    required this.bounce,
+    required this.kilometerBonus,
+    required this.netProfit,
+    required this.total,
+    required this.paymentsFromCaptain,
+    required this.paymentsToCaptain
+  });
 
   AccountBalance.none({
     this.sumPaymentsFromCaptain = 0,
@@ -78,5 +99,6 @@ class AccountBalance extends BalanceModel {
     this.bounce = 0,
     this.kilometerBonus = 0,
     this.netProfit = 0,
-    this.total = 0}) : super();
+    this.total = 0,
+  }) : super();
 }

@@ -22,10 +22,13 @@ class InActiveCaptainsStateManager {
   final PublishSubject<States> _stateSubject = PublishSubject();
 
   Stream<States> get stateStream => _stateSubject.stream;
+  InActiveCaptainsScreenState? _captainsScreenState;
+  InActiveCaptainsScreenState? get state => _captainsScreenState;
 
   InActiveCaptainsStateManager(this._captainsService);
 
   void getCaptains(InActiveCaptainsScreenState screenState){
+    _captainsScreenState = screenState;
     _stateSubject.add(LoadingState(screenState));
     _captainsService.getInActiveCaptains().then((value){
      if (value.hasError){

@@ -22,6 +22,8 @@ class CaptainManager {
   Future<CaptainAccountBalanceResponse?> getAccountBalance(int captainId) => _captainRepository.getCaptainAccountBalance(captainId);
   Future<CaptainAccountBalanceResponse?> getAccountBalanceLastMonth(int captainId) => _captainRepository.getCaptainAccountBalance(captainId);
   Future<CaptainUnfinishedPaymentsResponse?> getPayments() => _captainRepository.captainPayments();
+  Future<CaptainUnfinishedPaymentsResponse?> getCaptainRemainingPayments() => _captainRepository.captainRemainingPayments();
+
 
 
 }

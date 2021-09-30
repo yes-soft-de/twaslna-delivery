@@ -8,12 +8,15 @@ import 'package:twaslna_dashboard/module_captain/ui/screen/in_active_captains_sc
 import 'package:twaslna_dashboard/module_categories/ui/screen/store_categories_screen.dart';
 import 'package:twaslna_dashboard/module_company/ui/screen/company_finance_screen.dart';
 import 'package:twaslna_dashboard/module_company/ui/screen/company_profile_screen.dart';
+import 'package:twaslna_dashboard/module_filters/ui/screen/captain_filter_screen.dart';
 import 'package:twaslna_dashboard/module_main/sceen/home_screen.dart';
 import 'package:twaslna_dashboard/module_orders/ui/screen/OngoingOrdersScreen.dart';
 import 'package:twaslna_dashboard/module_orders/ui/screen/my_orders_screen.dart';
+import 'package:twaslna_dashboard/module_orders/ui/screen/order_accounts_screen.dart';
 import 'package:twaslna_dashboard/module_settings/ui/settings_page/settings_page.dart';
 import 'package:twaslna_dashboard/module_stores/ui/screen/stores_screen.dart';
 import 'package:twaslna_dashboard/navigator_menu/navigator_menu.dart';
+import 'package:twaslna_dashboard/utils/global/screen_type.dart';
 
 @injectable
 class MainScreen extends StatefulWidget {
@@ -29,6 +32,8 @@ class MainScreen extends StatefulWidget {
   final OrdersScreen _myOrdersScreen;
   final OnGoingOrdersScreen _onGoingOrdersScreen;
   final CompanyFinanceScreen _companyFinanceScreen;
+  final OrdersAccountScreen _ordersAccountScreen;
+  final CaptainFilterScreen _captainFilterScreen;
   final List<Widget> pages = [];
 
   MainScreen(
@@ -43,7 +48,9 @@ class MainScreen extends StatefulWidget {
       this._captainsPaymentsScreen,
       this._myOrdersScreen,
       this._onGoingOrdersScreen,
-      this._companyFinanceScreen
+      this._companyFinanceScreen,
+      this._ordersAccountScreen,
+      this._captainFilterScreen
       ) {
     pages.add(_homeScreen);
     pages.add(_storeCategoriesScreen);
@@ -57,6 +64,8 @@ class MainScreen extends StatefulWidget {
     pages.add(_myOrdersScreen);
     pages.add(_onGoingOrdersScreen);
     pages.add(_companyFinanceScreen);
+    pages.add(_ordersAccountScreen);
+    pages.add(_captainFilterScreen);
   }
 
   @override
@@ -75,9 +84,34 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (ScreenType.isDesktop()) {
+      return Scaffold(
+        body: Row(
+          children: [
+            NavigatorMenu(
+              width: 300,
+              currentIndex: selectedPage,
+              onTap: (index) {
+                selectedPage = index;
+                setState(() {});
+              },
+            ),
+            Expanded(
+              child: Scaffold(
+                body: AnimatedSwitcher(
+                  duration: Duration(milliseconds: 50),
+                  child: currentPage[selectedPage],
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    }
     return Scaffold(
       key: GlobalVariable.mainScreenScaffold,
       drawer: NavigatorMenu(
+        width: MediaQuery.of(context).size.width * 0.75,
         currentIndex: selectedPage,
         onTap: (index) {
           selectedPage = index;

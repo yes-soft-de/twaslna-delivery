@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "BestStores": MessageLookupByLibrary.simpleMessage("Best Stores"),
+        "Logs": MessageLookupByLibrary.simpleMessage("Logs"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("distance in KM"),
         "StatusCodeNotFound":
@@ -95,12 +96,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain in Store"),
         "captainInStoreDescription":
             MessageLookupByLibrary.simpleMessage("captain packing your order"),
+        "captainInfo": MessageLookupByLibrary.simpleMessage("Captain Info"),
+        "captainInfoBalance":
+            MessageLookupByLibrary.simpleMessage("Captain Balance Info"),
         "captainIsDelivering":
             MessageLookupByLibrary.simpleMessage("Captain is Delivering"),
         "captainIsInStore":
             MessageLookupByLibrary.simpleMessage("Captain is in store"),
         "captainIsInTheWay":
             MessageLookupByLibrary.simpleMessage("Captain is in the way"),
+        "captainLogs": MessageLookupByLibrary.simpleMessage("Captain Logs"),
+        "captainMoney": MessageLookupByLibrary.simpleMessage("Financial Dues"),
         "captainNotActive": MessageLookupByLibrary.simpleMessage(
             "Your account not activated yet please wait"),
         "captainPayments":
@@ -110,8 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainStateActive": MessageLookupByLibrary.simpleMessage("Active"),
         "captainStateInactive":
             MessageLookupByLibrary.simpleMessage("UnActive"),
-        "captainStatus":
-            MessageLookupByLibrary.simpleMessage("Captain Account Status"),
+        "captainStatus": MessageLookupByLibrary.simpleMessage("Account Status"),
         "captains": MessageLookupByLibrary.simpleMessage("Captains"),
         "car": MessageLookupByLibrary.simpleMessage("Car"),
         "card": MessageLookupByLibrary.simpleMessage("Card"),
@@ -120,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "category": MessageLookupByLibrary.simpleMessage("category"),
         "categoryCreatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Category created successfully"),
+        "categoryImage": MessageLookupByLibrary.simpleMessage("Category Image"),
         "categoryName": MessageLookupByLibrary.simpleMessage("CategoryName"),
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Change Language"),
@@ -149,11 +155,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseYourState":
             MessageLookupByLibrary.simpleMessage("choose your state"),
         "city": MessageLookupByLibrary.simpleMessage("City"),
+        "closingTime": MessageLookupByLibrary.simpleMessage("Closing Time"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "company": MessageLookupByLibrary.simpleMessage("Company"),
         "companyFinance":
             MessageLookupByLibrary.simpleMessage("Company Finance"),
         "companyInfo": MessageLookupByLibrary.simpleMessage("Company Info"),
+        "companyProfileCreatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "Company profile created successfully"),
+        "companyProfileUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "Company profile updated successfully"),
         "completeTime": MessageLookupByLibrary.simpleMessage("Completion Time"),
         "completedOrders":
             MessageLookupByLibrary.simpleMessage("Completed Orders"),
@@ -173,7 +186,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "countCompletedOrders":
             MessageLookupByLibrary.simpleMessage("Completed Orders"),
         "countOngoingOrders":
-            MessageLookupByLibrary.simpleMessage("Count Ongoing Orders"),
+            MessageLookupByLibrary.simpleMessage("Ongoing Orders"),
         "countOrdersDelivered":
             MessageLookupByLibrary.simpleMessage("Count Orders Delivered"),
         "countProducts": MessageLookupByLibrary.simpleMessage("Products Count"),
@@ -387,6 +400,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "online": MessageLookupByLibrary.simpleMessage("online"),
         "openChatRoom": MessageLookupByLibrary.simpleMessage("Open Chat Room"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
+        "openingTime": MessageLookupByLibrary.simpleMessage("Opening Time"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "orderAverage": MessageLookupByLibrary.simpleMessage(
             "percent of your orders limit"),
@@ -429,6 +443,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderType": MessageLookupByLibrary.simpleMessage("Order Type"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
+        "ordersAccount": MessageLookupByLibrary.simpleMessage("Orders Account"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),
         "ourBankAccountNumber":
             MessageLookupByLibrary.simpleMessage("Our Bank Account Number"),
@@ -443,12 +458,26 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordIsTooShort":
             MessageLookupByLibrary.simpleMessage("Password is too short"),
+        "pay": MessageLookupByLibrary.simpleMessage("Pay"),
         "paySubscription":
             MessageLookupByLibrary.simpleMessage("Pay Subscription"),
+        "paymentAmount": MessageLookupByLibrary.simpleMessage("Payment amount"),
+        "paymentFromCaptain":
+            MessageLookupByLibrary.simpleMessage("Payment From Captain"),
         "paymentHistory":
             MessageLookupByLibrary.simpleMessage("Payment History"),
         "paymentMethod": MessageLookupByLibrary.simpleMessage("Payment Method"),
         "paymentMethodHint": MessageLookupByLibrary.simpleMessage("Choose"),
+        "paymentSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Payment has been registered successfully"),
+        "paymentToCaptain":
+            MessageLookupByLibrary.simpleMessage("Payment To Captain"),
+        "paymentsFromCaptain":
+            MessageLookupByLibrary.simpleMessage("Payments From Captain"),
+        "paymentsManagement":
+            MessageLookupByLibrary.simpleMessage("Make Payments"),
+        "paymentsToCaptain":
+            MessageLookupByLibrary.simpleMessage("Payments To Captain"),
         "personalData": MessageLookupByLibrary.simpleMessage("Personal Data"),
         "phone": MessageLookupByLibrary.simpleMessage("Phone"),
         "phone2": MessageLookupByLibrary.simpleMessage("Phone 2"),
@@ -555,6 +584,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "saveSuccess": MessageLookupByLibrary.simpleMessage("Save Success"),
         "savingInvoice": MessageLookupByLibrary.simpleMessage(
             "Please wait we are invoice saving ..."),
+        "search": MessageLookupByLibrary.simpleMessage("Search"),
         "searchF": MessageLookupByLibrary.simpleMessage("Search for"),
         "searchFor":
             MessageLookupByLibrary.simpleMessage("Search for store , product"),
@@ -564,6 +594,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "search for order by order number"),
         "searchingForCaptain":
             MessageLookupByLibrary.simpleMessage("Searching for Captain"),
+        "searchingForCategories":
+            MessageLookupByLibrary.simpleMessage("Searching for categories"),
+        "searchingForStores":
+            MessageLookupByLibrary.simpleMessage("searching for store"),
         "second": MessageLookupByLibrary.simpleMessage("second"),
         "seconds": MessageLookupByLibrary.simpleMessage("seconds"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("Send me code"),
@@ -600,6 +634,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "store": MessageLookupByLibrary.simpleMessage("Store"),
         "storeCategories":
             MessageLookupByLibrary.simpleMessage("Stores Categories"),
+        "storeCreatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Store Created Successfully"),
         "storeImage": MessageLookupByLibrary.simpleMessage("Store Image"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("Store Info"),
         "storeLocation": MessageLookupByLibrary.simpleMessage("Store location"),
@@ -609,6 +645,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeOwner": MessageLookupByLibrary.simpleMessage("Store Owner"),
         "storePhone": MessageLookupByLibrary.simpleMessage("Store Phone"),
         "storeProducts": MessageLookupByLibrary.simpleMessage("Store Products"),
+        "storeService": MessageLookupByLibrary.simpleMessage("Store Service"),
+        "storeUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Store Updated Successfully"),
         "stores": MessageLookupByLibrary.simpleMessage("Stores"),
         "storesList": MessageLookupByLibrary.simpleMessage("Stores List"),
         "submittingProfile":
@@ -717,6 +756,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "whatsappWithClient": MessageLookupByLibrary.simpleMessage("Client"),
         "whatsappWithStoreOwner":
             MessageLookupByLibrary.simpleMessage("Store Owner"),
+        "workTime": MessageLookupByLibrary.simpleMessage("Store Shift"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "youReached": MessageLookupByLibrary.simpleMessage("You have reached "),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(

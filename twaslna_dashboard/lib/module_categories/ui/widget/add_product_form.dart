@@ -10,6 +10,7 @@ import 'package:twaslna_dashboard/module_categories/ui/state/product_store/produ
 import 'package:twaslna_dashboard/utils/components/custom_app_bar.dart';
 import 'package:twaslna_dashboard/utils/components/custom_feild.dart';
 import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
+import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
 import 'package:twaslna_dashboard/utils/components/stacked_form.dart';
 import 'package:twaslna_dashboard/utils/effect/checked.dart';
 import 'package:twaslna_dashboard/utils/effect/hidder.dart';
@@ -40,7 +41,7 @@ class _AddProductsFormState extends State<AddProductsForm> {
       body: StackedForm(
           child: Form(
             key: _key,
-            child: CustomListView.custom(
+            child: FixedContainer(child: CustomListView.custom(
                 padding: EdgeInsets.only(right: 16,left: 16),
                 children: [
                   Hider(
@@ -56,8 +57,8 @@ class _AddProductsFormState extends State<AddProductsForm> {
                           items:widget.state!.getChoices(),
                           onChanged: (v){
                             catId = v.toString();
-                           setState(() {
-                           });
+                            setState(() {
+                            });
                           },
                           hint: Text(S.current.chooseCategory,style: TextStyle(
                               fontWeight: FontWeight.bold
@@ -118,7 +119,7 @@ class _AddProductsFormState extends State<AddProductsForm> {
                     ),
                   ),
                   SizedBox(height: 100,),
-                ]),
+                ]),),
           ),
           label: S.current.save,
           onTap: () {
@@ -168,7 +169,7 @@ class _UpdateProductsFormState extends State<UpdateProductsForm> {
       body: StackedForm(
           child: Form(
             key: _key,
-            child: CustomListView.custom(
+            child: FixedContainer(child: CustomListView.custom(
                 padding: EdgeInsets.only(right: 16,left: 16),
                 children: [
                   Padding(
@@ -218,7 +219,7 @@ class _UpdateProductsFormState extends State<UpdateProductsForm> {
                     ),
                   ),
                   SizedBox(height: 100,),
-                ]),
+                ]),),
           ),
           label: S.current.save,
           onTap: () {

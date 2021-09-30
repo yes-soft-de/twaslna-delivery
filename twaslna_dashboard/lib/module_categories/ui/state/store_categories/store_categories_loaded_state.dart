@@ -6,10 +6,12 @@ import 'package:twaslna_dashboard/module_categories/request/store_categories_req
 import 'package:twaslna_dashboard/module_categories/ui/screen/store_categories_screen.dart';
 import 'package:twaslna_dashboard/module_categories/ui/state/store_categories/store_categories_state.dart';
 import 'package:twaslna_dashboard/module_stores/stores_routes.dart';
+import 'package:twaslna_dashboard/utils/components/costom_search.dart';
 import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/components/empty_screen.dart';
 import 'package:twaslna_dashboard/utils/components/error_screen.dart';
 import 'package:twaslna_dashboard/utils/components/progresive_image.dart';
+import 'package:twaslna_dashboard/utils/global/screen_type.dart';
 import 'package:twaslna_dashboard/utils/helpers/form_dialog.dart';
 
 class StoreCategoriesLoadedState extends StoreCategoriesState {
@@ -26,7 +28,7 @@ class StoreCategoriesLoadedState extends StoreCategoriesState {
       screenState.refresh();
     }
   }
-
+String? search;
   @override
   Widget getUI(BuildContext context) {
     if (error != null) {
@@ -43,7 +45,16 @@ class StoreCategoriesLoadedState extends StoreCategoriesState {
             screenState.getStoreCategories();
           });
     }
-    return CustomListView.custom(children: getCategories());
+    return Container(
+      width: double.maxFinite,
+      child: Center(
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: 600
+          ),
+          child: CustomListView.custom(children: getCategories()),
+        ),
+      ),);
   }
 
   List<Widget> getCategories() {
@@ -52,17 +63,24 @@ class StoreCategoriesLoadedState extends StoreCategoriesState {
       return widgets;
     }
     if (model!.isEmpty) return widgets;
-    model?.forEach((element) {
+    for (var element in model ?? <StoreCategoriesModel>[]) {
+
+      if (!element.categoryName.contains(search ?? '') && search != null) {
+        continue;
+      }
+
       widgets.add(Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(left:16.0,right: 16.0,bottom: 8.0,top: 8.0),
         child: InkWell(
-          borderRadius:BorderRadius.circular(25),
-          onTap: (){
-         //   Navigator.of(screenState.context).pushNamed(StoresRoutes.STORES,arguments: element.id.toString());
+          borderRadius: BorderRadius.circular(25),
+          onTap: () {
+            //   Navigator.of(screenState.context).pushNamed(StoresRoutes.STORES,arguments: element.id.toString());
           },
           child: Container(
             decoration: BoxDecoration(
-              color: Theme.of(screenState.context).primaryColor,
+              color: Theme
+                  .of(screenState.context)
+                  .primaryColor,
               borderRadius: BorderRadius.circular(25),
             ),
             child: Flex(
@@ -74,12 +92,12 @@ class StoreCategoriesLoadedState extends StoreCategoriesState {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(25),
                     child: SizedBox(
-                      height: 75,
-                      width: 75,
+                      height:75,
+                      width:75,
                       child: CustomNetworkImage(
                         imageSource: element.image,
-                        width: 75,
-                        height: 75,
+                        height:75,
+                        width:75,
                       ),
                     ),
                   ),
@@ -87,40 +105,46 @@ class StoreCategoriesLoadedState extends StoreCategoriesState {
                 Text(
                   element.categoryName,
                   style: TextStyle(
-                    color: Colors.white,
-                  fontWeight: FontWeight.bold
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                   ),
                 ),
                 InkWell(
                   customBorder: CircleBorder(),
-                  onTap: (){
+                  onTap: () {
                     showDialog(
                         context: screenState.context,
                         builder: (context) {
-                      return formDialog(
-                          context, S.current.storeCategories, S.current.category,
-                              (name, image) {
-                            Navigator.of(context).pop();
-                             screenState.updateCategory(UpdateStoreCategoriesRequest(
-                                  id: element.id,
-                                  description: '',
-                                  storeCategoryName: name,
-                                  image: image
+                          return formDialog(
+                              context, S.current.storeCategories,
+                              S.current.category,
+                                  (name, image) {
+                                Navigator.of(context).pop();
+                                screenState.updateCategory(
+                                    UpdateStoreCategoriesRequest(
+                                        id: element.id,
+                                        description: '',
+                                        storeCategoryName: name,
+                                        image: image
+                                    ));
+                              },
+                              storeCategoriesRequest: UpdateStoreCategoriesRequest(
+                                id: element.id,
+                                description: '',
+                                storeCategoryName: element.categoryName,
+                                image: element.image,
                               ));
-                          },storeCategoriesRequest:UpdateStoreCategoriesRequest(
-                        id: element.id,
-                        description: '',
-                        storeCategoryName: element.categoryName,
-                        image: element.image,
-                      ));
-                    });
+                        });
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Theme.of(screenState.context).backgroundColor.withOpacity(0.2),
+                        color: Theme
+                            .of(screenState.context)
+                            .backgroundColor
+                            .withOpacity(0.2),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -137,7 +161,29 @@ class StoreCategoriesLoadedState extends StoreCategoriesState {
           ),
         ),
       ));
-    });
+
+    }
+
+    if (model != null) {
+      widgets.insert(
+          0,
+          Padding(
+            padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16),
+            child: CustomDeliverySearch(
+              hintText: S.current.searchingForCategories,
+              onChanged: (s) {
+                if (s == '' || s.isEmpty) {
+                  search = null;
+                  screenState.refresh();
+                } else {
+                  search = s;
+                  screenState.refresh();
+                }
+              },
+            ),
+          ));
+    }
+
     return widgets;
   }
 }
