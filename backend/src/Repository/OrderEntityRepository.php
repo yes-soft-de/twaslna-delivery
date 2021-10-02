@@ -133,7 +133,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->setParameter('ongoing', self::ONGOING)
 
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getSingleScalarResult();
     }
 
     public function countCancelledOrders()
@@ -394,7 +394,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('OrderEntity')
 
-          ->select('count(OrderEntity.id) as count')
+          ->select('count(OrderEntity.id) as countOrdersInToday')
         
           ->andWhere("OrderEntity.state != :cancelled")
           ->andWhere('OrderEntity.createdAt >= :fromDate')
@@ -405,7 +405,7 @@ class OrderEntityRepository extends ServiceEntityRepository
           ->setParameter('cancelled', self::CANCEL)
           
           ->getQuery()
-          ->getOneOrNullResult();
+          ->getSingleScalarResult();
     }
 
     public function countCaptainOrdersDelivered($captainId)
@@ -598,7 +598,7 @@ class OrderEntityRepository extends ServiceEntityRepository
                 ->andWhere("OrderEntity.state = :delivered")
                 ->setParameter('delivered', self::DELIVERED)
                 ->getQuery()
-                ->getOneOrNullResult();
+                ->getSingleScalarResult();
     }
 
     public function getOrdersForSpecificClient($clientID)

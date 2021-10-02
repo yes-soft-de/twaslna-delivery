@@ -747,7 +747,6 @@ class OrderService
 
     public function countReport()
     {
-        $response = [];
         $item['countCompletedOrders'] = $this->orderManager->countCompletedOrders();
         $item['countOngoingOrders'] = $this->orderManager->countOngoingOrders();
         $item['countCaptains'] = $this->captainProfileService->countCaptains();
@@ -757,7 +756,7 @@ class OrderService
         $item['countOrdersInToday'] = $this->countOrdersInToday();
         
         $response = $this->autoMapping->map("array", CountReportResponse::class, $item);
-
+        
         return $response;
     }
 
