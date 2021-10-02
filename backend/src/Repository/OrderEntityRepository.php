@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainProfileEntity;
 use App\Entity\StoreOwnerProfileEntity;
+use App\Entity\ClientProfileEntity;
 use App\Entity\BranchesEntity;
 use App\Entity\OrderDetailEntity;
 use App\Entity\DeliveryCompanyFinancialCompensationEntity;
@@ -299,6 +300,58 @@ class OrderEntityRepository extends ServiceEntityRepository
           ->addGroupBy('OrderEntity.storeOwnerProfileID')
 
           ->having('count(OrderEntity.storeOwnerProfileID) > 0')
+          ->setMaxResults(15)
+          ->addOrderBy('countOrdersInMonth','DESC')
+         
+          ->setParameter('fromDate', $fromDate)
+          ->setParameter('toDate', $toDate)
+          ->setParameter('cancelled', self::CANCEL)
+          ->setParameter('pending', self::PENDING)
+          ->getQuery()
+          ->getResult();
+    }
+    
+    public function getCountOrdersEveryCaptainInLastMonth($fromDate, $toDate)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+          ->select('OrderEntity.captainID', 'count(OrderEntity.captainID) as countOrdersInMonth')
+          ->addSelect('CaptainProfileEntity.captainName', 'CaptainProfileEntity.image')
+          ->leftJoin(CaptainProfileEntity::class, 'CaptainProfileEntity', Join::WITH, 'CaptainProfileEntity.captainID = OrderEntity.captainID')
+        
+          ->where('OrderEntity.createdAt >= :fromDate')
+          ->andWhere('OrderEntity.createdAt < :toDate')
+          ->andWhere("OrderEntity.state != :cancelled")
+          ->andWhere("OrderEntity.state != :pending")
+
+          ->addGroupBy('OrderEntity.captainID')
+
+          ->having('count(OrderEntity.captainID) > 0')
+          ->setMaxResults(15)
+          ->addOrderBy('countOrdersInMonth','DESC')
+         
+          ->setParameter('fromDate', $fromDate)
+          ->setParameter('toDate', $toDate)
+          ->setParameter('cancelled', self::CANCEL)
+          ->setParameter('pending', self::PENDING)
+          ->getQuery()
+          ->getResult();
+    }
+    
+    public function getCountOrdersEveryClientInLastMonth($fromDate, $toDate)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+          ->select('OrderEntity.clientID', 'count(OrderEntity.clientID) as countOrdersInMonth')
+          ->addSelect('ClientProfileEntity.clientName', 'ClientProfileEntity.image')
+          ->leftJoin(ClientProfileEntity::class, 'ClientProfileEntity', Join::WITH, 'ClientProfileEntity.clientID = OrderEntity.clientID')
+        
+          ->where('OrderEntity.createdAt >= :fromDate')
+          ->andWhere('OrderEntity.createdAt < :toDate')
+          ->andWhere("OrderEntity.state != :cancelled")
+          ->andWhere("OrderEntity.state != :pending")
+
+          ->addGroupBy('OrderEntity.clientID')
+
+          ->having('count(OrderEntity.clientID) > 0')
           ->setMaxResults(15)
           ->addOrderBy('countOrdersInMonth','DESC')
          

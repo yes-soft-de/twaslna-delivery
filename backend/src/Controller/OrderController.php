@@ -187,6 +187,32 @@ class OrderController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
+   /**
+     * @Route("/countOrdersEveryCaptainInLastMonth", name="getCountOrdersEveryCaptainInLastMonth",methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getCountOrdersEveryCaptainInLastMonth()
+    {
+        $result = $this->orderService->getCountOrdersEveryCaptainInLastMonth();
+
+        return $this->response($result, self::FETCH);
+    }
+
+   /**
+     * @Route("/countOrdersEveryClientInLastMonth", name="getCountOrdersEveryClientInLastMonth",methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getCountOrdersEveryClientInLastMonth()
+    {
+        $result = $this->orderService->getCountOrdersEveryClientInLastMonth();
+
+        return $this->response($result, self::FETCH);
+    }
+
     /**
       * @Route("/getAcceptedOrder", name="getAcceptedOrderByCaptainId", methods={"GET"})
       * @IsGranted("ROLE_CAPTAIN")
