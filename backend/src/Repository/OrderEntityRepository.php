@@ -405,7 +405,7 @@ class OrderEntityRepository extends ServiceEntityRepository
           ->setParameter('cancelled', self::CANCEL)
           
           ->getQuery()
-          ->getResult();
+          ->getOneOrNullResult();
     }
 
     public function countCaptainOrdersDelivered($captainId)
