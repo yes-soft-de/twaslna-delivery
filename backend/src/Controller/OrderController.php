@@ -175,14 +175,53 @@ class OrderController extends BaseController
     }
 
    /**
-     * @Route("/countordersandtopowner", name="getTopOwnersInThisMonthAndCountOrdersForOwnerInDay",methods={"GET"})
+     * @Route("/countOrdersEveryStoreInLastMonth", name="getCountOrdersEveryStoreInLastMonth",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
      */
-    public function getCountOrdersInDayAndTopOwnersInThisMonth()
+    public function getCountOrdersEveryStoreInLastMonth()
     {
-        $result = $this->orderService->getCountOrdersInDayAndTopOwnersInThisMonth();
+        $result = $this->orderService->getCountOrdersEveryStoreInLastMonth();
+
+        return $this->response($result, self::FETCH);
+    }
+
+   /**
+     * @Route("/countOrdersEveryCaptainInLastMonth", name="getCountOrdersEveryCaptainInLastMonth",methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getCountOrdersEveryCaptainInLastMonth()
+    {
+        $result = $this->orderService->getCountOrdersEveryCaptainInLastMonth();
+
+        return $this->response($result, self::FETCH);
+    }
+
+   /**
+     * @Route("/countOrdersEveryClientInLastMonth", name="getCountOrdersEveryClientInLastMonth",methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getCountOrdersEveryClientInLastMonth()
+    {
+        $result = $this->orderService->getCountOrdersEveryClientInLastMonth();
+
+        return $this->response($result, self::FETCH);
+    }
+
+   /**
+     * @Route("/countOrdersEveryProductInLastMonth", name="getCountOrdersEveryProductInLastMonth",methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getCountOrdersEveryProductInLastMonth()
+    {
+        $result = $this->orderService->getCountOrdersEveryProductInLastMonth();
 
         return $this->response($result, self::FETCH);
     }

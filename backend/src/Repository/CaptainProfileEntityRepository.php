@@ -285,7 +285,7 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
                 ->andWhere("captainProfileEntity.status = :active")
                 ->setParameter('active', 'active')
                 ->getQuery()
-                ->getOneOrNullResult();
+                ->getSingleScalarResult();
     }
 
     public function captainFilter($name)

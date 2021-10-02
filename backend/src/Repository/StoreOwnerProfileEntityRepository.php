@@ -153,6 +153,6 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('profile')
         ->select('count(profile.id) as count')
         ->getQuery()
-        ->getOneOrNullResult();
+        ->getSingleScalarResult();
     }
 }

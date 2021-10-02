@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\OrderDetailEntity;
+use App\Entity\OrderEntity;
 use App\Entity\ProductEntity;
-use App\Entity\StoreProductEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
@@ -17,6 +17,8 @@ use Doctrine\ORM\Query\Expr\Join;
  */
 class OrderDetailEntityRepository extends ServiceEntityRepository
 {
+    const PENDING="pending";
+    const CANCEL="cancelled";
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, OrderDetailEntity::class);
@@ -73,4 +75,32 @@ class OrderDetailEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getCountOrdersEveryProductInLastMonth($fromDate, $toDate)
+    {
+        return $this->createQueryBuilder('OrderDetailEntity')
+          ->select('OrderDetailEntity.productID', 'count(OrderDetailEntity.productID) as countOrdersInMonth')
+          ->addSelect('ProductEntity.productName', 'ProductEntity.productImage')
+          
+          ->leftJoin(OrderEntity::class, 'OrderEntity', Join::WITH, 'OrderEntity.id = OrderDetailEntity.orderID')
+          ->leftJoin(ProductEntity::class, 'ProductEntity', Join::WITH, 'ProductEntity.id = OrderDetailEntity.productID')
+          ->where('OrderEntity.createdAt >= :fromDate')
+          ->andWhere('OrderEntity.createdAt < :toDate')
+          ->andWhere("OrderEntity.state != :cancelled")
+          ->andWhere("OrderEntity.state != :pending")
+
+          ->addGroupBy('OrderEntity.clientID')
+
+          ->having('count(OrderEntity.clientID) > 0')
+          ->setMaxResults(15)
+          ->addOrderBy('countOrdersInMonth','DESC')
+         
+          ->setParameter('fromDate', $fromDate)
+          ->setParameter('toDate', $toDate)
+          ->setParameter('cancelled', self::CANCEL)
+          ->setParameter('pending', self::PENDING)
+          ->getQuery()
+          ->getResult();
+    }
+    
 }

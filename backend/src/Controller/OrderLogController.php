@@ -32,13 +32,13 @@ class OrderLogController extends BaseController
       }
       
     /**
-      * @Route("/orderLogs/{orderNumber}", name="GetLogsByOrderNumber", methods={"GET"})
+      * @Route("/orderLogsTimeLine/{orderNumber}", name="getOrderLogsTimeLine", methods={"GET"})
       * @param Request $request
       * @return JsonResponse
       */
-      public function getOrderLogsByOrderNumber($orderNumber)
+      public function getOrderLogsTimeLine($orderNumber)
       {
-          $result = $this->orderLogService->getOrderLogsWithCompletionTime($orderNumber);
+          $result = $this->orderLogService->getOrderLogsTimeLine($orderNumber);
   
           return $this->response($result, self::FETCH);
       }

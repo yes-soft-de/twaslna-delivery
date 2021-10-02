@@ -32,6 +32,10 @@ use App\Response\OrdersAndTopOwnerResponse;
 use App\Response\OrdersAndCountResponse;
 use App\Response\CountReportResponse;
 use App\Response\OrdersByClientResponse;
+use App\Response\CountOrdersInLastMonthForStoreResponse;
+use App\Response\CountOrdersInLastMonthForCaptainResponse;
+use App\Response\CountOrdersInLastMonthForClientResponse;
+use App\Response\CountOrdersInLastMonthForProoductResponse;
 use App\Service\StoreOwnerSubscriptionService;
 use App\Service\RatingService;
 use App\Service\StoreOwnerProfileService;
@@ -401,22 +405,49 @@ class OrderService
         return $response;
     }
 
-    public function getCountOrdersInDayAndTopOwnersInThisMonth():?array
+    public function getCountOrdersEveryStoreInLastMonth():?array
     {
        $response=[];
        $date = $this->dateFactoryService->returnLastMonthDate();
  
-       $topOwners = $this->orderManager->getTopOwners($date[0],$date[1]);
-     
-        foreach ($topOwners as $topOwner) {
-         
-            $topOwner['imageURL'] = $topOwner['image'];
-            $topOwner['image'] = $this->params.$topOwner['image'];
-            $topOwner['baseURL'] = $this->params;
+       $items = $this->orderManager->getCountOrdersEveryStoreInLastMonth($date[0],$date[1]);
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', CountOrdersInLastMonthForStoreResponse::class, $item);
+        }
+       return $response;
+   }
 
-            $topOwner['countOrdersInDay'] = $this->orderManager->countOrdersInDay($topOwner['storeOwnerProfileID'], $date[0],$date[1]);
-           
-            $response[] = $this->autoMapping->map('array', OrdersAndTopOwnerResponse::class, $topOwner);
+    public function getCountOrdersEveryCaptainInLastMonth():?array
+    {
+       $response=[];
+       $date = $this->dateFactoryService->returnLastMonthDate();
+ 
+       $items = $this->orderManager->getCountOrdersEveryCaptainInLastMonth($date[0],$date[1]);
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', CountOrdersInLastMonthForCaptainResponse::class, $item);
+        }
+       return $response;
+   }
+   
+    public function getCountOrdersEveryClientInLastMonth():?array
+    {
+       $response=[];
+       $date = $this->dateFactoryService->returnLastMonthDate();
+       $items = $this->orderManager->getCountOrdersEveryClientInLastMonth($date[0],$date[1]);
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', CountOrdersInLastMonthForClientResponse::class, $item);
+        }
+       return $response;
+   }
+
+    public function getCountOrdersEveryProductInLastMonth():?array
+    {
+       $response=[];
+       $date = $this->dateFactoryService->returnLastMonthDate();
+       $items = $this->orderDetailService->getCountOrdersEveryProductInLastMonth($date[0],$date[1]);
+     
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', CountOrdersInLastMonthForProoductResponse::class, $item);
         }
        return $response;
    }
@@ -730,7 +761,6 @@ class OrderService
 
     public function countReport()
     {
-        $response = [];
         $item['countCompletedOrders'] = $this->orderManager->countCompletedOrders();
         $item['countOngoingOrders'] = $this->orderManager->countOngoingOrders();
         $item['countCaptains'] = $this->captainProfileService->countCaptains();
@@ -740,7 +770,7 @@ class OrderService
         $item['countOrdersInToday'] = $this->countOrdersInToday();
         
         $response = $this->autoMapping->map("array", CountReportResponse::class, $item);
-
+        
         return $response;
     }
 

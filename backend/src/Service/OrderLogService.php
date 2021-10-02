@@ -8,6 +8,8 @@ use App\Manager\OrderLogManager;
 use App\Response\OrderLogResponse;
 use App\Response\OrderLogCaptainResponse;
 use App\Response\OrderLogsForAdminResponse;
+use App\Response\OrderLogTimeLineResponse;
+use App\Response\OrderLogsResponse;
 use App\Service\DateFactoryService;
 
 
@@ -46,7 +48,7 @@ class OrderLogService
         return $this->orderLogManager->getOrderLogsByOrderNumber($orderNumber);
     }
 
-    public function getOrderLogsWithCompletionTime($orderNumber)
+    public function getOrderLogsTimeLine($orderNumber)
     {
         $response=[];
         $items = $this->getOrderLogsByOrderNumber($orderNumber);
@@ -59,13 +61,13 @@ class OrderLogService
             if($firstDate[0]['createdAt'] && $lastDate[0]['createdAt']) {
                 $state['completionTime'] = $this->dateFactoryService->subtractTwoDates($firstDate[0]['createdAt'], $lastDate[0]['createdAt']);
             }
-            $log[] = $this->autoMapping->map('array', OrderLogResponse::class, $item);
+            $logs[] = $this->autoMapping->map('array', OrderLogsResponse::class, $item);
         } 
         $state['currentStage'] = $lastDate[0]['state'] ;
-        $orderStatus[] = $this->autoMapping->map('array', OrderLogResponse::class, $state);
+        $orderStatus[] = $this->autoMapping->map('array', OrderLogTimeLineResponse::class, $state);
         if($firstDate && $lastDate) {
             $response['orderStatus'] = $orderStatus ;
-            $response['log'] = $log ;
+            $response['logs'] = $logs ;
             }
         return  $response;
     }
