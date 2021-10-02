@@ -72,4 +72,18 @@ class OrderDetailService
     {
         return $this->orderDetailManager->orderDetailDelete($id);
     }
+    
+    public function getCountOrdersEveryProductInLastMonth($fromDate, $toDate):?array
+    {
+       return $this->orderDetailManager->getCountOrdersEveryProductInLastMonth($fromDate, $toDate);
+   }
+
+   public function specialLinkCheck($bool)
+    {
+        if (!$bool)
+        {
+            return $this->params;
+        }
+    }
+
 }

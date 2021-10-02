@@ -12,7 +12,6 @@ use App\Entity\DeliveryCompanyFinancialCompensationEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
-use App\Entity\StoreOwnerBranchEntity;
 
 /**
  * @method OrderEntity|null find($id, $lockMode = null, $lockVersion = null)

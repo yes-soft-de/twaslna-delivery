@@ -76,6 +76,10 @@ class OrderDetailManager
             $this->entityManager->flush();
             return "Deleted";
         }
-        
+    }
+
+    public function getCountOrdersEveryProductInLastMonth($fromDate, $toDate)
+    {
+        return $this->orderDetailEntityRepository->getCountOrdersEveryProductInLastMonth($fromDate, $toDate);
     }
 }

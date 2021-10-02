@@ -35,6 +35,7 @@ use App\Response\OrdersByClientResponse;
 use App\Response\CountOrdersInLastMonthForStoreResponse;
 use App\Response\CountOrdersInLastMonthForCaptainResponse;
 use App\Response\CountOrdersInLastMonthForClientResponse;
+use App\Response\CountOrdersInLastMonthForProoductResponse;
 use App\Service\StoreOwnerSubscriptionService;
 use App\Service\RatingService;
 use App\Service\StoreOwnerProfileService;
@@ -427,6 +428,7 @@ class OrderService
         }
        return $response;
    }
+   
     public function getCountOrdersEveryClientInLastMonth():?array
     {
        $response=[];
@@ -434,6 +436,18 @@ class OrderService
        $items = $this->orderManager->getCountOrdersEveryClientInLastMonth($date[0],$date[1]);
         foreach ($items as $item) {
             $response[] = $this->autoMapping->map('array', CountOrdersInLastMonthForClientResponse::class, $item);
+        }
+       return $response;
+   }
+
+    public function getCountOrdersEveryProductInLastMonth():?array
+    {
+       $response=[];
+       $date = $this->dateFactoryService->returnLastMonthDate();
+       $items = $this->orderDetailService->getCountOrdersEveryProductInLastMonth($date[0],$date[1]);
+     
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map('array', CountOrdersInLastMonthForProoductResponse::class, $item);
         }
        return $response;
    }
