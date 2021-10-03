@@ -64,7 +64,7 @@ class OrderLogService
             $logs[] = $this->autoMapping->map('array', OrderLogsResponse::class, $item);
         } 
         $state['currentStage'] = $lastDate[0]['state'] ;
-        $orderStatus[] = $this->autoMapping->map('array', OrderLogTimeLineResponse::class, $state);
+        $orderStatus = $this->autoMapping->map('array', OrderLogTimeLineResponse::class, $state);
         if($firstDate && $lastDate) {
             $response['orderStatus'] = $orderStatus ;
             $response['logs'] = $logs ;

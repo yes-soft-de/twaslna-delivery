@@ -267,11 +267,10 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('OrderEntity')
 
-          ->select('OrderEntity.id')
-          ->addSelect('OrderDetailEntity.orderNumber')
+          ->select('OrderEntity.id', 'OrderEntity.deliveryDate', 'OrderEntity.createdAt', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.payment', 'OrderEntity.detail', 'OrderEntity.deliveryCost', 'OrderEntity.orderCost', 'OrderEntity.orderType', 'OrderEntity.destination', 'OrderEntity.note', 'OrderEntity.state')
+          ->addSelect('OrderDetailEntity.id as orderDetailId', 'OrderDetailEntity.orderNumber')
 
-           ->leftJoin(OrderDetailEntity::class, 'OrderDetailEntity', Join::WITH, 'OrderDetailEntity.orderID = OrderEntity.id')
-
+          ->leftJoin(OrderDetailEntity::class, 'OrderDetailEntity', Join::WITH, 'OrderDetailEntity.orderID = OrderEntity.id')
           ->where('OrderEntity.createdAt >= :fromDate')
           ->andWhere('OrderEntity.createdAt < :toDate')
           ->andWhere("OrderEntity.state != :cancelled")
