@@ -27,7 +27,7 @@ class ScreenType {
   static bool isMobile() {
     var screenSize =
         MediaQuery.of(GlobalVariable.navState.currentContext!).size;
-    if (screenSize.width < 600 && screenSize.width >= 250) {
+    if (screenSize.width < 600) {
       return true;
     }
     else{
@@ -49,7 +49,7 @@ class ScreenType {
   static bool isTablet() {
     var screenSize =
         MediaQuery.of(GlobalVariable.navState.currentContext!).size;
-    if (screenSize.width >= 600 && screenSize.width < 1200) {
+    if (screenSize.width > 600 && screenSize.width < 1200) {
       return true;
     }
     else{

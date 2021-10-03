@@ -496,7 +496,18 @@
   "companyProfileUpdatedSuccessfully": "Company profile updated successfully",
   "Logs": "Logs",
   "captainLogs": "Captain Logs",
-  "search": "Search"
+  "search": "Search",
+  "searchForStore": "Search for store",
+  "storeLogs": "Store Logs",
+  "countTodayOrder": "Today Order",
+  "firstDate": "First Date",
+  "lastDate": "Last Date",
+  "captainUpdatedSuccessfully": "Captain Updated Successfully"
+
+
+
+
+
 
 
 

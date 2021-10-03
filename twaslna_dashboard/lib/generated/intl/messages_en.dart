@@ -117,6 +117,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainStateInactive":
             MessageLookupByLibrary.simpleMessage("UnActive"),
         "captainStatus": MessageLookupByLibrary.simpleMessage("Account Status"),
+        "captainUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Captain Updated Successfully"),
         "captains": MessageLookupByLibrary.simpleMessage("Captains"),
         "car": MessageLookupByLibrary.simpleMessage("Car"),
         "card": MessageLookupByLibrary.simpleMessage("Card"),
@@ -191,6 +193,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Count Orders Delivered"),
         "countProducts": MessageLookupByLibrary.simpleMessage("Products Count"),
         "countStores": MessageLookupByLibrary.simpleMessage("Stores Count"),
+        "countTodayOrder": MessageLookupByLibrary.simpleMessage("Today Order"),
         "createNewOrder":
             MessageLookupByLibrary.simpleMessage("Create new order"),
         "createNewReport":
@@ -267,6 +270,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your subscription is out of date please renew your subscription"),
         "finishedOrdering":
             MessageLookupByLibrary.simpleMessage("Finish Order"),
+        "firstDate": MessageLookupByLibrary.simpleMessage("First Date"),
         "firstSendMessage": MessageLookupByLibrary.simpleMessage(
             "Be the first one to send message"),
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("From WhatsApp"),
@@ -328,6 +332,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 Employees"),
+        "lastDate": MessageLookupByLibrary.simpleMessage("Last Date"),
         "lastMonth": MessageLookupByLibrary.simpleMessage("Last Month"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("New Messages"),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("Latest Updates"),
@@ -592,6 +597,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Search for a notification"),
         "searchForOrder": MessageLookupByLibrary.simpleMessage(
             "search for order by order number"),
+        "searchForStore":
+            MessageLookupByLibrary.simpleMessage("Search for store"),
         "searchingForCaptain":
             MessageLookupByLibrary.simpleMessage("Searching for Captain"),
         "searchingForCategories":
@@ -639,6 +646,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeImage": MessageLookupByLibrary.simpleMessage("Store Image"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("Store Info"),
         "storeLocation": MessageLookupByLibrary.simpleMessage("Store location"),
+        "storeLogs": MessageLookupByLibrary.simpleMessage("Store Logs"),
         "storeManagment":
             MessageLookupByLibrary.simpleMessage("Store Management"),
         "storeName": MessageLookupByLibrary.simpleMessage("Store Name"),

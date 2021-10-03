@@ -4999,6 +4999,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Search for store`
+  String get searchForStore {
+    return Intl.message(
+      'Search for store',
+      name: 'searchForStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Logs`
+  String get storeLogs {
+    return Intl.message(
+      'Store Logs',
+      name: 'storeLogs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Today Order`
+  String get countTodayOrder {
+    return Intl.message(
+      'Today Order',
+      name: 'countTodayOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First Date`
+  String get firstDate {
+    return Intl.message(
+      'First Date',
+      name: 'firstDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Date`
+  String get lastDate {
+    return Intl.message(
+      'Last Date',
+      name: 'lastDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Updated Successfully`
+  String get captainUpdatedSuccessfully {
+    return Intl.message(
+      'Captain Updated Successfully',
+      name: 'captainUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

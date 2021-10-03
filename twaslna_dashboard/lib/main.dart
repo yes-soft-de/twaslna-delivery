@@ -23,6 +23,7 @@ import 'package:twaslna_dashboard/module_settings/settings_module.dart';
 import 'package:twaslna_dashboard/module_splash/splash_module.dart';
 import 'package:twaslna_dashboard/module_stores/stores_module.dart';
 import 'package:twaslna_dashboard/module_theme/service/theme_service/theme_service.dart';
+import 'package:twaslna_dashboard/utils/global/global_state_manager.dart';
 import 'package:twaslna_dashboard/utils/logger/logger.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -145,6 +146,7 @@ class _MyAppState extends State<MyApp> {
       activeTheme = event;
       setState(() {});
     });
+
   }
 
   @override

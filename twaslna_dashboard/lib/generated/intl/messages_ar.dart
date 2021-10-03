@@ -116,6 +116,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainStateActive": MessageLookupByLibrary.simpleMessage("فعال"),
         "captainStateInactive": MessageLookupByLibrary.simpleMessage("غر فعال"),
         "captainStatus": MessageLookupByLibrary.simpleMessage("حساب الكابتن"),
+        "captainUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "تم تعديل بيانات الكابتن بنجاح"),
         "captains": MessageLookupByLibrary.simpleMessage("المندوبين"),
         "car": MessageLookupByLibrary.simpleMessage("سيارة "),
         "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
@@ -187,6 +189,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("عدد الطلبات المنجزة"),
         "countProducts": MessageLookupByLibrary.simpleMessage("عدد المنتجات"),
         "countStores": MessageLookupByLibrary.simpleMessage("عدد المتاجر"),
+        "countTodayOrder":
+            MessageLookupByLibrary.simpleMessage("الطلبات اليوم"),
         "createNewOrder":
             MessageLookupByLibrary.simpleMessage("انشاء طلب جديد "),
         "createNewReport": MessageLookupByLibrary.simpleMessage("دعم سريع"),
@@ -259,6 +263,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "finishedDate": MessageLookupByLibrary.simpleMessage(
             "لقد انتهت صلاحية اشتراكك الرجاء تجديد الاشتراك من الإعدادات"),
         "finishedOrdering": MessageLookupByLibrary.simpleMessage("إنهاء الطلب"),
+        "firstDate": MessageLookupByLibrary.simpleMessage("من تاريخ"),
         "firstSendMessage":
             MessageLookupByLibrary.simpleMessage("كن أول من يرسل رسالة"),
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("من واتساب"),
@@ -317,6 +322,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 موظف"),
+        "lastDate": MessageLookupByLibrary.simpleMessage("حتى تاريخ"),
         "lastMonth": MessageLookupByLibrary.simpleMessage("الماضي"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("رسائل جديدة"),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("اخر التحديثات"),
@@ -579,6 +585,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ابحث عن إشعار"),
         "searchForOrder": MessageLookupByLibrary.simpleMessage(
             "ابحث عن طلب بإدخال رقم الطلب"),
+        "searchForStore": MessageLookupByLibrary.simpleMessage("ابحث عن متجر"),
         "searchingForCaptain":
             MessageLookupByLibrary.simpleMessage("جار البحث عن كابتن"),
         "searchingForCategories":
@@ -628,6 +635,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeImage": MessageLookupByLibrary.simpleMessage("صورة المتجر"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("معلومات المتجر"),
         "storeLocation": MessageLookupByLibrary.simpleMessage("موقع المتجر"),
+        "storeLogs": MessageLookupByLibrary.simpleMessage("سجلات المتاجر"),
         "storeManagment": MessageLookupByLibrary.simpleMessage("إدارة المتجر"),
         "storeName": MessageLookupByLibrary.simpleMessage("اسم المحل التجاري"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("محل تجاري"),
