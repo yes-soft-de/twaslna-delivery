@@ -91,17 +91,20 @@ class PaymentsFromCaptain {
   String? captainId;
   num? amount;
   Date? date;
-
+  String? note;
   PaymentsFromCaptain({
     this.id,
     this.captainId,
     this.amount,
-    this.date});
+    this.date,
+    this.note
+  });
 
   PaymentsFromCaptain.fromJson(dynamic json) {
     id = json['id'];
     captainId = json['captainId'];
     amount = json['amount'];
+    note = json['note'];
     date = json['date'] != null ? Date.fromJson(json['date']) : null;
   }
 

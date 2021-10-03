@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_dashboard/abstracts/states/loading_state.dart';
 import 'package:twaslna_dashboard/abstracts/states/state.dart';
+import 'package:twaslna_dashboard/di/di_config.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/global_nav_key.dart';
 import 'package:twaslna_dashboard/module_captain/state_manager/in_active_captains_state_manager.dart';
 import 'package:twaslna_dashboard/utils/components/custom_app_bar.dart';
+import 'package:twaslna_dashboard/utils/global/global_state_manager.dart';
 
 @injectable
 class InActiveCaptainsScreen extends StatefulWidget {
@@ -28,6 +30,9 @@ class InActiveCaptainsScreenState extends State<InActiveCaptainsScreen> {
       refresh();
     });
     widget._stateManager.getCaptains(this);
+    getIt<GlobalStateManager>().stateStream.listen((event) {
+      getCaptains();
+    });
     super.initState();
   }
 

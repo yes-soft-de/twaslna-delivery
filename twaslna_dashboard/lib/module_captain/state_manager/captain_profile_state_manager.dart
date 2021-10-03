@@ -44,11 +44,11 @@ class CaptainProfileStateManager {
       if (value.hasError){
         CustomFlushBarHelper.createError(title: S.current.warnning, message:value.error.toString()).show(screenState.context);
         getCaptainProfile(screenState, captainId);
-        getIt<GlobalStateManager>().updateCaptainList();
       }
       else {
         getCaptainProfile(screenState, captainId);
-        CustomFlushBarHelper.createSuccess(title: S.current.warnning, message:S.current.captainActivated).show(screenState.context);
+        CustomFlushBarHelper.createSuccess(title: S.current.warnning, message:S.current.captainUpdatedSuccessfully).show(screenState.context);
+        getIt<GlobalStateManager>().updateCaptainList();
       }
     });
   }
