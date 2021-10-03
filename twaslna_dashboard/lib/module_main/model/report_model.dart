@@ -9,6 +9,7 @@ class ReportModel extends DataModel {
   int countClients = 0;
   int countStores = 0;
   int countProducts = 0;
+  int countOrdersInToday = 0;
 
   ReportModel(
       {required this.countCompletedOrders,
@@ -19,12 +20,14 @@ class ReportModel extends DataModel {
       required this.countProducts});
 
   ReportModel.withData(Data data) : super.withData() {
-     countCompletedOrders =data.countCompletedOrders?.count ?? 0;
-     countOngoingOrders =data.countOngoingOrders?.count ?? 0;
-     countCaptains = data.countCaptains?.count ?? 0;
-     countClients = data.countClients?.count ?? 0;
-     countStores =data.countStores?.count ?? 0;
-     countProducts =data.countProducts?.count ?? 0;
+     countCompletedOrders =int.parse(data.countCompletedOrders ?? '0');
+     countOngoingOrders =int.parse(data.countOngoingOrders ?? '0');
+     countCaptains = int.parse(data.countCaptains ?? '0');
+     countClients = int.parse(data.countClients ?? '0');
+     countStores = int.parse(data.countStores ?? '0');
+     countProducts =int.parse(data.countProducts ?? '0');
+     countOrdersInToday =int.parse(data.countOrdersInToday ?? '0');
+
   }
 
 }

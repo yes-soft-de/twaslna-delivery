@@ -42,12 +42,19 @@ class HomeLoadedState extends States {
       physics:
       BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       child: SizedBox(
-        height: MediaQuery.of(context).size.height,
         child: Wrap(
           alignment: WrapAlignment.center,
           direction: Axis.horizontal,
             children: [
-          widgetTile(model?.countCompletedOrders.toString() ?? '',S.current.countCompletedOrders),
+              widgetTile(model?.countOrdersInToday.toString() ?? '',S.current.countTodayOrder),
+              Padding(
+                padding: const EdgeInsets.only(right:32,left: 32),
+                child: Divider(
+                  thickness: 2.5,
+                  color: Theme.of(context).primaryColor.withOpacity(0.3),
+                ),
+              ),
+              widgetTile(model?.countCompletedOrders.toString() ?? '',S.current.countCompletedOrders),
           widgetTile(model?.countOngoingOrders.toString() ?? '',S.current.countOngoingOrders),
           Padding(
             padding: const EdgeInsets.only(right:32,left: 32),
@@ -67,7 +74,7 @@ class HomeLoadedState extends States {
           ),
           widgetTile(model?.countStores.toString() ?? '',S.current.countStores),
           widgetTile(model?.countProducts.toString() ?? '',S.current.countProducts),
-        ]),
+            ]),
       ),
     );
   }

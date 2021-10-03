@@ -60,7 +60,10 @@ class HomeScreenState extends State<HomeScreen> {
     state = LoadingState(this);
     widget._stateManager.stateStream.listen((event) {
       state = event;
-      refresh();
+     if (this.mounted){
+       setState(() {
+       });
+     }
     });
     getReport();
     super.initState();
