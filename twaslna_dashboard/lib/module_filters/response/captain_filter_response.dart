@@ -33,9 +33,9 @@ class Data {
       this.stores});
 
   Data.fromJson(dynamic json) {
-    if (json['stores'] != null) {
+    if (json['captains'] != null) {
       stores = [];
-      json['stores'].forEach((v) {
+      json['captains'].forEach((v) {
         stores?.add(Stores.fromJson(v));
       });
     }
