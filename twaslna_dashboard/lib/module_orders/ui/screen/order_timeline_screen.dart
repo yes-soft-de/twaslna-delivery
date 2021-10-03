@@ -3,43 +3,34 @@ import 'package:injectable/injectable.dart';
 import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/global_nav_key.dart';
-import 'package:twaslna_dashboard/module_auth/authorization_routes.dart';
-import 'package:twaslna_dashboard/module_orders/state_manager/ongoing_orders_state_manager.dart';
+import 'package:twaslna_dashboard/module_orders/state_manager/order_tim_line_state_manager.dart';
 import 'package:twaslna_dashboard/module_orders/ui/state/my_orders/my_orders_loading_state.dart';
 import 'package:twaslna_dashboard/utils/components/custom_app_bar.dart';
-import 'package:twaslna_dashboard/utils/helpers/custom_flushbar.dart';
 
 @injectable
-class OnGoingOrdersScreen extends StatefulWidget {
-  final OnGoingOrdersStateManager _stateManager;
+class OrderTimLineScreen extends StatefulWidget {
+  final OrderTimeLineStateManager _stateManager;
 
-  OnGoingOrdersScreen(this._stateManager);
+  OrderTimLineScreen(this._stateManager);
 
   @override
-  OnGoingOrdersScreenState createState() => OnGoingOrdersScreenState();
+  OrderTimLineScreenState createState() => OrderTimLineScreenState();
 }
 
-class OnGoingOrdersScreenState extends State<OnGoingOrdersScreen> {
+class OrderTimLineScreenState extends State<OrderTimLineScreen> {
   late States currentState;
-
+void getOrder(){
+  widget._stateManager.getOrderTimeLine(orderId ?? -1, this);
+}
   void refresh() {
     if (mounted) {
       setState(() {});
     }
   }
-  Future <void> getOrders() async {
-    widget._stateManager.getOrders(this);
-  }
-  void goToLogin(){
-    Navigator.of(context).pushNamed(AuthorizationRoutes.LOGIN_SCREEN,arguments:1);
-    CustomFlushBarHelper.createError(title:S.current.warnning, message:S.current.pleaseLoginToContinue).show(context);
-  }
+
   @override
   void initState() {
     currentState = MyOrdersLoadingState(this);
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      widget._stateManager.getOrders(this);
-    });
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
@@ -49,8 +40,20 @@ class OnGoingOrdersScreenState extends State<OnGoingOrdersScreen> {
     super.initState();
   }
 
+  int? orderId;
+  bool flagArgs = true;
+
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute
+        .of(context)
+        ?.settings
+        .arguments;
+    if (args != null && flagArgs) {
+        orderId = int.parse(args.toString());
+        flagArgs = false;
+        widget._stateManager.getOrderTimeLine(orderId ?? -1,this);
+    }
     return GestureDetector(
       onTap: () {
         var focus = FocusScope.of(context);
@@ -60,9 +63,7 @@ class OnGoingOrdersScreenState extends State<OnGoingOrdersScreen> {
       },
       child: Scaffold(
         appBar: CustomTwaslnaAppBar.appBar(context,
-            title: S.of(context).ongoingOrders, icon: Icons.menu, onTap: () {
-              GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
-            }),
+            title: S.of(context).orderStatus),
         body: currentState.getUI(context),
       ),
     );

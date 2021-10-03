@@ -7,7 +7,7 @@ import 'package:twaslna_dashboard/utils/helpers/order_status_helper.dart';
 class OrderModel extends DataModel {
   late String orderDate;
   late String orderId;
-  late OrderStatus orderStatus;
+  late OrderStatusEnum orderStatus;
   late DateTime dateTime;
   late double orderCost;
   List<OrderModel> models = [];

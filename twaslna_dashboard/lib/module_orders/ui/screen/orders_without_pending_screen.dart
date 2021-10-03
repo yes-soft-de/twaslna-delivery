@@ -4,22 +4,24 @@ import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/global_nav_key.dart';
 import 'package:twaslna_dashboard/module_auth/authorization_routes.dart';
-import 'package:twaslna_dashboard/module_orders/state_manager/ongoing_orders_state_manager.dart';
+import 'package:twaslna_dashboard/module_orders/state_manager/my_orders_state_manager.dart';
+import 'package:twaslna_dashboard/module_orders/state_manager/orders_without_pending_state_manager.dart';
 import 'package:twaslna_dashboard/module_orders/ui/state/my_orders/my_orders_loading_state.dart';
+import 'package:twaslna_dashboard/module_orders/ui/state/my_orders/my_orders_state.dart';
 import 'package:twaslna_dashboard/utils/components/custom_app_bar.dart';
 import 'package:twaslna_dashboard/utils/helpers/custom_flushbar.dart';
 
 @injectable
-class OnGoingOrdersScreen extends StatefulWidget {
-  final OnGoingOrdersStateManager _stateManager;
+class OrdersWithoutPendingScreen extends StatefulWidget {
+  final OrderWithoutPendingStateManager _stateManager;
 
-  OnGoingOrdersScreen(this._stateManager);
+  OrdersWithoutPendingScreen(this._stateManager);
 
   @override
-  OnGoingOrdersScreenState createState() => OnGoingOrdersScreenState();
+  OrdersWithoutPendingScreenState createState() => OrdersWithoutPendingScreenState();
 }
 
-class OnGoingOrdersScreenState extends State<OnGoingOrdersScreen> {
+class OrdersWithoutPendingScreenState extends State<OrdersWithoutPendingScreen> {
   late States currentState;
 
   void refresh() {
@@ -48,7 +50,13 @@ class OnGoingOrdersScreenState extends State<OnGoingOrdersScreen> {
     });
     super.initState();
   }
-
+  DateTime? fDate;
+  DateTime? lDate;
+   void getOrderFilteredDate(DateTime  firstDate,DateTime endDate){
+    fDate = firstDate;
+    lDate = endDate;
+    widget._stateManager.getFilteredDateOrders(this, firstDate.toUtc().toIso8601String(), endDate.toUtc().toString());
+   }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -60,7 +68,7 @@ class OnGoingOrdersScreenState extends State<OnGoingOrdersScreen> {
       },
       child: Scaffold(
         appBar: CustomTwaslnaAppBar.appBar(context,
-            title: S.of(context).ongoingOrders, icon: Icons.menu, onTap: () {
+            title: S.of(context).orders, icon: Icons.menu, onTap: () {
               GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
             }),
         body: currentState.getUI(context),

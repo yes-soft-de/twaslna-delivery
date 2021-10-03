@@ -82,7 +82,7 @@ class StoreOwnerInfo {
 
 class OrderInfo {
   int id = -1;
-  OrderStatus state = OrderStatus.WAITING;
+  OrderStatusEnum state = OrderStatusEnum.WAITING;
   String roomID = '';
   int ownerID = -1;
   String deliveryDate = '';
@@ -179,7 +179,7 @@ OrderInfo toOrder(Order? order) {
   } else {
     return OrderInfo(
         id: -1,
-        state: OrderStatus.WAITING,
+        state: OrderStatusEnum.WAITING,
         roomID: 'roomID',
         ownerID: -1,
         deliveryDate: DateFormat('dd-MM-yyyy').format(DateTime.now()),
