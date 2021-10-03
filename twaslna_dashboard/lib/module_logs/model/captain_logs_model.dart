@@ -6,7 +6,7 @@ import 'package:twaslna_dashboard/utils/helpers/order_status_helper.dart';
 
 class CaptainLogsModel extends DataModel {
   DateTime deliveryDate = DateTime.now();
-  OrderStatus state = StatusHelper.getStatusEnum('waiting');
+  OrderStatusEnum state = StatusHelper.getStatusEnum('waiting');
   DateTime createdAt = DateTime.now();
   String orderNumber = '';
   num amount = 0;

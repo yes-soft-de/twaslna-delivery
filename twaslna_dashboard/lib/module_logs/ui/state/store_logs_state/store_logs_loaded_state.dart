@@ -5,6 +5,7 @@ import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/module_logs/model/captain_logs_model.dart';
 import 'package:twaslna_dashboard/module_logs/ui/screen/captain_logs_screen.dart';
+import 'package:twaslna_dashboard/module_logs/ui/screen/store_logs_screen.dart';
 import 'package:twaslna_dashboard/module_logs/ui/widget/chart_order_logs.dart';
 import 'package:twaslna_dashboard/module_logs/ui/widget/logs_card.dart';
 import 'package:twaslna_dashboard/module_orders/ui/widget/my_orders/order_card.dart';
@@ -12,13 +13,13 @@ import 'package:twaslna_dashboard/utils/components/empty_screen.dart';
 import 'package:twaslna_dashboard/utils/components/error_screen.dart';
 import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
 
-class CaptainLogsLoadedState extends States {
-  final CaptainLogsScreenState screenState;
+class StoreLogsLoadedState extends States {
+  final StoreLogsScreenState screenState;
   final List<String>? error;
   final bool empty;
   final CaptainLogsModel? captainBalance;
 
-  CaptainLogsLoadedState(this.screenState, this.captainBalance,
+  StoreLogsLoadedState(this.screenState, this.captainBalance,
       {this.empty = false, this.error})
       : super(screenState) {
     if (error != null) {
@@ -46,21 +47,21 @@ class CaptainLogsLoadedState extends States {
     }
     return FixedContainer(
         child: ListView(
-      physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-          child: ListView(
-            shrinkWrap: true,
-            physics: ScrollPhysics(),
-            children: getOrders(captainBalance?.data),
-          ),
-        ),
-        SizedBox(
-          height: 75,
-        ),
-      ],
-    ));
+          physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: ListView(
+                shrinkWrap: true,
+                physics: ScrollPhysics(),
+                children: getOrders(captainBalance?.data),
+              ),
+            ),
+            SizedBox(
+              height: 75,
+            ),
+          ],
+        ));
   }
 
   List<Widget> getOrders(List<CaptainLogsModel>? orders) {

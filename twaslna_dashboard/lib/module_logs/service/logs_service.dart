@@ -31,7 +31,7 @@ class LogsService {
 
   Future<DataModel> getStoreLogs(int storeId) async {
 
-    CaptainAccountBalanceResponse? _captainProfileResponse = await _logsManager.getStoreLogs(storeId);
+    CaptainLogsResponse? _captainProfileResponse = await _logsManager.getStoreLogs(storeId);
     if (_captainProfileResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
@@ -40,7 +40,7 @@ class LogsService {
           StatusCodeHelper.getStatusCodeMessages(_captainProfileResponse.statusCode));
     }
     if (_captainProfileResponse.data == null) return DataModel.empty();
-    return BalanceModel.withData(_captainProfileResponse.data!.first);
+    return CaptainLogsModel.withData(_captainProfileResponse.data!);
   }
 
 }

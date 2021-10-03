@@ -12,6 +12,6 @@ class LogsManager {
   LogsManager(this._logsRepository);
 
   Future<CaptainLogsResponse?> getCaptainLogs(int captainId) => _logsRepository.getCaptainLogs(captainId);
-  Future<CaptainAccountBalanceResponse?> getStoreLogs(int storeId) => _logsRepository.getStoreLogs(storeId);
+  Future<CaptainLogsResponse?> getStoreLogs(int storeId) => _logsRepository.getStoreLogs(storeId);
 
 }

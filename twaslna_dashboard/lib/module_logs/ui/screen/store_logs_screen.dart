@@ -4,19 +4,20 @@ import 'package:twaslna_dashboard/abstracts/states/loading_state.dart';
 import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/module_logs/state_manager/captain_logs_state_manager.dart';
+import 'package:twaslna_dashboard/module_logs/state_manager/store_logs_state_manager.dart';
 import 'package:twaslna_dashboard/utils/components/custom_app_bar.dart';
 
 @injectable
-class CaptainLogsScreen extends StatefulWidget {
-  final CaptainLogsStateManager _stateManager;
+class StoreLogsScreen extends StatefulWidget {
+  final StoreLogsStateManager _stateManager;
 
-  CaptainLogsScreen(this._stateManager);
+  StoreLogsScreen(this._stateManager);
 
   @override
-  CaptainLogsScreenState createState() => CaptainLogsScreenState();
+  StoreLogsScreenState createState() => StoreLogsScreenState();
 }
 
-class CaptainLogsScreenState extends State<CaptainLogsScreen> {
+class StoreLogsScreenState extends State<StoreLogsScreen> {
   late States currentState;
 
   @override
@@ -30,7 +31,7 @@ class CaptainLogsScreenState extends State<CaptainLogsScreen> {
   }
 
   void getCaptain() {
-    widget._stateManager.getCaptainLogs(this, captainId);
+    widget._stateManager.getStoreLogs(this, captainId);
   }
 
 
@@ -48,11 +49,11 @@ class CaptainLogsScreenState extends State<CaptainLogsScreen> {
       var arg = ModalRoute.of(context)?.settings.arguments;
       if (arg != null && arg is int) {
         captainId = arg;
-        widget._stateManager.getCaptainLogs(this, captainId);
+        widget._stateManager.getStoreLogs(this, captainId);
       }
     }
     return Scaffold(
-      appBar: CustomTwaslnaAppBar.appBar(context, title: S.current.captainLogs,),
+      appBar: CustomTwaslnaAppBar.appBar(context, title: S.current.storeLogs,),
       body: currentState.getUI(context),
     );
   }

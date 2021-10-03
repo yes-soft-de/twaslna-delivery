@@ -20,13 +20,13 @@ class LogsRepository {
     if (response == null) return null;
     return CaptainLogsResponse.fromJson(response);
   }
-  Future<CaptainAccountBalanceResponse?> getStoreLogs(int storeId) async {
+  Future<CaptainLogsResponse?> getStoreLogs(int storeId) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
-        Urls.GET_ACCOUNT_BALANCE_CAPTAIN + '$storeId',
+        Urls.GET_STORES_LOGS + '$storeId',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
-    return CaptainAccountBalanceResponse.fromJson(response);
+    return CaptainLogsResponse.fromJson(response);
   }
 
 }
