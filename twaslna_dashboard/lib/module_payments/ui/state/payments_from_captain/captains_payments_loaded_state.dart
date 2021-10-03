@@ -29,6 +29,8 @@ class PaymentsForCaptainLoadedState extends States {
   }
 
   final _amount = TextEditingController();
+  final _note = TextEditingController();
+
   String? id;
 
   AccountBalance? accountBalance;
@@ -73,6 +75,23 @@ class PaymentsForCaptainLoadedState extends States {
                 hintText: S.current.paymentAmount,
                 last: true,
               ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 12.0, bottom: 8, right: 12, top: 16.0),
+                child: Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    S.current.note,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+              ),
+              CustomFormField(
+                controller: _note,
+                hintText: S.current.note,
+                last: true,
+              ),
               SizedBox(
                 height: 16,
               ),
@@ -80,6 +99,7 @@ class PaymentsForCaptainLoadedState extends States {
                   onPressed: () {
                     screenState.pay(CaptainPaymentsRequest(
                         captainId: screenState.captainId,
+                        note: _note.text,
                         amount: num.parse(_amount.text.trim())));
                   },
                   style: ElevatedButton.styleFrom(
@@ -231,10 +251,23 @@ class PaymentsForCaptainLoadedState extends States {
             color: Theme.of(screenState.context).backgroundColor,
           ),
           child: ListTile(
+            onTap:element.note != null ? (){
+              showDialog(context: screenState.context, builder: (context){
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  title:Text(S.current.note),
+                  content: Container(
+                    child: Text(element.note ?? '') ,
+                  ),
+                );
+              });
+            } : null,
             leading: Icon(Icons.credit_card_rounded),
             title:Text(S.current.paymentAmount),
             subtitle:Text(element.amount.toString()),
-            trailing: Text(intl.DateFormat.yMMMMEEEEd().format(element.paymentDate)),
+            trailing: Text(intl.DateFormat('yyyy/M/dd').format(element.paymentDate)),
           ),
         ),
       ));
