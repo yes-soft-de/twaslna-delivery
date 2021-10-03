@@ -182,18 +182,7 @@ class OrderService
        if ($captain->getStatus() == 'active') {
             $response =[];
             $orders = $this->orderManager->closestOrders();
-
-            foreach ($orders as $order) {
-                if ($order['storeOwnerProfileID'] == true) {  
-                    $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($order['storeOwnerProfileID']);
-                    if( $order['storeOwner'] != null ){
-                        $order['storeOwnerName']=$order['storeOwner']->storeOwnerName;
-                        $order['image']=$order['storeOwner']->image;
-                        $order['branches']=$order['storeOwner']->branches;
-                    }
-                }
-                $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
-            }
+            return $this->getOrdersWithStore($orders);
         }
         return $response;
     }
@@ -294,8 +283,12 @@ class OrderService
 
     public function getOrdersWithOutPending():?array
     {
-        $response = [];
-        $orders = $this->orderManager->getOrdersWithOutPending();
+       $orders = $this->orderManager->getOrdersWithOutPending();
+       return $this->getOrdersWithStore($orders);
+    }
+    
+    public function getOrdersWithStore($orders):?array
+    {
         foreach ($orders as $order) {
             if ($order['storeOwnerProfileID'] == true) {  
                 $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($order['storeOwnerProfileID']);
@@ -312,20 +305,8 @@ class OrderService
 
     public function getOrdersOngoing():?array
     {
-        $response = [];
         $orders = $this->orderManager->getOrdersOngoing();
-        foreach ($orders as $order) {
-            if ($order['storeOwnerProfileID'] == true) {  
-                $order['storeOwner'] = $this->storeOwnerProfileService->getStoreOwnerProfileById($order['storeOwnerProfileID']);
-                if( $order['storeOwner'] != null ){
-                    $order['storeOwnerName']=$order['storeOwner']->storeOwnerName;
-                    $order['image']=$order['storeOwner']->image;
-                    $order['branches']=$order['storeOwner']->branches;
-                }
-            }
-            $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
-        }
-        return $response;
+        return $this->getOrdersWithStore($orders);
     }
 //TODO count orders for captain or for store or client
     //  public function getAllOrdersAndCount($year, $month, $userId, $userType):?array
@@ -394,15 +375,9 @@ class OrderService
     // }
      public function getOrdersInSpecificDate($fromDate, $toDate):?array
      {
-        $response = [];
         $date = $this->dateFactoryService->returnSpecificDate($fromDate, $toDate);
         $orders = $this->orderManager->getOrdersInSpecificDate($date[0], $date[1]);
-        foreach( $orders as $order){
-              //for get orders detail
-            // $response[] = $this->getOrderDetailsByOrderNumber($order['orderNumber']);
-            $response[] = $this->autoMapping->map('array', OrdersNumberResponse::class, $order);
-        }
-        return $response;
+        return $this->getOrdersWithStore($orders);
     }
 
     public function getCountOrdersEveryStoreInLastMonth():?array
