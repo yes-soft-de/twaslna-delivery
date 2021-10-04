@@ -89,10 +89,10 @@ class OrderDetailEntityRepository extends ServiceEntityRepository
           ->andWhere("OrderEntity.state != :cancelled")
           ->andWhere("OrderEntity.state != :pending")
 
-          ->addGroupBy('OrderEntity.clientID')
+          ->addGroupBy('OrderDetailEntity.productID')
 
-          ->having('count(OrderEntity.clientID) > 0')
-          ->setMaxResults(15)
+          ->having('count(OrderDetailEntity.productID) > 0')
+          ->setMaxResults(30)
           ->addOrderBy('countOrdersInMonth','DESC')
          
           ->setParameter('fromDate', $fromDate)
