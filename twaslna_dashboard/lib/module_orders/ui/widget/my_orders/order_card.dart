@@ -7,18 +7,19 @@ import 'package:twaslna_dashboard/utils/helpers/order_status_helper.dart';
 
 class OrderCard extends StatelessWidget {
   final String orderId;
-  final OrderStatus orderStatus;
+  final OrderStatusEnum orderStatus;
   final String orderDate;
   final String orderCost;
   final String? completeTime;
-  OrderCard({required this.orderId,required this.orderStatus,required this.orderDate,this.orderCost = '0',this.completeTime});
+  final GestureTapCallback? onTap;
+  OrderCard({this.onTap, required this.orderId,required this.orderStatus,required this.orderDate,this.orderCost = '0',this.completeTime});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: (){
+        onTap:onTap ?? (){
           Navigator.pushNamed(context,OrdersRoutes.ORDER_DETAILS,arguments:orderId);
         },
         child: Container(

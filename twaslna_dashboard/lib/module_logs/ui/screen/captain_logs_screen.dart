@@ -52,7 +52,7 @@ class CaptainLogsScreenState extends State<CaptainLogsScreen> {
       }
     }
     return Scaffold(
-      appBar: CustomTwaslnaAppBar.appBar(context, title: S.current.balanceDetails,),
+      appBar: CustomTwaslnaAppBar.appBar(context, title: S.current.captainLogs,),
       body: currentState.getUI(context),
     );
   }

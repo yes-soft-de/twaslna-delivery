@@ -60,7 +60,7 @@ class OnGoingOrdersScreenState extends State<OnGoingOrdersScreen> {
       },
       child: Scaffold(
         appBar: CustomTwaslnaAppBar.appBar(context,
-            title: S.of(context).orders, icon: Icons.menu, onTap: () {
+            title: S.of(context).ongoingOrders, icon: Icons.menu, onTap: () {
               GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
             }),
         body: currentState.getUI(context),

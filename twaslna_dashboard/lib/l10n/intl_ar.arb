@@ -495,7 +495,14 @@
   "companyProfileUpdatedSuccessfully": "تم تحديث معلومات الإدارة بنجاح",
   "Logs": "السجلات",
   "captainLogs": "سجل الكابتن",
-  "search": "ابحث"
+  "search": "ابحث",
+  "searchForStore": "ابحث عن متجر",
+  "storeLogs": "سجلات المتاجر",
+  "countTodayOrder": "الطلبات اليوم",
+  "firstDate": "من تاريخ",
+  "lastDate": "حتى تاريخ",
+  "captainUpdatedSuccessfully": "تم تعديل بيانات الكابتن بنجاح",
+
 
 
 }

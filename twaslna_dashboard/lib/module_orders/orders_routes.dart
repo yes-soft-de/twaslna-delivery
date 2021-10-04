@@ -5,4 +5,5 @@ class OrdersRoutes {
   static const CLIENT_ORDER = '/client_order';
   static const ORDER_LOG = '/order_logs';
   static const ORDERS_ONGOING = '/orders_ongoing';
+  static const ORDER_TIME_LINE = '/order_timeline';
 }

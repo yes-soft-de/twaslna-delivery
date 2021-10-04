@@ -1,26 +1,22 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
-import 'package:twaslna_dashboard/module_captain/model/balance_model.dart';
-import 'package:twaslna_dashboard/module_captain/ui/screen/captain_balance_screen.dart';
 import 'package:twaslna_dashboard/module_logs/model/captain_logs_model.dart';
 import 'package:twaslna_dashboard/module_logs/ui/screen/captain_logs_screen.dart';
+import 'package:twaslna_dashboard/module_logs/ui/widget/chart_order_logs.dart';
+import 'package:twaslna_dashboard/module_logs/ui/widget/logs_card.dart';
 import 'package:twaslna_dashboard/module_orders/ui/widget/my_orders/order_card.dart';
-import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/components/empty_screen.dart';
 import 'package:twaslna_dashboard/utils/components/error_screen.dart';
 import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
-import 'package:twaslna_dashboard/utils/effect/hidder.dart';
-import 'package:twaslna_dashboard/utils/effect/scaling.dart';
 
 class CaptainLogsLoadedState extends States {
   final CaptainLogsScreenState screenState;
   final List<String>? error;
   final bool empty;
-  final List<CaptainLogsModel>? captainBalance;
+  final CaptainLogsModel? captainBalance;
 
   CaptainLogsLoadedState(this.screenState, this.captainBalance,
       {this.empty = false, this.error})
@@ -57,7 +53,7 @@ class CaptainLogsLoadedState extends States {
           child: ListView(
             shrinkWrap: true,
             physics: ScrollPhysics(),
-            children: getOrders(captainBalance),
+            children: getOrders(captainBalance?.data),
           ),
         ),
         SizedBox(
@@ -70,9 +66,11 @@ class CaptainLogsLoadedState extends States {
   List<Widget> getOrders(List<CaptainLogsModel>? orders) {
     if (orders == null) return[];
     if (orders.isEmpty) return [];
-    List<OrderCard> ordersCard = [];
+    List<Widget> ordersCard = [];
     orders.forEach((element) {
-      ordersCard.add(OrderCard(
+      ordersCard.add(LogCard(
+        deliverPrice: element.deliveryCost.toString(),
+        orderType: element.orderType == 1 ? S.current.products : element.orderType == 2 ?S.current.privateOrder : S.current.deliverForMe,
         orderId: element.orderNumber,
         orderCost: element.orderCost.toString(),
         orderStatus: element.state,
@@ -81,6 +79,10 @@ class CaptainLogsLoadedState extends States {
             DateFormat.yMd().format(element.deliveryDate),
       ));
     });
+    ordersCard.insert(0, FixedContainer(
+      child: PieChartSample2(countDeliver: captainBalance!.countSendOnMeOrder,countPrivate: captainBalance!.countPrivateOrder,countProducts: captainBalance!.countProductOrder,),
+    )
+    );
     return ordersCard;
   }
 }

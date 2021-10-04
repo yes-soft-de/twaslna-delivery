@@ -86,7 +86,7 @@ class OrderDetailsLoadedState extends OrderDetailsState {
             ),
           ),
         ),
-        orderDetails.order.roomID.isNotEmpty && orderDetails.order.state != OrderStatus.WAITING ? Padding(
+        orderDetails.order.roomID.isNotEmpty && orderDetails.order.state != OrderStatusEnum.WAITING ? Padding(
           padding: const EdgeInsets.all(12.0),
           child: Container(
             decoration: BoxDecoration(

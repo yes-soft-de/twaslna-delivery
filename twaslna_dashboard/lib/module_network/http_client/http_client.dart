@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_firebase_performance/dio_firebase_performance.dart';
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_dashboard/utils/logger/logger.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 @injectable
 class ApiClient {
@@ -27,14 +28,16 @@ class ApiClient {
         receiveTimeout: 60000,
         connectTimeout: 60000,
       ));
-      client.interceptors.add(performanceInterceptor);
-
+      if (!kIsWeb) {
+        client.interceptors.add(performanceInterceptor);
+      }
       if (headers != null) {
         if (headers['Authorization'] != null) {
           _logger.info(tag, 'Adding Auth Header');
           client.options.headers['Authorization'] = headers['Authorization'];
         }
       }
+    //  client.options.headers['Access-Control-Allow-Origin'] = '*';
       var response = await client.get(
         url,
         queryParameters: queryParams,
@@ -80,7 +83,10 @@ class ApiClient {
           client.options.headers['Authorization'] = headers['Authorization'];
         }
       }
-      client.interceptors.add(performanceInterceptor);
+    //  client.options.headers['Access-Control-Allow-Origin'] = '*';
+      if (!kIsWeb) {
+        client.interceptors.add(performanceInterceptor);
+      }
       var response = await client.post(
         url,
         queryParameters: queryParams,
@@ -128,8 +134,10 @@ class ApiClient {
           client.options.headers['Authorization'] = headers['Authorization'];
         }
       }
-
-      client.interceptors.add(performanceInterceptor);
+    //  client.options.headers['Access-Control-Allow-Origin'] = '*';
+      if (!kIsWeb) {
+        client.interceptors.add(performanceInterceptor);
+      }
       var response = await client.put(
         url,
         queryParameters: queryParams,
@@ -170,13 +178,16 @@ class ApiClient {
         receiveTimeout: 60000,
         connectTimeout: 60000,
       ));
-      client.interceptors.add(performanceInterceptor);
+      if (!kIsWeb) {
+        client.interceptors.add(performanceInterceptor);
+      }
       if (headers != null) {
         if (headers['Authorization'] != null) {
           _logger.info(tag, 'Adding Auth Header');
           client.options.headers['Authorization'] = headers['Authorization'];
         }
       }
+   //   client.options.headers['Access-Control-Allow-Origin'] = '*';
       var response = await client.delete(
         url,
         queryParameters: queryParams,

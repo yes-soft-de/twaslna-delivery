@@ -30,7 +30,7 @@ class MyOrdersStateManager {
   void getOrders(OrdersScreenState screenState) {
     if (_authService.isLoggedIn) {
       _stateSubject.add(MyOrdersLoadingState(screenState));
-      _myOrdersService.getOrders().then((value) {
+      _myOrdersService.getPendingOrders().then((value) {
         if (value.hasError) {
           _stateSubject.add(MyOrdersErrorState(
               screenState, value.error ?? S.current.errorHappened,refresh: (){

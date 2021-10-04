@@ -27,7 +27,7 @@ class CaptainLogsStateManager {
       }
       else {
         CaptainLogsModel _model = value as CaptainLogsModel;
-        _stateSubject.add(CaptainLogsLoadedState(screenState,_model.data));
+        _stateSubject.add(CaptainLogsLoadedState(screenState,_model));
       }
     });
 

@@ -9,10 +9,12 @@ import 'package:twaslna_dashboard/module_categories/ui/screen/store_categories_s
 import 'package:twaslna_dashboard/module_company/ui/screen/company_finance_screen.dart';
 import 'package:twaslna_dashboard/module_company/ui/screen/company_profile_screen.dart';
 import 'package:twaslna_dashboard/module_filters/ui/screen/captain_filter_screen.dart';
+import 'package:twaslna_dashboard/module_filters/ui/screen/store_filter_screen.dart';
 import 'package:twaslna_dashboard/module_main/sceen/home_screen.dart';
 import 'package:twaslna_dashboard/module_orders/ui/screen/OngoingOrdersScreen.dart';
 import 'package:twaslna_dashboard/module_orders/ui/screen/my_orders_screen.dart';
 import 'package:twaslna_dashboard/module_orders/ui/screen/order_accounts_screen.dart';
+import 'package:twaslna_dashboard/module_orders/ui/screen/orders_without_pending_screen.dart';
 import 'package:twaslna_dashboard/module_settings/ui/settings_page/settings_page.dart';
 import 'package:twaslna_dashboard/module_stores/ui/screen/stores_screen.dart';
 import 'package:twaslna_dashboard/navigator_menu/navigator_menu.dart';
@@ -34,6 +36,9 @@ class MainScreen extends StatefulWidget {
   final CompanyFinanceScreen _companyFinanceScreen;
   final OrdersAccountScreen _ordersAccountScreen;
   final CaptainFilterScreen _captainFilterScreen;
+  final StoresFilterScreen _storesFilterScreen;
+  final OrdersWithoutPendingScreen _ordersWithoutPendingScreen;
+
   final List<Widget> pages = [];
 
   MainScreen(
@@ -50,7 +55,9 @@ class MainScreen extends StatefulWidget {
       this._onGoingOrdersScreen,
       this._companyFinanceScreen,
       this._ordersAccountScreen,
-      this._captainFilterScreen
+      this._captainFilterScreen,
+      this._storesFilterScreen,
+      this._ordersWithoutPendingScreen
       ) {
     pages.add(_homeScreen);
     pages.add(_storeCategoriesScreen);
@@ -66,6 +73,8 @@ class MainScreen extends StatefulWidget {
     pages.add(_companyFinanceScreen);
     pages.add(_ordersAccountScreen);
     pages.add(_captainFilterScreen);
+    pages.add(_storesFilterScreen);
+    pages.add(_ordersWithoutPendingScreen);
   }
 
   @override
@@ -111,7 +120,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       key: GlobalVariable.mainScreenScaffold,
       drawer: NavigatorMenu(
-        width: MediaQuery.of(context).size.width * 0.75,
+        width:ScreenType.isTablet() ? MediaQuery.of(context).size.width * 0.4 : MediaQuery.of(context).size.width * 0.75,
         currentIndex: selectedPage,
         onTap: (index) {
           selectedPage = index;
