@@ -85,17 +85,7 @@ class OrderManager
 
             return $item;
         }
-    }
-
-    public function countAllOrders()
-    {
-        return $this->orderEntityRepository->countAllOrders();
-    }
-
-    public function countpendingOrders()
-    {
-        return $this->orderEntityRepository->countpendingOrders();
-    }
+    }  
 
     public function countOngoingOrders()
     {
@@ -175,6 +165,11 @@ class OrderManager
     public function  countCaptainOrdersDelivered($captainId)
     {
         return $this->orderEntityRepository->countCaptainOrdersDelivered($captainId);
+    }
+
+    public function  sumFinancialAmount()
+    {
+        return $this->orderEntityRepository->sumFinancialAmount();
     }
 
     public function  captainOrdersDelivered($captainId)

@@ -125,19 +125,6 @@ class OrderController extends BaseController
     }
 
     /**
-     * @Route("/dashboardOrders", name="dashboardOrders",methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function dashboardOrders()
-    {
-        $result = $this->orderService->dashboardOrders();
-
-        return $this->response($result, self::FETCH);
-    }
-
-    /**
       * @Route("/getOrdersWithOutPending", name="getOrdersWithOutPendingForAdmin", methods={"GET"})
       * @IsGranted("ROLE_ADMIN")
       * @return JsonResponse

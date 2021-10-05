@@ -43,6 +43,14 @@ class DeliveryCompanyPaymentsFromCaptainEntityRepository extends ServiceEntityRe
                ->getResult();
     }
     
+    public function deliveryCompanySumPaymentsFromCaptains()
+    {
+        return $this->createQueryBuilder('paymentsFromCaptain')
+               ->select('sum(paymentsFromCaptain.amount) as sumPaymentsToCompany')
+               ->getQuery()
+               ->getResult();
+    }
+    
     public function deliveryCompanySumPaymentsFromCaptainInSpecificDate($captainId, $fromDate, $toDate)
     {
         return $this->createQueryBuilder('paymentsFromCaptain')
