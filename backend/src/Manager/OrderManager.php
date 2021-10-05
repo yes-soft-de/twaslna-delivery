@@ -167,6 +167,11 @@ class OrderManager
         return $this->orderEntityRepository->countCaptainOrdersDelivered($captainId);
     }
 
+    public function  sumFinancialAmount()
+    {
+        return $this->orderEntityRepository->sumFinancialAmount();
+    }
+
     public function  captainOrdersDelivered($captainId)
     {
         return $this->orderEntityRepository->captainOrdersDelivered($captainId);

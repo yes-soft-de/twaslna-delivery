@@ -22,6 +22,11 @@ class CaptainService
         return $this->orderManager->countCaptainOrdersDelivered($captainId);
     }
 
+    public function sumFinancialAmount()
+    {
+        return $this->orderManager->sumFinancialAmount();
+    }
+
     public function captainOrdersDelivered($captainId)
     {
         return $this->orderManager->captainOrdersDelivered($captainId);

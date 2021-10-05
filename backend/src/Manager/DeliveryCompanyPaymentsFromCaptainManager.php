@@ -42,6 +42,11 @@ class DeliveryCompanyPaymentsFromCaptainManager
         return $this->deliveryCompanyPaymentsFromCaptainEntityRepository->deliveryCompanySumPaymentsFromCaptain($captainId);
     }
 
+    public function deliveryCompanySumPaymentsFromCaptains()
+    {
+        return $this->deliveryCompanyPaymentsFromCaptainEntityRepository->deliveryCompanySumPaymentsFromCaptains();
+    }
+
     public function deliveryCompanySumPaymentsFromCaptainInSpecificDate($captainId, $fromDate, $toDate)
     {
         return $this->deliveryCompanyPaymentsFromCaptainEntityRepository->deliveryCompanySumPaymentsFromCaptainInSpecificDate($captainId, $fromDate, $toDate);

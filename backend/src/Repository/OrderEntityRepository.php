@@ -420,6 +420,18 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function sumFinancialAmount()
+    {
+        return $this->createQueryBuilder('OrderEntity')
+            ->select('sum(OrderEntity.invoiceAmount) as sumInvoiceAmount', 'sum(OrderEntity.deliveryCost) as deliveryCost' )
+
+            ->andWhere("OrderEntity.state = :delivered")
+
+            ->setParameter('delivered', self::DELIVERED)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function captainOrdersDelivered($captainId)
     {
         return $this->createQueryBuilder('OrderEntity')

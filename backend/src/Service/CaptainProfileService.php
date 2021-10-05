@@ -13,7 +13,6 @@ use App\Request\CaptainProfileUpdateByAdminRequest;
 use App\Response\CaptainIsActiveResponse;
 use App\Response\CaptainProfileCreateResponse;
 use App\Response\CaptainFinancialAccountDetailsResponse;
-use App\Response\CaptainFinancialAccountDetailsForAdminResponse;
 use App\Response\CaptainTotalFinancialAccountInMonthResponse;
 use App\Response\CaptainTotalFinancialAccountInMonthForAdminResponse;
 use App\Response\CaptainCountOrdersDeliveredInTodayResponse;
@@ -585,8 +584,14 @@ class CaptainProfileService
     public function captainsRemainingOnItAmount()
     {
         $response = [];
+        
+        $sumFinancialAmount = $this->captainService->sumFinancialAmount();
+        $sumPaymentsToCompany = $this->deliveryCompanyPaymentsFromCaptainService->deliveryCompanySumPaymentsFromCaptains();
+        $totalAmountForCompany = 
+        (float)$sumFinancialAmount[0]['sumInvoiceAmount'] + $sumFinancialAmount[0]['deliveryCost'] - $sumPaymentsToCompany[0]['sumPaymentsToCompany'];
+
         $captains = $this->userManager->getAllCaptains();
-     
+        
         foreach ($captains as $captain) {
                  $financialAccount = $this->getCaptainFinancialAccountDetailsByCaptainIdForAdmin($captain['captainID']);
                  $remainingAmountOnCaptain =$financialAccount[0]->remainingAmountForCompany;
@@ -596,7 +601,9 @@ class CaptainProfileService
                     $response[] =  $this->autoMapping->map('array', CaptainsRemainingOnItAmountResponse::class, $captain);
                 }
         } 
-        return $response;
+        $arr['totalAmountForCompany'] = $totalAmountForCompany;
+        $arr['captains'] = $response;
+        return $arr;
     }
 
     public function updateCaptainNewMessageStatus($request, $NewMessageStatus)
