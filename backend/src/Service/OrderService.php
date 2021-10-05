@@ -255,32 +255,7 @@ class OrderService
        }
         return $response;
     }
-    
-    public function dashboardOrders():array
-    {
-        $response = [];
-        $response[] = $this->orderManager->countpendingOrders();
-        $response[] = $this->orderManager->countOngoingOrders();
-        $response[] = $this->orderManager->countAllOrders();
-        $ongoingOrders = $this->orderManager->ongoingOrders();
-      
-        foreach ($ongoingOrders as  $ongoingOrder) {
-            
-            $ongoingOrder['image'] = $this->specialLinkCheck($ongoingOrder['specialLink']).$ongoingOrder['image'];
-            $ongoingOrder['image'] = $ongoingOrder['image'];
-            $ongoingOrder['imageURL'] = $ongoingOrder['image'];
-            
-            
-            if ($ongoingOrder['branchId']){
-                $ongoingOrder['branchId'] = $this->storeOwnerBranchService->getBrancheById($ongoingOrder['branchId']);
-                }
-
-            $response[]  = $this->autoMapping->map('array',OrdersongoingResponse::class,  $ongoingOrder);
-           
-        }  
-        return $response;
-    }
-
+   
     public function getOrdersWithOutPending():?array
     {
        $orders = $this->orderManager->getOrdersWithOutPending();
@@ -309,71 +284,7 @@ class OrderService
         $orders = $this->orderManager->getOrdersOngoing();
         return $this->getOrdersWithStore($orders);
     }
-//TODO count orders for captain or for store or client
-    //  public function getAllOrdersAndCount($year, $month, $userId, $userType):?array
-    //  {
-    //     $response = [];
-    //     $date = $this->dateFactoryService->returnRequiredDate($year, $month);
 
-    //     if ($userType == "owner") {
-    //         $response['countOrdersInMonth'] = $this->orderManager->countOrdersInMonthForOwner($date[0], $date[1], $userId);
-    //         $response['countOrdersInDay'] = $this->orderManager->countOrdersInDay($userId, $date[0],$date[1]);
-            
-    //         $ordersInMonth = $this->orderManager->getOrdersInMonthForOwner($date[0], $date[1], $userId);
-            
-    //         foreach ($ordersInMonth as $order) {
-
-    //             if ($order['branchId']){
-    //                 $order['branchId'] = $this->storeOwnerBranchService->getBrancheById($order['branchId']);
-    //                 }
-    
-    //             if ($order['captainID'] == true) {
-    //                 $order['acceptedOrder'] = $this->captainProfileService->getCaptainProfileByCaptainID($order['captainID']);
-    //                     }
-    //             if ($order['productID'] == true) {
-    //                 $order['product'] = $this->productService->getProductById($order['productID']);
-    //                     } 
-    //             $response[] = $this->autoMapping->map('array', OrdersAndCountResponse::class, $order);
-    //         }
-    //     }
-
-    //     if ($userType == "captain") {
-        
-    //         $response['countOrdersInMonth'] = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $userId);
-    //         $response['countOrdersInDay'] = $this->captainService->countCaptainOrdersInDay($userId, $date[0],$date[1]);
-    //         $acceptedInMonth = $this->captainService->getAcceptedOrderByCaptainIdInMonth($date[0], $date[1], $userId);
-            
-    //         foreach ($acceptedInMonth as $item){
-    //             $ordersInMonth =  $this->orderManager->orderById($item['id']);  
-            
-            
-    //             foreach ($ordersInMonth as $order) {
-        
-    //                 if ($order['branchId']){
-    //                     $order['branchId'] = $this->storeOwnerBranchService->getBrancheById($order['branchId']);
-    //                     }
-
-    //                 if ($order['captainID'] == true) {
-    //                     $order['acceptedOrder'] = $this->captainProfileService->getCaptainProfileByCaptainID($order['captainID']);
-    //                     }
-    //                 $order['log'] = $this->orderLogService->getOrderLogByOrderId($order['id']); 
-    //                 $firstDate = $this->orderLogService->getFirstDate($order['id']); 
-    //                 $lastDate = $this->orderLogService->getLastDate($order['id']);
-                
-    //                 if($firstDate[0]['date'] && $lastDate[0]['date']) {
-    //                     $order['completionTime'] = $this->dateFactoryService->subtractTwoDates($firstDate[0]['date'], $lastDate[0]['date']);
-                        
-    //                 }
-
-    //                 if ($order['productID'] == true) {
-    //                     $order['product'] = $this->productService->getProductById($order['productID']);
-    //                    }
-    //                 $response[] = $this->autoMapping->map('array', OrdersAndCountResponse::class, $order);   
-    //             }
-    //         }
-    //     }
-    //     return $response;
-    // }
      public function getOrdersInSpecificDate($fromDate, $toDate):?array
      {
         $date = $this->dateFactoryService->returnSpecificDate($fromDate, $toDate);

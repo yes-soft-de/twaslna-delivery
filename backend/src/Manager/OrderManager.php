@@ -85,17 +85,7 @@ class OrderManager
 
             return $item;
         }
-    }
-
-    public function countAllOrders()
-    {
-        return $this->orderEntityRepository->countAllOrders();
-    }
-
-    public function countpendingOrders()
-    {
-        return $this->orderEntityRepository->countpendingOrders();
-    }
+    }  
 
     public function countOngoingOrders()
     {
