@@ -120,18 +120,6 @@ class ProductController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
-    //TODO. this for remove
-    /**
-     * @Route("/productByProductIdAndStoreOwnerProfileId/{storeOwnerProfileId}/{productId}", name="getProductByProductIdAndStoreOwnerProfileId", methods={"GET"})
-     * @return JsonResponse
-     */
-    public function getProductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId)
-    {
-        $result = $this->productService->getProductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId);
-
-        return $this->response($result, self::FETCH);
-    }
-    
     /**
      * @Route("/updateProductByAdmin", name="updateProductByAdmin", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
