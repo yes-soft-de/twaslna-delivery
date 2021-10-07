@@ -2,7 +2,7 @@
 
 namespace App\Response;
 
-class ClientProfileResponse
+class ClientsProfileResponse
 {
     public $id;
     
@@ -10,15 +10,13 @@ class ClientProfileResponse
 
     public $clientName;
 
-    public $roomID;
-
     public $phone;
     
     public $image;
 
     public $imageURL;
-    
-    public $baseURL;
 
     public $location;
+    
+    public $baseURL;
 }

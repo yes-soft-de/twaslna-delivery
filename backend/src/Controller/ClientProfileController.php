@@ -91,7 +91,7 @@ class ClientProfileController extends BaseController
     }
 
     /**
-     * @Route("/clientprofilebyid/{id}", name="getClientProfileByID",methods={"GET"})
+     * @Route("/clientprofilebyid/{id}", name="getClientProfileByIDViewTheLatest25Clients",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
@@ -103,7 +103,7 @@ class ClientProfileController extends BaseController
     }
 
     /**
-     * @Route("/clientsProfile", name="getClientsProfile",methods={"GET"})
+     * @Route("/clientsprofile", name="getClientsProfile",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
@@ -120,6 +120,17 @@ class ClientProfileController extends BaseController
     public function clientFilter($itemName)
     {
         $result = $this->clientProfileService->clientFilter($itemName);
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * @Route("/clientfilterbyname/{name}", name="getClientsByName", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function clientsByName($name)
+    {
+        $result = $this->clientProfileService->clientsByName($name);
 
         return $this->response($result, self::FETCH);
     }
