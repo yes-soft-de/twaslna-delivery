@@ -56,6 +56,11 @@ class OrderLogManager
     {
         return $this->orderLogEntityRepository->getFirstDate($orderNumber);
     }
+
+    public function getAcceptOrderDate($orderNumber)
+    {
+        return $this->orderLogEntityRepository->getAcceptOrderDate($orderNumber);
+    }
     
     public function getLastDate($orderNumber)
     {
