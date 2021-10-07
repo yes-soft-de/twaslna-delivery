@@ -14,6 +14,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class OrderLogEntityRepository extends ServiceEntityRepository
 {
+    const ON_WAY="on way to pick order";
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, OrderLogEntity::class);
@@ -75,6 +77,21 @@ class OrderLogEntityRepository extends ServiceEntityRepository
             
             ->andWhere("OrderLogEntity.orderNumber =:orderNumber")
             ->setParameter('orderNumber', $orderNumber)
+            ->setMaxResults(1)
+            ->addOrderBy('OrderLogEntity.id','ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    
+    public function getAcceptOrderDate($orderNumber)
+    {
+        return $this->createQueryBuilder('OrderLogEntity')
+            ->select('OrderLogEntity.id, OrderLogEntity.state, OrderLogEntity.createdAt')
+            
+            ->andWhere("OrderLogEntity.orderNumber =:orderNumber")
+            ->andWhere("OrderLogEntity.state =:on_way")
+            ->setParameter('orderNumber', $orderNumber)
+             ->setParameter('on_way', self::ON_WAY)
             ->setMaxResults(1)
             ->addOrderBy('OrderLogEntity.id','ASC')
             ->getQuery()

@@ -101,14 +101,6 @@ class ProductService
        return $response;
    }
    
-    public function getProductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId):?array
-    {
-       $response = [];
-       $product = $this->productManager->getProductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId);
-       $response[] = $this->autoMapping->map('array', ProductFullInfoResponse::class, $product);
-       return $response;
-   }
-   
     public function getStoreProductsByProfileId($storeOwnerProfileId):?array
     {
        $response = [];

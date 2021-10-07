@@ -9,6 +9,7 @@ use App\Manager\UserManager;
 use App\Request\UserRegisterRequest;
 use App\Request\ClientProfileUpdateRequest;
 use App\Response\ClientProfileResponse;
+use App\Response\ClientsProfileResponse;
 use App\Response\UserRegisterResponse;
 use App\Response\NotificationLocalResponse;
 use App\Response\ClientFilterStoreResponse;
@@ -74,6 +75,9 @@ class ClientProfileService
     public function getClientProfileByID($id)
     {
         $item = $this->userManager->getClientProfileByID($id);
+        $item['imageURL'] = $item['image'];
+        $item['image'] = $this->params.$item['image'];
+        $item['baseURL'] = $this->params;
         return $this->autoMapping->map('array', ClientProfileResponse::class, $item);
     }
 
@@ -82,7 +86,10 @@ class ClientProfileService
         $response = [];
         $items = $this->userManager->getClientsProfile();
         foreach ($items as $item) {
-            $response[] = $this->autoMapping->map('array', ClientProfileResponse::class, $item);
+            $item['imageURL'] = $item['image'];
+            $item['image'] = $this->params.$item['image'];
+            $item['baseURL'] = $this->params;
+            $response[] = $this->autoMapping->map('array', ClientsProfileResponse::class, $item);
             }        
         return $response;
     }
@@ -109,4 +116,19 @@ class ClientProfileService
             }
         return $response;
     }
+
+   public function clientsByName($name)
+   {
+       $response = [];
+
+       $clients = $this->userManager->clientsByName($name);
+       foreach ($clients as $client)
+        {
+            $client['imageURL'] = $client['image'];
+            $client['image'] = $this->params.$client['image'];
+            $client['baseURL'] = $this->params;
+            $response['clients'][]= $this->autoMapping->map('array', ClientsProfileResponse::class, $client);
+           }
+       return $response;
+   }
 }

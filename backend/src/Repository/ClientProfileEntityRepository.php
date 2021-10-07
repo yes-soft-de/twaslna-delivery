@@ -48,8 +48,10 @@ class ClientProfileEntityRepository extends ServiceEntityRepository
     public function getClientsProfile()
     {
         return $this->createQueryBuilder('clientProfile')
-            ->select('clientProfile.id', 'clientProfile.clientName','clientProfile.clientID', 'clientProfile.image', 'clientProfile.phone', 'clientProfile.roomID', 'clientProfile.location')
+            ->select('clientProfile.id', 'clientProfile.clientName','clientProfile.clientID', 'clientProfile.image', 'clientProfile.phone','clientProfile.location')
 
+            ->setMaxResults(25)
+            ->addOrderBy('clientProfile.id','ASC')
             ->getQuery()
             ->getResult();
     }
@@ -60,5 +62,17 @@ class ClientProfileEntityRepository extends ServiceEntityRepository
         ->select('count(clientProfile.id) as count')
         ->getQuery()
         ->getSingleScalarResult();
+    }
+
+    public function clientsByName($name)
+    {
+        return $this->createQueryBuilder('clientProfile')
+        ->select('clientProfile.id', 'clientProfile.clientName','clientProfile.clientID', 'clientProfile.image', 'clientProfile.phone','clientProfile.location')
+
+            ->andWhere('clientProfile.clientName LIKE :name')
+
+            ->setParameter('name', '%'.$name.'%')
+            ->getQuery()
+            ->getResult();
     }
 }

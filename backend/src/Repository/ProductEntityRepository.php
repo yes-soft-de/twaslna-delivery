@@ -3,11 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\ProductEntity;
-use App\Entity\StoreProductEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\OrderDetailEntity;
-use App\Entity\ProductCategoryEntity;
 use App\Entity\DeliveryCompanyFinancialEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -145,30 +143,6 @@ class ProductEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getProductByProductIdAndStoreOwnerProfileId($storeOwnerProfileId, $productId)
-    {
-        return $this->createQueryBuilder('product')
-        ->select('product.id', 'product.productName', 'product.productImage', 'product.productImage', 'product.ProductCategoryID')
-        ->addSelect('StoreProduct.productPrice')
-
-        ->addSelect('storeOwnerProfile.id as storeOwnerProfileID', 'storeOwnerProfile.storeOwnerName as storeOwnerName','storeOwnerProfile.storeOwnerID', 'storeOwnerProfile.image', 'storeOwnerProfile.story', 'storeOwnerProfile.free', 'storeOwnerProfile.status', 'storeOwnerProfile.phone', 'storeOwnerProfile.storeOwnerID')
-
-        ->addSelect('storeOwnerBranch.location','storeOwnerBranch.branchName','storeOwnerBranch.city')
-        
-        ->leftJoin(StoreProductEntity::class, 'StoreProduct', Join::WITH, 'StoreProduct.productID = :productId')
-
-        ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.id = :storeOwnerProfileId')
-
-        ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOwnerProfile.id = storeOwnerBranch.storeOwnerProfileID')
-        ->andWhere('StoreProduct.storeOwnerProfileID= :storeOwnerProfileId')
-        ->andWhere('product.id = :productId')
-
-        ->setParameter('productId',$productId)
-        ->setParameter('storeOwnerProfileId',$storeOwnerProfileId)
-        ->getQuery()
-        ->getOneOrNullResult();
-    }
-
     public function getStoreProductsByProfileId($storeOwnerProfileId)
     {
         return $this->createQueryBuilder('product')
@@ -179,20 +153,6 @@ class ProductEntityRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
     }
-
-    public function areThereItemsRelatedToThisProduct($id) {
-      
-        return $this->createQueryBuilder('product')
-        ->leftJoin(StoreProductEntity::class, 'storeProduct', Join::WITH, 'storeProduct.productID = :id')
-        ->leftJoin(OrderDetailEntity::class, 'orderDetail', Join::WITH, 'orderDetail.productID = :id')
-
-        ->andWhere(' storeProduct.productID = :id ')
-        ->orWhere(' orderDetail.productID = :id ')
-
-        ->setParameter('id',$id)
-        ->getQuery()
-        ->getResult();
-      }
 
     public function countProducts()
     {

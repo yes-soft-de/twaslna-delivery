@@ -7,4 +7,6 @@ class OrderLogTimeLineResponse
     public $completionTime;
 
     public $currentStage;
+    
+    public $deliveredTime;
 }
