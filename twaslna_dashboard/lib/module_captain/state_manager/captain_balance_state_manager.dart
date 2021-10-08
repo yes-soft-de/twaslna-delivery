@@ -37,5 +37,19 @@ class CaptainBalanceStateManager {
     });
 
   }
-
+  void getBalanceFilteredDate(CaptainBalanceScreenState screenState,int captainId , AccountBalance captainBalance , AccountBalance captainBalanceLastMonth ,String firstDate,String lastDate){
+    _stateSubject.add(LoadingState(screenState));
+    _captainsService.getCaptainSpecificDate(captainId, firstDate, lastDate).then((value){
+      if (value.hasError){
+        _stateSubject.add(CaptainBalanceLoadedState(screenState,captainBalance,captainBalanceLastMonth,error: [value.error!]));
+      }
+      else if (value.isEmpty){
+        _stateSubject.add(CaptainBalanceLoadedState(screenState,captainBalance,captainBalanceLastMonth,empty: value.isEmpty));
+      }
+      else {
+        BalanceModel _model = value as BalanceModel;
+        _stateSubject.add(CaptainBalanceLoadedState(screenState,captainBalance,captainBalanceLastMonth,specificCaptainBalance:_model.data));
+      }
+    });
+  }
 }

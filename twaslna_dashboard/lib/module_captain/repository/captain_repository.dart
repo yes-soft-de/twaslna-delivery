@@ -8,6 +8,7 @@ import 'package:twaslna_dashboard/module_captain/response/captain_unfinished_pym
 import 'package:twaslna_dashboard/module_captain/response/in_active_captain_response.dart';
 import 'package:twaslna_dashboard/module_categories/response/response.dart';
 import 'package:twaslna_dashboard/module_network/http_client/http_client.dart';
+import 'package:twaslna_dashboard/module_orders/response/captain_remaining_payments_response.dart';
 
 @injectable
 class CaptainRepository {
@@ -66,13 +67,13 @@ class CaptainRepository {
     if (response == null) return null;
     return CaptainUnfinishedPaymentsResponse.fromJson(response);
   }
-  Future<CaptainUnfinishedPaymentsResponse?> captainRemainingPayments() async {
+  Future<CaptainRemainingPaymentsResponse?> captainRemainingPayments() async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
         Urls.GET_REMAINING_PAYMENT,
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
-    return CaptainUnfinishedPaymentsResponse.fromJson(response);
+    return CaptainRemainingPaymentsResponse.fromJson(response);
   }
 
   Future<ActionResponse?> enableCaptain(AcceptCaptainRequest request) async {
@@ -82,5 +83,14 @@ class CaptainRepository {
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
+  }
+
+  Future<CaptainAccountBalanceResponse?> getCaptainSpecificDate(int captainId,String firstDate,String lastDate) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(
+        Urls.GET_ACCOUNT_BALANCE_CAPTAIN_SPECIFIC + '$captainId' + '/$firstDate' + '/$lastDate',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptainAccountBalanceResponse.fromJson(response);
   }
 }

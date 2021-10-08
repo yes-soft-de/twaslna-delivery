@@ -6,6 +6,7 @@ import 'package:twaslna_dashboard/module_captain/response/captain_profile_respon
 import 'package:twaslna_dashboard/module_captain/response/captain_unfinished_pyments_response.dart';
 import 'package:twaslna_dashboard/module_captain/response/in_active_captain_response.dart';
 import 'package:twaslna_dashboard/module_categories/response/response.dart';
+import 'package:twaslna_dashboard/module_orders/response/captain_remaining_payments_response.dart';
 
 
 @injectable
@@ -22,7 +23,8 @@ class CaptainManager {
   Future<CaptainAccountBalanceResponse?> getAccountBalance(int captainId) => _captainRepository.getCaptainAccountBalance(captainId);
   Future<CaptainAccountBalanceResponse?> getAccountBalanceLastMonth(int captainId) => _captainRepository.getCaptainAccountBalance(captainId);
   Future<CaptainUnfinishedPaymentsResponse?> getPayments() => _captainRepository.captainPayments();
-  Future<CaptainUnfinishedPaymentsResponse?> getCaptainRemainingPayments() => _captainRepository.captainRemainingPayments();
+  Future<CaptainRemainingPaymentsResponse?> getCaptainRemainingPayments() => _captainRepository.captainRemainingPayments();
+  Future<CaptainAccountBalanceResponse?> getAccountBalanceSpecific(int captainId,firstDate,lastDate) => _captainRepository.getCaptainSpecificDate(captainId,firstDate,lastDate);
 
 
 

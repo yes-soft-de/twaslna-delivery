@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 import 'package:twaslna_dashboard/abstracts/states/loading_state.dart';
 import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
@@ -41,7 +42,15 @@ class CaptainBalanceScreenState extends State<CaptainBalanceScreen> {
   }
 
   int captainId = -1;
+  int currentIndex = 0;
+  DateTime? fDate;
+  DateTime? lDate;
 
+  void getBalanceFilteredDate(DateTime  firstDate,DateTime endDate,captainBalance , captainBalanceLastMonth){
+    fDate = firstDate;
+    lDate = endDate;
+    widget._stateManager.getBalanceFilteredDate(this,captainId,captainBalance,captainBalanceLastMonth ,DateFormat('yyyy-MM-dd','en').format(firstDate.toUtc()), DateFormat('yyyy-MM-dd','en').format(endDate.toUtc()));
+  }
   @override
   Widget build(BuildContext context) {
     if (captainId == -1) {

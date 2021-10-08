@@ -1,6 +1,7 @@
 import 'package:twaslna_dashboard/abstracts/data_model/data_model.dart';
 import 'package:twaslna_dashboard/module_captain/response/captain_unfinished_pyments_response.dart';
 
+
 class CaptainPaymentModel extends DataModel {
   int? id;
   String captainID = '-1';
