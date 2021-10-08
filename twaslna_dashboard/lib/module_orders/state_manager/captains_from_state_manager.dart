@@ -7,6 +7,7 @@ import 'package:twaslna_dashboard/module_captain/model/inActiveModel.dart';
 import 'package:twaslna_dashboard/module_captain/service/captains_service.dart';
 import 'package:twaslna_dashboard/module_captain/ui/screen/captains_list_screen.dart';
 import 'package:twaslna_dashboard/module_captain/ui/state/captain_list/captains_loaded_state.dart';
+import 'package:twaslna_dashboard/module_orders/model/order_account_model.dart';
 import 'package:twaslna_dashboard/module_orders/ui/screen/order_accounts_screen.dart';
 import 'package:twaslna_dashboard/module_orders/ui/state/order_account_loaded_state.dart';
 
@@ -29,7 +30,7 @@ class OrdersAccountStateManager {
         _stateSubject.add(OrdersAccountLoadedState(screenState,null,empty: value.isEmpty));
       }
       else {
-        CaptainPaymentModel _model = value as CaptainPaymentModel;
+        OrderAccountModel _model = value as OrderAccountModel;
         _stateSubject.add(OrdersAccountLoadedState(screenState,_model.data));
       }
     });
