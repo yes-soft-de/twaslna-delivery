@@ -63,6 +63,7 @@ class Urls {
   static const GET_REPORT = BASE_API + '/countReport';
   static const GET_ACCOUNT_BALANCE_CAPTAIN = BASE_API + '/captainFinancialAccountForAdmin/';
   static const GET_ACCOUNT_BALANCE_CAPTAIN_LAST_MONTH = BASE_API + '/captainFinancialAccountInLastMonthForAdmin/';
+  static const GET_ACCOUNT_BALANCE_CAPTAIN_SPECIFIC = BASE_API + '/captainFinancialAccountInSpecificDateForAdmin/';
   static const GET_UNFINISHED_PAYMENT = BASE_API + '/captainsRemainingForItAmount';
   static const GET_REMAINING_PAYMENT = BASE_API + '/captainsRemainingOnItAmount';
   static const GET_PENDING_ORDER = BASE_API + '/getPendingOrders';
@@ -71,7 +72,10 @@ class Urls {
   static const GET_SPECIFIC_DATE_ORDERS = BASE_API + '/getOrdersInSpecificDate/';
   static const GET_ORDER_DETAILS = BASE_API + '/orderDetailsForAdmin/';
   static const GET_ORDER_TIMELINE = BASE_API + '/orderLogsTimeLine/';
-
+  static const GET_CAPTAINS_REPORT = BASE_API + '/countOrdersEveryCaptainInLastMonth';
+  static const GET_STORES_REPORT = BASE_API + '/countOrdersEveryStoreInLastMonth';
+  static const GET_CLIENTS_REPORT = BASE_API + '/countOrdersEveryClientInLastMonth';
+  static const GET_PRODUCTS_REPORT = BASE_API + '/countOrdersEveryProductInLastMonth';
 
 
 
