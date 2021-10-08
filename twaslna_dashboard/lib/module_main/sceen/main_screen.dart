@@ -15,6 +15,10 @@ import 'package:twaslna_dashboard/module_orders/ui/screen/OngoingOrdersScreen.da
 import 'package:twaslna_dashboard/module_orders/ui/screen/my_orders_screen.dart';
 import 'package:twaslna_dashboard/module_orders/ui/screen/order_accounts_screen.dart';
 import 'package:twaslna_dashboard/module_orders/ui/screen/orders_without_pending_screen.dart';
+import 'package:twaslna_dashboard/module_reports/ui/screen/captains_reports_screen.dart';
+import 'package:twaslna_dashboard/module_reports/ui/screen/clients_reports_screen.dart';
+import 'package:twaslna_dashboard/module_reports/ui/screen/products_reports_screen.dart';
+import 'package:twaslna_dashboard/module_reports/ui/screen/stores_reports_screen.dart';
 import 'package:twaslna_dashboard/module_settings/ui/settings_page/settings_page.dart';
 import 'package:twaslna_dashboard/module_stores/ui/screen/stores_screen.dart';
 import 'package:twaslna_dashboard/navigator_menu/navigator_menu.dart';
@@ -38,6 +42,10 @@ class MainScreen extends StatefulWidget {
   final CaptainFilterScreen _captainFilterScreen;
   final StoresFilterScreen _storesFilterScreen;
   final OrdersWithoutPendingScreen _ordersWithoutPendingScreen;
+  final StoresReportScreen _storesReportScreen;
+  final ProductsReportScreen _productsReportScreen;
+  final ClientsReportScreen _clientsReportScreen;
+  final CaptainsReportScreen _captainsReportScreen;
 
   final List<Widget> pages = [];
 
@@ -57,7 +65,11 @@ class MainScreen extends StatefulWidget {
       this._ordersAccountScreen,
       this._captainFilterScreen,
       this._storesFilterScreen,
-      this._ordersWithoutPendingScreen
+      this._ordersWithoutPendingScreen,
+      this._clientsReportScreen,
+      this._captainsReportScreen,
+      this._productsReportScreen,
+      this._storesReportScreen
       ) {
     pages.add(_homeScreen);
     pages.add(_storeCategoriesScreen);
@@ -75,13 +87,18 @@ class MainScreen extends StatefulWidget {
     pages.add(_captainFilterScreen);
     pages.add(_storesFilterScreen);
     pages.add(_ordersWithoutPendingScreen);
+    pages.add(_clientsReportScreen);
+    pages.add(_captainsReportScreen);
+    pages.add(_productsReportScreen);
+    pages.add(_storesReportScreen);
+
   }
 
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver{
   int selectedPage = 0;
   late List<Widget> currentPage;
 
@@ -90,9 +107,16 @@ class _MainScreenState extends State<MainScreen> {
     currentPage = widget.pages;
     super.initState();
   }
+  @override
+  void didChangeMetrics() {
+setState(() {
+
+});
+  }
 
   @override
   Widget build(BuildContext context) {
+    print(ScreenType.getCurrentScreenType());
     if (ScreenType.isDesktop()) {
       return Scaffold(
         body: Row(

@@ -5059,6 +5059,136 @@ class S {
       args: [],
     );
   }
+
+  /// `Reports`
+  String get reports {
+    return Intl.message(
+      'Reports',
+      name: 'reports',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Products Report`
+  String get productsReport {
+    return Intl.message(
+      'Products Report',
+      name: 'productsReport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clients Report`
+  String get clientsReport {
+    return Intl.message(
+      'Clients Report',
+      name: 'clientsReport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stores Report`
+  String get storesReports {
+    return Intl.message(
+      'Stores Report',
+      name: 'storesReports',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Report`
+  String get captainsReports {
+    return Intl.message(
+      'Captain Report',
+      name: 'captainsReports',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Score`
+  String get score {
+    return Intl.message(
+      'Score',
+      name: 'score',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `deliver an order`
+  String get captainDelivered {
+    return Intl.message(
+      'deliver an order',
+      name: 'captainDelivered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain`
+  String get captainDid {
+    return Intl.message(
+      'Captain',
+      name: 'captainDid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `received order`
+  String get clientOrdered {
+    return Intl.message(
+      'received order',
+      name: 'clientOrdered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Client`
+  String get clientDid {
+    return Intl.message(
+      'Client',
+      name: 'clientDid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order requested from store`
+  String get storeDid {
+    return Intl.message(
+      'Order requested from store',
+      name: 'storeDid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request product`
+  String get productOrdered {
+    return Intl.message(
+      'Request product',
+      name: 'productOrdered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Specific`
+  String get specific {
+    return Intl.message(
+      'Specific',
+      name: 'specific',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

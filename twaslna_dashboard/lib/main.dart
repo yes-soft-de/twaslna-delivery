@@ -46,9 +46,7 @@ void main() async {
   await HiveSetUp.init();
   await Firebase.initializeApp();
   if (kIsWeb) {
-
-  }
-  else {
+  } else {
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
     FlutterError.onError = (FlutterErrorDetails details) {
       FirebaseCrashlytics.instance.recordFlutterError(details);
@@ -90,31 +88,31 @@ class MyApp extends StatefulWidget {
   final PaymentsModule _paymentsModule;
   final FiltersModule _filtersModule;
   final LogsModule _logsModule;
+
   MyApp(
-    this._themeDataService,
-    this._localizationService,
-    this._fireNotificationService,
-    this._localNotificationService,
-    this._splashModule,
-    this._authorizationModule,
-    this._chatModule,
-    this._settingsModule,
-    this._mainModule,
-    this._categoriesModule,
-    this._storesModule,
-    this._productsModule,
-    this._companyModule,
-    this._ordersModule,
-    this._paymentsModule,
-    this._filtersModule,
-    this._logsModule
-  );
+      this._themeDataService,
+      this._localizationService,
+      this._fireNotificationService,
+      this._localNotificationService,
+      this._splashModule,
+      this._authorizationModule,
+      this._chatModule,
+      this._settingsModule,
+      this._mainModule,
+      this._categoriesModule,
+      this._storesModule,
+      this._productsModule,
+      this._companyModule,
+      this._ordersModule,
+      this._paymentsModule,
+      this._filtersModule,
+      this._logsModule);
 
   @override
   State<StatefulWidget> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   static FirebaseAnalytics analytics = FirebaseAnalytics();
   static FirebaseAnalyticsObserver observer =
       FirebaseAnalyticsObserver(analytics: analytics);
@@ -146,7 +144,6 @@ class _MyAppState extends State<MyApp> {
       activeTheme = event;
       setState(() {});
     });
-
   }
 
   @override

@@ -88,6 +88,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain Accepted Order"),
         "captainActivated": MessageLookupByLibrary.simpleMessage(
             "Captain Activated Successfully"),
+        "captainDelivered":
+            MessageLookupByLibrary.simpleMessage("deliver an order"),
+        "captainDid": MessageLookupByLibrary.simpleMessage("Captain"),
         "captainGotCash":
             MessageLookupByLibrary.simpleMessage("Captain Got Cash"),
         "captainGotTheCash":
@@ -120,6 +123,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Captain Updated Successfully"),
         "captains": MessageLookupByLibrary.simpleMessage("Captains"),
+        "captainsReports":
+            MessageLookupByLibrary.simpleMessage("Captain Report"),
         "car": MessageLookupByLibrary.simpleMessage("Car"),
         "card": MessageLookupByLibrary.simpleMessage("Card"),
         "cash": MessageLookupByLibrary.simpleMessage("Cash"),
@@ -157,6 +162,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseYourState":
             MessageLookupByLibrary.simpleMessage("choose your state"),
         "city": MessageLookupByLibrary.simpleMessage("City"),
+        "clientDid": MessageLookupByLibrary.simpleMessage("Client"),
+        "clientOrdered": MessageLookupByLibrary.simpleMessage("received order"),
+        "clientsReport": MessageLookupByLibrary.simpleMessage("Clients Report"),
         "closingTime": MessageLookupByLibrary.simpleMessage("Closing Time"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "company": MessageLookupByLibrary.simpleMessage("Company"),
@@ -532,8 +540,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "productCategory":
             MessageLookupByLibrary.simpleMessage("Product Category"),
         "productName": MessageLookupByLibrary.simpleMessage("Product Name"),
+        "productOrdered":
+            MessageLookupByLibrary.simpleMessage("Request product"),
         "productPrice": MessageLookupByLibrary.simpleMessage("Product Price"),
         "products": MessageLookupByLibrary.simpleMessage("Products"),
+        "productsReport":
+            MessageLookupByLibrary.simpleMessage("Products Report"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "profileDataEmpty": MessageLookupByLibrary.simpleMessage(
             "There is no profile data available"),
@@ -569,6 +581,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "renewSubscription":
             MessageLookupByLibrary.simpleMessage("Renew Subscription"),
         "reportSent": MessageLookupByLibrary.simpleMessage("Report sent"),
+        "reports": MessageLookupByLibrary.simpleMessage("Reports"),
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("Request Meeting"),
         "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
@@ -589,6 +602,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "saveSuccess": MessageLookupByLibrary.simpleMessage("Save Success"),
         "savingInvoice": MessageLookupByLibrary.simpleMessage(
             "Please wait we are invoice saving ..."),
+        "score": MessageLookupByLibrary.simpleMessage("Score"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
         "searchF": MessageLookupByLibrary.simpleMessage("Search for"),
         "searchFor":
@@ -626,6 +640,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "socialMedia": MessageLookupByLibrary.simpleMessage("Social Media"),
         "sortByEarlier": MessageLookupByLibrary.simpleMessage("By Earlier"),
         "sortByRate": MessageLookupByLibrary.simpleMessage("highest rate"),
+        "specific": MessageLookupByLibrary.simpleMessage("Specific"),
         "startWriting": MessageLookupByLibrary.simpleMessage("Start Writing"),
         "status": MessageLookupByLibrary.simpleMessage("Online Status"),
         "statusCodeBadRequest": MessageLookupByLibrary.simpleMessage(
@@ -643,6 +658,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Stores Categories"),
         "storeCreatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("Store Created Successfully"),
+        "storeDid":
+            MessageLookupByLibrary.simpleMessage("Order requested from store"),
         "storeImage": MessageLookupByLibrary.simpleMessage("Store Image"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("Store Info"),
         "storeLocation": MessageLookupByLibrary.simpleMessage("Store location"),
@@ -658,6 +675,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Store Updated Successfully"),
         "stores": MessageLookupByLibrary.simpleMessage("Stores"),
         "storesList": MessageLookupByLibrary.simpleMessage("Stores List"),
+        "storesReports": MessageLookupByLibrary.simpleMessage("Stores Report"),
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("Submitting Profile"),
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),
