@@ -128,7 +128,7 @@ class ClientProfileController extends BaseController
      * @Route("/clientfilterbyname/{name}", name="getClientsByName", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function clientsByName($name)
+    public function clientsByName($name): JsonResponse
     {
         $result = $this->clientProfileService->clientsByName($name);
 

@@ -117,7 +117,7 @@ class ClientProfileService
         return $response;
     }
 
-   public function clientsByName($name)
+   public function clientsByName($name): array
    {
        $response = [];
 
@@ -127,7 +127,7 @@ class ClientProfileService
             $client['imageURL'] = $client['image'];
             $client['image'] = $this->params.$client['image'];
             $client['baseURL'] = $this->params;
-            $response['clients'][]= $this->autoMapping->map('array', ClientsProfileResponse::class, $client);
+            $response[]= $this->autoMapping->map('array', ClientsProfileResponse::class, $client);
            }
        return $response;
    }
