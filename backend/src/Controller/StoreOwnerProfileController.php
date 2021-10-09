@@ -39,7 +39,7 @@ class StoreOwnerProfileController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function storeOwnerRegister(Request $request)
+    public function storeOwnerRegister(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         
@@ -114,7 +114,7 @@ class StoreOwnerProfileController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function updateStoreOwnerByAdmin(Request $request)
+    public function updateStoreOwnerByAdmin(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -129,7 +129,7 @@ class StoreOwnerProfileController extends BaseController
      * @Route("/storeownerprofilebyid/{id}", name="getStoreOwnerProfileByID",methods={"GET"})
      * @return JsonResponse
      */
-    public function getStoreOwnerProfileByID($id)
+    public function getStoreOwnerProfileByID($id): JsonResponse
     {
         $response = $this->storeOwnerProfileService->getStoreOwnerProfileByID($id);
 
@@ -140,7 +140,7 @@ class StoreOwnerProfileController extends BaseController
      * @Route("/storeOwners", name="getAllStoreOwners",methods={"GET"})
      * @return JsonResponse
      */
-    public function getAllStoreOwners()
+    public function getAllStoreOwners(): JsonResponse
     {
         $response = $this->storeOwnerProfileService->getAllStoreOwners();
 
@@ -151,9 +151,22 @@ class StoreOwnerProfileController extends BaseController
      * @Route("/storeownerbycategoryid/{storeCategoryId}", name="getStoreOwnerByCategoryId",methods={"GET"})
      * @return JsonResponse
      */
-    public function getStoreOwnerByCategoryId($storeCategoryId)
+    public function getStoreOwnerByCategoryId($storeCategoryId): JsonResponse
     {
         $response = $this->storeOwnerProfileService->getStoreOwnerByCategoryId($storeCategoryId);
+
+        return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * @Route("/storeownerbycategoryidforadmin/{storeCategoryId}", name="getStoreOwnerByCategoryIdForAdmin",methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param $storeCategoryId
+     * @return JsonResponse
+     */
+    public function getStoreOwnerByCategoryIdForAdmin($storeCategoryId): JsonResponse
+    {
+        $response = $this->storeOwnerProfileService->getStoreOwnerByCategoryIdForAdmin($storeCategoryId);
 
         return $this->response($response, self::FETCH);
     }
@@ -162,9 +175,33 @@ class StoreOwnerProfileController extends BaseController
      * @Route("/storeOwnerBest", name="GetStoreOwnerBest",methods={"GET"})
      * @return JsonResponse
      */
-    public function getStoreOwnerBest()
+    public function getStoreOwnerBest(): JsonResponse
     {
         $response = $this->storeOwnerProfileService->getStoreOwnerBest();
+
+        return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * @Route("/storesinactive", name="GetStoresInactive", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
+     */
+    public function getStoreOwnerInactive(): JsonResponse
+    {
+        $response = $this->storeOwnerProfileService->getStoreOwnerInactive();
+
+        return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * @Route("/storesinactivefilter/{name}", name="GetStoresInactiveFilterByName", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
+     */
+    public function getStoreOwnerInactiveFilterByName($name): JsonResponse
+    {
+        $response = $this->storeOwnerProfileService->getStoreOwnerInactiveFilterByName($name);
 
         return $this->response($response, self::FETCH);
     }
@@ -175,7 +212,7 @@ class StoreOwnerProfileController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function createStoreOwnerProfileByAdmin(Request $request)
+    public function createStoreOwnerProfileByAdmin(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -198,7 +235,7 @@ class StoreOwnerProfileController extends BaseController
      * @IsGranted("ROLE_CLIENT")
      * @return JsonResponse
      */
-    public function storeOwnerProfileByStoreID()
+    public function storeOwnerProfileByStoreID(): JsonResponse
     {
         $response = $this->storeOwnerProfileService->storeOwnerProfileByStoreID($this->getUserId());
 
@@ -208,8 +245,9 @@ class StoreOwnerProfileController extends BaseController
     /**
      * @Route("/storeFilter/{name}", name="getStoresByName", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
      */
-    public function getStoresByName($name)
+    public function getStoresByName($name): JsonResponse
     {
         $result = $this->storeOwnerProfileService->getStoresByName($name);
 

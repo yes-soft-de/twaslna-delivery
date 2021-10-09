@@ -20,6 +20,8 @@ use Doctrine\ORM\Query\Expr\Join;
  */
 class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
 {
+    const STATUS_ACTIVE="active";
+    const STATUS_INACTIVE="inactive";
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, StoreOwnerProfileEntity::class);
@@ -43,7 +45,28 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     public function getStoreOwnerByCategoryId($storeCategoryId)
     {
         return $this->createQueryBuilder('profile')
-            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts', 'profile.status')
+            ->addSelect('StoreOwnerBranchEntity.location')
+            ->addSelect('DeliveryCompanyFinancialEntity.deliveryCost')
+
+            ->leftJoin(DeliveryCompanyFinancialEntity::class, 'DeliveryCompanyFinancialEntity', Join::WITH, 'profile.id = profile.id')
+
+            ->leftJoin(StoreOwnerBranchEntity::class, 'StoreOwnerBranchEntity', Join::WITH, 'StoreOwnerBranchEntity.storeOwnerProfileID = profile.id ')
+
+            ->andWhere('profile.storeCategoryId = :storeCategoryId')
+            ->andWhere('profile.status = :status')
+
+            ->setParameter('storeCategoryId', $storeCategoryId)
+            ->setParameter('status', self::STATUS_ACTIVE)
+            ->groupBy('profile.id')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getStoreOwnerByCategoryIdForAdmin($storeCategoryId)
+    {
+        return $this->createQueryBuilder('profile')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts', 'profile.status')
             ->addSelect('StoreOwnerBranchEntity.location')
             ->addSelect('DeliveryCompanyFinancialEntity.deliveryCost')
 
@@ -62,7 +85,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     public function getStoreOwnerBest()
     {
         return $this->createQueryBuilder('profile')
-            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts', 'profile.status')
             ->addSelect('StoreOwnerBranchEntity.location')
             ->addSelect('DeliveryCompanyFinancialEntity.deliveryCost')
 
@@ -71,7 +94,49 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
             ->leftJoin(StoreOwnerBranchEntity::class, 'StoreOwnerBranchEntity', Join::WITH, 'StoreOwnerBranchEntity.storeOwnerProfileID = profile.id ')
 
             ->andWhere('profile.is_best = :best')
+            ->andWhere('profile.status = :status')
             ->setParameter('best','best')
+            ->setParameter('status', self::STATUS_ACTIVE)
+            ->groupBy('profile.id')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getStoreOwnerInactive()
+    {
+        return $this->createQueryBuilder('profile')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts', 'profile.status', 'profile.openingTime', 'profile.closingTime')
+            ->addSelect('StoreOwnerBranchEntity.location')
+            ->addSelect('DeliveryCompanyFinancialEntity.deliveryCost')
+
+            ->leftJoin(DeliveryCompanyFinancialEntity::class, 'DeliveryCompanyFinancialEntity', Join::WITH, 'profile.id = profile.id')
+
+            ->leftJoin(StoreOwnerBranchEntity::class, 'StoreOwnerBranchEntity', Join::WITH, 'StoreOwnerBranchEntity.storeOwnerProfileID = profile.id ')
+
+            ->andWhere('profile.status = :status')
+
+            ->setParameter('status', self::STATUS_INACTIVE)
+            ->groupBy('profile.id')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getStoreOwnerInactiveFilterByName($name)
+    {
+        return $this->createQueryBuilder('profile')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts', 'profile.status', 'profile.openingTime', 'profile.closingTime')
+            ->addSelect('StoreOwnerBranchEntity.location')
+            ->addSelect('DeliveryCompanyFinancialEntity.deliveryCost')
+
+            ->leftJoin(DeliveryCompanyFinancialEntity::class, 'DeliveryCompanyFinancialEntity', Join::WITH, 'profile.id = profile.id')
+
+            ->leftJoin(StoreOwnerBranchEntity::class, 'StoreOwnerBranchEntity', Join::WITH, 'StoreOwnerBranchEntity.storeOwnerProfileID = profile.id ')
+
+            ->andWhere('profile.status = :status')
+            ->andWhere('profile.storeOwnerName LIKE :name')
+
+            ->setParameter('name', '%'.$name.'%')
+            ->setParameter('status', self::STATUS_INACTIVE)
             ->groupBy('profile.id')
             ->getQuery()
             ->getResult();
@@ -109,7 +174,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('profile')
 
-            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts', 'profile.openingTime', 'profile.closingTime')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.phone', 'profile.privateOrders', 'profile.hasProducts', 'profile.openingTime', 'profile.closingTime', 'profile.status')
             ->addSelect('StoreOwnerBranchEntity.location')
             ->addSelect('DeliveryCompanyFinancialEntity.deliveryCost', 'profile.storeCategoryId')
 

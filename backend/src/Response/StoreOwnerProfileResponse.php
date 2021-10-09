@@ -27,4 +27,6 @@ class StoreOwnerProfileResponse
     public $accountID;
     
     public $stcPay;
+
+    public $status;
 }
