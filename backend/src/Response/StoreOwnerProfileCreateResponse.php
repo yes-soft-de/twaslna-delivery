@@ -41,4 +41,6 @@ class StoreOwnerProfileCreateResponse
     public $storeCategoryId;
 
     public $storeCategoryName;
+
+    public $status;
 }

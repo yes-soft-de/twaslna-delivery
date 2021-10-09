@@ -27,4 +27,6 @@ class StoreOwnerByCategoryIdResponse
     public $closingTime;
 
     public $openingTime;
+
+    public $status;
 }

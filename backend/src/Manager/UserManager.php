@@ -576,10 +576,25 @@ class UserManager
     {
         return $this->storeOwnerProfileEntityRepository->getStoreOwnerByCategoryId($storeCategoryId);
     }
-    
+
+    public function getStoreOwnerByCategoryIdForAdmin($storeCategoryId)
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnerByCategoryIdForAdmin($storeCategoryId);
+    }
+
     public function getStoreOwnerBest()
     {
         return $this->storeOwnerProfileEntityRepository->getStoreOwnerBest();
+    }
+
+    public function getStoreOwnerInactive()
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnerInactive();
+    }
+
+    public function getStoreOwnerInactiveFilterByName($name)
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnerInactiveFilterByName($name);
     }
 
     public function createStoreOwnerProfileByAdmin(StoreOwnerProfileCreateByAdminRequest $request)

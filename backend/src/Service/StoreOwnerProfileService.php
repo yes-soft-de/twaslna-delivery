@@ -122,6 +122,17 @@ class StoreOwnerProfileService
         return $response;
     }
 
+    public function getStoreOwnerByCategoryIdForAdmin($storeCategoryId):array
+    {
+        $response = [];
+        $items = $this->userManager->getStoreOwnerByCategoryIdForAdmin($storeCategoryId);
+        foreach ($items as $item) {
+            $item['rating'] = $this->ratingService->getAvgRating($item['id'], 'store');
+            $response[] = $this->autoMapping->map('array', StoreOwnerByCategoryIdResponse::class, $item);
+            }
+        return $response;
+    }
+
     public function getStoreOwnerBest():array
     {
         $response = [];
@@ -129,6 +140,26 @@ class StoreOwnerProfileService
         foreach ($items as $item) {
             $response[] = $this->autoMapping->map('array', StoreOwnerByCategoryIdResponse::class, $item);
             }        
+        return $response;
+    }
+
+    public function getStoreOwnerInactive():array
+    {
+        $response = [];
+        $items = $this->userManager->getStoreOwnerInactive();
+        foreach ($items as $item) {
+           $response[] = $this->autoMapping->map('array', StoreOwnerByCategoryIdResponse::class, $item);
+            }
+        return $response;
+    }
+
+    public function getStoreOwnerInactiveFilterByName($name):array
+    {
+        $response = [];
+        $items = $this->userManager->getStoreOwnerInactiveFilterByName($name);
+        foreach ($items as $item) {
+           $response[] = $this->autoMapping->map('array', StoreOwnerByCategoryIdResponse::class, $item);
+            }
         return $response;
     }
 
