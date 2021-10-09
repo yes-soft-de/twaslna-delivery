@@ -13,6 +13,7 @@ import 'package:twaslna_dashboard/utils/components/error_screen.dart';
 import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
 import 'package:twaslna_dashboard/utils/components/progresive_image.dart';
 import 'package:twaslna_dashboard/utils/components/stacked_form.dart';
+import 'package:twaslna_dashboard/utils/global/screen_type.dart';
 import 'package:twaslna_dashboard/utils/helpers/form_dialog.dart';
 
 class CaptainProfileLoadedState extends States {
@@ -31,6 +32,7 @@ class CaptainProfileLoadedState extends States {
   }
   @override
   Widget getUI(BuildContext context) {
+    print(MediaQuery.of(context).size.width);
     if (error != null) {
       return ErrorStateWidget(
         onRefresh: () {
@@ -46,221 +48,108 @@ class CaptainProfileLoadedState extends States {
           });
     }
     return StackedForm(
-        child: CustomListView.custom(
-          // padding: EdgeInsets.only(left: 8,right: 8),
-          children: [
-            Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Theme.of(context).primaryColor,
+        child: FixedContainer(
+          child: CustomListView.custom(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  width: 175,
+                  height: 175,
+                  child: Center(
+                    child: ClipOval(
+                      //   borderRadius: BorderRadius.circular(25),
+                      child: Container(
+                        width: 175,
+                        height: 175,
+                        child: CustomNetworkImage(
+                          imageSource: model?.image ?? '',
+                          width: double.maxFinite,
+                          height: double.maxFinite,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Container(
-                          width: 175,
-                          height: 175,
-                          child: Center(
-                            child: ClipOval(
-                              //   borderRadius: BorderRadius.circular(25),
-                              child: Container(
-                                width: 175,
-                                height: 175,
-                                child: CustomNetworkImage(
-                                  imageSource: model?.image ?? '',
-                                  width: double.maxFinite,
-                                  height: double.maxFinite,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      ListTile(
-                        leading:Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Icon(Icons.person_rounded, color:Theme.of(context).primaryColor),
-                            )),
-                        title: Text(S.of(context).name,style: TextStyle(
-                            color: Colors.white
-                        ),) ,
-                        subtitle: Text(model?.name ?? S.current.unknown,style: TextStyle(
-                            color: Colors.white
-                        ),) ,
-                        trailing: customMiniTile(title: S.of(context).status,
-                            subTitle: model?.isOnline,
-                            iconData: Icons.wifi_rounded),
-                      ),
-                      ListTile(
-                        leading:Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Icon(Icons.calendar_today_rounded, color:Theme.of(context).primaryColor),
-                            )),
-                        title: Text(S.of(context).age,style: TextStyle(
-                            color: Colors.white
-                        ),) ,
-                        subtitle: Text(model?.age?.toString() ?? S.current.unknown,style: TextStyle(
-                            color: Colors.white
-                        ),) ,
-                        trailing: customMiniTile(title: S.of(context).captainStatus,
-                            subTitle: model?.status,
-                            iconData: Icons.account_box_rounded),
-                      ),
-                      ListTile(
-                        leading:Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Icon(Icons.phone, color:Theme.of(context).primaryColor),
-                            )),
-                        title: Text(S.of(context).phoneNumber,style: TextStyle(
-                            color: Colors.white
-                        ),) ,
-                        subtitle: Text(model?.phone ?? S.current.unknown,style: TextStyle(
-                            color: Colors.white
-                        ),) ,
-                        trailing: customMiniTile(
-                            title: S.of(context).car,
-                            subTitle: model?.car,
-                            iconData: Icons.local_taxi_rounded),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Container(
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).backgroundColor.withOpacity(0.25),
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Center(child:Text(S.current.identity,style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold),)),
-                            )),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right:16.0,left: 16,bottom: 16),
-                        child: Container(
-                          width: 175,
-                          height: 175,
-                          child: Center(
-                            child: ClipOval(
-                              child: Container(
-                                width: 175,
-                                height: 175,
-                                child: CustomNetworkImage(
-                                  imageSource: model?.identity ?? '',
-                                  width: double.maxFinite,
-                                  height: double.maxFinite,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Container(
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).backgroundColor.withOpacity(0.25),
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Center(child:Text(S.current.mechanichLicence,style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold),)),
-                            )),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right:16.0,left: 16,bottom: 16),
-                        child: Container(
-                          width: 175,
-                          height: 175,
-                          child: Center(
-                            child: ClipOval(
-                              child: Container(
-                                width: 175,
-                                height: 175,
-                                child: CustomNetworkImage(
-                                  imageSource: model?.mechanicLicense ?? '',
-                                  width: double.maxFinite,
-                                  height: double.maxFinite,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Container(
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).backgroundColor.withOpacity(0.25),
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Center(child:Text(S.current.driverLicence,style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold),)),
-                            )),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right:16.0,left: 16,bottom: 16),
-                        child: Container(
-                          width: 175,
-                          height: 175,
-                          child: Center(
-                            child: ClipOval(
-                              child: Container(
-                                width: 175,
-                                height: 175,
-                                child: CustomNetworkImage(
-                                  imageSource: model?.drivingLicence ?? '',
-                                  width: double.maxFinite,
-                                  height: double.maxFinite,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      customListTile(
-                          title: S.of(context).bankName,
-                          subTitle: model?.bankName,
-                          iconData: Icons.monetization_on_rounded),
-                      customListTile(
-                          title: S.of(context).bankAccountNumber,
-                          subTitle: model?.bankNumber,
-                          iconData: Icons.password_rounded),
-                      customListTile(
-                          title: S.of(context).stcPayCode,
-                          subTitle: model?.stcPay,
-                          iconData: Icons.credit_card_rounded),
-                      customListTile(
-                          title: S.of(context).salary,
-                          subTitle: model?.salary?.toString(),
-                          iconData: Icons.money),
-                      customListTile(
-                          title: S.of(context).bounce,
-                          subTitle: model?.bounce?.toString(),
-                          iconData: Icons.wallet_giftcard_rounded),
-                    ]),
               ),
-            ),
-            Container(height: 75,)
-          ],
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Theme.of(context).primaryColor
+                  ),
+                  child: Column(
+                    children: [
+                      customListTile(
+                          title: S.of(context).name,
+                          subTitle: model?.name,
+                          iconData: Icons.person_rounded),
+                      customListTile(
+                          title: S.of(context).age,
+                          subTitle:model?.age?.toString(),
+                          iconData:Icons.calendar_today_rounded),
+                      customListTile(
+                          title: S.of(context).phoneNumber,
+                          subTitle:model?.phone,
+                          iconData:Icons.phone),
+                      customListTile(
+                          title:  S.of(context).car,
+                          subTitle:model?.car,
+                          iconData:Icons.local_taxi_rounded),
+                      customListTile(
+                          title: S.of(context).status,
+                          subTitle:model?.isOnline,
+                          iconData:Icons.wifi_rounded),
+                      customListTile(
+                          title: S.of(context).captainStatus,
+                          subTitle:model?.status,
+                          iconData:Icons.account_box_rounded),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Theme.of(context).primaryColor
+                  ),
+                  child: Flex(
+                    direction:ScreenType.isMobile() ? Axis.vertical : Axis.horizontal,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      imageTile(title:S.current.identity ,image:model?.identity ?? ''),
+                      imageTile(title:S.current.mechanichLicence ,image:model?.mechanicLicense ?? ''),
+                      imageTile(title:S.current.driverLicence ,image:model?.drivingLicence ?? ''),
+                    ],
+                  ),
+                ),
+              ),
+              // customListTile(
+              //     title: S.of(context).bankName,
+              //     subTitle: model?.bankName,
+              //     iconData: Icons.monetization_on_rounded),
+              // customListTile(
+              //     title: S.of(context).bankAccountNumber,
+              //     subTitle: model?.bankNumber,
+              //     iconData: Icons.password_rounded),
+              // customListTile(
+              //     title: S.of(context).stcPayCode,
+              //     subTitle: model?.stcPay,
+              //     iconData: Icons.credit_card_rounded),
+              // customListTile(
+              //     title: S.of(context).salary,
+              //     subTitle: model?.salary?.toString(),
+              //     iconData: Icons.money),
+              // customListTile(
+              //     title: S.of(context).bounce,
+              //     subTitle: model?.bounce?.toString(),
+              //     iconData: Icons.wallet_giftcard_rounded),
+              Container(height: 75,)
+            ],
+          ),
         ),
         label: S.current.updateProfile,
         onTap: () {
@@ -285,7 +174,6 @@ class CaptainProfileLoadedState extends States {
     var context = screenState.context;
     Widget? icon;
     if (title == S.current.captainStatus || title == S.current.status) {
-      print(subTitle);
       icon = PhysicalModel(
           color: Theme.of(context).scaffoldBackgroundColor,
           elevation: 5,
@@ -379,6 +267,47 @@ Widget customMiniTile({required String title, String? subTitle, required IconDat
           SizedBox(child: icon,)
         ],
       ),
+    );
+}
+Widget imageTile({required String title,required String image}){
+    var context = screenState.context;
+    return Flex(
+      direction: Axis.vertical,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top:16.0,left: 8,right: 8),
+          child: Container(
+            width: 150,
+              decoration: BoxDecoration(
+                color: Theme.of(context).backgroundColor.withOpacity(0.25),
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Center(child:Text(title,style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold),)),
+              )),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 16,top: 16),
+          child: Container(
+            width: 75,
+            height: 75,
+            child: Center(
+              child: ClipOval(
+                child: Container(
+                  width: 75,
+                  height: 75,
+                  child: CustomNetworkImage(
+                    imageSource: image,
+                    width: double.maxFinite,
+                    height: double.maxFinite,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
 }
 }

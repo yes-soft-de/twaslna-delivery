@@ -4,6 +4,7 @@ import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/module_captain/captains_routes.dart';
 import 'package:twaslna_dashboard/module_captain/model/captain_model_payment_model.dart';
 import 'package:twaslna_dashboard/module_captain/model/inActiveModel.dart';
+import 'package:twaslna_dashboard/module_orders/model/order_account_model.dart';
 import 'package:twaslna_dashboard/module_orders/ui/screen/order_accounts_screen.dart';
 import 'package:twaslna_dashboard/module_payments/payments_routes.dart';
 import 'package:twaslna_dashboard/utils/components/costom_search.dart';
@@ -17,7 +18,7 @@ class OrdersAccountLoadedState extends States {
   final OrdersAccountScreenState screenState;
   final String? error;
   final bool empty;
-  final List<CaptainPaymentModel>? model;
+  final OrderAccountModel? model;
 
   OrdersAccountLoadedState(this.screenState, this.model,
       {this.empty = false, this.error})
@@ -51,7 +52,7 @@ class OrdersAccountLoadedState extends States {
 
   List<Widget> getCaptains(BuildContext context) {
     List<Widget> widgets = [];
-    for (var element in model ?? <CaptainPaymentModel>[]) {
+    for (var element in model?.captains ?? <CaptainFromPaymentsModel>[]) {
       if (!element.captainName!.contains(search ?? '') && search != null) {
         continue;
       }
@@ -95,6 +96,23 @@ class OrdersAccountLoadedState extends States {
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: element.remainingAmountForCaptain! > 0
+                          ? Colors.green
+                          : Colors.red),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 8, bottom: 8, left: 16.0, right: 16),
+                    child: Text(
+                      element.remainingAmountForCaptain.toString() +
+                          ' ' +
+                          S.current.sar,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Container(
@@ -136,6 +154,24 @@ class OrdersAccountLoadedState extends States {
                   screenState.refresh();
                 }
               },
+            ),));
+      widgets.insert(
+          1,
+          Padding(
+            padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16),
+            child: Column(
+              children: [
+                SizedBox(height: 16,),
+                Text(model?.totalPaymentsAmount.toString() ?? '0',style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),),
+                SizedBox(height: 16,),
+                Text(S.current.remainingAmountForCompany,style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),),
+              ],
             ),));
     }
 

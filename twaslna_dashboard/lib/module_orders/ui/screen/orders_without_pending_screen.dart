@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/global_nav_key.dart';
@@ -55,7 +56,7 @@ class OrdersWithoutPendingScreenState extends State<OrdersWithoutPendingScreen> 
    void getOrderFilteredDate(DateTime  firstDate,DateTime endDate){
     fDate = firstDate;
     lDate = endDate;
-    widget._stateManager.getFilteredDateOrders(this, firstDate.toUtc().toIso8601String(), endDate.toUtc().toString());
+    widget._stateManager.getFilteredDateOrders(this, DateFormat('yyyy-MM-dd','en').format(firstDate.toUtc()), DateFormat('yyyy-MM-dd','en').format(endDate.toUtc()));
    }
   @override
   Widget build(BuildContext context) {

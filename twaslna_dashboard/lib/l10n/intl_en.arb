@@ -502,7 +502,23 @@
   "countTodayOrder": "Today Order",
   "firstDate": "First Date",
   "lastDate": "Last Date",
-  "captainUpdatedSuccessfully": "Captain Updated Successfully"
+  "captainUpdatedSuccessfully": "Captain Updated Successfully",
+  "reports": "Reports",
+  "productsReport": "Products Report",
+  "clientsReport": "Clients Report",
+  "storesReports": "Stores Report",
+  "captainsReports": "Captain Report",
+  "score": "Score",
+  "captainDelivered": "deliver an order",
+  "captainDid": "Captain",
+  "clientOrdered": "received order",
+  "clientDid": "Client",
+  "storeDid": "Order requested from store",
+  "productOrdered": "Request product",
+  "specific": "Specific"
+
+
+
 
 
 

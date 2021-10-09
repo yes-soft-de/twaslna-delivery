@@ -1,3 +1,4 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/consts/order_status.dart';
@@ -10,6 +11,7 @@ import 'package:twaslna_dashboard/utils/components/error_screen.dart';
 import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
 import 'package:flutter/material.dart';
 import 'package:twaslna_dashboard/utils/helpers/order_status_helper.dart';
+import 'package:twaslna_dashboard/utils/helpers/translating.dart';
 
 class OrderTimLineLoadedState extends States {
   OrderTimLineScreenState screenState;
@@ -41,6 +43,21 @@ class OrderTimLineLoadedState extends States {
           physics: BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics()),
           children: [
+          ListTile(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25)
+            ),
+            leading: Container(
+                height: double.maxFinite,
+                width:50,
+                child: Icon(FontAwesomeIcons.solidClock,color: Colors.white,)),
+            tileColor: Theme.of(context).primaryColor,
+            title: Text(S.current.orderTime,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+            subtitle:   Text(Trans.localString(model?.orderStatus.completionTime ?? '', context),style: TextStyle(
+                fontWeight: FontWeight.bold,
+              color: Colors.white
+            ),),
+          ),
             Flex(
               direction: Axis.vertical,
               children: getStepper(StatusHelper.getOrderStatusIndex(model?.orderStatus.currentStage ?? OrderStatusEnum.WAITING)),

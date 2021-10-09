@@ -12,6 +12,8 @@ import 'package:twaslna_dashboard/module_captain/response/captain_profile_respon
 import 'package:twaslna_dashboard/module_captain/response/captain_unfinished_pyments_response.dart';
 import 'package:twaslna_dashboard/module_captain/response/in_active_captain_response.dart';
 import 'package:twaslna_dashboard/module_categories/response/response.dart';
+import 'package:twaslna_dashboard/module_orders/model/order_account_model.dart';
+import 'package:twaslna_dashboard/module_orders/response/captain_remaining_payments_response.dart';
 import 'package:twaslna_dashboard/utils/helpers/status_code_helper.dart';
 
 @injectable
@@ -103,7 +105,7 @@ class CaptainsService {
   }
   Future<DataModel> getRemainingPayments() async {
 
-    CaptainUnfinishedPaymentsResponse? _paymentResponse = await _captainManager.getCaptainRemainingPayments();
+    CaptainRemainingPaymentsResponse? _paymentResponse = await _captainManager.getCaptainRemainingPayments();
     if (_paymentResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
@@ -112,7 +114,7 @@ class CaptainsService {
           StatusCodeHelper.getStatusCodeMessages(_paymentResponse.statusCode));
     }
     if (_paymentResponse.data == null) return DataModel.empty();
-    return CaptainPaymentModel.withData(_paymentResponse.data!);
+    return OrderAccountModel.withData(_paymentResponse.data!);
   }
 
   Future<DataModel> enableCaptain(AcceptCaptainRequest request) async {
@@ -127,5 +129,20 @@ class CaptainsService {
     }
     return DataModel.empty();
   }
+
+  Future<DataModel> getCaptainSpecificDate(int captainId,String firstDate , String lastDate) async {
+
+    CaptainAccountBalanceResponse? _captainProfileResponse = await _captainManager.getAccountBalanceSpecific(captainId,firstDate,lastDate);
+    if (_captainProfileResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (_captainProfileResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(_captainProfileResponse.statusCode));
+    }
+    if (_captainProfileResponse.data == null) return DataModel.empty();
+    return BalanceModel.withData(_captainProfileResponse.data!.first);
+  }
+
 
 }

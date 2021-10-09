@@ -99,7 +99,7 @@ class CustomNetworkImage extends StatelessWidget {
                     ),
                     backgroundColor: Colors.black,
                     body: PinchZoom(
-                      child: Image.network(image,),
+                      child:Image.network(image),
                       resetDuration: const Duration(milliseconds: 150),
                       onZoomStart: () {},
                       onZoomEnd: () {},

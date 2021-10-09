@@ -4,7 +4,7 @@ import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/global_nav_key.dart';
 import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/customIcon/custom_icons.dart';
-// current last index is 15
+// current last index is 19
 class NavigatorMenu extends StatefulWidget {
   final Function(int) onTap;
   final int currentIndex;
@@ -119,6 +119,16 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               children: [
                 customListTile(13, S.current.captainLogs, FontAwesomeIcons.history,true),
                 customListTile(14, S.current.storeLogs, FontAwesomeIcons.storeAlt,true),
+              ],
+              index: widget.currentIndex),
+          customExpansionTile(
+              title: S.current.reports,
+              icon: FontAwesomeIcons.solidNewspaper,
+              children: [
+                customListTile(17, S.current.captainsReports, FontAwesomeIcons.motorcycle,true),
+                customListTile(19, S.current.storesReports, FontAwesomeIcons.storeAlt,true),
+                customListTile(16, S.current.clientsReport, FontAwesomeIcons.peopleArrows,true),
+                customListTile(18, S.current.productsReport, FontAwesomeIcons.chartPie,true),
               ],
               index: widget.currentIndex),
           customListTile(6, S.current.settings, FontAwesomeIcons.cog),

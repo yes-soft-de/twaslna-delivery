@@ -1,8 +1,10 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
 class CustomFlushBarHelper {
   static Flushbar createSuccess({required String title,required String message,int timeout = 4,Color? background,bool top=false,EdgeInsets? padding,EdgeInsets? margin}) {
     return Flushbar(
+      maxWidth: 600,
       title:title,
       message: message,
       icon: Icon(
@@ -21,6 +23,7 @@ class CustomFlushBarHelper {
   }
   static Flushbar createError({required String title,required String message,int timeout = 4}) {
     return Flushbar(
+      maxWidth: 600,
       title:title,
       message: message,
       icon: Icon(

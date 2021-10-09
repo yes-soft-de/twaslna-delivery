@@ -87,6 +87,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("قبل الكابتن الطلب"),
         "captainActivated":
             MessageLookupByLibrary.simpleMessage("تم تفعيل المندوب بنجاح"),
+        "captainDelivered":
+            MessageLookupByLibrary.simpleMessage("بتوصيل طلبية"),
+        "captainDid": MessageLookupByLibrary.simpleMessage("قام المندوب"),
         "captainGotCash":
             MessageLookupByLibrary.simpleMessage("حصل الكابتن على الكاش"),
         "captainGotTheCash":
@@ -119,6 +122,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "تم تعديل بيانات الكابتن بنجاح"),
         "captains": MessageLookupByLibrary.simpleMessage("المندوبين"),
+        "captainsReports":
+            MessageLookupByLibrary.simpleMessage("تقارير المندوبين"),
         "car": MessageLookupByLibrary.simpleMessage("سيارة "),
         "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
         "cash": MessageLookupByLibrary.simpleMessage("نقدا"),
@@ -152,6 +157,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("عدد الموظفين العاملين"),
         "chooseYourState": MessageLookupByLibrary.simpleMessage("اختر حالتك"),
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
+        "clientDid": MessageLookupByLibrary.simpleMessage("قام العميل"),
+        "clientOrdered": MessageLookupByLibrary.simpleMessage("باستلام طلبية"),
+        "clientsReport": MessageLookupByLibrary.simpleMessage("تقارير العملاء"),
         "closingTime": MessageLookupByLibrary.simpleMessage("وقت الإغلاق"),
         "community":
             MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),
@@ -521,8 +529,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أصناف منتجات"),
         "productCategory": MessageLookupByLibrary.simpleMessage("صنف منتج"),
         "productName": MessageLookupByLibrary.simpleMessage("اسم المنتج"),
+        "productOrdered": MessageLookupByLibrary.simpleMessage("تم طلب المنتج"),
         "productPrice": MessageLookupByLibrary.simpleMessage("سعر المنتج"),
         "products": MessageLookupByLibrary.simpleMessage("منتجات"),
+        "productsReport":
+            MessageLookupByLibrary.simpleMessage("تقارير المنتجات"),
         "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
         "profileDataEmpty": MessageLookupByLibrary.simpleMessage(
             "لايوجد بيانات شخصية متوفرة بعد"),
@@ -557,6 +568,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "renewSubscription":
             MessageLookupByLibrary.simpleMessage("تجديد الاشتراك"),
         "reportSent": MessageLookupByLibrary.simpleMessage("تم ارسال الابلاغ"),
+        "reports": MessageLookupByLibrary.simpleMessage("تقارير"),
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("اطلب موعدا للقاء"),
         "resendCode": MessageLookupByLibrary.simpleMessage("اعادة الارسال"),
@@ -577,6 +589,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "saveSuccess": MessageLookupByLibrary.simpleMessage("تم بنجاح"),
         "savingInvoice": MessageLookupByLibrary.simpleMessage(
             "جاري حفظ الفاتورة الرجاء الانتظار"),
+        "score": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "search": MessageLookupByLibrary.simpleMessage("ابحث"),
         "searchF": MessageLookupByLibrary.simpleMessage("ابحث عن"),
         "searchFor":
@@ -615,6 +628,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sortByEarlier":
             MessageLookupByLibrary.simpleMessage("من الأحدث للأقدم"),
         "sortByRate": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),
+        "specific": MessageLookupByLibrary.simpleMessage("محدد"),
         "startWriting": MessageLookupByLibrary.simpleMessage("ابدأ الكتابة"),
         "status": MessageLookupByLibrary.simpleMessage("الحالة"),
         "statusCodeBadRequest":
@@ -632,6 +646,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أصناف المتاجر"),
         "storeCreatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إنشاء المتجر بنجاح"),
+        "storeDid":
+            MessageLookupByLibrary.simpleMessage("تم طلب طلبية من متجر"),
         "storeImage": MessageLookupByLibrary.simpleMessage("صورة المتجر"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("معلومات المتجر"),
         "storeLocation": MessageLookupByLibrary.simpleMessage("موقع المتجر"),
@@ -647,6 +663,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تعديل المتجر بنجاح"),
         "stores": MessageLookupByLibrary.simpleMessage("متاجر"),
         "storesList": MessageLookupByLibrary.simpleMessage("قائمة المتاجر"),
+        "storesReports": MessageLookupByLibrary.simpleMessage("تقارير المتاجر"),
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("جار حفظ الملف"),
         "subscribe": MessageLookupByLibrary.simpleMessage("اشترك"),

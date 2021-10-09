@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/module_captain/model/balance_model.dart';
@@ -8,6 +9,7 @@ import 'package:twaslna_dashboard/module_captain/ui/screen/captain_balance_scree
 import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/components/empty_screen.dart';
 import 'package:twaslna_dashboard/utils/components/error_screen.dart';
+import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
 import 'package:twaslna_dashboard/utils/effect/hidder.dart';
 import 'package:twaslna_dashboard/utils/effect/scaling.dart';
 
@@ -17,18 +19,25 @@ class CaptainBalanceLoadedState extends States {
   final bool empty;
   final AccountBalance? captainBalance;
   final AccountBalance? captainBalanceLastMonth;
+  final AccountBalance? specificCaptainBalance;
 
   CaptainBalanceLoadedState(
       this.screenState, this.captainBalance, this.captainBalanceLastMonth,
-      {this.empty = false, this.error})
+      {this.empty = false, this.error,this.specificCaptainBalance})
       : super(screenState) {
+    currentIndex = screenState.currentIndex;
     if (error != null) {
       screenState.refresh();
+    }
+    if (screenState.fDate != null && screenState.lDate != null){
+      firstDate = screenState.fDate;
+      lastDate = screenState.lDate;
     }
   }
 
   int currentIndex = 0;
-
+  DateTime? firstDate;
+  DateTime? lastDate;
   @override
   Widget getUI(BuildContext context) {
     if (error != null) {
@@ -45,7 +54,7 @@ class CaptainBalanceLoadedState extends States {
             screenState.getCaptain();
           });
     }
-    return Flex(
+    return FixedContainer(child: Flex(
       direction: Axis.vertical,
       children: [
         Hider(
@@ -67,20 +76,99 @@ class CaptainBalanceLoadedState extends States {
                       direction: Axis.vertical,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        ListTile(
-                          leading: Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Theme.of(screenState.context).primaryColor,
+                        Hider(
+                          active: currentIndex != 2,
+                          child: ListTile(
+                            leading: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Theme.of(screenState.context).primaryColor,
+                                ),
+                                child: Center(
+                                    child: Icon(
+                                      Icons.info_rounded,
+                                      color: Colors.white,
+                                    ))),
+                            title: Text(S.current.myBalanceHint),
+                          ),
+                        ),
+                        Hider(
+                          active: currentIndex == 2,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(25),
+                                            color: Theme.of(screenState.context).scaffoldBackgroundColor,
+                                          ),
+                                          child: ListTile(
+                                            onTap: (){
+                                              showDatePicker(context: screenState.context, initialDate: DateTime.now(), firstDate: DateTime(2021), lastDate: DateTime.now()).then((value) {
+                                                if (value!=null){
+                                                  firstDate = value;
+                                                  screenState.refresh();
+                                                }
+                                              });
+                                            },
+                                            title: Center(child: Text(S.current.firstDate)),
+                                            subtitle: Center(child: Text(firstDate != null ? DateFormat('yyyy/M/d').format(firstDate!) : '0000/00/00')),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(width: 32,height: 2.5,color: Theme.of(screenState.context).scaffoldBackgroundColor,),
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(25),
+                                            color: Theme.of(screenState.context).scaffoldBackgroundColor,
+                                          ),
+                                          child: ListTile(
+                                            onTap: (){
+                                              showDatePicker(context: screenState.context, initialDate: DateTime.now(), firstDate: DateTime(2021), lastDate: DateTime.now()).then((value) {
+                                                if (value!=null){
+                                                  lastDate = value;
+                                                  screenState.refresh();
+                                                }
+                                              });
+                                            },
+                                            title: Center(child: Text(S.current.lastDate)),
+                                            subtitle: Center(child: Text(lastDate != null ? DateFormat('yyyy/M/dd').format(lastDate!) : '0000/00/00')),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                              child: Center(
-                                  child: Icon(
-                                    Icons.info_rounded,
-                                color: Colors.white,
-                              ))),
-                          title: Text(S.current.myBalanceHint),
+                              Padding(
+                                padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16,top: 16),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      elevation: 2,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(25),
+                                      )
+                                  ),
+                                  onPressed:firstDate != null && lastDate != null ? () => screenState.getBalanceFilteredDate(firstDate!,lastDate!,captainBalance,captainBalanceLastMonth): null,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(S.current.search,style: TextStyle(color:firstDate != null && lastDate != null ? Colors.white : null),),
+                                  ),
+                                ),),
+                            ],
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 16.0, left: 16),
@@ -98,7 +186,7 @@ class CaptainBalanceLoadedState extends States {
           ),
         ),
       ],
-    );
+    ));
   }
 
   Widget data(BuildContext context) {
@@ -113,6 +201,11 @@ class CaptainBalanceLoadedState extends States {
               ? balanceDetails(
                   context, captainBalanceLastMonth ?? AccountBalance.none())
               : SizedBox(),
+          Hider(
+            active: currentIndex == 2 && specificCaptainBalance != null,
+            child: balanceDetails(
+                context, specificCaptainBalance ?? AccountBalance.none()),
+          )
         ],
       );
     }
@@ -137,6 +230,7 @@ class CaptainBalanceLoadedState extends States {
       padding: EdgeInsets.all(8),
       onTap: (index) {
         currentIndex = index;
+        screenState.currentIndex = currentIndex;
         screenState.refresh();
       },
       items: [
@@ -146,6 +240,9 @@ class CaptainBalanceLoadedState extends States {
         BottomNavigationBarItem(
             icon: Icon(Icons.update_rounded),
             label: '${S.of(context).lastMonth}'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today_rounded),
+            label: '${S.of(context).specific}'),
       ],
     );
   }

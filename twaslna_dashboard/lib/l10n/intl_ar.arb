@@ -502,7 +502,17 @@
   "firstDate": "من تاريخ",
   "lastDate": "حتى تاريخ",
   "captainUpdatedSuccessfully": "تم تعديل بيانات الكابتن بنجاح",
-
-
-
+  "reports": "تقارير",
+  "productsReport": "تقارير المنتجات",
+  "clientsReport": "تقارير العملاء",
+  "storesReports": "تقارير المتاجر",
+  "captainsReports": "تقارير المندوبين",
+  "score": "الطلبات",
+  "captainDelivered": "بتوصيل طلبية",
+  "captainDid": "قام المندوب",
+  "clientOrdered": "باستلام طلبية",
+  "clientDid": "قام العميل",
+  "storeDid": "تم طلب طلبية من متجر",
+  "productOrdered": "تم طلب المنتج",
+  "specific": "محدد"
 }
