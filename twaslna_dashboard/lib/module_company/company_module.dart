@@ -7,15 +7,15 @@ import 'package:twaslna_dashboard/module_company/ui/screen/company_profile_scree
 
 @injectable
 class CompanyModule extends YesModule {
- final CompanyProfileScreen _companyProfileScreen;
- final CompanyFinanceScreen _companyFinanceScreen;
-  CompanyModule(this._companyProfileScreen,this._companyFinanceScreen){
+ final CompanyProfileScreen companyProfileScreen;
+ final CompanyFinanceScreen companyFinanceScreen;
+  CompanyModule(this.companyProfileScreen,this.companyFinanceScreen){
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      CompanyRoutes.COMPANY_PROFILE_SCREEN : (context) => _companyProfileScreen,
-      CompanyRoutes.COMPANY_FINANCE_SCREEN : (context) => _companyFinanceScreen
+      CompanyRoutes.COMPANY_PROFILE_SCREEN : (context) => companyProfileScreen,
+      CompanyRoutes.COMPANY_FINANCE_SCREEN : (context) => companyFinanceScreen
     };
   }
 }

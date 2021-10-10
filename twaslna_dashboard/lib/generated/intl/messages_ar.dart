@@ -159,6 +159,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
         "clientDid": MessageLookupByLibrary.simpleMessage("قام العميل"),
         "clientOrdered": MessageLookupByLibrary.simpleMessage("باستلام طلبية"),
+        "clients": MessageLookupByLibrary.simpleMessage("العملاء"),
         "clientsReport": MessageLookupByLibrary.simpleMessage("تقارير العملاء"),
         "closingTime": MessageLookupByLibrary.simpleMessage("وقت الإغلاق"),
         "community":
@@ -225,6 +226,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverTo": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إليك"),
+        "deliveryTime": MessageLookupByLibrary.simpleMessage("زمن التوصيل"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("التوصيل إلى"),
         "destinationAddressHint":
@@ -444,7 +446,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderStatus": MessageLookupByLibrary.simpleMessage("حالة الطلب"),
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية"),
-        "orderTime": MessageLookupByLibrary.simpleMessage("زمن التوصيل"),
+        "orderTime": MessageLookupByLibrary.simpleMessage("زمن الطلب"),
         "orderType": MessageLookupByLibrary.simpleMessage("نوع الطلب"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("طلب في الشهر"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
@@ -642,6 +644,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "stc": MessageLookupByLibrary.simpleMessage("س ت سي"),
         "stcPayCode": MessageLookupByLibrary.simpleMessage("رقم حساب STC PAY"),
         "store": MessageLookupByLibrary.simpleMessage("المتجر"),
+        "storeAvailable": MessageLookupByLibrary.simpleMessage("المتجر متوفر"),
         "storeCategories":
             MessageLookupByLibrary.simpleMessage("أصناف المتاجر"),
         "storeCreatedSuccessfully":
@@ -662,6 +665,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تعديل المتجر بنجاح"),
         "stores": MessageLookupByLibrary.simpleMessage("متاجر"),
+        "storesInActive":
+            MessageLookupByLibrary.simpleMessage("المتاجر الغير متاحة"),
         "storesList": MessageLookupByLibrary.simpleMessage("قائمة المتاجر"),
         "storesReports": MessageLookupByLibrary.simpleMessage("تقارير المتاجر"),
         "submittingProfile":

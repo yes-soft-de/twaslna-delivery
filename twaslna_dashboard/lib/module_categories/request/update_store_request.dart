@@ -19,7 +19,8 @@ class UpdateStoreRequest {
       this.privateOrders,
       this.hasProducts,
       this.closingTime,
-      this.openingTime});
+      this.openingTime,
+      });
 
   UpdateStoreRequest.fromJson(dynamic json) {
     id = json['id'];

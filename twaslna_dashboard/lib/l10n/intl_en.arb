@@ -280,6 +280,7 @@
   "card": "Card",
   "chooseAddressNote":"Please update your current location if you want to",
   "orderTime":"Order Time",
+  "deliveryTime": "Delivery Time",
   "paymentMethodHint":"Choose",
   "statusCodeOk": "Data fetched succesfuly",
   "statusCodeCreated": "The request has succeeded and a new resource has been created as a result",
@@ -515,16 +516,10 @@
   "clientDid": "Client",
   "storeDid": "Order requested from store",
   "productOrdered": "Request product",
-  "specific": "Specific"
-
-
-
-
-
-
-
-
-
+  "specific": "Specific",
+  "clients": "Clients",
+  "storeAvailable": "Store Availability",
+  "storesInActive": "Stores In Active"
 
 
 }

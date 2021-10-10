@@ -35,6 +35,8 @@ class Urls {
   static const CREATE_STORE_CATEGORIES = BASE_API + '/createstorecategory';
   static const GET_STORES_BY_CATEGORY = BASE_API + '/storeownerbycategoryid';
   static const GET_STORES = BASE_API + '/storeOwners';
+  static const GET_STORES_INACTIVE = BASE_API + '/storesinactive';
+  static const GET_STORES_INACTIVE_FILTER = BASE_API + '/storesinactivefilter/';
   static const GET_STORE_PROFILE = BASE_API + '/storeownerprofilebyid/';
   static const CREATE_STORES = BASE_API + '/storeownercreatbyadmin';
   static const GET_PRODUCTS_CATEGORY = BASE_API + '/storeProductsCategory/';
@@ -45,10 +47,12 @@ class Urls {
   static const GET_IN_ACTIVE_CAPTAINS = BASE_API + '/getcaptainsinactive';
   static const CAPTAIN_FILTER = BASE_API + '/captainFilter/';
   static const STORE_FILTER = BASE_API + '/storeFilter/';
+  static const CLIENT_FILTER = BASE_API + '/clientfilterbyname/';
   static const ACTIVATE_CAPTAIN = BASE_API + '/captainprofileupdatebyadmin';
   static const PAYMENTS_FROM_CAPTAIN = BASE_API + '/deliveryCompanyPaymentsFromCaptain';
   static const PAYMENTS_TO_CAPTAIN = BASE_API + '/deliveryCompanyPaymentsToCaptain';
   static const GET_CAPTAIN_PROFILE = BASE_API +'/captainProfile/';
+  static const GET_CLIENT_PROFILE = BASE_API +'/clientprofilebyid/';
   static const UPDATE_STORE_CATEGORY = BASE_API + '/updateStorecategory';
   static const UPDATE_STORE = BASE_API + '/storeownerprofileupdatebyadmin';
   static const UPDATE_PRODUCT_CATEGORY = BASE_API + '/storeProductCategory';
@@ -60,6 +64,7 @@ class Urls {
   static const UPDATE_DELIVERY_PRICE_COMPANY = BASE_API + '/deliveryCompanyFinancial';
   static const CREATE_COMPANY_PROFILE = BASE_API + '/companyinfo';
   static const GET_CAPTAINS_LIST = BASE_API + '/captains';
+  static const GET_CLIENTS_LIST = BASE_API + '/clientsprofile';
   static const GET_REPORT = BASE_API + '/countReport';
   static const GET_ACCOUNT_BALANCE_CAPTAIN = BASE_API + '/captainFinancialAccountForAdmin/';
   static const GET_ACCOUNT_BALANCE_CAPTAIN_LAST_MONTH = BASE_API + '/captainFinancialAccountInLastMonthForAdmin/';
