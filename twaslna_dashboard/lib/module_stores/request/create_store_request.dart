@@ -11,6 +11,7 @@ class CreateStoreRequest {
   GeoJson? location;
   String? closingTime;
   String? openingTime;
+  String? status;
   CreateStoreRequest({
       this.storeOwnerName, 
       this.image, 
@@ -21,7 +22,8 @@ class CreateStoreRequest {
       this.phone,
       this.location,
       this.closingTime,
-      this.openingTime
+      this.openingTime,
+      this.status
   });
 
   CreateStoreRequest.fromJson(dynamic json) {
@@ -30,6 +32,7 @@ class CreateStoreRequest {
     storeCategoryId = json['storeCategoryId'];
     privateOrders = json['privateOrders'];
     hasProducts = json['hasProducts'];
+    status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +46,7 @@ class CreateStoreRequest {
     map['hasProducts'] = hasProducts;
     map['closingTime'] = closingTime;
     map['openingTime'] = openingTime;
+    map['status'] = status;
     map['location'] = location?.toJson();
     return map;
   }

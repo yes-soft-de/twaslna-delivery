@@ -87,7 +87,7 @@ class StoresScreenState extends State<StoresScreen> {
                       body: AddStoreWidget(
                         state: currentState is StoresLoadedState ? currentState as StoresLoadedState : null,
                         addStore:
-                            (id,name,phone, image,location ,products, privateOrder,open,close) {
+                            (id,name,phone, image,location ,products, privateOrder,open,close,status) {
                           Navigator.of(context).pop();
                           addStore(CreateStoreRequest(
                               location: location,
@@ -98,7 +98,8 @@ class StoresScreenState extends State<StoresScreen> {
                               hasProducts: products ? 1 : 0,
                               privateOrders: privateOrder ? 1 : 0,
                               openingTime: open,
-                              closingTime: close
+                              closingTime: close,
+                              status: status
                           ));
                         },
                       ),

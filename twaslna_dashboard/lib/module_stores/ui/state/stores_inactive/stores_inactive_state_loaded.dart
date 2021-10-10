@@ -1,30 +1,32 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/module_categories/model/StoreCategoriesModel.dart';
 import 'package:twaslna_dashboard/module_categories/request/update_store_request.dart';
 import 'package:twaslna_dashboard/module_stores/model/stores_model.dart';
-import 'package:twaslna_dashboard/module_stores/request/create_store_request.dart';
 import 'package:twaslna_dashboard/module_stores/stores_routes.dart';
-import 'package:twaslna_dashboard/module_stores/ui/screen/stores_screen.dart';
-import 'package:twaslna_dashboard/module_stores/ui/state/store_categories/stores_state.dart';
+import 'package:twaslna_dashboard/module_stores/ui/screen/stores_inactive_screen.dart';
 import 'package:twaslna_dashboard/module_stores/ui/widget/add_store_widget.dart';
+import 'package:twaslna_dashboard/utils/components/costom_search.dart';
 import 'package:twaslna_dashboard/utils/components/custom_app_bar.dart';
 import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/components/empty_screen.dart';
 import 'package:twaslna_dashboard/utils/components/error_screen.dart';
 import 'package:twaslna_dashboard/utils/components/progresive_image.dart';
 
-class StoresLoadedState extends StoresState {
-  final StoresScreenState screenState;
+class StoresInActiveLoadedState extends States {
+  final StoresInActiveScreenState screenState;
   final String? error;
   final bool empty;
   final List<StoresModel>? model;
   final List<StoreCategoriesModel>? categories;
 
-  StoresLoadedState(this.screenState, this.model, this.categories,
+  StoresInActiveLoadedState(this.screenState, this.model, this.categories,
       {this.empty = false, this.error})
       : super(screenState) {
+    if (screenState.searchKey != ''){
+      search.text = screenState.searchKey;
+    }
     if (error != null) {
       screenState.canAddCategories = false;
       screenState.refresh();
@@ -32,7 +34,7 @@ class StoresLoadedState extends StoresState {
   }
 
   String? id;
-
+  TextEditingController search = TextEditingController();
   @override
   Widget getUI(BuildContext context) {
     if (error != null) {
@@ -54,40 +56,23 @@ class StoresLoadedState extends StoresState {
       child: Center(
         child: Container(
           constraints: BoxConstraints(
-            maxWidth: 600
+              maxWidth: 600
           ),
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Container(
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      //color: Theme.of(context).backgroundColor,
-                      border: Border.all(
-                          color: Theme.of(context).primaryColor, width: 4)),
-                  child: Center(
-                    child: DropdownButton(
-                      value: id,
-                      items: getChoices(),
-                      onChanged: (v) {
-                        id = v.toString();
-                        screenState.refresh();
-                      },
-                      hint: Text(
-                        S.current.chooseCategory,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      underline: SizedBox(),
-                      icon: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Icon(Icons.arrow_drop_down_rounded),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+                padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16,top: 16),
+                child: CustomDeliverySearch(
+                  controller: search,
+                  hintText: S.current.searchForStore,
+                  onChanged: (s) {
+                    if (s == '' || s.isEmpty) {
+                      screenState.getStores();
+                    } else {
+                      screenState.getStoresFilter(s.toString());
+                    }
+                  },
+                ),),
               Expanded(
                 child: CustomListView.custom(children: getStores()),
               )
@@ -194,15 +179,15 @@ class StoresLoadedState extends StoresState {
                                     (id,name,image,products, privateOrder,open,close,status) {
                                   Navigator.of(context).pop();
                                   screenState.updateStore(UpdateStoreRequest(
-                                      status: status,
-                                      id: element.id.toString(),
-                                      storeOwnerName: name,
-                                      storeCategoryId: int.parse(element.categoryId),
-                                      image: image,
-                                      hasProducts: products ? 1 : 0,
-                                      privateOrders: privateOrder ? 1 : 0,
-                                      openingTime: open,
-                                      closingTime: close,
+                                    status: status,
+                                    id: element.id.toString(),
+                                    storeOwnerName: name,
+                                    storeCategoryId: int.parse(element.categoryId),
+                                    image: image,
+                                    hasProducts: products ? 1 : 0,
+                                    privateOrders: privateOrder ? 1 : 0,
+                                    openingTime: open,
+                                    closingTime: close,
 
                                   ));
                                 },
