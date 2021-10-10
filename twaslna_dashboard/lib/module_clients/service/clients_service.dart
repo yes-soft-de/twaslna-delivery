@@ -1,13 +1,13 @@
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_dashboard/abstracts/data_model/data_model.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
-import 'package:twaslna_dashboard/module_captain/model/inActiveModel.dart';
 import 'package:twaslna_dashboard/module_captain/model/porfile_model.dart';
 import 'package:twaslna_dashboard/module_captain/response/captain_profile_response.dart';
-import 'package:twaslna_dashboard/module_captain/response/in_active_captain_response.dart';
 import 'package:twaslna_dashboard/module_clients/manager/clients_manager.dart';
-import 'package:twaslna_dashboard/module_filters/model/store_filter_model.dart';
-import 'package:twaslna_dashboard/module_filters/response/stores_filter_response.dart';
+import 'package:twaslna_dashboard/module_clients/model/client_list_model.dart';
+import 'package:twaslna_dashboard/module_clients/model/porfile_model.dart';
+import 'package:twaslna_dashboard/module_clients/response/client_profile_response.dart';
+import 'package:twaslna_dashboard/module_clients/response/clients_list_profile.dart';
 import 'package:twaslna_dashboard/utils/helpers/status_code_helper.dart';
 
 @injectable
@@ -19,34 +19,34 @@ class ClientsService {
 
   Future<DataModel> getClients() async {
 
-    InActiveCaptainResponse? _inActiveCaptainResponse = await _clientsManager.getClients();
-    if (_inActiveCaptainResponse == null) {
+    ClientsListProfileResponse? _clientsListResponse = await _clientsManager.getClients();
+    if (_clientsListResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
-    if (_inActiveCaptainResponse.statusCode != '200') {
+    if (_clientsListResponse.statusCode != '200') {
       return DataModel.withError(
-          StatusCodeHelper.getStatusCodeMessages(_inActiveCaptainResponse.statusCode));
+          StatusCodeHelper.getStatusCodeMessages(_clientsListResponse.statusCode));
     }
-    if (_inActiveCaptainResponse.data == null) return DataModel.empty();
-    return InActiveModel.withData(_inActiveCaptainResponse.data!);
+    if (_clientsListResponse.data == null) return DataModel.empty();
+    return ClientsListModel.withData(_clientsListResponse.data!);
   }
 
-  Future<DataModel> getCaptainProfile(int captainId) async {
+  Future<DataModel> getClientProfile(int captainId) async {
 
-    CaptainProfileResponse? _captainProfileResponse = await _clientsManager.getClientProfile(captainId);
-    if (_captainProfileResponse == null) {
+    ClientProfileResponse? _clientProfileResponse = await _clientsManager.getClientProfile(captainId);
+    if (_clientProfileResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
-    if (_captainProfileResponse.statusCode != '200') {
+    if (_clientProfileResponse.statusCode != '200') {
       return DataModel.withError(
-          StatusCodeHelper.getStatusCodeMessages(_captainProfileResponse.statusCode));
+          StatusCodeHelper.getStatusCodeMessages(_clientProfileResponse.statusCode));
     }
-    if (_captainProfileResponse.data == null) return DataModel.empty();
-    return ProfileModel.withData(_captainProfileResponse.data!);
+    if (_clientProfileResponse.data == null) return DataModel.empty();
+    return ClientProfileModel.withData(_clientProfileResponse.data!);
   }
   Future<DataModel> getClientsFilter(String key) async {
 
-    StoresFilterResponse? _captainFilter = await _clientsManager.getClientsFilter(key);
+    ClientsListProfileResponse? _captainFilter = await _clientsManager.getClientsFilter(key);
     if (_captainFilter == null) {
       return DataModel.withError(S.current.networkError);
     }
@@ -55,6 +55,6 @@ class ClientsService {
           StatusCodeHelper.getStatusCodeMessages(_captainFilter.statusCode));
     }
     if (_captainFilter.data == null) return DataModel.empty();
-    return StoresFilterModel.withData(_captainFilter.data!);
+    return ClientsListModel.withData(_captainFilter.data!);
   }
 }

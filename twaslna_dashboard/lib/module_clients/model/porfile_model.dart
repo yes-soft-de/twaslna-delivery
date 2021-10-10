@@ -1,63 +1,28 @@
 import 'package:twaslna_dashboard/abstracts/data_model/data_model.dart';
-import 'package:twaslna_dashboard/module_captain/response/captain_profile_response.dart';
+import 'package:twaslna_dashboard/module_clients/response/client_profile_response.dart';
 
-class ProfileModel extends DataModel{
+class ClientProfileModel extends DataModel{
 
   String? image;
   String? name;
   String? phone;
-  String? stcPay;
-  String? bankNumber;
-  String? bankName;
-  String? drivingLicence;
-  String? car;
-  String? identity;
-  String? mechanicLicense;
-  int? age;
-  String? isOnline;
-  String? status;
-  num? salary;
-  num? bounce;
-  ProfileModel(
+
+  ClientProfileModel(
       {this.image,
         this.name,
         this.phone,
-        this.stcPay,
-        this.bankNumber,
-        this.bankName,
-        this.drivingLicence,
-        this.car,
-        this.identity,
-        this.mechanicLicense,
-        this.age,
-        this.isOnline,
-        this.status,
-        this.bounce,
-        this.salary
       });
 
-  ProfileModel? _models;
+  ClientProfileModel? _models;
 
-  ProfileModel.withData(Data data) : super.withData() {
+  ClientProfileModel.withData(Data data) : super.withData() {
 
-    _models = ProfileModel(
+    _models = ClientProfileModel(
         image: data.image,
-        name: data.captainName,
+        name: data.clientName,
         phone:  data.phone,
-        stcPay:  data.stcPay,
-        bankName:  data.bankName,
-        bankNumber: data.bankAccountNumber,
-        car:data.car,
-        age:data.age,
-        mechanicLicense:data.mechanicLicense,
-        drivingLicence:data.drivingLicence,
-        identity:data.identity,
-        isOnline:data.isOnline,
-        status: data.status,
-        salary: data.salary,
-        bounce: data.bounce
     );
   }
 
-  ProfileModel get data => _models ?? ProfileModel();
+  ClientProfileModel get data => _models ?? ClientProfileModel();
 }
