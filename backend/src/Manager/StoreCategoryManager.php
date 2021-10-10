@@ -48,10 +48,10 @@ class StoreCategoryManager
 
     public function getStoreCategories()
     {
-       return $this->storeCategoryEntityRepository->findAll();
+       return $this->storeCategoryEntityRepository->getStoreCategories();
     }
 
-    public function getStoreCategory($id)
+    public function getStoreCategory($id): ?StoreCategoryEntity
     {
        return $this->storeCategoryEntityRepository->find($id);
     }

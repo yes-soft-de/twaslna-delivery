@@ -21,15 +21,12 @@ class StoreCategoryEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, StoreCategoryEntity::class);
     }
 
-    
-  public function areThereItemsRelatedToThisStoreCategory($id) {
-    return $this->createQueryBuilder('storeCategory')
-    ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.storeCategoryId = :id')
+    public function getStoreCategories()
+    {
+        return $this->createQueryBuilder('storeCategory')
+            ->select('storeCategory.id', 'storeCategory.storeCategoryName', 'storeCategory.description', 'storeCategory.image')
+            ->getQuery()
+            ->getResult();
+    }
 
-    ->andWhere(' storeOwnerProfile.storeCategoryId = :id ')
-
-    ->setParameter('id',$id)
-    ->getQuery()
-    ->getResult();
-  }
 }
