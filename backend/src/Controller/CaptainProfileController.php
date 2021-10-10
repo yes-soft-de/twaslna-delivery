@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\AutoMapping;
-use App\Request\CaptainProfileCreateRequest;
 use App\Request\CaptainProfileUpdateRequest;
 use App\Request\CaptainProfileUpdateLocationRequest;
 use App\Request\CaptainProfileUpdateByAdminRequest;
@@ -39,7 +38,7 @@ class CaptainProfileController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function captainRegister(Request $request)
+    public function captainRegister(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         
@@ -70,7 +69,7 @@ class CaptainProfileController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function updateCaptainProfile(Request $request)
+    public function updateCaptainProfile(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -86,7 +85,7 @@ class CaptainProfileController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function captainProfileUpdateLocation(Request $request)
+    public function captainProfileUpdateLocation(Request $request): JsonResponse
     {
         $response="error lon or lat";
         $data = json_decode($request->getContent(), true);
@@ -109,7 +108,7 @@ class CaptainProfileController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function updateCaptainProfileByAdmin(Request $request)
+    public function updateCaptainProfileByAdmin(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -133,7 +132,7 @@ class CaptainProfileController extends BaseController
      * @IsGranted("ROLE_CAPTAIN")
      *  @return JsonResponse
      */
-    public function getCaptainProfileByCaptainID()
+    public function getCaptainProfileByCaptainID(): JsonResponse
     {
         $response = $this->captainProfileService->getCaptainProfileByCaptainID($this->getUserId());
 
@@ -145,7 +144,7 @@ class CaptainProfileController extends BaseController
      * @IsGranted("ROLE_ADMIN")
      *  @return JsonResponse
      */
-    public function getCaptainProfileByCaptainIDForAdmin($captainID)
+    public function getCaptainProfileByCaptainIDForAdmin($captainID): JsonResponse
     {
         $response = $this->captainProfileService->getCaptainProfileByCaptainIDForAdmin($captainID);
 
@@ -157,7 +156,7 @@ class CaptainProfileController extends BaseController
      * @IsGranted("ROLE_ADMIN")
      *  @return JsonResponse
      */
-    public function getCaptainsInactive()
+    public function getCaptainsInactive(): JsonResponse
     {
         $response = $this->captainProfileService->getCaptainsInactive();
 
@@ -167,10 +166,9 @@ class CaptainProfileController extends BaseController
     /**
      * @Route("/dashboardcaptains", name="dashboardCaptains",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
      * @return JsonResponse
      */
-    public function dashboardCaptains()
+    public function dashboardCaptains(): JsonResponse
     {
         $result = $this->captainProfileService->dashboardCaptains();
 
@@ -180,10 +178,9 @@ class CaptainProfileController extends BaseController
     /**
      * @Route("/getdayofcaptains", name="getDayOfCaptains",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
      * @return JsonResponse
      */
-    public function getCaptainsInVacation()
+    public function getCaptainsInVacation(): JsonResponse
     {
         $result = $this->captainProfileService->getCaptainsInVacation();
 
@@ -195,7 +192,7 @@ class CaptainProfileController extends BaseController
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
-    public function getAllCaptains()
+    public function getAllCaptains(): JsonResponse
     {
         $response = $this->captainProfileService->getAllCaptains();
 
@@ -207,7 +204,7 @@ class CaptainProfileController extends BaseController
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
-    public function captainsRemainingForItAmount()
+    public function captainsRemainingForItAmount(): JsonResponse
     {
         $response = $this->captainProfileService->captainsRemainingForItAmount();
 
@@ -219,7 +216,7 @@ class CaptainProfileController extends BaseController
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      */
-    public function captainsRemainingOnItAmount()
+    public function captainsRemainingOnItAmount(): JsonResponse
     {
         $response = $this->captainProfileService->captainsRemainingOnItAmount();
 
@@ -248,7 +245,7 @@ class CaptainProfileController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function getTop5Captains()
+    public function getTop5Captains(): JsonResponse
     {
         $result = $this->captainProfileService->getTop5Captains();
 
@@ -258,10 +255,9 @@ class CaptainProfileController extends BaseController
     /**
      * @Route("/topCaptains", name="getTopCaptainsInThisMonth",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
      * @return JsonResponse
      */
-    public function getTopCaptainsInLastMonthDate()
+    public function getTopCaptainsInLastMonthDate(): JsonResponse
     {
         $result = $this->captainProfileService->getTopCaptainsInLastMonthDate();
 
@@ -273,7 +269,7 @@ class CaptainProfileController extends BaseController
      * @IsGranted("ROLE_CAPTAIN")
      *  @return JsonResponse
      */
-    public function getCaptainFinancialAccountDetailsByCaptainId()
+    public function getCaptainFinancialAccountDetailsByCaptainId(): JsonResponse
     {
         $response = $this->captainProfileService->getCaptainFinancialAccountDetailsByCaptainId($this->getUserId());
 
@@ -285,7 +281,7 @@ class CaptainProfileController extends BaseController
      * @IsGranted("ROLE_CAPTAIN")
      *  @return JsonResponse
      */
-    public function captainFinancialAccountInLastMonth()
+    public function captainFinancialAccountInLastMonth(): JsonResponse
     {
         $response = $this->captainProfileService->captainFinancialAccountInLastMonth($this->getUserId());
 
@@ -297,7 +293,7 @@ class CaptainProfileController extends BaseController
      * @IsGranted("ROLE_CAPTAIN")
      *  @return JsonResponse
      */
-    public function captainFinancialAccountInSpecificDate($fromDate, $toDate)
+    public function captainFinancialAccountInSpecificDate($fromDate, $toDate): JsonResponse
     {
         $response = $this->captainProfileService->captainFinancialAccountInSpecificDate($this->getUserId(), $fromDate, $toDate);
 
@@ -309,7 +305,7 @@ class CaptainProfileController extends BaseController
      * @IsGranted("ROLE_CAPTAIN")
      *  @return JsonResponse
      */
-    public function countOrdersCaptainDeliveredInToday()
+    public function countOrdersCaptainDeliveredInToday(): JsonResponse
     {
         $response = $this->captainProfileService->countOrdersCaptainDeliveredInToday($this->getUserId());
 
@@ -319,21 +315,23 @@ class CaptainProfileController extends BaseController
     /**
      * @Route("/captainFinancialAccountForAdmin/{captainID}", name="captainFinancialAccountForAdmin",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     *  @return JsonResponse
+     * @param $captainID
+     * @return JsonResponse
      */
-    public function getCaptainFinancialAccountDetailsByCaptainIdForAdmin($captainID)
+    public function getCaptainFinancialAccountDetailsByCaptainIdForAdmin($captainID): JsonResponse
     {
         $response = $this->captainProfileService->getCaptainFinancialAccountDetailsByCaptainIdForAdmin($captainID);
 
         return $this->response($response, self::FETCH);
     }
 
-     /**
+    /**
      * @Route("/captainFinancialAccountInLastMonthForAdmin/{captainID}", name="captainFinancialAccountInLastMonthForAdmin",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     *  @return JsonResponse
+     * @param $captainID
+     * @return JsonResponse
      */
-    public function captainFinancialAccountInLastMonthForAdmin($captainID)
+    public function captainFinancialAccountInLastMonthForAdmin($captainID): JsonResponse
     {
         $response = $this->captainProfileService->captainFinancialAccountInLastMonthForAdmin($captainID);
 
@@ -356,7 +354,7 @@ class CaptainProfileController extends BaseController
      * @Route("/captainFilter/{name}", name="getCaptainsByName", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function captainFilter($name)
+    public function captainFilter($name): JsonResponse
     {
         $result = $this->captainProfileService->captainFilter($name);
 
