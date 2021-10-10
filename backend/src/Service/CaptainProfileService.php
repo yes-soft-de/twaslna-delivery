@@ -301,15 +301,19 @@ class CaptainProfileService
         $paymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanyPaymentsToCaptain($captainId);
        
         if ($item) {
-             $countOrdersDelivered = $this->captainService->countCaptainOrdersDelivered($item[0]['captainID']);            
+             $countOrdersDelivered = $this->captainService->countCaptainOrdersDelivered($item[0]['captainID']);
+
+             $sumInvoiceAmountWithoutOrderTypeSendIt = $this->captainService->sumInvoiceAmountWithoutOrderTypeSendIt($item[0]['captainID']);
+
              $sumKilometerBonus = $this->getOrderKilometers($captainId);
              
              $item['countOrdersDelivered'] = (float)$countOrdersDelivered[0]['countOrdersDelivered'];
              $item['kilometerBonus'] = $sumKilometerBonus;
 
-             $item['sumInvoiceAmount'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'];
+//             $item['sumInvoiceAmount'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'];
+             $item['sumInvoiceAmount'] = (float)$sumInvoiceAmountWithoutOrderTypeSendIt[0]['sumInvoiceAmount'];
              $item['deliveryCost'] = (float)$countOrdersDelivered[0]['deliveryCost'];
-             $item['amountWithCaptain'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
+             $item['amountWithCaptain'] = (float)$sumInvoiceAmountWithoutOrderTypeSendIt[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
 
              $item['sumPaymentsToCaptain'] = (float)$sumPaymentsToCaptainFromCompany[0]['sumPaymentsFromCompany'];
              $item['sumPaymentsFromCaptain'] = (float)$sumPaymentsFromCaptainToCompany[0]['sumPaymentsToCompany'];

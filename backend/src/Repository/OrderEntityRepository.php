@@ -420,6 +420,22 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function sumInvoiceAmountWithoutOrderTypeSendIt($captainId)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+            ->select('sum(OrderEntity.invoiceAmount) as sumInvoiceAmount')
+
+            ->andWhere('OrderEntity.captainID = :captainId')
+            ->andWhere("OrderEntity.state = :delivered")
+            ->andWhere("OrderEntity.orderType != :type")
+
+            ->setParameter('captainId', $captainId)
+            ->setParameter('delivered', self::DELIVERED)
+            ->setParameter('type', 3)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function sumFinancialAmount()
     {
         return $this->createQueryBuilder('OrderEntity')

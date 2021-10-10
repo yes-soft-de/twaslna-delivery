@@ -19,6 +19,8 @@ use Doctrine\ORM\Query\Expr\Join;
  */
 class ProductEntityRepository extends ServiceEntityRepository
 {
+    const STATUS_ACTIVE="active";
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ProductEntity::class);
@@ -87,7 +89,7 @@ class ProductEntityRepository extends ServiceEntityRepository
 
             ->addSelect('count(orderDetailEntity.productID) as countProduct, orderDetailEntity.productID')
 
-            ->addSelect('storeOwnerProfile.id as storeOwnerProfileID', 'storeOwnerProfile.storeOwnerName as storeOwnerName', 'storeOwnerProfile.image', 'storeOwnerProfile.phone')
+            ->addSelect('storeOwnerProfile.id as storeOwnerProfileID', 'storeOwnerProfile.storeOwnerName as storeOwnerName', 'storeOwnerProfile.image', 'storeOwnerProfile.phone', 'storeOwnerProfile.status')
 
             ->addSelect('storeOwnerBranch.location','storeOwnerBranch.branchName')
 
@@ -102,6 +104,8 @@ class ProductEntityRepository extends ServiceEntityRepository
             ->leftJoin(DeliveryCompanyFinancialEntity::class, 'DeliveryCompanyFinancialEntity', Join::WITH, 'product.id = product.id')
 
             ->andWhere('orderDetailEntity.productID = product.id')
+            ->andWhere('storeOwnerProfile.status = :status')
+            ->setParameter('status', self::STATUS_ACTIVE)
 
             ->addGroupBy('orderDetailEntity.productID')
             ->having('count(orderDetailEntity.productID) > 0')

@@ -106,6 +106,9 @@ class StoreOwnerProfileService
         $response = [];
         $items = $this->userManager->getAllStoreOwners();
         foreach ($items as $item) {
+            $item['imageURL'] = $item['image'];
+            $item['image'] = $this->params.$item['image'];
+            $item['baseURL'] = $this->params;
             $response[] = $this->autoMapping->map('array', StoreOwnerByCategoryIdResponse::class, $item);
             }        
         return $response;

@@ -63,10 +63,9 @@ class StoreCategoryController extends BaseController
 
     /**
       * @Route("/storecategories", name="getStoreCategories", methods={"GET"})
-      * @param Request $request
       * @return JsonResponse
       */
-      public function getStoreCategories()
+      public function getStoreCategories(): JsonResponse
       {
           $result = $this->storeCategoryService->getStoreCategories();
   
