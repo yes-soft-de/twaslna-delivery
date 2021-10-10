@@ -7,6 +7,7 @@ class CustomDeliverySearch extends StatefulWidget {
   final EdgeInsetsGeometry contentPadding;
   final String hintText;
   final ValueChanged<String>? onChanged;
+  final TextEditingController? controller;
   @override
   _CustomDeliverySearchState createState() => _CustomDeliverySearchState();
 
@@ -14,7 +15,8 @@ class CustomDeliverySearch extends StatefulWidget {
       {this.height = 50,
       this.contentPadding = const EdgeInsets.fromLTRB(0, 13.5, 0, 0),
       required this.hintText,
-      this.onChanged
+      this.onChanged,
+        this.controller
       });
 }
 
@@ -28,6 +30,7 @@ class _CustomDeliverySearchState extends State<CustomDeliverySearch> {
         color: Theme.of(context).backgroundColor,
       ),
       child: TextField(
+        controller: widget.controller,
         onChanged:widget.onChanged,
         decoration: InputDecoration(
           border: InputBorder.none,
