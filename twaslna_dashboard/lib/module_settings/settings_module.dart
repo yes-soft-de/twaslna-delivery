@@ -5,10 +5,10 @@ import 'package:twaslna_dashboard/module_settings/ui/settings_page/settings_page
 
 @injectable
 class SettingsModule extends YesModule {
-  final SettingsScreen _settingsScreen;
-  SettingsModule(this._settingsScreen) {
+  final SettingsScreen settingsScreen;
+  SettingsModule(this.settingsScreen) {
     YesModule.RoutesMap.addAll({
-      SettingRoutes.ROUTE_SETTINGS: (context) => _settingsScreen,
+      SettingRoutes.ROUTE_SETTINGS: (context) => settingsScreen,
     });
   }
 }
