@@ -523,8 +523,8 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                           height: 150,
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(25),
-                              child: imagePath!.contains('original-image')
-                                  ? Image.network(Urls.IMAGES_ROOT + imagePath!)
+                              child: imagePath!.contains('http')
+                                  ? Image.network(imagePath!)
                                   : Image.file(
                                 File(imagePath ?? ''),
                                 fit: BoxFit.cover,

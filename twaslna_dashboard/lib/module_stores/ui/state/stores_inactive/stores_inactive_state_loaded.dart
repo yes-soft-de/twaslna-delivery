@@ -118,7 +118,8 @@ class StoresInActiveLoadedState extends States {
                     image: element.image,
                     privateOrders: element.privateOrders,
                     hasProducts: element.hasProducts,
-                    categoryId:categories?.firstWhere((e) => e.id.toString() == element.categoryId).categoryName ?? S.current.categoryName
+                    categoryId:categories?.firstWhere((e) => e.id.toString() == element.categoryId).categoryName ?? S.current.categoryName,
+                status: element.status
                 ));
           },
           child: Container(
@@ -174,6 +175,7 @@ class StoresInActiveLoadedState extends States {
                                   image: element.image,
                                   openingTime:element.openingTime?.toIso8601String(),
                                   closingTime:element.closingTime?.toIso8601String(),
+                                  status: element.status
                                 ),
                                 updateStore:
                                     (id,name,image,products, privateOrder,open,close,status) {

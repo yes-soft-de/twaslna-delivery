@@ -33,7 +33,7 @@ class Urls {
   static const CHECK_USER_ROLE = BASE_API + '/checkUserType';
   static const STORE_CATEGORIES = BASE_API + '/storecategories';
   static const CREATE_STORE_CATEGORIES = BASE_API + '/createstorecategory';
-  static const GET_STORES_BY_CATEGORY = BASE_API + '/storeownerbycategoryid';
+  static const GET_STORES_BY_CATEGORY = BASE_API + '/storeownerbycategoryidforadmin';
   static const GET_STORES = BASE_API + '/storeOwners';
   static const GET_STORES_INACTIVE = BASE_API + '/storesinactive';
   static const GET_STORES_INACTIVE_FILTER = BASE_API + '/storesinactivefilter/';

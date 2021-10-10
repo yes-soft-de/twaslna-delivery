@@ -19,12 +19,12 @@ class StoresModel extends DataModel {
   bool hasProducts = false;
   DateTime? closingTime;
   DateTime? openingTime;
-
+  String status = '';
   List<StoresModel> _models = [];
 
   StoresModel({required this.id, required this.storeOwnerName,
       required this.phone, required this.deliveryCost, required this.image, required this.privateOrders,
-      required this.hasProducts,required this.categoryId,this.openingTime,this.closingTime});
+      required this.hasProducts,required this.categoryId,this.openingTime,this.closingTime,required this.status});
 
   StoresModel.withData(List<Data> data) : super.withData() {
     _models = [];
@@ -44,6 +44,7 @@ class StoresModel extends DataModel {
           image:element.image ?? ImageAsset.PLACEHOLDER ,phone:element.phone??'',
         openingTime:DateHelper.convert(element.openingTime?.timestamp),
         closingTime:DateHelper.convert(element.closingTime?.timestamp),
+        status: element.status ?? ''
       ));
     }
   }

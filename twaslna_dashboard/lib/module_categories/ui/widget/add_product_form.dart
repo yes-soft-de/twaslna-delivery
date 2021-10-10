@@ -212,7 +212,7 @@ class _UpdateProductsFormState extends State<UpdateProductsForm> {
                           height: 150,
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(25),
-                              child:imagePath!.contains('/original-image/') == true ? Image.network(Urls.IMAGES_ROOT + imagePath!) : Image.file(
+                              child:imagePath!.contains('http') == true ? Image.network(imagePath!) : Image.file(
                                 File(imagePath ?? ''),
                                 fit: BoxFit.cover,
                               ))),

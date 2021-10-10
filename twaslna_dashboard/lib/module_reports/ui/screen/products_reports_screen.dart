@@ -51,7 +51,7 @@ class ProductsReportScreenState extends State<ProductsReportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomTwaslnaAppBar.appBar(context,
-          title: S.of(context).reportSent, icon: Icons.menu, onTap: () {
+          title: S.of(context).productsReport, icon: Icons.menu, onTap: () {
             GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
           }),
       body: currentState.getUI(context),
