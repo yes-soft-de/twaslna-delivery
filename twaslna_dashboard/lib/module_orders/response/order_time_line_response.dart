@@ -217,14 +217,17 @@ class Transitions {
 class OrderStatus {
   String? completionTime;
   String? currentStage;
-
+  String? deliveredTime;
   OrderStatus({
       this.completionTime, 
-      this.currentStage});
+      this.currentStage,
+      this.deliveredTime
+  });
 
   OrderStatus.fromJson(dynamic json) {
     completionTime = json['completionTime'];
     currentStage = json['currentStage'];
+    deliveredTime = json['deliveredTime'];
   }
 
   Map<String, dynamic> toJson() {
