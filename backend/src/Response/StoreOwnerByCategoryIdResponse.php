@@ -9,6 +9,10 @@ class StoreOwnerByCategoryIdResponse
     public $storeOwnerName;
 
     public $image;
+
+    public $imageURL;
+
+    public $baseURL;
     
     public $phone;
     
