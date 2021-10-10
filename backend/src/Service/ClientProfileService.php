@@ -98,7 +98,7 @@ class ClientProfileService
         return $this->userManager->countClients();
     }
 
-    public function clientFilter($itemName)
+    public function clientFilter($itemName): array
     {
         $response = [];
 
