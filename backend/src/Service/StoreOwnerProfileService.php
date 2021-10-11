@@ -101,7 +101,7 @@ class StoreOwnerProfileService
         return $response;
     }
 
-    public function getAllStoreOwners()
+    public function getAllStoreOwners(): array
     {
         $response = [];
         $items = $this->userManager->getAllStoreOwners();
@@ -151,6 +151,9 @@ class StoreOwnerProfileService
         $response = [];
         $items = $this->userManager->getStoreOwnerInactive();
         foreach ($items as $item) {
+            $item['imageURL'] = $item['image'];
+            $item['image'] = $this->params.$item['image'];
+            $item['baseURL'] = $this->params;
            $response[] = $this->autoMapping->map('array', StoreOwnerByCategoryIdResponse::class, $item);
             }
         return $response;
@@ -161,9 +164,23 @@ class StoreOwnerProfileService
         $response = [];
         $items = $this->userManager->getStoreOwnerInactiveFilterByName($name);
         foreach ($items as $item) {
-           $response[] = $this->autoMapping->map('array', StoreOwnerByCategoryIdResponse::class, $item);
+            $item['imageURL'] = $item['image'];
+            $item['image'] = $this->params.$item['image'];
+            $item['baseURL'] = $this->params;
+            //this for future
+//              $item['image'] = $this->getImageParams($item['image'], $this->params.$item['image'], $this->params);
+              $response[] = $this->autoMapping->map('array', StoreOwnerByCategoryIdResponse::class, $item);
             }
         return $response;
+    }
+
+    public function getImageParams($imageURL, $image, $baseURL):array
+    {
+        $item['imageURL'] = $imageURL;
+        $item['image'] = $image;
+        $item['baseURL'] = $baseURL;
+
+        return $item;
     }
 
     public function createStoreOwnerProfileByAdmin(StoreOwnerProfileCreateByAdminRequest $request)
@@ -176,13 +193,6 @@ class StoreOwnerProfileService
        }
     }
 
-    public function storeOwnerProfileByStoreID($storeOwnerID)
-    {
-        $item = $this->userManager->storeOwnerProfileByStoreID($storeOwnerID);  
-            
-        return $this->autoMapping->map('array', ClientProfileResponse::class, $item);
-    }
-    
     public function countStores() {
         return $this->userManager->countStores();
     }

@@ -21,7 +21,6 @@ use App\Request\CaptainVacationCreateRequest;
 use App\Request\StoreOwnerProfileUpdateRequest;
 use App\Request\CaptainProfileUpdateByAdminRequest;
 use App\Request\CaptainProfileUpdateRequest;
-use App\Request\ClientProfileCreateRequest;
 use App\Request\ClientProfileUpdateRequest;
 use App\Request\UserRegisterRequest;
 use App\Manager\StoreOwnerBranchManager;
@@ -356,12 +355,6 @@ class UserManager
         return $this->storeOwnerProfileEntityRepository->getremainingOrders($userID);
     }
 
-    
-    public function storeOwnerProfileByStoreID($storeOwnerID)
-    {
-        return $this->storeOwnerProfileEntityRepository->storeOwnerProfileByStoreID($storeOwnerID);
-    }
-
     public function getStoresByName($name)
     {
         return $this->storeOwnerProfileEntityRepository->getStoresByName($name);
@@ -633,7 +626,7 @@ class UserManager
         return $userProfile;
     }
     
-    public function checkUserType($userType,$userID)
+    public function checkUserType($userType,$userID): string
     {
         $user = $this->userRepository->find($userID);
 
