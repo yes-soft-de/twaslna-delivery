@@ -127,6 +127,7 @@ class StoreOwnerProfileController extends BaseController
 
     /**
      * @Route("/storeownerprofilebyid/{id}", name="getStoreOwnerProfileByID",methods={"GET"})
+     * @param $id
      * @return JsonResponse
      */
     public function getStoreOwnerProfileByID($id): JsonResponse
@@ -149,6 +150,7 @@ class StoreOwnerProfileController extends BaseController
 
     /**
      * @Route("/storeownerbycategoryid/{storeCategoryId}", name="getStoreOwnerByCategoryId",methods={"GET"})
+     * @param $storeCategoryId
      * @return JsonResponse
      */
     public function getStoreOwnerByCategoryId($storeCategoryId): JsonResponse
@@ -228,18 +230,6 @@ class StoreOwnerProfileController extends BaseController
         $response = $this->storeOwnerProfileService->createStoreOwnerProfileByAdmin($request);
 
         return $this->response($response, self::CREATE);
-    }
-
-    /**
-     * @Route("/storeOwnerProfileByStoreID", name="storeOwnerProfileByStoreID",methods={"GET"})
-     * @IsGranted("ROLE_CLIENT")
-     * @return JsonResponse
-     */
-    public function storeOwnerProfileByStoreID(): JsonResponse
-    {
-        $response = $this->storeOwnerProfileService->storeOwnerProfileByStoreID($this->getUserId());
-
-        return $this->response($response, self::FETCH);
     }
 
     /**

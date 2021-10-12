@@ -52,7 +52,7 @@ class DeliveryCompanyProfileController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function updateCompanyInfo(Request $request)
+    public function updateCompanyInfo(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -71,11 +71,12 @@ class DeliveryCompanyProfileController extends BaseController
         return $this->response($result, self::UPDATE);
     }
 
-     /**
+    /**
      * @Route("companyinfo/{id}", name="getcompanyinfoById", methods={"GET"})
+     * @param $id
      * @return JsonResponse
      */
-    public function getcompanyinfoById($id)
+    public function getCompanyInfoById($id): JsonResponse
     {
         $result = $this->deliveryCompanyProfileService->getcompanyinfoById($id);
 
@@ -86,7 +87,7 @@ class DeliveryCompanyProfileController extends BaseController
      * @Route("companyinfoall", name="getcompanyinfoAll", methods={"GET"})
      * @return JsonResponse
      */
-    public function getcompanyinfoAll()
+    public function getCompanyInfoAll(): JsonResponse
     {
         $result = $this->deliveryCompanyProfileService->getcompanyinfoAll();
 
@@ -97,7 +98,7 @@ class DeliveryCompanyProfileController extends BaseController
      * @Route("companyinfoforuser", name="getcompanyinfoAllforUser", methods={"GET"})
      * @return JsonResponse
      */
-    public function getcompanyinfoAllForUser()
+    public function getCompanyInfoAllForUser(): JsonResponse
     {
         if ($this->isGranted('ROLE_OWNER')) {
              $result = $this->deliveryCompanyProfileService->getAllCompanyInfoForStoreOwner($this->getUserId());

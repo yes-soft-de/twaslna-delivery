@@ -356,6 +356,21 @@ class OrderManager
         return $this->orderEntityRepository->getOrdersForSpecificClient($clientID);
     }
 
+    public function clientOrdersCount($clientID)
+    {
+        return $this->orderEntityRepository->clientOrdersCount($clientID);
+    }
+
+    public function clientOrdersCancel($clientID)
+    {
+        return $this->orderEntityRepository->clientOrdersCancel($clientID);
+    }
+
+    public function clientOrdersDelivered($clientID)
+    {
+        return $this->orderEntityRepository->clientOrdersDelivered($clientID);
+    }
+
     public function countStoreOrders($storeProfileId)
     {
         return $this->orderEntityRepository->countStoreOrders($storeProfileId);

@@ -641,7 +641,46 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    
+
+    public function clientOrdersCount($clientID)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+            ->select('count(OrderEntity.id) as ordersCount')
+
+            ->andWhere('OrderEntity.clientID = :clientID')
+            ->setParameter('clientID', $clientID)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function clientOrdersCancel($clientID)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+            ->select('count(OrderEntity.id) as ordersCount')
+
+            ->andWhere('OrderEntity.clientID = :clientID')
+            ->andWhere("OrderEntity.state = :cancelled")
+
+            ->setParameter('clientID', $clientID)
+            ->setParameter('cancelled', self::CANCEL)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function clientOrdersDelivered($clientID)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+            ->select('count(OrderEntity.id) as ordersCount')
+
+            ->andWhere('OrderEntity.clientID = :clientID')
+            ->andWhere("OrderEntity.state = :delivered")
+
+            ->setParameter('clientID', $clientID)
+            ->setParameter('delivered', self::DELIVERED)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function countStoreOrders($storeProfileId)
     {
         return $this->createQueryBuilder('OrderEntity')

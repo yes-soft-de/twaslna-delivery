@@ -8,6 +8,7 @@ use App\Entity\UserEntity;
 use App\Manager\UserManager;
 use App\Request\UserRegisterRequest;
 use App\Request\ClientProfileUpdateRequest;
+use App\Response\clientOrdersCountResponse;
 use App\Response\ClientProfileResponse;
 use App\Response\ClientsProfileResponse;
 use App\Response\UserRegisterResponse;
@@ -78,10 +79,11 @@ class ClientProfileService
         $item['imageURL'] = $item['image'];
         $item['image'] = $this->params.$item['image'];
         $item['baseURL'] = $this->params;
+        $item['statistics'] = $this->clientOrdersReport($item['clientID']);
         return $this->autoMapping->map('array', ClientProfileResponse::class, $item);
     }
 
-    public function getClientsProfile()
+    public function getClientsProfile(): array
     {
         $response = [];
         $items = $this->userManager->getClientsProfile();
@@ -92,6 +94,14 @@ class ClientProfileService
             $response[] = $this->autoMapping->map('array', ClientsProfileResponse::class, $item);
             }        
         return $response;
+    }
+
+    public function clientOrdersReport($clientID) {
+        $item['clientOrdersCount'] = $this->userManager->clientOrdersCount($clientID);
+        $item['clientOrdersCancel'] = $this->userManager->clientOrdersCancel($clientID);
+        $item['clientOrdersDelivered'] = $this->userManager->clientOrdersDelivered($clientID);
+
+        return $this->autoMapping->map('array', clientOrdersCountResponse::class, $item);
     }
 
     public function countClients() {

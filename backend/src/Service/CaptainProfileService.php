@@ -142,9 +142,7 @@ class CaptainProfileService
 
             $item['rating'] = $this->ratingService->getAvgRating($item['captainID'], 'captain');
         }
-        $response =  $this->autoMapping->map('array', CaptainProfileCreateResponse::class, $item);
-    
-        return $response;
+        return $this->autoMapping->map('array', CaptainProfileCreateResponse::class, $item);
     }
 
     public function getCaptainsInactive():array
@@ -166,8 +164,6 @@ class CaptainProfileService
     {
         $item = $this->userManager->captainIsActive($captainID);
         return $this->autoMapping->map('array',CaptainIsActiveResponse::class, $item);
-
-
      }
 
      public function dashboardCaptains():array
@@ -559,15 +555,7 @@ class CaptainProfileService
         return $response;
     }
 
-    public function specialLinkCheck($bool)
-    {
-        if (!$bool)
-        {
-            return $this->params;
-        }
-    }
-
-    public function captainsRemainingForItAmount()
+    public function captainsRemainingForItAmount(): array
     {
         $response = [];
         $captains = $this->userManager->getAllCaptains();
@@ -585,7 +573,7 @@ class CaptainProfileService
         return $response;
     }
 
-    public function captainsRemainingOnItAmount()
+    public function captainsRemainingOnItAmount(): array
     {
         $response = [];
         
@@ -646,7 +634,7 @@ class CaptainProfileService
     return $this->userManager->countCaptains();
    }
 
-   public function captainFilter($name)
+   public function captainFilter($name): array
    {
        $response = [];
 
