@@ -21,4 +21,6 @@ class ClientProfileResponse
     public $baseURL;
 
     public $location;
+
+    public $statistics;
 }

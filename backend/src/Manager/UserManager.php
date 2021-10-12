@@ -640,4 +640,19 @@ class UserManager
     {
         return $this->orderManager->getOrdersForSpecificClient($clientID);
     }
+
+    public function clientOrdersCount($clientID)
+    {
+        return $this->orderManager->clientOrdersCount($clientID);
+    }
+
+    public function clientOrdersCancel($clientID)
+    {
+        return $this->orderManager->clientOrdersCancel($clientID);
+    }
+
+    public function clientOrdersDelivered($clientID)
+    {
+        return $this->orderManager->clientOrdersDelivered($clientID);
+    }
 }
