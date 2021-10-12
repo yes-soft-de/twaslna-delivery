@@ -2830,6 +2830,16 @@ class S {
     );
   }
 
+  /// `Delivery Time`
+  String get deliveryTime {
+    return Intl.message(
+      'Delivery Time',
+      name: 'deliveryTime',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Choose`
   String get paymentMethodHint {
     return Intl.message(
@@ -5185,6 +5195,36 @@ class S {
     return Intl.message(
       'Specific',
       name: 'specific',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clients`
+  String get clients {
+    return Intl.message(
+      'Clients',
+      name: 'clients',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Availability`
+  String get storeAvailable {
+    return Intl.message(
+      'Store Availability',
+      name: 'storeAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stores In Active`
+  String get storesInActive {
+    return Intl.message(
+      'Stores In Active',
+      name: 'storesInActive',
       desc: '',
       args: [],
     );

@@ -20,7 +20,7 @@ import 'package:twaslna_dashboard/utils/helpers/custom_flushbar.dart';
 
 class AddStoreWidget extends StatefulWidget {
   final Function(
-          String, String, String, String, GeoJson, bool, bool, String, String)
+          String, String, String, String, GeoJson, bool, bool, String, String,String)
       addStore;
   final StoresLoadedState? state;
 
@@ -44,7 +44,7 @@ class _AddStoreWidgetState extends State<AddStoreWidget> {
   TimeOfDay? openingTime;
   TimeOfDay? closingTime;
   var date = DateTime.now();
-
+  String status = 'active';
   @override
   Widget build(BuildContext context) {
     return StackedForm(
@@ -287,6 +287,16 @@ class _AddStoreWidgetState extends State<AddStoreWidget> {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: CheckboxListTile(
+                        value: status == 'active',
+                        title: Text(S.of(context).storeAvailable),
+                        onChanged: (v) {
+                          status = v == true ? 'active' : 'inactive';
+                          setState(() {});
+                        }),
+                  ),
                   // Store Services
                   Padding(
                     padding: const EdgeInsets.only(top: 32.0, left: 16, right: 16),
@@ -349,6 +359,7 @@ class _AddStoreWidgetState extends State<AddStoreWidget> {
                   date.day, closingTime!.hour, closingTime!.minute)
                   .toUtc()
                   .toIso8601String(),
+              status
             );
           } else if (storeLocation == null) {
             CustomFlushBarHelper.createError(
@@ -374,7 +385,7 @@ class _AddStoreWidgetState extends State<AddStoreWidget> {
 }
 
 class UpdateStoreWidget extends StatefulWidget {
-  final Function(String, String, String, bool, bool, String?, String?)
+  final Function(String, String, String, bool, bool, String?, String?,String)
       updateStore;
   final UpdateStoreRequest? request;
 
@@ -397,6 +408,7 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
   MapController mapController = MapController();
   TimeOfDay? openingTime;
   TimeOfDay? closingTime;
+  String status = 'active';
   var date = DateTime.now();
   @override
   Widget build(BuildContext context) {
@@ -511,8 +523,8 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                           height: 150,
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(25),
-                              child: imagePath!.contains('original-image')
-                                  ? Image.network(Urls.IMAGES_ROOT + imagePath!)
+                              child: imagePath!.contains('http')
+                                  ? Image.network(imagePath!)
                                   : Image.file(
                                 File(imagePath ?? ''),
                                 fit: BoxFit.cover,
@@ -601,6 +613,16 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: CheckboxListTile(
+                        value: status == 'active',
+                        title: Text(S.of(context).storeAvailable),
+                        onChanged: (v) {
+                          status = v == true ? 'active' : 'inactive';
+                          setState(() {});
+                        }),
+                  ),
                   // Store Services
                   Padding(
                     padding: const EdgeInsets.only(top: 32.0, left: 16, right: 16),
@@ -659,6 +681,7 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                   date.day, closingTime!.hour, closingTime!.minute)
                   .toUtc()
                   .toIso8601String(),
+              status
             );
           } else {
             CustomFlushBarHelper.createError(
@@ -683,6 +706,7 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
           widget.request?.openingTime ?? DateTime.now().toString()));
       closingTime = TimeOfDay.fromDateTime(DateTime.parse(
           widget.request?.closingTime ?? DateTime.now().toString()));
+      status = widget.request?.status ?? 'active';
     }
     super.initState();
   }

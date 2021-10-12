@@ -8,9 +8,9 @@ class OrderTimeLineModel extends DataModel {
   OrderStatusTimeLine orderStatus = OrderStatusTimeLine.empty();
   List<Logs> logs = [];
 
-
   OrderTimeLineModel.withData(Data data) : super.withData() {
     orderStatus = OrderStatusTimeLine(
+        deliveredTime:data.orderStatus?.deliveredTime ?? '' ,
         completionTime: data.orderStatus?.completionTime ?? '',
         currentStage: StatusHelper.getStatusEnum(
             data.orderStatus?.currentStage));
@@ -25,9 +25,9 @@ class OrderTimeLineModel extends DataModel {
 class OrderStatusTimeLine {
   String completionTime = '';
   OrderStatusEnum currentStage = OrderStatusEnum.WAITING;
-
+  String deliveredTime = '';
   OrderStatusTimeLine(
-      {required this.completionTime, required this.currentStage});
+      {required this.completionTime, required this.currentStage,required this.deliveredTime});
 
   OrderStatusTimeLine.empty();
 

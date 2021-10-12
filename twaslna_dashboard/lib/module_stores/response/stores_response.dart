@@ -37,6 +37,7 @@ class Data {
   num? categoryId;
   Date? closingTime;
   Date? openingTime;
+  String? status;
   Data(
       {this.id,
       this.storeOwnerName,
@@ -47,8 +48,10 @@ class Data {
       this.privateOrders,
       this.hasProducts,
       this.categoryId,
-        this.closingTime,
-        this.openingTime});
+      this.closingTime,
+      this.openingTime,
+      this.status
+      });
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -62,6 +65,7 @@ class Data {
     hasProducts = json['hasProducts'];
     closingTime = json['closingTime'] != null ? Date.fromJson(json['closingTime']) : null;
     openingTime = json['openingTime'] != null ? Date.fromJson(json['openingTime']) : null;
+    status = json['status'];
   }
 }
 

@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:twaslna_dashboard/di/di_config.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/global_nav_key.dart';
+import 'package:twaslna_dashboard/module_captain/captains_module.dart';
+import 'package:twaslna_dashboard/module_categories/categories_module.dart';
+import 'package:twaslna_dashboard/module_clients/clients_module.dart';
+import 'package:twaslna_dashboard/module_company/company_module.dart';
+import 'package:twaslna_dashboard/module_logs/logs_module.dart';
+import 'package:twaslna_dashboard/module_main/main_module.dart';
+import 'package:twaslna_dashboard/module_orders/orders_module.dart';
+import 'package:twaslna_dashboard/module_reports/report_module.dart';
+import 'package:twaslna_dashboard/module_settings/settings_module.dart';
+import 'package:twaslna_dashboard/module_stores/stores_module.dart';
 import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/customIcon/custom_icons.dart';
 // current last index is 19
 class NavigatorMenu extends StatefulWidget {
-  final Function(int) onTap;
-  final int currentIndex;
+  final Function(StatefulWidget) onTap;
+  final StatefulWidget currentPage;
   final double? width;
-  NavigatorMenu({this.width,required this.onTap, required this.currentIndex});
+  NavigatorMenu({this.width,required this.onTap, required this.currentPage});
 
   @override
   _NavigatorMenuState createState() => _NavigatorMenuState();
@@ -69,83 +80,95 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             thickness: 2.5,
             color: Theme.of(context).backgroundColor,
           ),
-          customListTile(0, S.current.home, FontAwesomeIcons.home),
+          customListTile(getIt<MainModule>().homeScreen, S.current.home, FontAwesomeIcons.home),
           // Store
           customExpansionTile(
               title: S.current.stores,
               icon: FontAwesomeIcons.store,
               children: [
                 customListTile(
-                    1, S.current.storeCategories, Icons.category_rounded,true),
+                    getIt<CategoriesModule>().storeCategoriesScreen, S.current.storeCategories, Icons.category_rounded,true),
                 customListTile(
-                    2, S.current.storesList, Icons.storefront_rounded,true),
+                    getIt<StoresModule>().storesScreen, S.current.storesList, Icons.storefront_rounded,true),
+                customListTile(
+                    getIt<StoresModule>().storesInActiveScreen, S.current.storesInActive, FontAwesomeIcons.storeSlash,true),
               ],
-              index: widget.currentIndex),
+              page: widget.currentPage),
           // Captains
           customExpansionTile(
               title: S.current.captains,
               icon: FontAwesomeIcons.car,
               children: [
                 customListTile(
-                    3, S.current.captains, FontAwesomeIcons.solidListAlt,true),
+                    getIt<CaptainsModule>().captainsScreen, S.current.captains, FontAwesomeIcons.solidListAlt,true),
                 customListTile(
-                    4, S.current.inActiveCaptains, FontAwesomeIcons.solidAddressCard,true),
+                    getIt<CaptainsModule>().inActiveCaptains, S.current.inActiveCaptains, FontAwesomeIcons.solidAddressCard,true),
                 customListTile(
-                    8, S.current.captainPayments, FontAwesomeIcons.solidCreditCard,true),
+                    getIt<CaptainsModule>().captainsPaymentsScreen, S.current.captainPayments, FontAwesomeIcons.solidCreditCard,true),
               ],
-              index: widget.currentIndex),
+              page: widget.currentPage),
+          // client
+          customExpansionTile(
+              title: S.current.clients,
+              icon: FontAwesomeIcons.userAlt,
+              children: [
+                customListTile(
+                    getIt<ClientsModule>().clientsScreen, S.current.clients, FontAwesomeIcons.personBooth,true),
+
+              ],
+              page: widget.currentPage),
           // Orders
           customExpansionTile(
               title: S.current.orders,
               icon: FontAwesomeIcons.box,
               children: [
-                customListTile(9, S.current.orderPending, FontAwesomeIcons.solidClock,true),
-                customListTile(10, S.current.ongoingOrders, FontAwesomeIcons.play,true),
-                customListTile(15, S.current.orders, FontAwesomeIcons.boxes,true),
-                customListTile(12, S.current.ordersAccount, FontAwesomeIcons.cashRegister,true),
+                customListTile(getIt<OrdersModule>().myOrdersScreen, S.current.orderPending, FontAwesomeIcons.solidClock,true),
+                customListTile(getIt<OrdersModule>().onGoingOrdersScreen, S.current.ongoingOrders, FontAwesomeIcons.play,true),
+                customListTile(getIt<OrdersModule>().ordersWithoutPendingScreen, S.current.orders, FontAwesomeIcons.boxes,true),
+                customListTile(getIt<OrdersModule>().ordersAccountScreen, S.current.ordersAccount, FontAwesomeIcons.cashRegister,true),
               ],
-              index: widget.currentIndex),
+              page: widget.currentPage),
           customExpansionTile(
               title: S.current.company,
               icon: FontAwesomeIcons.solidCopyright,
               children: [
-                customListTile(11, S.current.companyFinance, FontAwesomeIcons.moneyCheckAlt,true),
-                customListTile(5, S.current.companyInfo, Icons.info,true),
+                customListTile(getIt<CompanyModule>().companyFinanceScreen, S.current.companyFinance, FontAwesomeIcons.moneyCheckAlt,true),
+                customListTile(getIt<CompanyModule>().companyProfileScreen, S.current.companyInfo, Icons.info,true),
               ],
-              index: widget.currentIndex),
+              page: widget.currentPage),
           customExpansionTile(
               title: S.current.Logs,
               icon: FontAwesomeIcons.solidFlag,
               children: [
-                customListTile(13, S.current.captainLogs, FontAwesomeIcons.history,true),
-                customListTile(14, S.current.storeLogs, FontAwesomeIcons.storeAlt,true),
+                customListTile(getIt<LogsModule>().captainLogsScreen, S.current.captainLogs, FontAwesomeIcons.history,true),
+                customListTile(getIt<LogsModule>().storeLogsScreen, S.current.storeLogs, FontAwesomeIcons.storeAlt,true),
               ],
-              index: widget.currentIndex),
+              page: widget.currentPage),
           customExpansionTile(
               title: S.current.reports,
               icon: FontAwesomeIcons.solidNewspaper,
               children: [
-                customListTile(17, S.current.captainsReports, FontAwesomeIcons.motorcycle,true),
-                customListTile(19, S.current.storesReports, FontAwesomeIcons.storeAlt,true),
-                customListTile(16, S.current.clientsReport, FontAwesomeIcons.peopleArrows,true),
-                customListTile(18, S.current.productsReport, FontAwesomeIcons.chartPie,true),
+                customListTile(getIt<ReportsModule>().captainsReportScreen, S.current.captainsReports, FontAwesomeIcons.motorcycle,true),
+                customListTile(getIt<ReportsModule>().storesReportScreen, S.current.storesReports, FontAwesomeIcons.storeAlt,true),
+                customListTile(getIt<ReportsModule>().clientsReportScreen, S.current.clientsReport, FontAwesomeIcons.peopleArrows,true),
+                customListTile(getIt<ReportsModule>().productsReportScreen, S.current.productsReport, FontAwesomeIcons.chartPie,true),
               ],
-              index: widget.currentIndex),
-          customListTile(6, S.current.settings, FontAwesomeIcons.cog),
+              page: widget.currentPage),
+          customListTile(getIt<SettingsModule>().settingsScreen, S.current.settings, FontAwesomeIcons.cog),
         ]));
   }
 
-  Widget customListTile(int index, String title, IconData icon,[bool subtitle = false]) {
-    bool selected = index == widget.currentIndex;
+  Widget customListTile(StatefulWidget page, String title, IconData icon,[bool subtitle = false]) {
+    bool selected = page.toString() == widget.currentPage.toString();
     double? size = icon.fontPackage == 'font_awesome_flutter' ? (subtitle ? 18 : 22) : 26;
     if (size == 26 && subtitle){
       size = 20;
     }
 
     return InkWell(
-      key: ValueKey(index),
+      key: ValueKey(page),
       onTap: () {
-        widget.onTap(index);
+        widget.onTap(page);
         GlobalVariable.mainScreenScaffold.currentState?.openEndDrawer();
         setState(() {});
       },
@@ -179,13 +202,13 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
   }
 
   Widget customExpansionTile(
-      {required int index,
+      {required StatefulWidget page,
       required String title,
       required IconData icon,
       required List<Widget> children}) {
     bool extended = false;
     for (var i in children) {
-      if (i.key.toString() == '[<$index>]') {
+      if (i.key.toString() == '[<$page>]') {
         extended = true;
         break;
       }

@@ -8,17 +8,17 @@ import 'package:twaslna_dashboard/module_categories/ui/screen/store_categories_s
 
 @injectable
 class CategoriesModule extends YesModule {
-  final StoreCategoriesScreen _storeCategoriesScreen;
-  final ProductCategoriesScreen _productCategoriesScreen;
-  final StoreProductScreen _productStoreCategoriesScreen;
-  CategoriesModule(this._storeCategoriesScreen,this._productCategoriesScreen,this._productStoreCategoriesScreen){
+  final StoreCategoriesScreen storeCategoriesScreen;
+  final ProductCategoriesScreen productCategoriesScreen;
+  final StoreProductScreen productStoreCategoriesScreen;
+  CategoriesModule(this.storeCategoriesScreen,this.productCategoriesScreen,this.productStoreCategoriesScreen){
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      CategoriesRoutes.STORE_CATEGORIES : (context) => _storeCategoriesScreen,
-      CategoriesRoutes.PRODUCT_CATEGORIES : (context) => _productCategoriesScreen,
-      CategoriesRoutes.PRODUCT_STORE_CATEGORIES : (context) => _productStoreCategoriesScreen
+      CategoriesRoutes.STORE_CATEGORIES : (context) => storeCategoriesScreen,
+      CategoriesRoutes.PRODUCT_CATEGORIES : (context) => productCategoriesScreen,
+      CategoriesRoutes.PRODUCT_STORE_CATEGORIES : (context) => productStoreCategoriesScreen
     };
   }
 }

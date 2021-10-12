@@ -137,7 +137,7 @@ class _InsertFormState extends State<InsertForm> {
                     height: 125,
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(25),
-                        child:imagePath.contains('original-image') ? Image.network(Urls.IMAGES_ROOT + imagePath) :Image.file(
+                        child:imagePath.contains('http') ? Image.network(imagePath) :Image.file(
                           File(imagePath),
                           fit: BoxFit.cover,
               )

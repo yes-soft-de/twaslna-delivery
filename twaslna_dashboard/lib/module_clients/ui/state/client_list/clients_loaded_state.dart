@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/module_captain/captains_routes.dart';
-import 'package:twaslna_dashboard/module_captain/model/inActiveModel.dart';
-import 'package:twaslna_dashboard/module_clients/ui/screen/captains_list_screen.dart';
+import 'package:twaslna_dashboard/module_clients/clients_routes.dart';
+import 'package:twaslna_dashboard/module_clients/model/client_list_model.dart';
+import 'package:twaslna_dashboard/module_clients/ui/screen/clients_list_screen.dart';
 import 'package:twaslna_dashboard/utils/components/costom_search.dart';
 import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/components/empty_screen.dart';
@@ -15,7 +16,7 @@ class ClientsLoadedState extends States {
   final ClientsScreenState screenState;
   final String? error;
   final bool empty;
-  final List<InActiveModel>? model;
+  final List<ClientsListModel>? model;
 
   ClientsLoadedState(this.screenState, this.model,
       {this.empty = false, this.error})
@@ -44,23 +45,20 @@ class ClientsLoadedState extends States {
             screenState.getClients();
           });
     }
-    return FixedContainer(child:CustomListView.custom(children: getCaptains(context)));
+    return FixedContainer(child:CustomListView.custom(children: getClients(context)));
   }
 
-  List<Widget> getCaptains(BuildContext context) {
+  List<Widget> getClients(BuildContext context) {
     List<Widget> widgets = [];
-    for (var element in model ?? <InActiveModel>[]) {
-      if (!element.captainName.contains(search ?? '') && search != null) {
-        continue;
-      }
+    for (var element in model ?? <ClientsListModel>[]) {
       widgets.add(Padding(
         padding: const EdgeInsets.only(
             right: 16.0, left: 16.0, bottom: 8.0, top: 8.0),
         child: InkWell(
           borderRadius: BorderRadius.circular(50),
           onTap: () {
-            Navigator.of(context).pushNamed(CaptainsRoutes.CAPTAIN_PROFILE,
-                arguments: int.parse(element.captainID));
+            Navigator.of(context).pushNamed(ClientsRoutes.CLIENT_PROFILE,
+                arguments: int.parse(element.id));
           },
           child: Container(
             decoration: BoxDecoration(
@@ -88,7 +86,7 @@ class ClientsLoadedState extends States {
                 ),
                 Expanded(
                   child: Text(
-                    element.captainName,
+                    element.clientName,
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
@@ -124,14 +122,14 @@ class ClientsLoadedState extends States {
           Padding(
             padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16),
             child: CustomDeliverySearch(
-              hintText: S.current.searchingForCaptain,
+              hintText: S.current.clients,
               onChanged: (s) {
                 if (s == '' || s.isEmpty) {
                   search = null;
-                  screenState.refresh();
+                  screenState.getClients();
                 } else {
                   search = s;
-                  screenState.refresh();
+                  screenState.getSearchResult(search!);
                 }
               },
             ),));

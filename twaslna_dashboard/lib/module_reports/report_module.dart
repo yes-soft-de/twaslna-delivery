@@ -2,26 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_dashboard/abstracts/module/yes_module.dart';
 import 'package:twaslna_dashboard/module_captain/captains_routes.dart';
-import 'package:twaslna_dashboard/module_captain/ui/screen/captain_balance_screen.dart';
-import 'package:twaslna_dashboard/module_captain/ui/screen/captain_profile_screen.dart';
-import 'package:twaslna_dashboard/module_captain/ui/screen/catpains_payment_screen.dart';
-import 'package:twaslna_dashboard/module_captain/ui/screen/in_active_captains_screen.dart';
+import 'package:twaslna_dashboard/module_reports/reports_routes.dart';
+import 'package:twaslna_dashboard/module_reports/ui/screen/captains_reports_screen.dart';
+import 'package:twaslna_dashboard/module_reports/ui/screen/clients_reports_screen.dart';
+import 'package:twaslna_dashboard/module_reports/ui/screen/products_reports_screen.dart';
+import 'package:twaslna_dashboard/module_reports/ui/screen/stores_reports_screen.dart';
 
 @injectable
-class CaptainsModule extends YesModule {
-  final InActiveCaptainsScreen _inActiveCaptains;
-  final CaptainProfileScreen _captainProfileScreen;
-  final CaptainBalanceScreen _captainBalanceScreen;
-  final CaptainsPaymentsScreen _captainsPaymentsScreen;
-  CaptainsModule(this._inActiveCaptains,this._captainProfileScreen,this._captainBalanceScreen,this._captainsPaymentsScreen){
+class ReportsModule extends YesModule {
+  final CaptainsReportScreen captainsReportScreen;
+  final StoresReportScreen storesReportScreen;
+  final ProductsReportScreen productsReportScreen;
+  final ClientsReportScreen clientsReportScreen ;
+
+  ReportsModule(this.productsReportScreen,this.storesReportScreen,this.captainsReportScreen,this.clientsReportScreen){
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      CaptainsRoutes.IN_ACTIVE_CAPTAINS: (context) => _inActiveCaptains,
-      CaptainsRoutes.CAPTAIN_PROFILE: (context) => _captainProfileScreen,
-      CaptainsRoutes.CAPTAIN_BALANCE: (context) => _captainBalanceScreen,
-      CaptainsRoutes.CAPTAIN_UNFINISHED: (context) => _captainsPaymentsScreen,
+      ReportsRoutes.REPORTS_CAPTAIN : (context) => captainsReportScreen,
+      ReportsRoutes.REPORTS_STORE : (context) => storesReportScreen,
+      ReportsRoutes.REPORTS_CLIENT : (context) => clientsReportScreen,
+      ReportsRoutes.REPORTS_PRODUCT : (context) => productsReportScreen,
+
     };
   }
 }

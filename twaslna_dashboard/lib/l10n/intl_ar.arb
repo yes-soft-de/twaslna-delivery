@@ -277,7 +277,8 @@
   "myAddressHint": "اكتب عنوانك",
   "card" : "بطاقة",
   "chooseAddressNote":"يمكنك تعديل مكان التسليم الحالي على الخارطة",
-  "orderTime":"زمن التوصيل",
+  "orderTime":"زمن الطلب",
+  "deliveryTime": "زمن التوصيل",
   "paymentMethodHint":"اختر",
   "statusCodeOk": "تم جلب المعلومات بنجاح",
   "statusCodeCreated": "نجح الطلب وتم إنشاء تغيير جديد نتيجة لذلك ",
@@ -514,5 +515,8 @@
   "clientDid": "قام العميل",
   "storeDid": "تم طلب طلبية من متجر",
   "productOrdered": "تم طلب المنتج",
-  "specific": "محدد"
+  "specific": "محدد",
+  "clients": "العملاء",
+  "storeAvailable": "المتجر متوفر",
+  "storesInActive": "المتاجر الغير متاحة"
 }

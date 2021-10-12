@@ -2,24 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
-import 'package:twaslna_dashboard/module_captain/model/porfile_model.dart';
-import 'package:twaslna_dashboard/module_captain/ui/widget/update_profile_widget.dart';
-import 'package:twaslna_dashboard/module_clients/ui/screen/captain_profile_screen.dart';
-import 'package:twaslna_dashboard/utils/components/custom_app_bar.dart';
+import 'package:twaslna_dashboard/module_clients/model/porfile_model.dart';
+import 'package:twaslna_dashboard/module_clients/ui/screen/clients_profile_screen.dart';
 import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/components/empty_screen.dart';
 import 'package:twaslna_dashboard/utils/components/error_screen.dart';
-import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
 import 'package:twaslna_dashboard/utils/components/progresive_image.dart';
-import 'package:twaslna_dashboard/utils/components/stacked_form.dart';
-import 'package:twaslna_dashboard/utils/global/screen_type.dart';
 
 class ClientProfileLoadedState extends States {
 
   final ClientProfileScreenState screenState;
   final String? error;
   final bool empty;
-  final ProfileModel? model;
+  final ClientProfileModel? model;
 
   ClientProfileLoadedState(this.screenState, this.model,
       {this.empty = false, this.error})
@@ -44,123 +39,53 @@ class ClientProfileLoadedState extends States {
             screenState.getClientProfile();
           });
     }
-    return StackedForm(
-        child: FixedContainer(
-          child: CustomListView.custom(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
+    return  CustomListView.custom(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            width: 175,
+            height: 175,
+            child: Center(
+              child: ClipOval(
+                //   borderRadius: BorderRadius.circular(25),
                 child: Container(
                   width: 175,
                   height: 175,
-                  child: Center(
-                    child: ClipOval(
-                      //   borderRadius: BorderRadius.circular(25),
-                      child: Container(
-                        width: 175,
-                        height: 175,
-                        child: CustomNetworkImage(
-                          imageSource: model?.image ?? '',
-                          width: double.maxFinite,
-                          height: double.maxFinite,
-                        ),
-                      ),
-                    ),
+                  child: CustomNetworkImage(
+                    imageSource: model?.image ?? '',
+                    width: double.maxFinite,
+                    height: double.maxFinite,
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).primaryColor
-                  ),
-                  child: Column(
-                    children: [
-                      customListTile(
-                          title: S.of(context).name,
-                          subTitle: model?.name,
-                          iconData: Icons.person_rounded),
-                      customListTile(
-                          title: S.of(context).age,
-                          subTitle:model?.age?.toString(),
-                          iconData:Icons.calendar_today_rounded),
-                      customListTile(
-                          title: S.of(context).phoneNumber,
-                          subTitle:model?.phone,
-                          iconData:Icons.phone),
-                      customListTile(
-                          title:  S.of(context).car,
-                          subTitle:model?.car,
-                          iconData:Icons.local_taxi_rounded),
-                      customListTile(
-                          title: S.of(context).status,
-                          subTitle:model?.isOnline,
-                          iconData:Icons.wifi_rounded),
-                      customListTile(
-                          title: S.of(context).captainStatus,
-                          subTitle:model?.status,
-                          iconData:Icons.account_box_rounded),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).primaryColor
-                  ),
-                  child: Flex(
-                    direction:ScreenType.isMobile() ? Axis.vertical : Axis.horizontal,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      imageTile(title:S.current.identity ,image:model?.identity ?? ''),
-                      imageTile(title:S.current.mechanichLicence ,image:model?.mechanicLicense ?? ''),
-                      imageTile(title:S.current.driverLicence ,image:model?.drivingLicence ?? ''),
-                    ],
-                  ),
-                ),
-              ),
-              // customListTile(
-              //     title: S.of(context).bankName,
-              //     subTitle: model?.bankName,
-              //     iconData: Icons.monetization_on_rounded),
-              // customListTile(
-              //     title: S.of(context).bankAccountNumber,
-              //     subTitle: model?.bankNumber,
-              //     iconData: Icons.password_rounded),
-              // customListTile(
-              //     title: S.of(context).stcPayCode,
-              //     subTitle: model?.stcPay,
-              //     iconData: Icons.credit_card_rounded),
-              // customListTile(
-              //     title: S.of(context).salary,
-              //     subTitle: model?.salary?.toString(),
-              //     iconData: Icons.money),
-              // customListTile(
-              //     title: S.of(context).bounce,
-              //     subTitle: model?.bounce?.toString(),
-              //     iconData: Icons.wallet_giftcard_rounded),
-              Container(height: 75,)
-            ],
+            ),
           ),
         ),
-        label: S.current.updateProfile,
-        onTap: () {
-          showDialog(
-              context: context,
-              builder: (_) {
-                return Scaffold(
-                  appBar: CustomTwaslnaAppBar.appBar(context, title: S.current.updateProfile),
-                  body: UpdateProfile(updateProfile: (salary,bounce,status){
-                    Navigator.of(context).pop();
-                  },salary:model?.salary.toString(),bounce:model?.bounce.toString(),status: model?.status,),
-                );
-              });
-        });
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Theme.of(context).primaryColor
+            ),
+            child: Column(
+              children: [
+                customListTile(
+                    title: S.of(context).name,
+                    subTitle: model?.name,
+                    iconData: Icons.person_rounded),
+                customListTile(
+                    title: S.of(context).phoneNumber,
+                    subTitle:model?.phone,
+                    iconData:Icons.phone),
+              ],
+            ),
+          ),
+        ),
+        Container(height: 75,)
+      ],
+    );
   }
   Widget customListTile(
       {required String title, String? subTitle, required IconData iconData}) {

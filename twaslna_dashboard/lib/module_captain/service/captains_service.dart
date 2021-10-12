@@ -24,7 +24,6 @@ class CaptainsService {
   CaptainsService(this._captainManager);
 
   Future<DataModel> getInActiveCaptains() async {
-
     InActiveCaptainResponse? _inActiveCaptainResponse = await _captainManager.getInActiveCaptain();
     if (_inActiveCaptainResponse == null) {
       return DataModel.withError(S.current.networkError);

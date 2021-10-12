@@ -55,34 +55,7 @@ class ClientProfileScreenState extends State<ClientProfileScreen> {
     }
     return Scaffold(
       appBar: CustomTwaslnaAppBar.appBar(context,
-          title: S.current.profile,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: InkWell(
-                  customBorder: CircleBorder(),
-                  onTap: () {
-                    Navigator.pushNamed(
-                        context, CaptainsRoutes.CAPTAIN_BALANCE,arguments: clientId);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        shape: BoxShape.circle),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.account_balance,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ]),
+          title: S.current.profile,),
       body: currentState.getUI(context),
     );
   }

@@ -28,6 +28,32 @@ class StoresService {
     if (_storesResponse.data == null) return DataModel.empty();
     return StoresModel.withData(_storesResponse.data!);
   }
+
+  Future<DataModel> getStoresInActive() async {
+    StoresResponse? _storesResponse = await _storeManager.getStoresInActive();
+    if (_storesResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (_storesResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(_storesResponse.statusCode));
+    }
+    if (_storesResponse.data == null) return DataModel.empty();
+    return StoresModel.withData(_storesResponse.data!);
+  }
+
+  Future<DataModel> getStoresInActiveFilter(String searchKey) async {
+    StoresResponse? _storesResponse = await _storeManager.getStoresInActiveFilter(searchKey);
+    if (_storesResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (_storesResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(_storesResponse.statusCode));
+    }
+    if (_storesResponse.data == null) return DataModel.empty();
+    return StoresModel.withData(_storesResponse.data!);
+  }
   Future<DataModel> getStoreProfile(int id) async {
     StoreProfileResponse? _storeResponse = await _storeManager.getStoreProfile(id);
     if (_storeResponse == null) {

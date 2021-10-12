@@ -45,19 +45,35 @@ class OrderTimLineLoadedState extends States {
           children: [
           ListTile(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25)
+                borderRadius: BorderRadius.vertical(top: Radius.circular(25))
             ),
             leading: Container(
                 height: double.maxFinite,
                 width:50,
                 child: Icon(FontAwesomeIcons.solidClock,color: Colors.white,)),
             tileColor: Theme.of(context).primaryColor,
-            title: Text(S.current.orderTime,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
-            subtitle:   Text(Trans.localString(model?.orderStatus.completionTime ?? '', context),style: TextStyle(
+            title: Text(S.current.deliveryTime,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+            subtitle:   Text(Trans.localString(model?.orderStatus.deliveredTime ?? '', context),style: TextStyle(
                 fontWeight: FontWeight.bold,
               color: Colors.white
             ),),
           ),
+            ListTile(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(bottom: Radius.circular(25))
+              ),
+              leading: Container(
+                  height: double.maxFinite,
+                  width:50,
+                  child: Icon(FontAwesomeIcons.delicious,color: Colors.white,)),
+              tileColor: Theme.of(context).primaryColor,
+              title: Text(S.current.orderTime,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+              subtitle:   Text(Trans.localString(model?.orderStatus.completionTime ?? '', context),style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white
+              ),),
+            ),
+
             Flex(
               direction: Axis.vertical,
               children: getStepper(StatusHelper.getOrderStatusIndex(model?.orderStatus.currentStage ?? OrderStatusEnum.WAITING)),

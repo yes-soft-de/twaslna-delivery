@@ -7,15 +7,15 @@ import 'package:twaslna_dashboard/module_logs/ui/screen/store_logs_screen.dart';
 
 @injectable
 class LogsModule extends YesModule {
-  final CaptainLogsScreen _captainLogsScreen;
-  final StoreLogsScreen _storeLogsScreen;
-  LogsModule(this._captainLogsScreen,this._storeLogsScreen){
+  final CaptainLogsScreen captainLogsScreen;
+  final StoreLogsScreen storeLogsScreen;
+  LogsModule(this.captainLogsScreen,this.storeLogsScreen){
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      LogsRoutes.CAPTAIN_LOGS: (context) => _captainLogsScreen,
-      LogsRoutes.STORE_LOGS: (context) => _storeLogsScreen
+      LogsRoutes.CAPTAIN_LOGS: (context) => captainLogsScreen,
+      LogsRoutes.STORE_LOGS: (context) => storeLogsScreen
     };
   }
 }

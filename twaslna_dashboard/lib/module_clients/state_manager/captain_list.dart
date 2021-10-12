@@ -3,8 +3,9 @@ import 'package:rxdart/rxdart.dart';
 import 'package:twaslna_dashboard/abstracts/states/loading_state.dart';
 import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/module_captain/model/inActiveModel.dart';
+import 'package:twaslna_dashboard/module_clients/model/client_list_model.dart';
 import 'package:twaslna_dashboard/module_clients/service/clients_service.dart';
-import 'package:twaslna_dashboard/module_clients/ui/screen/captains_list_screen.dart';
+import 'package:twaslna_dashboard/module_clients/ui/screen/clients_list_screen.dart';
 import 'package:twaslna_dashboard/module_clients/ui/state/client_list/clients_loaded_state.dart';
 
 @injectable
@@ -25,11 +26,12 @@ class ClientsStateManager {
         _stateSubject.add(ClientsLoadedState(screenState,null,empty: value.isEmpty));
       }
       else {
-        InActiveModel _model = value as InActiveModel;
+        ClientsListModel _model = value as ClientsListModel;
         _stateSubject.add(ClientsLoadedState(screenState,_model.data));
       }
     });
   }
+
   void getClientsFiltered(ClientsScreenState screenState,String searchKey){
 
     _clientsService.getClientsFilter(searchKey).then((value){
@@ -40,7 +42,7 @@ class ClientsStateManager {
         _stateSubject.add(ClientsLoadedState(screenState,null,empty: value.isEmpty));
       }
       else {
-        InActiveModel _model = value as InActiveModel;
+        ClientsListModel _model = value as ClientsListModel;
         _stateSubject.add(ClientsLoadedState(screenState,_model.data));
       }
     });

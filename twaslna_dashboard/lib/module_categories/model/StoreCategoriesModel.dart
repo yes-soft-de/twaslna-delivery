@@ -9,6 +9,8 @@ class StoreCategoriesModel extends DataModel {
   String categoryName = '';
   String categoryDescription = '';
   String image = '';
+  String? imageUrl;
+  String? baseImage;
   List<StoreCategoriesModel> _models = [];
 
   StoreCategoriesModel.withData(List<Data> data) : super.withData() {
@@ -23,7 +25,8 @@ class StoreCategoriesModel extends DataModel {
           id: element.id ?? -1,
           categoryName: element.storeCategoryName ?? S.current.storeCategories,
           categoryDescription: element.description ?? '',
-          image: element.image ?? ''));
+          image: element.image ?? '',
+      ));
     }
   }
 

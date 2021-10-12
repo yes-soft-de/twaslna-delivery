@@ -48,7 +48,7 @@ class ClientsScreenState extends State<ClientsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomTwaslnaAppBar.appBar(context,
-          title: S.of(context).captains, icon: Icons.menu, onTap: () {
+          title: S.of(context).clients, icon: Icons.menu, onTap: () {
             GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
           }),
       body: currentState.getUI(context),

@@ -16,14 +16,12 @@ import 'package:twaslna_dashboard/module_localization/service/localization_servi
 import 'package:twaslna_dashboard/module_logs/logs_module.dart';
 import 'package:twaslna_dashboard/module_main/main_module.dart';
 import 'package:twaslna_dashboard/module_notifications/service/fire_notification_service/fire_notification_service.dart';
-import 'package:twaslna_dashboard/module_orders/model/order_model.dart';
 import 'package:twaslna_dashboard/module_orders/orders_module.dart';
 import 'package:twaslna_dashboard/module_payments/payments_module.dart';
 import 'package:twaslna_dashboard/module_settings/settings_module.dart';
 import 'package:twaslna_dashboard/module_splash/splash_module.dart';
 import 'package:twaslna_dashboard/module_stores/stores_module.dart';
 import 'package:twaslna_dashboard/module_theme/service/theme_service/theme_service.dart';
-import 'package:twaslna_dashboard/utils/global/global_state_manager.dart';
 import 'package:twaslna_dashboard/utils/logger/logger.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';

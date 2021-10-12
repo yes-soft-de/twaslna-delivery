@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
-import 'package:twaslna_dashboard/module_captain/captains_routes.dart';
-import 'package:twaslna_dashboard/module_filters/model/captain_filter_model.dart';
 import 'package:twaslna_dashboard/module_filters/model/store_filter_model.dart';
-import 'package:twaslna_dashboard/module_filters/ui/screen/captain_filter_screen.dart';
 import 'package:twaslna_dashboard/module_filters/ui/screen/store_filter_screen.dart';
 import 'package:twaslna_dashboard/module_logs/logs_routes.dart';
 import 'package:twaslna_dashboard/utils/components/costom_search.dart';

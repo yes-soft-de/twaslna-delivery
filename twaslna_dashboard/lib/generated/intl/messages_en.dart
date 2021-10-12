@@ -164,6 +164,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "city": MessageLookupByLibrary.simpleMessage("City"),
         "clientDid": MessageLookupByLibrary.simpleMessage("Client"),
         "clientOrdered": MessageLookupByLibrary.simpleMessage("received order"),
+        "clients": MessageLookupByLibrary.simpleMessage("Clients"),
         "clientsReport": MessageLookupByLibrary.simpleMessage("Clients Report"),
         "closingTime": MessageLookupByLibrary.simpleMessage("Closing Time"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
@@ -228,6 +229,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverTo": MessageLookupByLibrary.simpleMessage("Deliver To"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("captain on his way to you"),
+        "deliveryTime": MessageLookupByLibrary.simpleMessage("Delivery Time"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("Destination Address"),
         "destinationAddressHint": MessageLookupByLibrary.simpleMessage(
@@ -654,6 +656,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "stc": MessageLookupByLibrary.simpleMessage("STC"),
         "stcPayCode": MessageLookupByLibrary.simpleMessage("STC Pay Code"),
         "store": MessageLookupByLibrary.simpleMessage("Store"),
+        "storeAvailable":
+            MessageLookupByLibrary.simpleMessage("Store Availability"),
         "storeCategories":
             MessageLookupByLibrary.simpleMessage("Stores Categories"),
         "storeCreatedSuccessfully":
@@ -674,6 +678,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("Store Updated Successfully"),
         "stores": MessageLookupByLibrary.simpleMessage("Stores"),
+        "storesInActive":
+            MessageLookupByLibrary.simpleMessage("Stores In Active"),
         "storesList": MessageLookupByLibrary.simpleMessage("Stores List"),
         "storesReports": MessageLookupByLibrary.simpleMessage("Stores Report"),
         "submittingProfile":

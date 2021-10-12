@@ -25,6 +25,20 @@ class StoresRepository {
     if (response == null) return null;
     return StoresResponse.fromJson(response);
   }
+  Future<StoresResponse?> getStoresInActive() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(Urls.GET_STORES_INACTIVE,
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return StoresResponse.fromJson(response);
+  }
+  Future<StoresResponse?> getStoresFilter(String searchKey) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(Urls.GET_STORES_INACTIVE_FILTER + '$searchKey',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return StoresResponse.fromJson(response);
+  }
   Future<StoreProfileResponse?> getStoreProfile(int id) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(Urls.GET_STORE_PROFILE + '$id',
