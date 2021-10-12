@@ -21,9 +21,9 @@ class AppointmentService
 
     public function createAppointment(AppointmentCreateRequest $request):object
     {
-        $reprot = $this->appointmentManager->createAppointment($request);
+        $report = $this->appointmentManager->createAppointment($request);
 
-        return $this->autoMapping->map(AppointmentEntity::class, AppointmentResponse::class, $reprot);
+        return $this->autoMapping->map(AppointmentEntity::class, AppointmentResponse::class, $report);
     }
 
     public function getAppointments():array

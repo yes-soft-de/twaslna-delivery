@@ -134,6 +134,11 @@ class OrderEntity
      */
     private $invoiceImage;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isBillCalculated;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -418,6 +423,18 @@ class OrderEntity
     public function setInvoiceImage($invoiceImage)
     {
         $this->invoiceImage = $invoiceImage;
+
+        return $this;
+    }
+
+    public function getIsBillCalculated(): ?bool
+    {
+        return $this->isBillCalculated;
+    }
+
+    public function setBillCalculated(?bool $isBillCalculated): self
+    {
+        $this->isBillCalculated = $isBillCalculated;
 
         return $this;
     }

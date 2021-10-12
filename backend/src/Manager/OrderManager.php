@@ -210,7 +210,8 @@ class OrderManager
         $item->setDeliveryDate($item->getDeliveryDate());
         $item->setState('pending');
         $item->setOrderType(1);
-        
+        $item->setBillCalculated(1);
+
         $this->entityManager->persist($item);
         $this->entityManager->flush();
         $this->entityManager->clear();
@@ -226,6 +227,7 @@ class OrderManager
         $item->setDeliveryDate($item->getDeliveryDate());
         $item->setState('pending');
         $item->setOrderType(3);
+        $item->setBillCalculated(1);
 
         $this->entityManager->persist($item);
         $this->entityManager->flush();
@@ -242,6 +244,7 @@ class OrderManager
         $item->setDeliveryDate($item->getDeliveryDate());
         $item->setState('pending');
         $item->setOrderType(2);
+        $item->setBillCalculated(1);
 
         $this->entityManager->persist($item);
         $this->entityManager->flush();

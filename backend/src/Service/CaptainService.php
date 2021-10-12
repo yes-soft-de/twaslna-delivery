@@ -2,19 +2,15 @@
 
 namespace App\Service;
 
-use App\AutoMapping;
 use App\Manager\OrderManager;
-use App\Service\OrderLogService;
 
 class CaptainService
 {
     private $orderManager;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, OrderLogService $orderLogService)
+    public function __construct(OrderManager $orderManager)
     {
-        $this->autoMapping = $autoMapping;
         $this->orderManager = $orderManager;
-        $this->orderLogService = $orderLogService;
     }
 
     public function countCaptainOrdersDelivered($captainId)
