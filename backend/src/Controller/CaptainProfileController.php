@@ -142,7 +142,8 @@ class CaptainProfileController extends BaseController
     /**
      * @Route("/captainProfile/{captainID}", name="getCaptainProfileByCaptainIDForAdmin",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     *  @return JsonResponse
+     * @param $captainID
+     * @return JsonResponse
      */
     public function getCaptainProfileByCaptainIDForAdmin($captainID): JsonResponse
     {
@@ -242,7 +243,6 @@ class CaptainProfileController extends BaseController
 
     /**
      * @Route("/gettop5captains", name="GetTop5Captains",methods={"GET"})
-     * @param Request $request
      * @return JsonResponse
      */
     public function getTop5Captains(): JsonResponse

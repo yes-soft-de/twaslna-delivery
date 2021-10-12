@@ -81,7 +81,7 @@ class ClientProfileService
         return $this->autoMapping->map('array', ClientProfileResponse::class, $item);
     }
 
-    public function getClientsProfile()
+    public function getClientsProfile(): array
     {
         $response = [];
         $items = $this->userManager->getClientsProfile();
