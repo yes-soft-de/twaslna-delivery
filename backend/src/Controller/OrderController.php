@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\AutoMapping;
+use App\Request\orderUpdateBillCalculatedByCaptainRequest;
 use App\Service\OrderService;
 use App\Request\OrderCreateRequest;
 use App\Request\OrderClientCreateRequest ;
@@ -228,7 +229,7 @@ class OrderController extends BaseController
      * @Route("clientorder", name="createClientOrder", methods={"POST"})
      * @IsGranted("ROLE_CLIENT")
      */
-    public function createClientOrder(Request $request)
+    public function createClientOrder(Request $request): JsonResponse
     {  
         $data = json_decode($request->getContent(), true);
         $request = $this->autoMapping->map(stdClass::class, OrderClientCreateRequest::class, (object)$data);
@@ -409,7 +410,7 @@ class OrderController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function orderUpdateInvoiceByCaptain(Request $request)
+    public function orderUpdateInvoiceByCaptain(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -421,7 +422,26 @@ class OrderController extends BaseController
           }
         return $this->response($response, self::UPDATE);
     }
-    
+
+     /**
+     * @Route("/orderupdatebillcalculatedbycaptain", name="orderUpdateBillCalculatedByCaptain", methods={"PUT"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function orderUpdateBillCalculatedByCaptain(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, orderUpdateBillCalculatedByCaptainRequest::class, (object) $data);
+        $request->setCaptainID($this->getUserId());
+        $response = $this->orderService->orderUpdateBillCalculatedByCaptain($request);
+        if(is_string($response)){
+            return $this->response($response, self::ERROR);
+          }
+        return $this->response($response, self::UPDATE);
+    }
+
     /**
      * @Route("/countReport", name="countReport",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")

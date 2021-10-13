@@ -29,6 +29,8 @@ class ClientProfileService
     private $roomIdHelperService;
     private $storeOwnerProfileService;
     private $productService;
+    private $ratingService;
+    private $params;
 
     public function __construct(AutoMapping $autoMapping, UserManager $userManager,  RatingService $ratingService, ParameterBagInterface $params, RoomIdHelperService $roomIdHelperService, ProductService $productService, StoreOwnerProfileService $storeOwnerProfileService)
     {

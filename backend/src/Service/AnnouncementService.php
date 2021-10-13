@@ -42,13 +42,13 @@ class AnnouncementService
 
     public function  getAnnouncements():array
     {
-        $respons=[];
+        $response=[];
         $results = $this->announcementManager->getAnnouncements();
        
         foreach ($results as  $result) {
-           $respons[]= $this->autoMapping->map('array', AnnouncementResponse::class, $result);
+           $response[]= $this->autoMapping->map('array', AnnouncementResponse::class, $result);
         }
-        return $respons;
+        return $response;
        
     }
 }

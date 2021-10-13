@@ -9,6 +9,7 @@ use App\Request\OrderCreateRequest;
 use App\Request\OrderClientCreateRequest;
 use App\Request\OrderClientSendCreateRequest;
 use App\Request\OrderClientSpecialCreateRequest;
+use App\Request\orderUpdateBillCalculatedByCaptainRequest;
 use App\Request\OrderUpdateByClientRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
 use App\Request\OrderUpdateInvoiceByCaptainRequest;
@@ -187,6 +188,11 @@ class OrderManager
         return $this->orderEntityRepository->countOrdersInMonthForCaptain($fromDate, $toDate, $captainId);
     }
 
+    public function sumInvoiceAmountWithoutOrderTypeSendItInMonthForCaptain($fromDate, $toDate, $captainId)
+    {
+        return $this->orderEntityRepository->sumInvoiceAmountWithoutOrderTypeSendItInMonthForCaptain($fromDate, $toDate, $captainId);
+    }
+
     public function getAcceptedOrderByCaptainIdInMonth($fromDate, $toDate, $captainId)
     {
         return $this->orderEntityRepository->getAcceptedOrderByCaptainIdInMonth($fromDate, $toDate, $captainId);
@@ -210,7 +216,8 @@ class OrderManager
         $item->setDeliveryDate($item->getDeliveryDate());
         $item->setState('pending');
         $item->setOrderType(1);
-        
+        $item->setBillCalculated(1);
+
         $this->entityManager->persist($item);
         $this->entityManager->flush();
         $this->entityManager->clear();
@@ -226,6 +233,7 @@ class OrderManager
         $item->setDeliveryDate($item->getDeliveryDate());
         $item->setState('pending');
         $item->setOrderType(3);
+        $item->setBillCalculated(1);
 
         $this->entityManager->persist($item);
         $this->entityManager->flush();
@@ -242,6 +250,7 @@ class OrderManager
         $item->setDeliveryDate($item->getDeliveryDate());
         $item->setState('pending');
         $item->setOrderType(2);
+        $item->setBillCalculated(1);
 
         $this->entityManager->persist($item);
         $this->entityManager->flush();
@@ -329,6 +338,21 @@ class OrderManager
 
             $item->setUpdatedAt($item->getUpdatedAt());
             
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+
+            return $item;
+        }
+    }
+
+    public function orderUpdateBillCalculatedByCaptain(orderUpdateBillCalculatedByCaptainRequest $request)
+    {
+        $item = $this->orderEntityRepository->find($request->getId());
+
+        if ($item) {
+            $item = $this->autoMapping->mapToObject(orderUpdateBillCalculatedByCaptainRequest::class, OrderEntity::class, $request, $item);
+
+
             $this->entityManager->flush();
             $this->entityManager->clear();
 

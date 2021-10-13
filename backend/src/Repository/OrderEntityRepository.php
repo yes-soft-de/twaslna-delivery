@@ -413,9 +413,9 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->andWhere('OrderEntity.captainID = :captainId')
             ->andWhere("OrderEntity.state = :delivered")
-
             ->setParameter('captainId', $captainId)
             ->setParameter('delivered', self::DELIVERED)
+
             ->getQuery()
             ->getResult();
     }
@@ -427,11 +427,11 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->andWhere('OrderEntity.captainID = :captainId')
             ->andWhere("OrderEntity.state = :delivered")
-            ->andWhere("OrderEntity.orderType != :type")
 
+            ->andWhere("OrderEntity.isBillCalculated = :true")
+            ->setParameter('true', 1)
             ->setParameter('captainId', $captainId)
             ->setParameter('delivered', self::DELIVERED)
-            ->setParameter('type', 3)
             ->getQuery()
             ->getResult();
     }
@@ -478,6 +478,27 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->setParameter('delivered', self::DELIVERED)
             ->getQuery()
             ->getResult();
+    }
+
+
+    public function sumInvoiceAmountWithoutOrderTypeSendItInMonthForCaptain($fromDate, $toDate, $captainId)
+    {
+        return $this->createQueryBuilder('OrderEntity')
+                ->select('sum(OrderEntity.invoiceAmount) as sumInvoiceAmount')
+
+                ->where('OrderEntity.deliveryDate >= :fromDate')
+                ->andWhere('OrderEntity.deliveryDate < :toDate')
+                ->andWhere('OrderEntity.captainID = :captainId')
+                ->andWhere("OrderEntity.state = :delivered")
+                ->andWhere("OrderEntity.isBillCalculated = :true")
+
+                ->setParameter('fromDate', $fromDate)
+                ->setParameter('toDate', $toDate)
+                ->setParameter('true', 1)
+                ->setParameter('captainId', $captainId)
+                ->setParameter('delivered', self::DELIVERED)
+                ->getQuery()
+                ->getResult();
     }
 
     public function getAcceptedOrderByCaptainIdInMonth($fromDate, $toDate, $captainId)

@@ -230,7 +230,7 @@ class CaptainProfileController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function updateCaptainNewMessageStatus(Request $request)
+    public function updateCaptainNewMessageStatus(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
