@@ -38,6 +38,11 @@ class CaptainService
         return $this->orderManager->countOrdersInMonthForCaptain($fromDate, $toDate, $captainId);
     }
 
+    public function sumInvoiceAmountWithoutOrderTypeSendItInMonthForCaptain($fromDate, $toDate, $captainId)
+    {
+        return $this->orderManager->sumInvoiceAmountWithoutOrderTypeSendItInMonthForCaptain($fromDate, $toDate, $captainId);
+    }
+
     public function getAcceptedOrderByCaptainIdInMonth($fromDate, $toDate, $captainId)
     {
         return $this->orderManager->getAcceptedOrderByCaptainIdInMonth($fromDate, $toDate, $captainId);

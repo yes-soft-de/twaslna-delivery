@@ -258,15 +258,17 @@ class CaptainProfileService
         $sumPaymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanySumPaymentsToCaptain($captainId);
       
         if ($item) {
-             $countOrdersDelivered = $this->captainService->countCaptainOrdersDelivered($item[0]['captainID']);            
-             $sumKilometerBonus = $this->getOrderKilometers($captainId);
+             $countOrdersDelivered = $this->captainService->countCaptainOrdersDelivered($item[0]['captainID']);
+            $sumInvoiceAmountWithoutOrderTypeSendIt = $this->captainService->sumInvoiceAmountWithoutOrderTypeSendIt($item[0]['captainID']);
+
+            $sumKilometerBonus = $this->getOrderKilometers($captainId);
              
              $item['countOrdersDelivered'] = (float)$countOrdersDelivered[0]['countOrdersDelivered'];
              $item['kilometerBonus'] = $sumKilometerBonus;
 
-             $item['sumInvoiceAmount'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'];
+             $item['sumInvoiceAmount'] = (float)$sumInvoiceAmountWithoutOrderTypeSendIt[0]['sumInvoiceAmount'];
              $item['deliveryCost'] = (float)$countOrdersDelivered[0]['deliveryCost'];
-             $item['amountYouOwn'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
+             $item['amountYouOwn'] = (float)$sumInvoiceAmountWithoutOrderTypeSendIt[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
 
              $item['sumPaymentsFromCompany'] = (float)$sumPaymentsToCaptainFromCompany[0]['sumPaymentsFromCompany'];
              $item['sumPaymentsToCompany'] = (float)$sumPaymentsFromCaptainToCompany[0]['sumPaymentsToCompany'];
@@ -298,9 +300,7 @@ class CaptainProfileService
        
         if ($item) {
              $countOrdersDelivered = $this->captainService->countCaptainOrdersDelivered($item[0]['captainID']);
-
              $sumInvoiceAmountWithoutOrderTypeSendIt = $this->captainService->sumInvoiceAmountWithoutOrderTypeSendIt($item[0]['captainID']);
-
              $sumKilometerBonus = $this->getOrderKilometers($captainId);
              
              $item['countOrdersDelivered'] = (float)$countOrdersDelivered[0]['countOrdersDelivered'];
@@ -352,16 +352,17 @@ class CaptainProfileService
 
         if ($item) {
             
-             $countOrdersDelivered = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);           
-             $paymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanyPaymentsToCaptainInSpecificDate( $item[0]['captainID'] ,$date[0], $date[1]); 
+            $countOrdersDelivered = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);
+            $sumInvoiceAmount = $this->captainService->sumInvoiceAmountWithoutOrderTypeSendItInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);
+            $paymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanyPaymentsToCaptainInSpecificDate( $item[0]['captainID'] ,$date[0], $date[1]);
 
              $sumKilometerBonus = $this->getOrderKilometersInThisMonth($captainId, $date[0], $date[1]);
              $item['kilometerBonus'] = $sumKilometerBonus;
 
              $item['countOrdersDelivered'] = (float)$countOrdersDelivered[0]['countOrdersInMonth'];
-             $item['sumInvoiceAmount'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'];
+             $item['sumInvoiceAmount'] = (float)$sumInvoiceAmount[0]['sumInvoiceAmount'];
              $item['deliveryCost'] = (float)$countOrdersDelivered[0]['deliveryCost'];
-             $item['amountYouOwn'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
+             $item['amountYouOwn'] = (float)$sumInvoiceAmount[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
 
              $item['sumPaymentsFromCompany'] = (float)$sumPaymentsToCaptainFromCompany[0]['sumPayments'];
              $item['sumPaymentsToCompany'] = (float)$sumPaymentsFromCaptainToCompany[0]['sumPayments'];
@@ -393,12 +394,13 @@ class CaptainProfileService
         if( $sumPaymentsToCaptainFromCompany[0]['sumPayments'] == null) { 
             $sumPaymentsToCaptainFromCompany[0]['sumPayments'] = (float)0; 
              }
-        if( $sumPaymentsFromCaptainToCompany[0]['sumPayments'] == null) { 
-            $sumPaymentsFromCaptain[0]['sumPayments'] = (float)0; 
+        if( $sumPaymentsFromCaptainToCompany[0]['sumPayments'] == null) {
+            $sumPaymentsFromCaptainToCompany[0]['sumPayments'] = (float)0;
              }
 
         if ($item) {
              $countOrdersDelivered = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);
+             $sumInvoiceAmount = $this->captainService->sumInvoiceAmountWithoutOrderTypeSendItInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);
              $paymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanyPaymentsToCaptainInSpecificDate($item[0]['captainID'] ,$date[0], $date[1]);
 
              $paymentsFromCaptainToCompany = $this->deliveryCompanyPaymentsFromCaptainService->deliveryCompanyPaymentsFromCaptainInSpecificDate($item[0]['captainID'] ,$date[0], $date[1]);
@@ -407,9 +409,10 @@ class CaptainProfileService
              $item['kilometerBonus'] = $sumKilometerBonus;
 
              $item['countOrdersDelivered'] = (float)$countOrdersDelivered[0]['countOrdersInMonth'];
-             $item['sumInvoiceAmount'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'];
+//             $item['sumInvoiceAmount'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'];
+             $item['sumInvoiceAmount'] = (float)$sumInvoiceAmount[0]['sumInvoiceAmount'];
              $item['deliveryCost'] = (float)$countOrdersDelivered[0]['deliveryCost'];
-             $item['amountWithCaptain'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
+             $item['amountWithCaptain'] = (float)$sumInvoiceAmount[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
 
              $item['sumPaymentsToCaptain'] = (float)$sumPaymentsToCaptainFromCompany[0]['sumPayments'];
              $item['sumPaymentsFromCaptain'] = (float)$sumPaymentsFromCaptainToCompany[0]['sumPayments'];
@@ -449,6 +452,7 @@ class CaptainProfileService
 
         if ($item) {
              $countOrdersDelivered = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);
+             $sumInvoiceAmount = $this->captainService->sumInvoiceAmountWithoutOrderTypeSendItInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);
              $paymentsToCaptainFromCompany = $this->deliveryCompanyPaymentsToCaptainService->deliveryCompanyPaymentsToCaptainInSpecificDate($item[0]['captainID'] ,$date[0], $date[1]);
 
              $paymentsFromCaptainToCompany = $this->deliveryCompanyPaymentsFromCaptainService->deliveryCompanyPaymentsFromCaptainInSpecificDate($item[0]['captainID'] ,$date[0], $date[1]);
@@ -457,9 +461,10 @@ class CaptainProfileService
              $item['kilometerBonus'] = $sumKilometerBonus;
 
              $item['countOrdersDelivered'] = (float)$countOrdersDelivered[0]['countOrdersInMonth'];
-             $item['sumInvoiceAmount'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'];
+//             $item['sumInvoiceAmount'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'];
+             $item['sumInvoiceAmount'] = (float)$sumInvoiceAmount[0]['sumInvoiceAmount'];
              $item['deliveryCost'] = (float)$countOrdersDelivered[0]['deliveryCost'];
-             $item['amountWithCaptain'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
+             $item['amountWithCaptain'] = (float)$sumInvoiceAmount[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
 
              $item['sumPaymentsToCaptain'] = (float)$sumPaymentsToCaptainFromCompany[0]['sumPayments'];
              $item['sumPaymentsFromCaptain'] = (float)$sumPaymentsFromCaptainToCompany[0]['sumPayments'];
@@ -501,16 +506,17 @@ class CaptainProfileService
 
         if ($item) {
             
-             $countOrdersDelivered = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);           
-             $paymentsFromCompany = $this->captainPaymentService->getPaymentsFromCompanyInSpecificDate( $item[0]['captainID'] ,$date[0], $date[1]);     
+            $countOrdersDelivered = $this->captainService->countOrdersInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);
+            $sumInvoiceAmount = $this->captainService->sumInvoiceAmountWithoutOrderTypeSendItInMonthForCaptain($date[0], $date[1], $item[0]['captainID']);
+            $paymentsFromCompany = $this->captainPaymentService->getPaymentsFromCompanyInSpecificDate( $item[0]['captainID'] ,$date[0], $date[1]);
 
              $sumKilometerBonus = $this->getOrderKilometersInThisMonth($captainId, $date[0], $date[1]);
              $item['kilometerBonus'] = $sumKilometerBonus;
 
              $item['countOrdersDelivered'] = (float)$countOrdersDelivered[0]['countOrdersInMonth'];
-             $item['sumInvoiceAmount'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'];
+             $item['sumInvoiceAmount'] = (float)$sumInvoiceAmount[0]['sumInvoiceAmount'];
              $item['deliveryCost'] = (float)$countOrdersDelivered[0]['deliveryCost'];
-             $item['amountYouOwn'] = (float)$countOrdersDelivered[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
+             $item['amountYouOwn'] = (float)$sumInvoiceAmount[0]['sumInvoiceAmount'] + $countOrdersDelivered[0]['deliveryCost'];
 
              $item['sumPaymentsFromCompany'] = (float)$sumPaymentsToCaptainFromCompany[0]['sumPayments'];
              $item['sumPaymentsToCompany'] = (float)$sumPaymentsFromCaptainToCompany[0]['sumPayments'];
