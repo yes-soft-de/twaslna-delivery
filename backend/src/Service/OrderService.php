@@ -10,6 +10,7 @@ use App\Request\OrderCreateRequest;
 use App\Request\OrderClientCreateRequest;
 use App\Request\OrderClientSendCreateRequest;
 use App\Request\OrderClientSpecialCreateRequest;
+use App\Request\orderUpdateBillCalculatedByCaptainRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
 use App\Request\OrderUpdateInvoiceByCaptainRequest;
 use App\Request\OrderUpdateByClientRequest;
@@ -23,6 +24,7 @@ use App\Response\OrdersongoingResponse;
 use App\Response\OrdersByOwnerResponse;
 use App\Response\OrderClosestResponse;
 use App\Response\OrderPendingResponse;
+use App\Response\orderUpdateBillCalculatedByCaptainResponse;
 use App\Response\OrderUpdateStateResponse;
 use App\Response\OrderUpdateInvoiceByCaptainResponse;
 use App\Response\OrderCreateClientResponse;
@@ -642,6 +644,18 @@ class OrderService
             $request->setId($orderDetails[0]->orderID);
             $item = $this->orderManager->orderUpdateInvoiceByCaptain($request);
             $response = $this->autoMapping->map(OrderEntity::class, OrderUpdateInvoiceByCaptainResponse::class, $item);
+       }
+        return $response;
+    }
+
+    public function orderUpdateBillCalculatedByCaptain(orderUpdateBillCalculatedByCaptainRequest $request)
+    {
+        $response = "Not updated!!";
+        $orderDetails = $this->orderDetailService->getOrderIdByOrderNumber($request->getOrderNumber());
+        if($orderDetails){
+            $request->setId($orderDetails[0]->orderID);
+            $item = $this->orderManager->orderUpdateBillCalculatedByCaptain($request);
+            $response = $this->autoMapping->map(OrderEntity::class, orderUpdateBillCalculatedByCaptainResponse::class, $item);
        }
         return $response;
     }

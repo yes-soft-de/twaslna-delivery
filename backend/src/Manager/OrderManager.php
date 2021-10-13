@@ -9,6 +9,7 @@ use App\Request\OrderCreateRequest;
 use App\Request\OrderClientCreateRequest;
 use App\Request\OrderClientSendCreateRequest;
 use App\Request\OrderClientSpecialCreateRequest;
+use App\Request\orderUpdateBillCalculatedByCaptainRequest;
 use App\Request\OrderUpdateByClientRequest;
 use App\Request\OrderUpdateStateByCaptainRequest;
 use App\Request\OrderUpdateInvoiceByCaptainRequest;
@@ -337,6 +338,21 @@ class OrderManager
 
             $item->setUpdatedAt($item->getUpdatedAt());
             
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+
+            return $item;
+        }
+    }
+
+    public function orderUpdateBillCalculatedByCaptain(orderUpdateBillCalculatedByCaptainRequest $request)
+    {
+        $item = $this->orderEntityRepository->find($request->getId());
+
+        if ($item) {
+            $item = $this->autoMapping->mapToObject(orderUpdateBillCalculatedByCaptainRequest::class, OrderEntity::class, $request, $item);
+
+
             $this->entityManager->flush();
             $this->entityManager->clear();
 
