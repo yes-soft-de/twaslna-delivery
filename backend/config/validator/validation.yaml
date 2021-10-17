@@ -87,13 +87,6 @@ App\Request\CaptainProfileUpdateByAdminRequest:
       - NotBlank: ~
     bounce:
       - NotBlank: ~
-
-App\Request\OrderCreateRequest:
-  properties:
-    destination:
-      - NotBlank: ~
-    payment:
-      - NotBlank: ~
       
 App\Request\OrderUpdateRequest:
   properties:

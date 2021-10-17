@@ -6,7 +6,6 @@ use App\AutoMapping;
 use App\Constant\NotificationLocalConstant;
 use App\Entity\OrderEntity;
 use App\Manager\OrderManager;
-use App\Request\OrderCreateRequest;
 use App\Request\OrderClientCreateRequest;
 use App\Request\OrderClientSendCreateRequest;
 use App\Request\OrderClientSpecialCreateRequest;
@@ -17,11 +16,7 @@ use App\Request\OrderUpdateByClientRequest;
 use App\Request\OrderUpdateSpecialByClientRequest;
 use App\Request\OrderUpdateSendByClientRequest;
 use App\Request\SendNotificationRequest;
-use App\Response\OrderCreateResponse;
-use App\Response\OrdersNumberResponse;
 use App\Response\OrderResponse;
-use App\Response\OrdersongoingResponse;
-use App\Response\OrdersByOwnerResponse;
 use App\Response\OrderClosestResponse;
 use App\Response\OrderPendingResponse;
 use App\Response\orderUpdateBillCalculatedByCaptainResponse;
@@ -30,8 +25,6 @@ use App\Response\OrderUpdateInvoiceByCaptainResponse;
 use App\Response\OrderCreateClientResponse;
 use App\Response\OrderClientSendCreateResponse;
 use App\Response\AcceptedOrderResponse;
-use App\Response\OrdersAndTopOwnerResponse;
-use App\Response\OrdersAndCountResponse;
 use App\Response\CountReportResponse;
 use App\Response\OrdersByClientResponse;
 use App\Response\CountOrdersInLastMonthForStoreResponse;
@@ -43,49 +36,40 @@ use App\Service\StoreOwnerProfileService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use App\Service\RoomIdHelperService;
 use App\Service\DateFactoryService;
-use App\Service\CaptainService;
 use App\Service\CaptainProfileService;
-use App\Service\StoreOwnerBranchService;
 use App\Service\ProductService;
 use App\Service\OrderDetailService;
 use App\Service\DeliveryCompanyFinancialService;
 use App\Service\ClientProfileService;
 use App\Service\NotificationLocalService;
-use App\Constant\ResponseConstant;
-use App\Constant\SubscribeStatusConstant;
 use DateTime;
 
 class OrderService
 {
     private $autoMapping;
     private $orderManager;
-    private $logService;
-    private $storeOwnerBranchService;
     private $storeOwnerProfileService;
     private $params;
     private $ratingService;
     // private $notificationService;
     private $roomIdHelperService;
     private $dateFactoryService;
-    private $captainService;
     private $captainProfileService;
     private $productService;
     private $orderDetailService;
     private $deliveryCompanyFinancialService;
     private $clientProfileService;
     private $notificationLocalService;
+    private $orderLogService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, OrderLogService $orderLogService, StoreOwnerBranchService $storeOwnerBranchService, StoreOwnerProfileService $storeOwnerProfileService, ParameterBagInterface $params,  RatingService $ratingService
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, StoreOwnerProfileService $storeOwnerProfileService, ParameterBagInterface $params,  RatingService $ratingService
                                 // , NotificationService $notificationService
-                               , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, CaptainService $captainService, CaptainProfileService $captainProfileService, ProductService $productService, OrderDetailService $orderDetailService, DeliveryCompanyFinancialService $deliveryCompanyFinancialService,
-                               ClientProfileService $clientProfileService, NotificationLocalService $notificationLocalService
+                               , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, CaptainProfileService $captainProfileService, ProductService $productService, OrderDetailService $orderDetailService, DeliveryCompanyFinancialService $deliveryCompanyFinancialService,
+                               ClientProfileService $clientProfileService, NotificationLocalService $notificationLocalService, OrderLogService $orderLogService
                                 )
     {
         $this->autoMapping = $autoMapping;
         $this->orderManager = $orderManager;
-        $this->captainService = $captainService;
-        $this->orderLogService = $orderLogService;
-        $this->storeOwnerBranchService = $storeOwnerBranchService;
         $this->storeOwnerProfileService = $storeOwnerProfileService;
         $this->ratingService = $ratingService;
         $this->roomIdHelperService = $roomIdHelperService;
@@ -98,6 +82,7 @@ class OrderService
         $this->deliveryCompanyFinancialService = $deliveryCompanyFinancialService;
         $this->clientProfileService = $clientProfileService;
         $this->notificationLocalService = $notificationLocalService;
+        $this->orderLogService = $orderLogService;
     }
 
     public function closestOrders($userId)
