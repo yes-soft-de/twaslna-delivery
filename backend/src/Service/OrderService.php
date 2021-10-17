@@ -250,14 +250,6 @@ class OrderService
        return $response;
    }
 
-   public function specialLinkCheck($bool)
-    {
-        if (!$bool)
-        {
-            return $this->params;
-        }
-    }
-
     public function getAcceptedOrderByCaptainId($captainID):array
     {
         $response = [];
