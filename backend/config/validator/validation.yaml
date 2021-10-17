@@ -20,30 +20,6 @@ App\Request\UpdateImageRequest:
     image:
       - NotBlank: ~
 
-App\Request\PackageCreateRequest:
-  properties:
-    name:
-      - NotBlank: ~
-    cost:
-      - NotBlank: ~
-    carCount:
-      - NotBlank: ~
-    orderCount:
-      - NotBlank: ~
-    city:
-      - NotBlank: ~
-    status:
-      - NotBlank: ~
-    branch:
-      - NotBlank: ~
-
-App\Request\PackageUpdateStateRequest:
-  properties:
-    id:
-      - NotBlank: ~
-    status:
-      - NotBlank: ~
-
 App\Request\UserRegisterRequest:
   properties:
     userID:
