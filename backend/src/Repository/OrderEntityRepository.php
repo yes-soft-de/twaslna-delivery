@@ -44,20 +44,6 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getOrdersByOwnerID($storeOwnerID)
-    {
-        return $this->createQueryBuilder('OrderEntity')
-            ->addselect('OrderEntity.id', 'OrderEntity.storeOwnerProfileID', 'OrderEntity.source', 'OrderEntity.destination', 'OrderEntity.deliveryDate', 'OrderEntity.updatedAt', 'OrderEntity.note', 'OrderEntity.payment', 'OrderEntity.recipientName', 'OrderEntity.recipientPhone', 'OrderEntity.state', 'OrderEntity.branchId', 'OrderEntity.captainID', 'OrderEntity.createdAt')
-
-            ->andWhere('OrderEntity.storeOwnerProfileID = :storeOwnerID')
-            ->andWhere("OrderEntity.state != :cancelled")
-            ->setParameter('storeOwnerID', $storeOwnerID)
-            ->setParameter('cancelled', self::CANCEL)
-
-            ->getQuery()
-            ->getResult();
-    }
-
     public function orderStatusByOrderId($orderId)
     {
         return $this->createQueryBuilder('OrderEntity')

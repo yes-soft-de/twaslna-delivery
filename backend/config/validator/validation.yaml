@@ -44,29 +44,6 @@ App\Request\PackageUpdateStateRequest:
     status:
       - NotBlank: ~
 
-App\Request\SubscriptionCreateRequest:
-  properties:
-    packageID:
-      - NotBlank: ~
-
-App\Request\StoreOwnerSubscriptionUpdateRequest:
-  properties:
-    packageID:
-      - NotBlank: ~
-    status:
-      - NotBlank: ~
-    endDate:
-      - NotBlank: ~
-
-App\Request\SubscriptionUpdateStateRequest:
-  properties:
-    id:
-      - NotBlank: ~
-    endDate:
-      - NotBlank: ~
-    status:
-      - NotBlank: ~
-
 App\Request\UserRegisterRequest:
   properties:
     userID:

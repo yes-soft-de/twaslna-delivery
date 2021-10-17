@@ -7,7 +7,6 @@ use App\Entity\StoreOwnerPaymentEntity;
 use App\Manager\StoreOwnerPaymentManager;
 use App\Request\StoreOwnerPaymentCreateRequest;
 use App\Response\StoreOwnerCreateResponse;
-use App\Service\StoreOwnerSubscriptionService;
 use App\Service\DateFactoryService;
 
 
@@ -15,14 +14,13 @@ class StoreOwnerPaymentService
 {
     private $autoMapping;
     private $storeOwnerPaymentManager;
-    private $storeOwnersubscriptionService;
     private $dateFactoryService;
 
-    public function __construct(AutoMapping $autoMapping, StoreOwnerPaymentManager $storeOwnerPaymentManager, StoreOwnerSubscriptionService $storeOwnersubscriptionService, DateFactoryService $dateFactoryService)
+    public function __construct(AutoMapping $autoMapping, StoreOwnerPaymentManager $storeOwnerPaymentManager, DateFactoryService $dateFactoryService)
     {
         $this->autoMapping = $autoMapping;
         $this->storeOwnerPaymentManager = $storeOwnerPaymentManager;
-        $this->storeOwnersubscriptionService = $storeOwnersubscriptionService;
+
         $this->dateFactoryService = $dateFactoryService;
     }
 
@@ -37,8 +35,6 @@ class StoreOwnerPaymentService
     {
        $response = [];
 
-       $totalAmountOfSubscriptions= $this->storeOwnersubscriptionService->totalAmountOfSubscriptions($ownerId);
-       
         $items = $this->storeOwnerPaymentManager->getpaymentsForOwner($ownerId);
       
         $sumPayments = $this->storeOwnerPaymentManager->getSumAmount($ownerId);

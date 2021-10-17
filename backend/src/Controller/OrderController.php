@@ -37,44 +37,6 @@ class OrderController extends BaseController
         $this->validator = $validator;
         $this->orderService = $orderService;
     }
-//TODO
-    /**
-     * @Route("order", name="createOrderByStoreOwner", methods={"POST"})
-     * @IsGranted("ROLE_OWNER")
-     */
-    public function createOrder(Request $request)
-    {  
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class, OrderCreateRequest::class, (object)$data);
-        $request->setOwnerID($this->getUserId());
-
-        $violations = $this->validator->validate($request);
-        if (\count($violations) > 0) {
-            $violationsString = (string) $violations;
-            return new JsonResponse($violationsString, Response::HTTP_OK);
-            }
-
-            $response = $this->orderService->createOrder($request);
-      
-        if (is_string($response)) {
-            return $this->response($response, self::SUBSCRIBE_ERROR);
-        }
-
-        return $this->response($response, self::CREATE);
-    }
-//TODO
-     /**
-      * @Route("orders", name="GetOrdersByOwnerID", methods={"GET"})
-      * @IsGranted("ROLE_OWNER")
-      * @return JsonResponse
-      */
-    public function getOrdersByOwnerID()
-    {
-        $result = $this->orderService->getOrdersByOwnerID($this->getUserId());
-
-        return $this->response($result, self::FETCH);
-    }
 
     /**
      * @Route("/closestOrders",   name="GetPendingOrdersForCaptain", methods={"GET"})

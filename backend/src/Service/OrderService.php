@@ -38,7 +38,6 @@ use App\Response\CountOrdersInLastMonthForStoreResponse;
 use App\Response\CountOrdersInLastMonthForCaptainResponse;
 use App\Response\CountOrdersInLastMonthForClientResponse;
 use App\Response\CountOrdersInLastMonthForProoductResponse;
-use App\Service\StoreOwnerSubscriptionService;
 use App\Service\RatingService;
 use App\Service\StoreOwnerProfileService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -62,7 +61,6 @@ class OrderService
     private $orderManager;
     private $logService;
     private $storeOwnerBranchService;
-    private $storeOwnerSubscriptionService;
     private $storeOwnerProfileService;
     private $params;
     private $ratingService;
@@ -77,7 +75,7 @@ class OrderService
     private $clientProfileService;
     private $notificationLocalService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, OrderLogService $orderLogService, StoreOwnerBranchService $storeOwnerBranchService, StoreOwnerSubscriptionService $storeOwnerSubscriptionService, StoreOwnerProfileService $storeOwnerProfileService, ParameterBagInterface $params,  RatingService $ratingService
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, OrderLogService $orderLogService, StoreOwnerBranchService $storeOwnerBranchService, StoreOwnerProfileService $storeOwnerProfileService, ParameterBagInterface $params,  RatingService $ratingService
                                 // , NotificationService $notificationService
                                , RoomIdHelperService $roomIdHelperService,  DateFactoryService $dateFactoryService, CaptainService $captainService, CaptainProfileService $captainProfileService, ProductService $productService, OrderDetailService $orderDetailService, DeliveryCompanyFinancialService $deliveryCompanyFinancialService,
                                ClientProfileService $clientProfileService, NotificationLocalService $notificationLocalService
@@ -88,7 +86,6 @@ class OrderService
         $this->captainService = $captainService;
         $this->orderLogService = $orderLogService;
         $this->storeOwnerBranchService = $storeOwnerBranchService;
-        $this->storeOwnerSubscriptionService = $storeOwnerSubscriptionService;
         $this->storeOwnerProfileService = $storeOwnerProfileService;
         $this->ratingService = $ratingService;
         $this->roomIdHelperService = $roomIdHelperService;
@@ -101,79 +98,6 @@ class OrderService
         $this->deliveryCompanyFinancialService = $deliveryCompanyFinancialService;
         $this->clientProfileService = $clientProfileService;
         $this->notificationLocalService = $notificationLocalService;
-    }
-
-    public function createOrder(OrderCreateRequest $request)
-    {  
-        $response = ResponseConstant::$PLEASE_SUBSCRIBE;
-        //get Subscribe id Current
-        $subscriptionCurrent =  $this->storeOwnerSubscriptionService->getSubscriptionCurrent($request->getOwnerID());
-      
-        if ($subscriptionCurrent) {
-             // check subscription
-            $status = $this->storeOwnerSubscriptionService->subscriptionIsActive($request->getOwnerID(), $subscriptionCurrent['id']);
-        
-            if ($status == 'active') {
-                $roomID = $this->roomIdHelperService->roomIdGenerate();
-                
-                $item = $this->orderManager->createOrder($request, $roomID, $subscriptionCurrent['id']);
-
-                //start-----> notification
-                // try{
-                // $this->notificationService->notificationToCaptain();
-                //notification <------end
-                // }
-                // catch (\Exception $e)
-                // {
-        
-                // }
-                if ($item) {
-                    $this->orderLogService->createOrderLog($item->getId(), $item->getState(), $request->getOwnerID());
-                }
-                $response =$this->autoMapping->map(OrderEntity::class, OrderCreateResponse::class, $item);
-            }
-            
-            if ($status == SubscribeStatusConstant::$INACTIVE) {
-                $response = ResponseConstant::$SUBSCRIBE_IS_AWAITING_ACTIVATION;
-            }
-            if ($status == SubscribeStatusConstant::$ORDERS_FINISHED) {
-                $response = ResponseConstant::$SUBSCRIBE_AND_COUNT_ORDER_FINISHED;
-            }
-
-            if ($status == SubscribeStatusConstant::$DATE_FINISHED) {
-                $response = ResponseConstant::$SUBSCRIBE_AND_DATE_FINISHED;
-            }
-
-            if ($status == SubscribeStatusConstant::$UNACCEPT) {
-                $response = ResponseConstant::$SUBSCRIBE_UNACCEPTED;
-            }
-    }
-        return $response;
-    }
-
-    public function getOrdersByOwnerID($userID)
-    {
-        $response = [];
-        $orders = $this->orderManager->getOrdersByOwnerID($userID);
-       
-        foreach ($orders as $order) {
-
-            if ($order['branchId'] == true){
-                $order['branchId'] = $this->storeOwnerBranchService->getBrancheById($order['branchId']);
-            }
-            
-            if ($order['captainID'] == true) {
-                $order['acceptedOrder'] = $this->captainProfileService->getCaptainProfileByCaptainID($order['captainID']);
-                }
-
-            if ($order['productID'] == true) {
-                $order['product'] = $this->productService->getProductById($order['productID']);
-                }
-            $order['log'] = $this->orderLogService->getOrderLogByOrderId($order['id']);
-            $response[] = $this->autoMapping->map('array', OrdersByOwnerResponse::class, $order);
-        }
-
-        return $response;
     }
 
     public function closestOrders($userId)
