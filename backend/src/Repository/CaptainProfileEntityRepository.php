@@ -293,7 +293,7 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
     public function captainFilter($name)
     {
         return $this->createQueryBuilder('captainProfileEntity')
-        ->select('captainProfileEntity.id','captainProfileEntity.captainID','captainProfileEntity.captainName', 'captainProfileEntity.image',)
+        ->select('captainProfileEntity.id','captainProfileEntity.captainID','captainProfileEntity.captainName', 'captainProfileEntity.image')
 
             ->andWhere('captainProfileEntity.captainName LIKE :name')
 
