@@ -161,18 +161,28 @@ class _InsertFormState extends State<InsertForm> {
   }
 }
 
-class insertFormWithoutImage extends StatelessWidget {
+class insertFormWithoutImage extends StatefulWidget {
   final Function(String) add;
   final String hintText;
   final UpdateProductCategoryRequest? updateStoreCategoriesRequest;
-  insertFormWithoutImage({required this.add, required this.hintText,this.updateStoreCategoriesRequest}){
-    if (updateStoreCategoriesRequest!=null){
-      nameController.text = updateStoreCategoriesRequest!.productCategoryName ?? '';
-    }
-  }
+  insertFormWithoutImage({required this.add, required this.hintText,this.updateStoreCategoriesRequest});
 
+  @override
+  State<insertFormWithoutImage> createState() => _insertFormWithoutImageState();
+}
+
+class _insertFormWithoutImageState extends State<insertFormWithoutImage> {
   final GlobalKey<FormState> keyForm = GlobalKey<FormState>();
-  final TextEditingController nameController = TextEditingController();
+
+  final  TextEditingController nameController = TextEditingController();
+
+  @override
+  void initState() {
+    if (widget.updateStoreCategoriesRequest!=null){
+      nameController.text = widget.updateStoreCategoriesRequest!.productCategoryName ?? '';
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +201,7 @@ class insertFormWithoutImage extends StatelessWidget {
             ),
             CustomFormField(
               controller: nameController,
-              hintText: hintText,
+              hintText: widget.hintText,
               last: true,
             ),
           ]),
@@ -199,7 +209,7 @@ class insertFormWithoutImage extends StatelessWidget {
         label: S.current.save,
         onTap: () {
           if (keyForm.currentState!.validate()) {
-            add(nameController.text.trim());
+            widget.add(nameController.text.trim());
           } else {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,

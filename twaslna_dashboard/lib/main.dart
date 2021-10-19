@@ -86,7 +86,6 @@ class MyApp extends StatefulWidget {
   final PaymentsModule _paymentsModule;
   final FiltersModule _filtersModule;
   final LogsModule _logsModule;
-
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -104,7 +103,8 @@ class MyApp extends StatefulWidget {
       this._ordersModule,
       this._paymentsModule,
       this._filtersModule,
-      this._logsModule);
+      this._logsModule,
+      );
 
   @override
   State<StatefulWidget> createState() => _MyAppState();

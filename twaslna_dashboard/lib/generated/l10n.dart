@@ -5229,6 +5229,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Orders Canceled`
+  String get ordersCancel {
+    return Intl.message(
+      'Orders Canceled',
+      name: 'ordersCancel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

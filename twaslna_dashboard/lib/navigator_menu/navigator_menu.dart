@@ -7,6 +7,7 @@ import 'package:twaslna_dashboard/module_captain/captains_module.dart';
 import 'package:twaslna_dashboard/module_categories/categories_module.dart';
 import 'package:twaslna_dashboard/module_clients/clients_module.dart';
 import 'package:twaslna_dashboard/module_company/company_module.dart';
+import 'package:twaslna_dashboard/module_filters/filters_module.dart';
 import 'package:twaslna_dashboard/module_logs/logs_module.dart';
 import 'package:twaslna_dashboard/module_main/main_module.dart';
 import 'package:twaslna_dashboard/module_orders/orders_module.dart';
@@ -140,8 +141,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               title: S.current.Logs,
               icon: FontAwesomeIcons.solidFlag,
               children: [
-                customListTile(getIt<LogsModule>().captainLogsScreen, S.current.captainLogs, FontAwesomeIcons.history,true),
-                customListTile(getIt<LogsModule>().storeLogsScreen, S.current.storeLogs, FontAwesomeIcons.storeAlt,true),
+                customListTile(getIt<FiltersModule>().captainFilterScreen, S.current.captainLogs, FontAwesomeIcons.history,true),
+                customListTile(getIt<FiltersModule>().storesFilterScreen, S.current.storeLogs, FontAwesomeIcons.storeAlt,true),
               ],
               page: widget.currentPage),
           customExpansionTile(
@@ -155,18 +156,19 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               ],
               page: widget.currentPage),
           customListTile(getIt<SettingsModule>().settingsScreen, S.current.settings, FontAwesomeIcons.cog),
+
         ]));
   }
 
   Widget customListTile(StatefulWidget page, String title, IconData icon,[bool subtitle = false]) {
-    bool selected = page.toString() == widget.currentPage.toString();
+    bool selected = page.runtimeType.toString() == widget.currentPage.runtimeType.toString();
     double? size = icon.fontPackage == 'font_awesome_flutter' ? (subtitle ? 18 : 22) : 26;
     if (size == 26 && subtitle){
       size = 20;
     }
 
     return InkWell(
-      key: ValueKey(page),
+      key: ValueKey(page.runtimeType),
       onTap: () {
         widget.onTap(page);
         GlobalVariable.mainScreenScaffold.currentState?.openEndDrawer();
@@ -208,7 +210,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
       required List<Widget> children}) {
     bool extended = false;
     for (var i in children) {
-      if (i.key.toString() == '[<$page>]') {
+      if (i.key.toString() == '[<${page.runtimeType}>]') {
         extended = true;
         break;
       }

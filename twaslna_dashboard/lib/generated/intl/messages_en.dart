@@ -459,6 +459,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
         "ordersAccount": MessageLookupByLibrary.simpleMessage("Orders Account"),
+        "ordersCancel": MessageLookupByLibrary.simpleMessage("Orders Canceled"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),
         "ourBankAccountNumber":
             MessageLookupByLibrary.simpleMessage("Our Bank Account Number"),
