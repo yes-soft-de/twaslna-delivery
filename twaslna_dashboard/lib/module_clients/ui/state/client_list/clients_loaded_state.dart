@@ -38,7 +38,7 @@ class ClientsLoadedState extends States {
         },
         error: error,
       );
-    } else if (empty) {
+    } else if (empty && search == null) {
       return EmptyStateWidget(
           empty: S.current.emptyStaff,
           onRefresh: () {

@@ -83,6 +83,68 @@ class ClientProfileLoadedState extends States {
             ),
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(S.current.orders,style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),),
+                      SizedBox(height: 8,),
+                      Text(model?.statistics?.clientOrdersCount.toString() ?? S.current.unknown,style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),),
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(S.current.countOrdersDelivered,style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),),
+                      SizedBox(height: 8,),
+                      Text(model?.statistics?.clientOrdersDelivered.toString() ?? S.current.unknown,style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),),
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(S.current.ordersCancel,style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),),
+                      SizedBox(height: 8,),
+                      Text(model?.statistics?.clientOrdersCancel.toString() ?? S.current.unknown,style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
         Container(height: 75,)
       ],
     );
@@ -228,4 +290,5 @@ Widget imageTile({required String title,required String image}){
       ],
     );
 }
+
 }
