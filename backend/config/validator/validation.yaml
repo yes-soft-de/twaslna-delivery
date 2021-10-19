@@ -20,53 +20,6 @@ App\Request\UpdateImageRequest:
     image:
       - NotBlank: ~
 
-App\Request\PackageCreateRequest:
-  properties:
-    name:
-      - NotBlank: ~
-    cost:
-      - NotBlank: ~
-    carCount:
-      - NotBlank: ~
-    orderCount:
-      - NotBlank: ~
-    city:
-      - NotBlank: ~
-    status:
-      - NotBlank: ~
-    branch:
-      - NotBlank: ~
-
-App\Request\PackageUpdateStateRequest:
-  properties:
-    id:
-      - NotBlank: ~
-    status:
-      - NotBlank: ~
-
-App\Request\SubscriptionCreateRequest:
-  properties:
-    packageID:
-      - NotBlank: ~
-
-App\Request\StoreOwnerSubscriptionUpdateRequest:
-  properties:
-    packageID:
-      - NotBlank: ~
-    status:
-      - NotBlank: ~
-    endDate:
-      - NotBlank: ~
-
-App\Request\SubscriptionUpdateStateRequest:
-  properties:
-    id:
-      - NotBlank: ~
-    endDate:
-      - NotBlank: ~
-    status:
-      - NotBlank: ~
-
 App\Request\UserRegisterRequest:
   properties:
     userID:
@@ -133,13 +86,6 @@ App\Request\CaptainProfileUpdateByAdminRequest:
     status:
       - NotBlank: ~
     bounce:
-      - NotBlank: ~
-
-App\Request\OrderCreateRequest:
-  properties:
-    destination:
-      - NotBlank: ~
-    payment:
       - NotBlank: ~
       
 App\Request\OrderUpdateRequest:

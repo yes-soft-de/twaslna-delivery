@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\AutoMapping;
 use App\Request\orderUpdateBillCalculatedByCaptainRequest;
 use App\Service\OrderService;
-use App\Request\OrderCreateRequest;
 use App\Request\OrderClientCreateRequest ;
 use App\Request\OrderClientSendCreateRequest ;
 use App\Request\OrderClientSpecialCreateRequest ;
@@ -36,44 +35,6 @@ class OrderController extends BaseController
         $this->autoMapping = $autoMapping;
         $this->validator = $validator;
         $this->orderService = $orderService;
-    }
-//TODO
-    /**
-     * @Route("order", name="createOrderByStoreOwner", methods={"POST"})
-     * @IsGranted("ROLE_OWNER")
-     */
-    public function createOrder(Request $request)
-    {  
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class, OrderCreateRequest::class, (object)$data);
-        $request->setOwnerID($this->getUserId());
-
-        $violations = $this->validator->validate($request);
-        if (\count($violations) > 0) {
-            $violationsString = (string) $violations;
-            return new JsonResponse($violationsString, Response::HTTP_OK);
-            }
-
-            $response = $this->orderService->createOrder($request);
-      
-        if (is_string($response)) {
-            return $this->response($response, self::SUBSCRIBE_ERROR);
-        }
-
-        return $this->response($response, self::CREATE);
-    }
-//TODO
-     /**
-      * @Route("orders", name="GetOrdersByOwnerID", methods={"GET"})
-      * @IsGranted("ROLE_OWNER")
-      * @return JsonResponse
-      */
-    public function getOrdersByOwnerID()
-    {
-        $result = $this->orderService->getOrdersByOwnerID($this->getUserId());
-
-        return $this->response($result, self::FETCH);
     }
 
     /**
@@ -149,13 +110,14 @@ class OrderController extends BaseController
           return $this->response($result, self::FETCH);
       }
 
-     /**
+    /**
      * @Route("/getOrdersInSpecificDate/{fromDate}/{toDate}", name="getOrdersInSpecificDate",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
+     * @param $fromDate
+     * @param $toDate
      * @return JsonResponse
      */
-    public function getOrdersInSpecificDate($fromDate, $toDate)
+    public function getOrdersInSpecificDate($fromDate, $toDate): JsonResponse
     {
         $result = $this->orderService->getOrdersInSpecificDate($fromDate, $toDate);
 
@@ -175,39 +137,36 @@ class OrderController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
-   /**
+    /**
      * @Route("/countOrdersEveryCaptainInLastMonth", name="getCountOrdersEveryCaptainInLastMonth",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
      * @return JsonResponse
      */
-    public function getCountOrdersEveryCaptainInLastMonth()
+    public function getCountOrdersEveryCaptainInLastMonth(): JsonResponse
     {
         $result = $this->orderService->getCountOrdersEveryCaptainInLastMonth();
 
         return $this->response($result, self::FETCH);
     }
 
-   /**
+    /**
      * @Route("/countOrdersEveryClientInLastMonth", name="getCountOrdersEveryClientInLastMonth",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
      * @return JsonResponse
      */
-    public function getCountOrdersEveryClientInLastMonth()
+    public function getCountOrdersEveryClientInLastMonth(): JsonResponse
     {
         $result = $this->orderService->getCountOrdersEveryClientInLastMonth();
 
         return $this->response($result, self::FETCH);
     }
 
-   /**
+    /**
      * @Route("/countOrdersEveryProductInLastMonth", name="getCountOrdersEveryProductInLastMonth",methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
      * @return JsonResponse
      */
-    public function getCountOrdersEveryProductInLastMonth()
+    public function getCountOrdersEveryProductInLastMonth(): JsonResponse
     {
         $result = $this->orderService->getCountOrdersEveryProductInLastMonth();
 
@@ -219,7 +178,7 @@ class OrderController extends BaseController
       * @IsGranted("ROLE_CAPTAIN")
       * @return JsonResponse
       */
-      public function getAcceptedOrderByCaptainId()
+      public function getAcceptedOrderByCaptainId(): JsonResponse
       {
           $result = $this->orderService->getAcceptedOrderByCaptainId($this->getUserId());
           return $this->response($result, self::FETCH);
@@ -246,7 +205,7 @@ class OrderController extends BaseController
      * @Route("clientsendorder", name="createClientSendOrder", methods={"POST"})
      * @IsGranted("ROLE_CLIENT")
      */
-    public function createClientSendOrder(Request $request)
+    public function createClientSendOrder(Request $request): JsonResponse
     {  
         $data = json_decode($request->getContent(), true);
       
@@ -263,7 +222,7 @@ class OrderController extends BaseController
      * @Route("clientSpecialOrder", name="createClientSpecialOrder", methods={"POST"})
      * @IsGranted("ROLE_CLIENT")
      */
-    public function createClientSpecialOrder(Request $request)
+    public function createClientSpecialOrder(Request $request): JsonResponse
     {  
         $data = json_decode($request->getContent(), true);
       
@@ -280,20 +239,21 @@ class OrderController extends BaseController
       * @Route("orderstatusbyordernumber/{orderNumber}", name="getOrderStatusByOrderNumber", methods={"GET"})
       * @return JsonResponse
       */
-    public function getOrderStatusByOrderNumber($orderNumber)
-      {
+    public function getOrderStatusByOrderNumber($orderNumber): JsonResponse
+    {
         $result = $this->orderService->getOrderStatusByOrderNumber($orderNumber);
   
         return $this->response($result, self::FETCH);
       }
 
     /**
-      * @Route("orderDetails/{orderNumber}", name="getOrderDetailsByOrderNumber", methods={"GET"})
-      * @IsGranted("ROLE_CAPTAIN")
-      * @return JsonResponse
-      */
-    public function getOrderDetailsByOrderNumber($orderNumber)
-      {
+     * @Route("orderDetails/{orderNumber}", name="getOrderDetailsByOrderNumber", methods={"GET"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @param $orderNumber
+     * @return JsonResponse
+     */
+    public function getOrderDetailsByOrderNumber($orderNumber): JsonResponse
+    {
         $result = $this->orderService->getOrderDetailsByOrderNumber($orderNumber);
   
         return $this->response($result, self::FETCH);

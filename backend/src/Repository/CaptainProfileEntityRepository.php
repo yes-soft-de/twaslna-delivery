@@ -6,6 +6,7 @@ use App\Entity\CaptainProfileEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOwnerBranchEntity;
+use App\Entity\UserEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
@@ -38,7 +39,8 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('captainProfile')
             ->addSelect('captainProfile.id', 'captainProfile.captainID', 'captainProfile.captainName', 'captainProfile.image', 'captainProfile.location', 'captainProfile.age', 'captainProfile.car', 'captainProfile.drivingLicence', 'captainProfile.salary', 'captainProfile.status', 'captainProfile.specialLink', 'captainProfile.phone', 'captainProfile.isOnline', 'captainProfile.bankName', 'captainProfile.bankAccountNumber', 'captainProfile.stcPay', 'captainProfile.mechanicLicense', 'captainProfile.identity', 'captainProfile.bounce')
-
+            ->addSelect('UserEntity.createDate')
+            ->leftJoin(UserEntity::class, 'UserEntity', Join::WITH, 'UserEntity.id = captainProfile.captainID')
             ->andWhere('captainProfile.captainID=:captainID')
             
             ->setParameter('captainID', $captainID)
@@ -291,7 +293,7 @@ class CaptainProfileEntityRepository extends ServiceEntityRepository
     public function captainFilter($name)
     {
         return $this->createQueryBuilder('captainProfileEntity')
-        ->select('captainProfileEntity.id','captainProfileEntity.captainID','captainProfileEntity.captainName', 'captainProfileEntity.image',)
+        ->select('captainProfileEntity.id','captainProfileEntity.captainID','captainProfileEntity.captainName', 'captainProfileEntity.image')
 
             ->andWhere('captainProfileEntity.captainName LIKE :name')
 

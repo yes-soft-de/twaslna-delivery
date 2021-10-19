@@ -5,7 +5,6 @@ namespace App\Manager;
 use App\AutoMapping;
 use App\Entity\OrderEntity;
 use App\Repository\OrderEntityRepository;
-use App\Request\OrderCreateRequest;
 use App\Request\OrderClientCreateRequest;
 use App\Request\OrderClientSendCreateRequest;
 use App\Request\OrderClientSpecialCreateRequest;
@@ -31,30 +30,9 @@ class OrderManager
         $this->orderEntityRepository = $orderEntityRepository;
     }
 
-    public function createOrder(OrderCreateRequest $request, $roomID, $subscribeId)
-    {
-        $request->setRoomID($roomID);
-        $request->setSubscribeId($subscribeId);
-        $item = $this->autoMapping->map(OrderCreateRequest::class, OrderEntity::class, $request);
-
-        $item->setDeliveryDate($item->getDeliveryDate());
-        $item->setState('pending');
-        
-        $this->entityManager->persist($item);
-        $this->entityManager->flush();
-        $this->entityManager->clear();
-
-        return $item;
-    }
-    
     public function orderById($orderId)
     {
         return $this->orderEntityRepository->orderById($orderId);
-    }
-
-    public function getOrdersByOwnerID($userID)
-    {
-        return $this->orderEntityRepository->getOrdersByOwnerID($userID);
     }
 
     public function orderStatusByOrderId($orderId)

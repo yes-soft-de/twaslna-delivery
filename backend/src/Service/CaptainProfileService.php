@@ -129,17 +129,13 @@ class CaptainProfileService
 
     public function getCaptainProfileByCaptainIDForAdmin($captainID)
     {
-        $response=[];
         $item = $this->userManager->getCaptainProfileByCaptainID($captainID);
         if($item) {
-            // $totalBounce = $this->getCaptainFinancialAccountDetailsByCaptainProfileId($item['id']);
             $item['imageURL'] = $item['image'];
             $item['image'] = $this->params.$item['image'];
             $item['drivingLicenceURL'] = $item['drivingLicence'];
             $item['drivingLicence'] = $this->params.$item['drivingLicence'];
             $item['baseURL'] = $this->params;
-            // $countOrdersDeliverd = $this->captainService->countCaptainOrdersDelivered($item['captainID']);
-
             $item['rating'] = $this->ratingService->getAvgRating($item['captainID'], 'captain');
         }
         return $this->autoMapping->map('array', CaptainProfileCreateResponse::class, $item);

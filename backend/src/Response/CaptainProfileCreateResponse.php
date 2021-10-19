@@ -51,4 +51,6 @@ class CaptainProfileCreateResponse
     public $mechanicLicense;
 
     public $identity;
+
+    public $createDate;
 }
