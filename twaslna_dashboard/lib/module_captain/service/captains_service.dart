@@ -78,7 +78,7 @@ class CaptainsService {
   }
   Future<DataModel> getCaptainBalanceLastMonth(int captainId) async {
 
-    CaptainAccountBalanceResponse? _captainProfileResponse = await _captainManager.getAccountBalance(captainId);
+    CaptainAccountBalanceResponse? _captainProfileResponse = await _captainManager.getAccountBalanceLastMonth(captainId);
     if (_captainProfileResponse == null) {
       return DataModel.withError(S.current.networkError);
     }

@@ -21,7 +21,7 @@ class CaptainManager {
   Future<ActionResponse?> enableCaptain(AcceptCaptainRequest request) => _captainRepository.enableCaptain(request);
   Future<CaptainProfileResponse?> getCaptainProfile(int captainId) => _captainRepository.getCaptainProfile(captainId);
   Future<CaptainAccountBalanceResponse?> getAccountBalance(int captainId) => _captainRepository.getCaptainAccountBalance(captainId);
-  Future<CaptainAccountBalanceResponse?> getAccountBalanceLastMonth(int captainId) => _captainRepository.getCaptainAccountBalance(captainId);
+  Future<CaptainAccountBalanceResponse?> getAccountBalanceLastMonth(int captainId) => _captainRepository.getCaptainAccountBalanceLastBalance(captainId);
   Future<CaptainUnfinishedPaymentsResponse?> getPayments() => _captainRepository.captainPayments();
   Future<CaptainRemainingPaymentsResponse?> getCaptainRemainingPayments() => _captainRepository.captainRemainingPayments();
   Future<CaptainAccountBalanceResponse?> getAccountBalanceSpecific(int captainId,firstDate,lastDate) => _captainRepository.getCaptainSpecificDate(captainId,firstDate,lastDate);
