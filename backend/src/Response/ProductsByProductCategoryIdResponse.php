@@ -6,8 +6,10 @@ class ProductsByProductCategoryIdResponse
 {
     public $id;
     public $productName;
-    public $productImage;
     public $productPrice;
     public $storeOwnerProfileID;
     public $storeProductCategoryID;
+    public $image;
+    public $imageURL;
+    public $baseURL;
 }
