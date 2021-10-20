@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\AutoMapping;
-use App\Constant\NotificationLocalConstant;
+use App\Constant\LocalNotificationList;
 use App\Entity\OrderEntity;
 use App\Manager\OrderManager;
 use App\Request\OrderClientCreateRequest;
@@ -140,18 +140,18 @@ class OrderService
             //create notification local
             $state ="";
             if ($request->getState() == "on way to pick order"){
-                $state = NotificationLocalConstant::$STATE_ON_WAY_PICK_ORDER;
+                $state = LocalNotificationList::$STATE_ON_WAY_PICK_ORDER;
             }
             if ($request->getState() == "in store"){
-                $state =  NotificationLocalConstant::$STATE_IN_STORE;
+                $state =  LocalNotificationList::$STATE_IN_STORE;
             }
             if ($request->getState() == "ongoing"){
-                $state =  NotificationLocalConstant::$STATE_ONGOING;
+                $state =  LocalNotificationList::$STATE_ONGOING;
             }
             if ($request->getState() == "delivered"){
-                $state =  NotificationLocalConstant::$STATE_DELIVERED;
+                $state =  LocalNotificationList::$STATE_DELIVERED;
             }
-            $this->notificationLocalService->createNotificationLocal($item->getClientID(),  NotificationLocalConstant::$STATE_TITLE, $state, $request->getOrderNumber());
+            $this->notificationLocalService->createNotificationLocal($item->getClientID(),  LocalNotificationList::$STATE_TITLE, $state, $request->getOrderNumber());
 
             $response = $this->autoMapping->map(OrderEntity::class, OrderUpdateStateResponse::class, $item);
         
@@ -284,7 +284,7 @@ class OrderService
             //create log
             $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID(), $request->getStoreOwnerProfileID());
             //create notification local
-            $this->notificationLocalService->createNotificationLocal($request->getClientID(), NotificationLocalConstant::$NEW_ORDER_TITLE, NotificationLocalConstant::$CREATE_ORDER_SUCCESS, $orderNumber);
+            $this->notificationLocalService->createNotificationLocal($request->getClientID(), LocalNotificationList::$NEW_ORDER_TITLE, LocalNotificationList::$CREATE_ORDER_SUCCESS, $orderNumber);
             $response = $this->autoMapping->map(OrderEntity::class, OrderCreateClientResponse::class, $item);
             $response->orderDetail = $orderDetail; 
           }            
@@ -306,7 +306,7 @@ class OrderService
             //create log
             $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID());
             //create notification local
-            $this->notificationLocalService->createNotificationLocal($request->getClientID(), NotificationLocalConstant::$NEW_ORDER_TITLE, NotificationLocalConstant::$CREATE_ORDER_SUCCESS, $orderNumber);
+            $this->notificationLocalService->createNotificationLocal($request->getClientID(), LocalNotificationList::$NEW_ORDER_TITLE, LocalNotificationList::$CREATE_ORDER_SUCCESS, $orderNumber);
             $response = $this->autoMapping->map(OrderEntity::class, OrderClientSendCreateResponse::class, $item);
             $response->orderDetail['orderNumber'] = $orderDetail->orderNumber;
             $response->orderDetail['orderDetailId'] = $orderDetail->id;
@@ -329,7 +329,7 @@ class OrderService
             //create log
             $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $request->getClientID(), $request->getStoreOwnerProfileID());
             //create notification local
-            $this->notificationLocalService->createNotificationLocal($request->getClientID(), NotificationLocalConstant::$NEW_ORDER_TITLE, NotificationLocalConstant::$CREATE_ORDER_SUCCESS, $orderNumber);
+            $this->notificationLocalService->createNotificationLocal($request->getClientID(), LocalNotificationList::$NEW_ORDER_TITLE, LocalNotificationList::$CREATE_ORDER_SUCCESS, $orderNumber);
             $response = $this->autoMapping->map(OrderEntity::class, OrderClientSendCreateResponse::class, $item);
             $response->orderDetail['orderNumber'] = $orderDetail->orderNumber;
             $response->orderDetail['orderDetailId'] = $orderDetail->id;
@@ -391,7 +391,7 @@ class OrderService
             $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->getOrderID());
             if($order[0]['state'] == 'in store') {
                 //notification local
-                $this->notificationLocalService->createNotificationLocal($clientID, NotificationLocalConstant::$UPDATE_ORDER_TITLE, NotificationLocalConstant::$UPDATE_ORDER_ERROR_CAPTAIN_IN_STORE, $request->getOrderNumber());
+                $this->notificationLocalService->createNotificationLocal($clientID, LocalNotificationList::$UPDATE_ORDER_TITLE, LocalNotificationList::$UPDATE_ORDER_ERROR_CAPTAIN_IN_STORE, $request->getOrderNumber());
                 return $response = "you can't edit, captain in the store.";
             }
                 $orderUpdate = $this->orderManager->orderUpdateByClient($request, $orderDetails[0]->getOrderID());
@@ -408,7 +408,7 @@ class OrderService
                             $createOrderDetail = $this->orderDetailService->createOrderDetail($orderDetails[0]->getOrderID(), $productID, $countProduct, $request->getOrderNumber());
                         }
                         //notification local
-                        $this->notificationLocalService->createNotificationLocal($clientID, NotificationLocalConstant::$UPDATE_ORDER_TITLE, NotificationLocalConstant::$UPDATE_ORDER_SUCCESS, $request->getOrderNumber());
+                        $this->notificationLocalService->createNotificationLocal($clientID, LocalNotificationList::$UPDATE_ORDER_TITLE, LocalNotificationList::$UPDATE_ORDER_SUCCESS, $request->getOrderNumber());
                     return $response = $this->getOrderStatusByOrderNumber($request->getOrderNumber());  
                     } 
                 }     
@@ -424,7 +424,7 @@ class OrderService
             $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->getOrderID());
             if($order[0]['state'] == 'in store') {
                 //notification local
-                $this->notificationLocalService->createNotificationLocal($userID, NotificationLocalConstant::$UPDATE_ORDER_TITLE, NotificationLocalConstant::$UPDATE_ORDER_ERROR_CAPTAIN_IN_STORE, $request->getOrderNumber());
+                $this->notificationLocalService->createNotificationLocal($userID, LocalNotificationList::$UPDATE_ORDER_TITLE, LocalNotificationList::$UPDATE_ORDER_ERROR_CAPTAIN_IN_STORE, $request->getOrderNumber());
                 return $response = "you can't edit, captain in the store.";
             }
                 $orderUpdate = $this->orderManager->orderSpecialUpdateByClient($request, $orderDetails[0]->getOrderID());
@@ -436,7 +436,7 @@ class OrderService
                     if ($orderDetailDelete == "Deleted") {
                         $createOrderDetail = $this->orderDetailService->createOrderDetail($orderDetails[0]->getOrderID(), null, null, $request->getOrderNumber());
                         //notification local
-                        $this->notificationLocalService->createNotificationLocal($userID, NotificationLocalConstant::$UPDATE_ORDER_TITLE, NotificationLocalConstant::$UPDATE_ORDER_SUCCESS, $request->getOrderNumber());
+                        $this->notificationLocalService->createNotificationLocal($userID, LocalNotificationList::$UPDATE_ORDER_TITLE, LocalNotificationList::$UPDATE_ORDER_SUCCESS, $request->getOrderNumber());
                         return $response = $this->getOrderStatusByOrderNumber($request->getOrderNumber());  
                     } 
                 }     
@@ -452,7 +452,7 @@ class OrderService
             $order = $this->orderManager->orderStatusByOrderId($orderDetails[0]->getOrderID());
             if($order[0]['state'] == 'in store') {
                 //notification local
-                $this->notificationLocalService->createNotificationLocal($userID, NotificationLocalConstant::$UPDATE_ORDER_TITLE, NotificationLocalConstant::$UPDATE_ORDER_ERROR_CAPTAIN_IN_STORE, $request->getOrderNumber());
+                $this->notificationLocalService->createNotificationLocal($userID, LocalNotificationList::$UPDATE_ORDER_TITLE, LocalNotificationList::$UPDATE_ORDER_ERROR_CAPTAIN_IN_STORE, $request->getOrderNumber());
                 return $response = "you can't edit, captain in the store.";
             }
                 $orderUpdate = $this->orderManager->orderSendUpdateByClient($request, $orderDetails[0]->getOrderID());
@@ -464,7 +464,7 @@ class OrderService
                     if ($orderDetailDelete == "Deleted") {
                         $createOrderDetail = $this->orderDetailService->createOrderDetail($orderDetails[0]->getOrderID(), null, null, $request->getOrderNumber());
                         //notification local
-                        $this->notificationLocalService->createNotificationLocal($userID, NotificationLocalConstant::$UPDATE_ORDER_TITLE, NotificationLocalConstant::$UPDATE_ORDER_SUCCESS, $request->getOrderNumber());
+                        $this->notificationLocalService->createNotificationLocal($userID, LocalNotificationList::$UPDATE_ORDER_TITLE, LocalNotificationList::$UPDATE_ORDER_SUCCESS, $request->getOrderNumber());
                         return $response = $this->getOrderStatusByOrderNumber($request->getOrderNumber());  
                     } 
                 }     
@@ -484,12 +484,12 @@ class OrderService
             
             if ( $halfHourLaterTime < $nowDate) {
                 //notification local
-                $this->notificationLocalService->createNotificationLocal($userID, NotificationLocalConstant::$CANCEL_ORDER_TITLE, NotificationLocalConstant::$CANCEL_ORDER_ERROR_TIME, $orderNumber);
+                $this->notificationLocalService->createNotificationLocal($userID, LocalNotificationList::$CANCEL_ORDER_TITLE, LocalNotificationList::$CANCEL_ORDER_ERROR_TIME, $orderNumber);
                 $response="can not remove it, Exceeded time allowed";
             }
             elseif ($order[0]['state'] == 'on way to pick order') {
                 //notification local
-                $this->notificationLocalService->createNotificationLocal($userID, NotificationLocalConstant::$CANCEL_ORDER_TITLE, NotificationLocalConstant::$CANCEL_ORDER_ERROR_ACCEPTED, $orderNumber);
+                $this->notificationLocalService->createNotificationLocal($userID, LocalNotificationList::$CANCEL_ORDER_TITLE, LocalNotificationList::$CANCEL_ORDER_ERROR_ACCEPTED, $orderNumber);
                 $response = "can not remove it, The captain received the order";
             }            
             else {
@@ -505,7 +505,7 @@ class OrderService
                         $this->orderLogService->createOrderLog($orderNumber, $item->getState(), $userID);
                     }
                     //notification local
-                    $this->notificationLocalService->createNotificationLocal($userID, NotificationLocalConstant::$CANCEL_ORDER_TITLE, NotificationLocalConstant::$CANCEL_ORDER_SUCCESS, $orderNumber);
+                    $this->notificationLocalService->createNotificationLocal($userID, LocalNotificationList::$CANCEL_ORDER_TITLE, LocalNotificationList::$CANCEL_ORDER_SUCCESS, $orderNumber);
                 }
                 $response = $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $item);
             }

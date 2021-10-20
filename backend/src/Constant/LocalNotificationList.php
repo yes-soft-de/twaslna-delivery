@@ -2,7 +2,7 @@
 
 namespace App\Constant;
 
-abstract class NotificationLocalConstant
+abstract class LocalNotificationList
 {
     static $STATE_TITLE = "حالة الطلب";
 
