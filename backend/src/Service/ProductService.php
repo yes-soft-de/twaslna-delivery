@@ -10,17 +10,19 @@ use App\Response\ProductCreateResponse;
 use App\Response\ProductsResponse;
 use App\Response\ProductFullInfoResponse;
 use App\Response\ProductsByProductCategoryIdResponse;
-
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class ProductService
 {
     private $autoMapping;
     private $productManager;
+    private $params;
 
-    public function __construct(AutoMapping $autoMapping, ProductManager $productManager)
+    public function __construct(AutoMapping $autoMapping, ProductManager $productManager, ParameterBagInterface $params)
     {
         $this->autoMapping = $autoMapping;
         $this->productManager = $productManager;
+        $this->params = $params->get('upload_base_url') . '/';
     }
 
     public function createProductByAdmin(ProductCreateRequest $request)
@@ -106,6 +108,9 @@ class ProductService
        $response = [];
        $items = $this->productManager->getStoreProductsByProfileId($storeOwnerProfileId);
        foreach ($items as $item) {
+        $item['imageURL'] = $item['productImage'];
+        $item['image'] = $this->params.$item['productImage'];
+        $item['baseURL'] = $this->params;
             $response[] = $this->autoMapping->map('array', ProductsByProductCategoryIdResponse::class, $item);
        }
        return $response;
