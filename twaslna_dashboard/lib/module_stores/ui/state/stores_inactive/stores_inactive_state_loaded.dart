@@ -25,7 +25,7 @@ class StoresInActiveLoadedState extends States {
       {this.empty = false, this.error})
       : super(screenState) {
     if (screenState.searchKey != ''){
-      search.text = screenState.searchKey;
+    //  search.text = screenState.searchKey;
     }
     if (error != null) {
       screenState.canAddCategories = false;
@@ -34,7 +34,9 @@ class StoresInActiveLoadedState extends States {
   }
 
   String? id;
-  TextEditingController search = TextEditingController();
+//  TextEditingController search = TextEditingController();
+  String? search;
+
   @override
   Widget getUI(BuildContext context) {
     if (error != null) {
@@ -44,7 +46,7 @@ class StoresInActiveLoadedState extends States {
         },
         error: error,
       );
-    } else if (empty) {
+    } else if (empty && search==null) {
       return EmptyStateWidget(
           empty: S.current.emptyStaff,
           onRefresh: () {
@@ -63,12 +65,14 @@ class StoresInActiveLoadedState extends States {
               Padding(
                 padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16,top: 16),
                 child: CustomDeliverySearch(
-                  controller: search,
+                //  controller: search,
                   hintText: S.current.searchForStore,
                   onChanged: (s) {
                     if (s == '' || s.isEmpty) {
+                      search = null;
                       screenState.getStores();
                     } else {
+                      search = s.toString();
                       screenState.getStoresFilter(s.toString());
                     }
                   },

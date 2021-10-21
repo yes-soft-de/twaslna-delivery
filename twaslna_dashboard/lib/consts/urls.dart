@@ -25,8 +25,8 @@ class Urls {
   static const CAPTAIN_PROFILE_API = BASE_API + '/captainprofile' ;
   static const TERMS_CAPTAIN = BASE_API + '/termscaptain';
   static const LOG_API = BASE_API + '/getRecords';
-  static const CAPTAIN_BALANCE_ACCOUNT = BASE_API + '/captainFinancialAccount';
-  static const CAPTAIN_BALANCE_LAST_MONTH = BASE_API + '/captainFinancialAccountInLastMonth';
+  static const CAPTAIN_BALANCE_ACCOUNT = BASE_API + '/captainFinancialAccountForAdmin';
+  static const CAPTAIN_BALANCE_LAST_MONTH = BASE_API + '/captainFinancialAccountInLastMonthForAdmin';
   static const GET_ORDER_LOGS = BASE_API + '/orderLogs';
   static const GET_CAPTAINS_LOGS = BASE_API + '/ordersAndCountByCaptainId/';
   static const GET_STORES_LOGS = BASE_API + '/ordersAndCountByStoreProfileId/';

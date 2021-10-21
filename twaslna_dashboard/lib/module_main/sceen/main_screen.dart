@@ -32,7 +32,6 @@ setState(() {
 
   @override
   Widget build(BuildContext context) {
-    print(ScreenType.getCurrentScreenType());
     if (ScreenType.isDesktop()) {
       return Scaffold(
         body: Row(

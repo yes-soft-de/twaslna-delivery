@@ -7,15 +7,15 @@ import 'package:twaslna_dashboard/module_filters/ui/screen/store_filter_screen.d
 
 @injectable
 class FiltersModule extends YesModule {
-  final CaptainFilterScreen _captainFilterScreen;
-  final StoresFilterScreen _storesFilterScreen;
-  FiltersModule(this._captainFilterScreen,this._storesFilterScreen){
+  final CaptainFilterScreen captainFilterScreen;
+  final StoresFilterScreen storesFilterScreen;
+  FiltersModule(this.captainFilterScreen,this.storesFilterScreen){
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      FiltersRoutes.CAPTAIN_FILTERS : (context) => _captainFilterScreen,
-      FiltersRoutes.STORE_FILTERS : (context) => _storesFilterScreen
+      FiltersRoutes.CAPTAIN_FILTERS : (context) => captainFilterScreen,
+      FiltersRoutes.STORE_FILTERS : (context) => storesFilterScreen
     };
   }
 }

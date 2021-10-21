@@ -200,6 +200,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "countStores": MessageLookupByLibrary.simpleMessage("عدد المتاجر"),
         "countTodayOrder":
             MessageLookupByLibrary.simpleMessage("الطلبات اليوم"),
+        "createDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
         "createNewOrder":
             MessageLookupByLibrary.simpleMessage("انشاء طلب جديد "),
         "createNewReport": MessageLookupByLibrary.simpleMessage("دعم سريع"),
@@ -451,6 +452,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ordermonth": MessageLookupByLibrary.simpleMessage("طلب في الشهر"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "ordersAccount": MessageLookupByLibrary.simpleMessage("حسابات الطلبات"),
+        "ordersCancel": MessageLookupByLibrary.simpleMessage("الطلبات الملغية"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("طلب / الشهر"),
         "ourBankAccountNumber":
             MessageLookupByLibrary.simpleMessage("رقم حسابنا"),

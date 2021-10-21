@@ -28,7 +28,6 @@ class ProductCategoriesScreenState extends State<ProductCategoriesScreen> {
 
   @override
   void initState() {
-
     currentState = ProductCategoriesLoadingState(this);
 
     widget._stateManager.stateStream.listen((event) {

@@ -1,4 +1,5 @@
 import 'package:dotted_line/dotted_line.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twaslna_dashboard/consts/order_status.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/module_chat/chat_routes.dart';
@@ -13,6 +14,7 @@ import 'package:twaslna_dashboard/utils/components/fixed_container.dart';
 import 'package:twaslna_dashboard/utils/components/progresive_image.dart';
 import 'package:twaslna_dashboard/utils/effect/hidder.dart';
 import 'package:twaslna_dashboard/utils/helpers/order_status_helper.dart';
+import 'package:twaslna_dashboard/utils/helpers/translating.dart';
 
 class OrderDetailsLoadedState extends OrderDetailsState {
   OrderDetailsScreenState screenState;
@@ -28,7 +30,7 @@ class OrderDetailsLoadedState extends OrderDetailsState {
     return FixedContainer(child: ListView(
       physics: BouncingScrollPhysics(
           parent: AlwaysScrollableScrollPhysics()),
-      children: [
+        children: [
         Hider(
           active: orderDetails.order.orderType != 3,
           child: Padding(
@@ -77,6 +79,7 @@ class OrderDetailsLoadedState extends OrderDetailsState {
                     orderDetails.order.state),
                 style: TextStyle(color: Colors.white),
               ),
+              trailing: Text(orderDetails.order.createAt == orderDetails.order.deliveryDate ? '${orderDetails.order.deliveryDate}' : '',style:TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
               leading: Icon(
                 StatusHelper.getOrderStatusIcon(
                     orderDetails.order.state),
@@ -84,6 +87,43 @@ class OrderDetailsLoadedState extends OrderDetailsState {
                 size: 35,
               ),
             ),
+          ),
+        ),
+        Hider(
+          active: orderDetails.order.createAt != orderDetails.order.deliveryDate,
+          child: Column(
+            children: [
+              ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(25))
+                ),
+                leading: Container(
+                    height: double.maxFinite,
+                    width:50,
+                    child: Icon(FontAwesomeIcons.solidClock,color: Colors.white,)),
+                tileColor: Theme.of(context).primaryColor,
+                title: Text(S.current.deliveryTime,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+                subtitle:   Text(Trans.localString(orderDetails.order.deliveryDate, context),style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white
+                ),),
+              ),
+              ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(bottom: Radius.circular(25))
+                ),
+                leading: Container(
+                    height: double.maxFinite,
+                    width:50,
+                    child: Icon(FontAwesomeIcons.delicious,color: Colors.white,)),
+                tileColor: Theme.of(context).primaryColor,
+                title: Text(S.current.orderTime,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+                subtitle:   Text(Trans.localString(orderDetails.order.createAt, context),style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white
+                ),),
+              ),
+            ],
           ),
         ),
         orderDetails.order.roomID.isNotEmpty && orderDetails.order.state != OrderStatusEnum.WAITING ? Padding(

@@ -1,3 +1,5 @@
+import 'package:twaslna_dashboard/module_clients/response/statistics.dart';
+
 class ClientProfileResponse {
   ClientProfileResponse({
       this.statusCode, 
@@ -35,7 +37,9 @@ class Data {
       this.image, 
       this.imageURL, 
       this.baseURL, 
-      this.location,});
+      this.location,
+      this.statistics
+  });
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -47,6 +51,7 @@ class Data {
     imageURL = json['imageURL'];
     baseURL = json['baseURL'];
     location = json['location'];
+    statistics = json['statistics'] != null ? Statistics.fromJson(json['statistics']): null;
   }
   int? id;
   String? clientID;
@@ -57,6 +62,7 @@ class Data {
   dynamic imageURL;
   String? baseURL;
   dynamic location;
+  Statistics? statistics;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

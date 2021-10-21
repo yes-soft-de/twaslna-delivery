@@ -203,6 +203,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "countProducts": MessageLookupByLibrary.simpleMessage("Products Count"),
         "countStores": MessageLookupByLibrary.simpleMessage("Stores Count"),
         "countTodayOrder": MessageLookupByLibrary.simpleMessage("Today Order"),
+        "createDate": MessageLookupByLibrary.simpleMessage("Create Date"),
         "createNewOrder":
             MessageLookupByLibrary.simpleMessage("Create new order"),
         "createNewReport":
@@ -459,6 +460,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
         "ordersAccount": MessageLookupByLibrary.simpleMessage("Orders Account"),
+        "ordersCancel": MessageLookupByLibrary.simpleMessage("Orders Canceled"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),
         "ourBankAccountNumber":
             MessageLookupByLibrary.simpleMessage("Our Bank Account Number"),

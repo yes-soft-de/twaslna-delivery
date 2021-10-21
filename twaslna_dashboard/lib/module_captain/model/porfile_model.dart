@@ -1,5 +1,7 @@
+import 'package:intl/intl.dart';
 import 'package:twaslna_dashboard/abstracts/data_model/data_model.dart';
 import 'package:twaslna_dashboard/module_captain/response/captain_profile_response.dart';
+import 'package:twaslna_dashboard/utils/helpers/date_converter.dart';
 
 class ProfileModel extends DataModel{
 
@@ -18,6 +20,7 @@ class ProfileModel extends DataModel{
   String? status;
   num? salary;
   num? bounce;
+  String? createDate;
   ProfileModel(
       {this.image,
         this.name,
@@ -33,7 +36,8 @@ class ProfileModel extends DataModel{
         this.isOnline,
         this.status,
         this.bounce,
-        this.salary
+        this.salary,
+        this.createDate
       });
 
   ProfileModel? _models;
@@ -55,7 +59,8 @@ class ProfileModel extends DataModel{
         isOnline:data.isOnline,
         status: data.status,
         salary: data.salary,
-        bounce: data.bounce
+        bounce: data.bounce,
+        createDate: DateFormat.jm().format(DateHelper.convert(data.createDate?.timestamp)) + '   ' + DateFormat.yMd().format(DateHelper.convert(data.createDate?.timestamp))
     );
   }
 

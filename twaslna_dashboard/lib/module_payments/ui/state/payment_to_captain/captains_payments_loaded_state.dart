@@ -5,8 +5,8 @@ import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/module_captain/model/balance_model.dart';
 import 'package:twaslna_dashboard/module_captain/model/porfile_model.dart';
 import 'package:twaslna_dashboard/module_payments/request/captain_payments_request.dart';
-import 'package:twaslna_dashboard/module_payments/ui/screen/paymen_from_captain_screen.dart';
 import 'package:twaslna_dashboard/module_payments/ui/screen/payment_to_captain_screen.dart';
+import 'package:twaslna_dashboard/module_payments/ui/widget/custom_list_tile.dart';
 import 'package:twaslna_dashboard/utils/components/custom_feild.dart';
 import 'package:twaslna_dashboard/utils/components/empty_screen.dart';
 import 'package:twaslna_dashboard/utils/components/error_screen.dart';
@@ -144,25 +144,25 @@ class PaymentsToCaptainLoadedState extends States {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          customListTile(
+                          CustomListTileCaptainsPayment(
                               title: S.of(context).name,
-                              subTitle: model?.name,
+                              subTitle: model?.name ?? '',
                               iconData: Icons.person),
-                          customListTile(
+                          CustomListTileCaptainsPayment(
                               title: S.of(context).phone,
-                              subTitle: model?.phone,
+                              subTitle: model?.phone ?? '',
                               iconData: Icons.phone),
-                          customListTile(
+                          CustomListTileCaptainsPayment(
                               title: S.of(context).bankName,
-                              subTitle: model?.bankName,
+                              subTitle: model?.bankName ?? '',
                               iconData: Icons.monetization_on_rounded),
-                          customListTile(
+                          CustomListTileCaptainsPayment(
                               title: S.of(context).bankAccountNumber,
-                              subTitle: model?.bankNumber,
+                              subTitle: model?.bankNumber ?? '',
                               iconData: Icons.password_rounded),
-                          customListTile(
+                          CustomListTileCaptainsPayment(
                               title: S.of(context).stcPayCode,
-                              subTitle: model?.stcPay,
+                              subTitle: model?.stcPay ?? '',
                               iconData: Icons.credit_card_rounded),
                         ],
                       ),
@@ -218,17 +218,17 @@ class PaymentsToCaptainLoadedState extends States {
               ),
               child: Column(
                 children: [
-                  customListTile(
+                  CustomListTileCaptainsPayment(
                       title: S.of(context).salary,
-                      subTitle: accountBalance?.salary.toString(),
+                      subTitle: accountBalance?.salary.toString() ?? '',
                       iconData: Icons.money),
-                  customListTile(
+                  CustomListTileCaptainsPayment(
                       title: S.of(context).bounce,
-                      subTitle: accountBalance?.bounce.toString(),
+                      subTitle: accountBalance?.bounce.toString() ?? '',
                       iconData: Icons.wallet_giftcard_rounded),
-                  customListTile(
+                  CustomListTileCaptainsPayment(
                       title: S.of(context).captainMoney,
-                      subTitle: accountBalance?.total.toString(),
+                      subTitle: accountBalance?.total.toString() ?? '',
                       iconData: FontAwesomeIcons.coins),
                 ],
               ),
@@ -307,51 +307,4 @@ class PaymentsToCaptainLoadedState extends States {
     );
   }
 
-  Widget customListTile(
-      {required String title, String? subTitle, required IconData iconData}) {
-    var context = screenState.context;
-    Widget? icon;
-    if (title == S.current.captainStatus || title == S.current.status) {
-      icon = PhysicalModel(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          elevation: 5,
-          shape: BoxShape.circle,
-          child: Icon(
-            Icons.circle,
-            color: subTitle == 'active' ? Colors.green : Colors.red,
-            size: 30,
-          ));
-      subTitle = subTitle == 'active'
-          ? S.current.captainStateActive
-          : S.current.captainStateInactive;
-    }
-    return ListTile(
-      leading: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Theme.of(context).scaffoldBackgroundColor,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(iconData, color: Theme.of(context).disabledColor),
-          )),
-      title: Text(
-        title,
-        style: TextStyle(),
-      ),
-      trailing: icon,
-      subtitle: Text(
-        subTitle ?? S.current.unknown,
-        style: TextStyle(),
-        textDirection: S.current.phoneNumber == title &&
-                Localizations.localeOf(context).languageCode == 'ar'
-            ? TextDirection.ltr
-            : null,
-        textAlign: S.current.phoneNumber == title &&
-                Localizations.localeOf(context).languageCode == 'ar'
-            ? TextAlign.right
-            : null,
-      ),
-    );
-  }
 }

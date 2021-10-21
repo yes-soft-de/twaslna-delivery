@@ -3,6 +3,7 @@ import 'package:twaslna_dashboard/abstracts/data_model/data_model.dart';
 import 'package:twaslna_dashboard/consts/order_status.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/module_orders/response/order_details_response.dart';
+import 'package:twaslna_dashboard/utils/helpers/date_converter.dart';
 import 'package:twaslna_dashboard/utils/helpers/order_status_helper.dart';
 
 class OrderDetailsModel extends DataModel{
@@ -86,6 +87,7 @@ class OrderInfo {
   String roomID = '';
   int ownerID = -1;
   String deliveryDate = '';
+  String createAt = '';
   double deliveryCost = 0;
   double orderCost = 0;
   String payment = '';
@@ -96,7 +98,6 @@ class OrderInfo {
   String? orderDetails;
   String? recipientName;
   String? recipientPhoneNumber;
-  bool? removable;
   String? invoiceImage;
   num? invoiceAmount;
 
@@ -115,9 +116,10 @@ class OrderInfo {
       this.orderDetails,
       this.recipientName,
       this.recipientPhoneNumber,
-      required this.removable,
       this.invoiceImage,
-      this.invoiceAmount});
+      this.invoiceAmount,
+      required this.createAt
+      });
 
   OrderInfo.Empty() {
     empty = true;
@@ -146,25 +148,15 @@ List<Item> toCartList(List<OrderDetails> ordersItems) {
 
 OrderInfo toOrder(Order? order) {
   if (order != null) {
-    bool timeout = false;
-    var date = DateTime.fromMillisecondsSinceEpoch(
-        (order.createdAt?.timestamp ?? DateTime.now().millisecondsSinceEpoch) *
-            1000);
-    if (DateTime.now().difference(date).inMinutes > 30) {
-      timeout = true;
-    }
+
     return OrderInfo(
         id: order.id ?? -1,
         state: StatusHelper.getStatusEnum(order.state),
         roomID: order.roomID ?? 'roomID',
         ownerID: order.ownerID ?? -1,
         orderCost: order.orderCost ?? 0,
-        deliveryDate: DateTime.fromMillisecondsSinceEpoch(
-                (order.deliveryDate?.timestamp ??
-                        DateTime.now().millisecondsSinceEpoch) *
-                    1000)
-            .toUtc()
-            .toIso8601String(),
+        deliveryDate:DateFormat.jm().format(DateHelper.convert(order.deliveryDate?.timestamp)) + '   ' + DateFormat.yMd().format(DateHelper.convert(order.deliveryDate?.timestamp)),
+        createAt: DateFormat.jm().format(DateHelper.convert(order.createdAt?.timestamp)) + '   ' + DateFormat.yMd().format(DateHelper.convert(order.createdAt?.timestamp)),
         deliveryCost: order.deliveryCost ?? 0,
         payment: order.payment!,
         note: order.note,
@@ -175,7 +167,7 @@ OrderInfo toOrder(Order? order) {
         recipientPhoneNumber: order.recipientPhone,
         invoiceAmount: order.invoiceAmount,
         invoiceImage: order.invoiceImage,
-        removable: !timeout);
+    );
   } else {
     return OrderInfo(
         id: -1,
@@ -183,10 +175,11 @@ OrderInfo toOrder(Order? order) {
         roomID: 'roomID',
         ownerID: -1,
         deliveryDate: DateFormat('dd-MM-yyyy').format(DateTime.now()),
+        createAt: DateFormat('dd-MM-yyyy').format(DateTime.now()),
         orderCost: 0,
         deliveryCost: 0,
         payment: 'cash',
         orderType: 0,
-        removable: false);
+    );
   }
 }

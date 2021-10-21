@@ -58,7 +58,7 @@ class StoresInActiveScreenState extends State<StoresInActiveScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomTwaslnaAppBar.appBar(context,
-          title: S.of(context).storesList, icon: Icons.menu, onTap: () {
+          title: S.of(context).storesInActive, icon: Icons.menu, onTap: () {
             GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
           }),
       body: currentState.getUI(context),

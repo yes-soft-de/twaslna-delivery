@@ -519,7 +519,11 @@
   "specific": "Specific",
   "clients": "Clients",
   "storeAvailable": "Store Availability",
-  "storesInActive": "Stores In Active"
+  "storesInActive": "Stores In Active",
+  "ordersCancel": "Orders Canceled",
+  "createDate": "Create Date"
+
+
 
 
 }
