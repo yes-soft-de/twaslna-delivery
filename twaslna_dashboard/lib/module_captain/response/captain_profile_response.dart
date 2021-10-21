@@ -51,6 +51,7 @@ class Data {
   dynamic? vacationStatus;
   String? mechanicLicense;
   String? identity;
+  CreateDate? createDate;
 
   Data({
       this.id, 
@@ -76,7 +77,9 @@ class Data {
       this.stcPay, 
       this.vacationStatus, 
       this.mechanicLicense, 
-      this.identity});
+      this.identity,
+      this.createDate
+  });
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -103,6 +106,8 @@ class Data {
     vacationStatus = json['vacationStatus'];
     mechanicLicense = json['mechanicLicense'];
     identity = json['identity'];
+    createDate = json['createDate'] != null ? CreateDate.fromJson(json['createDate']) : null;
+
   }
 
   Map<String, dynamic> toJson() {
@@ -175,6 +180,101 @@ class Location {
     var map = <String, dynamic>{};
     map['lat'] = lat;
     map['lon'] = lon;
+    return map;
+  }
+
+}
+class Transitions {
+  int? ts;
+  String? time;
+  int? offset;
+  bool? isdst;
+  String? abbr;
+
+  Transitions({
+    this.ts,
+    this.time,
+    this.offset,
+    this.isdst,
+    this.abbr});
+
+  Transitions.fromJson(dynamic json) {
+    ts = json['ts'];
+    time = json['time'];
+    offset = json['offset'];
+    isdst = json['isdst'];
+    abbr = json['abbr'];
+  }
+
+  Map<String, dynamic> toJson() {
+    var map = <String, dynamic>{};
+    map['ts'] = ts;
+    map['time'] = time;
+    map['offset'] = offset;
+    map['isdst'] = isdst;
+    map['abbr'] = abbr;
+    return map;
+  }
+
+}
+
+class CreateDate {
+  Timezone? timezone;
+  int? offset;
+  int? timestamp;
+
+  CreateDate({
+    this.timezone,
+    this.offset,
+    this.timestamp});
+
+  CreateDate.fromJson(dynamic json) {
+    timezone = json['timezone'] != null ? Timezone.fromJson(json['timezone']) : null;
+    offset = json['offset'];
+    timestamp = json['timestamp'];
+  }
+
+  Map<String, dynamic> toJson() {
+    var map = <String, dynamic>{};
+    if (timezone != null) {
+      map['timezone'] = timezone?.toJson();
+    }
+    map['offset'] = offset;
+    map['timestamp'] = timestamp;
+    return map;
+  }
+
+}
+class Timezone {
+  String? name;
+  List<Transitions>? transitions;
+  Location? location;
+
+  Timezone({
+    this.name,
+    this.transitions,
+    this.location});
+
+  Timezone.fromJson(dynamic json) {
+    name = json['name'];
+    if (json['transitions'] != null) {
+      transitions = [];
+      json['transitions'].forEach((v) {
+        transitions?.add(Transitions.fromJson(v));
+      });
+    }
+    location = json['location'] != null ? Location.fromJson(json['location']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    var map = <String, dynamic>{};
+    map['name'] = name;
+    if (transitions != null) {
+      map['transitions'] = transitions?.map((v) => v.toJson()).toList();
+    }
+    if (location != null) {
+      map['location'] = location?.toJson();
+    }
     return map;
   }
 

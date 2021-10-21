@@ -519,5 +519,6 @@
   "clients": "العملاء",
   "storeAvailable": "المتجر متوفر",
   "storesInActive": "المتاجر الغير متاحة",
-  "ordersCancel": "الطلبات الملغية"
+  "ordersCancel": "الطلبات الملغية",
+  "createDate": "تاريخ الإنشاء"
 }

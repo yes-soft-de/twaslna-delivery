@@ -6,6 +6,7 @@ import 'package:twaslna_dashboard/abstracts/states/state.dart';
 import 'package:twaslna_dashboard/generated/l10n.dart';
 import 'package:twaslna_dashboard/module_captain/model/balance_model.dart';
 import 'package:twaslna_dashboard/module_captain/ui/screen/captain_balance_screen.dart';
+import 'package:twaslna_dashboard/module_captain/ui/widget/custom_tile.dart';
 import 'package:twaslna_dashboard/utils/components/custom_list_view.dart';
 import 'package:twaslna_dashboard/utils/components/empty_screen.dart';
 import 'package:twaslna_dashboard/utils/components/error_screen.dart';
@@ -244,48 +245,6 @@ class CaptainBalanceLoadedState extends States {
             icon: Icon(Icons.calendar_today_rounded),
             label: '${S.of(context).specific}'),
       ],
-    );
-  }
-
-  Widget CustomTile(IconData icon, String text, num value) {
-    bool currency = S.current.countOrdersDelivered != text;
-    return ScalingWidget(
-      milliseconds: 1250,
-      fade: true,
-      child: ListTile(
-        leading: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Theme.of(screenState.context).primaryColor,
-            ),
-            child: Center(
-                child: Icon(
-              icon,
-              color: Colors.white,
-            ))),
-        title: Text(text),
-        trailing: Container(
-          constraints:
-              BoxConstraints(maxWidth: 120, minWidth: 95, maxHeight: 55),
-          decoration: BoxDecoration(
-            color: Theme.of(screenState.context).primaryColor,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              '${value} ${currency ? S.current.sar : S.current.sOrder}',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-          ),
-        ),
-      ),
     );
   }
 

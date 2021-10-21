@@ -520,7 +520,9 @@
   "clients": "Clients",
   "storeAvailable": "Store Availability",
   "storesInActive": "Stores In Active",
-  "ordersCancel": "Orders Canceled"
+  "ordersCancel": "Orders Canceled",
+  "createDate": "Create Date"
+
 
 
 

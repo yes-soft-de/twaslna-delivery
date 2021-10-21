@@ -5,6 +5,7 @@ import 'package:twaslna_dashboard/module_captain/model/balance_model.dart';
 import 'package:twaslna_dashboard/module_captain/model/porfile_model.dart';
 import 'package:twaslna_dashboard/module_payments/request/captain_payments_request.dart';
 import 'package:twaslna_dashboard/module_payments/ui/screen/paymen_from_captain_screen.dart';
+import 'package:twaslna_dashboard/module_payments/ui/widget/custom_list_tile.dart';
 import 'package:twaslna_dashboard/utils/components/custom_feild.dart';
 import 'package:twaslna_dashboard/utils/components/empty_screen.dart';
 import 'package:twaslna_dashboard/utils/components/error_screen.dart';
@@ -197,10 +198,10 @@ class PaymentsForCaptainLoadedState extends States {
                     //     title: S.of(context).salary,
                     //     subTitle: accountBalance?.salary.toString(),
                     //     iconData: Icons.money),
-                    customListTile(
+                    CustomListTileCaptainsPayment(
                         title: S.of(context).remainingAmountForCompany,
                         subTitle:
-                        accountBalance?.remainingAmountForCompany.toString(),
+                        accountBalance?.remainingAmountForCompany.toString() ?? '',
                         iconData: Icons.monetization_on_rounded),
                   ],
                 ),
@@ -280,51 +281,4 @@ class PaymentsForCaptainLoadedState extends States {
     );
   }
 
-  Widget customListTile(
-      {required String title, String? subTitle, required IconData iconData}) {
-    var context = screenState.context;
-    Widget? icon;
-    if (title == S.current.captainStatus || title == S.current.status) {
-      icon = PhysicalModel(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          elevation: 5,
-          shape: BoxShape.circle,
-          child: Icon(
-            Icons.circle,
-            color: subTitle == 'active' ? Colors.green : Colors.red,
-            size: 30,
-          ));
-      subTitle = subTitle == 'active'
-          ? S.current.captainStateActive
-          : S.current.captainStateInactive;
-    }
-    return ListTile(
-      leading: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Theme.of(context).scaffoldBackgroundColor,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(iconData, color: Theme.of(context).disabledColor),
-          )),
-      title: Text(
-        title,
-        style: TextStyle(),
-      ),
-      trailing: icon,
-      subtitle: Text(
-        subTitle ?? S.current.unknown,
-        style: TextStyle(),
-        textDirection: S.current.phoneNumber == title &&
-                Localizations.localeOf(context).languageCode == 'ar'
-            ? TextDirection.ltr
-            : null,
-        textAlign: S.current.phoneNumber == title &&
-                Localizations.localeOf(context).languageCode == 'ar'
-            ? TextAlign.right
-            : null,
-      ),
-    );
-  }
 }
