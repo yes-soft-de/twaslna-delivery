@@ -23,7 +23,6 @@ class OrderDetailsScreen extends StatefulWidget {
 class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   late OrderDetailsState currentState;
   ClientOrderRequest? clientOrderRequest;
-  ClientOrderRequest handleOrderRequest = ClientOrderRequest();
 
   bool flagOrderId = true;
   int? orderNumber;
@@ -91,7 +90,6 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     Hive.box('Order').listenable(keys: ['cart']).addListener(() {
       if (CartHiveHelper().getProduct()!=null){
         clientOrderRequest?.products = CartHiveHelper().getProduct();
-        handleOrderRequest.products = CartHiveHelper().getProduct();
         CartHiveHelper().setFinish();
       }
       if (mounted){

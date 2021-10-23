@@ -12,7 +12,7 @@ class OrderChip extends StatefulWidget {
   final int defaultQuantity;
   final bool editable;
   final int productID;
-  OrderChip({
+  OrderChip({Key? key,
     required this.title,required this.productID,required this.image,required this.price,this.currency = 'SAR',required this.quantity,this.defaultQuantity = 0,this.editable = true});
   @override
   _OrderChipState createState() => _OrderChipState();
@@ -24,34 +24,11 @@ class _OrderChipState extends State<OrderChip> {
   void initState() {
     super.initState();
     products = Products(productID:widget.productID,productName: widget.title,productsImage: widget.image,price: widget.price,countProduct:widget.defaultQuantity);
-    Hive.box('Order').listenable(keys: ['finish']).addListener(() {
-      if (CartHiveHelper().getFinish() && CartHiveHelper().getProduct() != null){
-        if (CartHiveHelper().getProduct()!.isNotEmpty){
-             CartHiveHelper().getProduct()?.forEach((element) {
-              if (products.productID == element.productID){
-                products = element;
-                print(element.productName);
-                print(element.countProduct);
-              }
-            });
-        }
-        if (mounted){
-          setState(() {
-          });
-        }
-      }
-    });
   }
   @override
   Widget build(BuildContext context) {
-
-    if (products.productName != widget.title) {
-      products = Products(productID:widget.productID,productName: widget.title,productsImage: widget.image,price: widget.price,countProduct:widget.defaultQuantity);
-    }
-    if (products.countProduct == 0){
-      return Container();
-    }
     return Container(
+      key: widget.key,
       width: double.maxFinite,
       height: 100,
       child:Flex(

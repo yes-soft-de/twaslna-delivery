@@ -373,6 +373,7 @@ class OrderDetailsLoadedState extends OrderDetailsState {
     List<Widget> orderChips = [];
     carts.forEach((element) {
       orderChips.add(OrderChip(
+        key:ValueKey(element.productID),
         productID: element.productID,
         title: element.productName,
         image: element.productImage,

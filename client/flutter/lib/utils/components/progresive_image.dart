@@ -80,53 +80,58 @@ class CustomNetworkImage extends StatelessWidget {
       if (!image.contains('http')){
         image = Urls.IMAGES_ROOT + image;
       }
-      return ProgressiveImage.custom(
-        height: height,
-        width: width,
-        placeholderBuilder: (context) {
-          return Container(
-            height: height,
-            width: width,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color:background?? Theme
-                    .of(context)
-                    .backgroundColor),
-            child: Flex(
-              direction: Axis.vertical,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Icon(
-                    CustomIcon.logo,
-                    size: 30,
-                  ),
-                ),
-                Padding(
-                  padding:
-                  const EdgeInsets.only(left: 16.0, right: 16.0, top: 10.0),
-                  child: Container(
-                    width: 28,
-                    child: LinearProgressIndicator(
-                        minHeight: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                            Theme
-                                .of(context)
-                                .textTheme
-                                .headline1!
-                                .color!)),
-                  ),
-                ),
-              ],
-            ),
-          );
+      return GestureDetector(
+        onTap: (){
+
         },
-        fadeDuration: Duration(milliseconds: 750),
-        thumbnail: NetworkImage(image),
-        image: NetworkImage(image),
-        fit: BoxFit.cover,
+        child: ProgressiveImage.custom(
+          height: height,
+          width: width,
+          placeholderBuilder: (context) {
+            return Container(
+              height: height,
+              width: width,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color:background?? Theme
+                      .of(context)
+                      .backgroundColor),
+              child: Flex(
+                direction: Axis.vertical,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Icon(
+                      CustomIcon.logo,
+                      size: 30,
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                    const EdgeInsets.only(left: 16.0, right: 16.0, top: 10.0),
+                    child: Container(
+                      width: 28,
+                      child: LinearProgressIndicator(
+                          minHeight: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              Theme
+                                  .of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .color!)),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+          fadeDuration: Duration(milliseconds: 750),
+          thumbnail: NetworkImage(image),
+          image: NetworkImage(image),
+          fit: BoxFit.cover,
+        ),
       );
     }
   }
