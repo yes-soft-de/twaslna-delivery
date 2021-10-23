@@ -1,3 +1,5 @@
+import 'package:twaslna_dashboard/utils/logger/logger.dart';
+
 class FinancialCompensationsResponse {
   String? statusCode;
   String? msg;
@@ -9,13 +11,19 @@ class FinancialCompensationsResponse {
       this.data});
 
   FinancialCompensationsResponse.fromJson(dynamic json) {
-    statusCode = json['status_code'];
-    msg = json['msg'];
-    if (json['Data'] != null) {
-      data = [];
-      json['Data'].forEach((v) {
-        data?.add(Data.fromJson(v));
-      });
+
+    try {
+      statusCode = json['status_code'];
+      msg = json['msg'];
+      if (json['Data'] != null) {
+        data = [];
+        json['Data'].forEach((v) {
+          data?.add(Data.fromJson(v));
+        });
+      }
+    } catch(e){
+      Logger().error('Fniance', e.toString(), StackTrace.current);
+      statusCode = '-1';
     }
   }
 

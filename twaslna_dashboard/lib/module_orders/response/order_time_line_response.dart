@@ -1,3 +1,5 @@
+import 'package:twaslna_dashboard/utils/logger/logger.dart';
+
 class OrderTimeLineResponse {
   String? statusCode;
   String? msg;
@@ -12,6 +14,12 @@ class OrderTimeLineResponse {
     statusCode = json['status_code'];
     msg = json['msg'];
     data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
+    try {
+
+    } catch (e){
+      Logger().error('Order Time Line',e.toString(),StackTrace.current);
+      statusCode = '-1';
+    }
   }
 
   Map<String, dynamic> toJson() {

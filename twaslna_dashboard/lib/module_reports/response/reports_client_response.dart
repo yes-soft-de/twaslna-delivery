@@ -1,21 +1,26 @@
+import 'package:twaslna_dashboard/utils/logger/logger.dart';
+
 class ReportsClientResponse {
   String? statusCode;
   String? msg;
   List<Data>? data;
 
-  ReportsClientResponse({
-      this.statusCode, 
-      this.msg, 
-      this.data});
+  ReportsClientResponse({this.statusCode, this.msg, this.data});
 
   ReportsClientResponse.fromJson(dynamic json) {
-    statusCode = json['status_code'];
-    msg = json['msg'];
-    if (json['Data'] != null) {
-      data = [];
-      json['Data'].forEach((v) {
-        data?.add(Data.fromJson(v));
-      });
+    try {
+      statusCode = json['status_code'];
+      msg = json['msg'];
+      if (json['Data'] != null) {
+        data = [];
+        json['Data'].forEach((v) {
+          data?.add(Data.fromJson(v));
+        });
+      }
+    } catch (e) {
+      Logger()
+          .error('Reports Client Response', e.toString(), StackTrace.current);
+      statusCode = '-1';
     }
   }
 
@@ -28,7 +33,6 @@ class ReportsClientResponse {
     }
     return map;
   }
-
 }
 
 class Data {
@@ -37,11 +41,7 @@ class Data {
   String? clientName;
   String? image;
 
-  Data({
-      this.clientID, 
-      this.countOrdersInMonth, 
-      this.clientName, 
-      this.image});
+  Data({this.clientID, this.countOrdersInMonth, this.clientName, this.image});
 
   Data.fromJson(dynamic json) {
     clientID = json['clientID'];
@@ -58,5 +58,4 @@ class Data {
     map['image'] = image;
     return map;
   }
-
 }

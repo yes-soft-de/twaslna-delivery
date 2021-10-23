@@ -1,4 +1,5 @@
 import 'package:twaslna_dashboard/module_clients/response/statistics.dart';
+import 'package:twaslna_dashboard/utils/logger/logger.dart';
 
 class ClientProfileResponse {
   ClientProfileResponse({
@@ -7,9 +8,15 @@ class ClientProfileResponse {
       this.data,});
 
   ClientProfileResponse.fromJson(dynamic json) {
-    statusCode = json['status_code'];
-    msg = json['msg'];
-    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
+
+    try {
+      statusCode = json['status_code'];
+      msg = json['msg'];
+      data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
+    } catch(e) {
+      Logger().error('Client Profile Response', e.toString(), StackTrace.current);
+      statusCode = '-1';
+    }
   }
   String? statusCode;
   String? msg;

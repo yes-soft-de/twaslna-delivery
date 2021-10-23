@@ -23,6 +23,7 @@ class StoreProductsResponse {
     }
     catch(e){
       Logger().error('Store Products Response',e.toString(), StackTrace.current);
+      statusCode = '-1';
     }
   }
 

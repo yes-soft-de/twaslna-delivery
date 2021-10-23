@@ -1,3 +1,5 @@
+import 'package:twaslna_dashboard/utils/logger/logger.dart';
+
 class StoresFilterResponse {
   String? statusCode;
   String? msg;
@@ -9,14 +11,20 @@ class StoresFilterResponse {
       this.data});
 
   StoresFilterResponse.fromJson(dynamic json) {
-    statusCode = json['status_code'];
-    msg = json['msg'];
-    if (json['Data'] != null) {
-      data = [];
-      json['Data'].forEach((v) {
-        data?.add(Data.fromJson(v));
-      });
+    try {
+      statusCode = json['status_code'];
+      msg = json['msg'];
+      if (json['Data'] != null) {
+        data = [];
+        json['Data'].forEach((v) {
+          data?.add(Data.fromJson(v));
+        });
+      }
+    } catch (e){
+      Logger().error('Stores Filter Response', e.toString(), StackTrace.current);
+      statusCode = '-1';
     }
+
   }
 
   Map<String, dynamic> toJson() {

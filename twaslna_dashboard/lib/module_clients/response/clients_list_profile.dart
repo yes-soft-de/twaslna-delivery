@@ -1,3 +1,5 @@
+import 'package:twaslna_dashboard/utils/logger/logger.dart';
+
 class ClientsListProfileResponse {
   ClientsListProfileResponse({
       this.statusCode, 
@@ -12,6 +14,12 @@ class ClientsListProfileResponse {
       json['Data'].forEach((v) {
         data?.add(Data.fromJson(v));
       });
+    }
+    try {
+
+    } catch(e){
+      Logger().error('Client List Profile', e.toString(), StackTrace.current);
+      statusCode = '-1';
     }
   }
   String? statusCode;
