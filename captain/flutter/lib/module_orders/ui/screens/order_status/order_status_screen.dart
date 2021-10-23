@@ -33,7 +33,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
   OrderDetailsState? currentState;
   OrderInvoiceRequest? invoiceRequest;
   bool makeInvoice = false;
-
+  bool deliverOnMe = false;
   @override
   void initState() {
     currentState = OrderDetailsStateInit(this);
@@ -73,14 +73,14 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     )..show(context);
   }
 
-  void saveBill(String image, double price) {
+  void saveBill(String image, double price,bool? isBilled) {
     invoiceRequest = OrderInvoiceRequest(
-        invoiceAmount: price, invoiceImage: image, orderNumber: orderId);
+        invoiceAmount: price, invoiceImage: image, orderNumber: orderId,isBilled: isBilled == null ? null : (isBilled == true ? 1 : 0));
     refresh();
   }
 
   void refresh() {
-    if (mounted) {
+    if (this.mounted) {
       setState(() {});
     }
   }
@@ -93,8 +93,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
           return CustomAlertDialog(
               onPressed: () {
                 Navigator.of(context).pop();
-                if (currentOrder.order.state == OrderStatus.IN_STORE &&
-                    invoiceRequest != null) {
+                if (currentOrder.order.state == OrderStatus.IN_STORE && invoiceRequest != null) {
                   currentOrder.providedDistance =
                       double.tryParse(distance ?? '0');
                   widget._stateManager.updateInvoice(
@@ -207,9 +206,9 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
           barrierDismissible: false,
           builder: (context) {
             return TweenAnimationBuilder(
-              duration: Duration(milliseconds: 750),
+              duration: Duration(milliseconds: 375),
               tween: Tween<double>(begin: 0, end: 1),
-              curve: Curves.bounceIn,
+              curve: Curves.linear,
               builder: (context, double val, child) {
                 return Transform.scale(
                   scale: val,
@@ -219,10 +218,11 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
               child: InvoiceDialog(
                 totalCost,
                 imagePath!,
-                onPressed: () async {
+                isBilledCalculated: deliverOnMe,
+                onPressed: (isBilled){
                   Navigator.of(context).pop();
-                  await widget._stateManager.uploadBill(
-                      this, imagePath!, double.tryParse(totalCost.text) ?? 0);
+                   widget._stateManager.uploadBill(
+                      this, imagePath!, double.tryParse(totalCost.text) ?? 0,isBilled);
                 },
               ),
             );

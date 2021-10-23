@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:twaslna_captain/generated/l10n.dart';
+import 'package:twaslna_captain/module_orders/request/billed_calculated.dart';
 import 'package:twaslna_captain/module_orders/request/order_invoice_request.dart';
 import 'package:twaslna_captain/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:twaslna_captain/module_orders/service/orders/orders.service.dart';
@@ -63,13 +64,28 @@ class OrderStatusStateManager {
         CustomFlushBarHelper.createError(title:S.current.warnning, message:S.current.saveInvoiceFailed).show(screenState.context);
       }
       else {
-        updateOrder(orderRequest, screenState);
+        if (request.isBilled != null){
+          _ordersService.billedForCompany(BilledCalculatedRequest(
+              orderNumber: request.orderNumber,
+              isBillCalculated: request.isBilled
+          )).then((value) {
+            if (value.hasError) {
+              CustomFlushBarHelper.createError(title:S.current.warnning, message:S.current.saveInvoiceFailed).show(screenState.context);
+            }
+            else {
+              updateOrder(orderRequest, screenState);
+            }
+          });
+        }
+        else {
+          updateOrder(orderRequest, screenState);
+        }
       }
     });
   }
 
   Future<void> uploadBill(
-      OrderStatusScreenState screenState,String image,double totalPrice) async {
+      OrderStatusScreenState screenState,String image,double totalPrice,[bool? isBilled]) async {
     await CustomFlushBarHelper.createSuccess(title:S.current.warnning, message:S.current.savingInvoice,).show(screenState.context);
     await _imageUploadService
         .uploadImage(image)
@@ -78,7 +94,7 @@ class OrderStatusStateManager {
         CustomFlushBarHelper.createError(title:S.current.warnning, message:S.current.saveInvoiceFailed)..show(screenState.context);
       } else {
         CustomFlushBarHelper.createSuccess(title:S.current.warnning, message:S.current.saveInvoiceSuccess)..show(screenState.context);
-        screenState.saveBill(uploadedImageLink,totalPrice);
+        screenState.saveBill(uploadedImageLink,totalPrice,isBilled);
       }
     });
   }

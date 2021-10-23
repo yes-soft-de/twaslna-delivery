@@ -9,8 +9,14 @@ class GeoJson {
   });
 
   GeoJson.fromJson(dynamic json) {
-    lat = json['lat'];
-    long = json['long'];
+    try {
+      lat = json['lat'];
+      long = json['long'];
+    } catch(e) {
+      lat = null;
+      long = null;
+    }
+
   }
 
   Map<String, dynamic> toJson() {

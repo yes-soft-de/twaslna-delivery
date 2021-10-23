@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:twaslna_captain/module_orders/repository/order_repository/order_repository.dart';
 import 'package:twaslna_captain/module_orders/request/accept_order_request/accept_order_request.dart';
+import 'package:twaslna_captain/module_orders/request/billed_calculated.dart';
 import 'package:twaslna_captain/module_orders/request/order_invoice_request.dart';
 import 'package:twaslna_captain/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:twaslna_captain/module_orders/response/company_info/company_info.dart';
@@ -39,6 +40,10 @@ class OrdersManager {
   Future<OrderActionResponse?> updateBill(
       OrderInvoiceRequest request) =>
       _repository.updateOrderBill(request);
+  Future<OrderActionResponse?> billedForCompany(
+      BilledCalculatedRequest request) =>
+      _repository.billedForCompany(request);
+
   Future<List?> getUpdates() => _repository.getUpdates();
 
   Future<Map?> getOrder(int orderId) => _repository.getOrder(orderId);

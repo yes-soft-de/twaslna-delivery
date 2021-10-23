@@ -16,6 +16,7 @@ class PackageBalanceRepository {
     if (response == null) return null;
     return AccountBalanceResponse.fromJson(response);
   }
+
   Future<AccountBalanceResponse?> getCaptainPackageLastBalance() async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(Urls.CAPTAIN_BALANCE_LAST_MONTH,headers:{'Authorization':'Bearer $token'});
