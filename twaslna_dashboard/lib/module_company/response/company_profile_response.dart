@@ -1,3 +1,5 @@
+import 'package:twaslna_dashboard/utils/logger/logger.dart';
+
 class CompanyProfileResponse {
   String? statusCode;
   String? msg;
@@ -16,6 +18,12 @@ class CompanyProfileResponse {
       json['Data'].forEach((v) {
         data?.add(Data.fromJson(v));
       });
+    }
+    try {
+
+    } catch(e) {
+      Logger().error('Company Response', e.toString(), StackTrace.current);
+      statusCode = '-1';
     }
   }
 

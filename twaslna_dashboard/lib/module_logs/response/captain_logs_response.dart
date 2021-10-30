@@ -1,3 +1,5 @@
+import 'package:twaslna_dashboard/utils/logger/logger.dart';
+
 class CaptainLogsResponse {
   String? statusCode;
   String? msg;
@@ -9,9 +11,14 @@ class CaptainLogsResponse {
       this.data});
 
   CaptainLogsResponse.fromJson(dynamic json) {
-    statusCode = json['status_code'];
-    msg = json['msg'];
-    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
+    try {
+      statusCode = json['status_code'];
+      msg = json['msg'];
+      data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
+    } catch (e){
+      Logger().error('Captain Logs Response',e.toString(),StackTrace.current);
+      statusCode = '-1';
+    }
   }
 
   Map<String, dynamic> toJson() {
