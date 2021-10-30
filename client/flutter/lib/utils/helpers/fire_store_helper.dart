@@ -24,6 +24,7 @@ class FireStoreHelper {
           .add({'date': DateTime.now().toUtc().toIso8601String()});
     } catch (e) {
       print(e.toString());
+      return;
     }
   }
 }

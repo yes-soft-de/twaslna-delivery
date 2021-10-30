@@ -13,7 +13,6 @@ import 'package:twaslna_delivery/module_main/main_module.dart';
 import 'package:twaslna_delivery/module_notifications/service/fire_notification_service/fire_notification_service.dart';
 import 'package:twaslna_delivery/module_orders/orders_module.dart';
 import 'package:twaslna_delivery/module_our_services/services_module.dart';
-import 'package:twaslna_delivery/module_search/model/search_model.dart';
 import 'package:twaslna_delivery/module_search/search_module.dart';
 import 'package:twaslna_delivery/module_settings/settings_module.dart';
 import 'package:twaslna_delivery/module_splash/splash_module.dart';
@@ -171,4 +170,5 @@ class _MyAppState extends State<MyApp> {
       initialRoute: SplashRoutes.SPLASH_SCREEN,
     );
   }
+
 }

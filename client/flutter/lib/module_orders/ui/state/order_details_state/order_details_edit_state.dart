@@ -61,7 +61,6 @@ class OrderDetailsEditState extends OrderDetailsState {
     var width = MediaQuery.of(context).size.width;
     return WillPopScope(
       onWillPop: () async {
-        screenState.handleOrderRequest = ClientOrderRequest();
         await cartHiveHelper.deleteCart();
         screenState.currentState =
             OrderDetailsLoadedState(screenState, orderDetails);
@@ -77,7 +76,6 @@ class OrderDetailsEditState extends OrderDetailsState {
           ),
           CustomOrderDetailsAppBar(
             onTap: () {
-              screenState.handleOrderRequest = ClientOrderRequest();
               cartHiveHelper.deleteCart().whenComplete(() {
                 screenState.currentState =
                     OrderDetailsLoadedState(screenState, orderDetails);
@@ -114,7 +112,9 @@ class OrderDetailsEditState extends OrderDetailsState {
                           message: S.current.yourCartEmpty)
                       .show(context);
                 } else {
-                  screenState.updateClientOrder();
+                  cartHiveHelper.deleteCart().whenComplete(() {
+                    screenState.updateClientOrder();
+                  });
                 }
               }
             },
@@ -183,7 +183,7 @@ class OrderDetailsEditState extends OrderDetailsState {
             physics: ScrollPhysics(),
             shrinkWrap: true,
             children:
-                getOrdersList(screenState.handleOrderRequest.products??toProducts(orderDetails.carts)),
+                getOrdersList(screenState.clientOrderRequest?.products),
           ),
           Container(
             height: 8,
@@ -314,33 +314,38 @@ class OrderDetailsEditState extends OrderDetailsState {
     updateTotal();
     List<Widget> orderChips = [];
     carts?.forEach((element) {
-        orderChips.add(OrderChip(
-          productID: element.productID!,
-          title: element.productName ?? S.current.product,
-          image: element.productsImage ?? ImageAsset.NETWORK,
-          price: element.price!,
-          currency: S.current.sar,
-          quantity: (product) {
-            if (product.countProduct == 0) {
-              screenState.clientOrderRequest?.products
-                  ?.forEach((element) {
-                    if (element.productID == product.productID){
-                      element.countProduct = 0;
-                    }
-              });
-            } else {
-              screenState.clientOrderRequest?.products
-                  ?.forEach((element) {
-                if (element.productID == product.productID){
-                  element.countProduct = product.countProduct;
-                }
-              });
-            }
-            updateTotal();
-            screenState.refresh();
-          },
-          editable: true,
-          defaultQuantity: element.countProduct!,
+        orderChips.add(SizedBox(
+          key:ObjectKey(element),
+          child: OrderChip(
+            productID: element.productID!,
+            title: element.productName ?? S.current.product,
+            image: element.productsImage ?? ImageAsset.NETWORK,
+            price: element.price!,
+            currency: S.current.sar,
+            quantity: (product) {
+              if (product.countProduct == 0) {
+                screenState.clientOrderRequest?.products
+                    ?.forEach((element) {
+                      if (element.productID == product.productID){
+                        element.countProduct = 0;
+                      }
+                });
+                cleanProducts();
+                screenState.refresh();
+              } else {
+                screenState.clientOrderRequest?.products
+                    ?.forEach((element) {
+                  if (element.productID == product.productID){
+                    element.countProduct = product.countProduct;
+                  }
+                });
+              }
+              updateTotal();
+              screenState.refresh();
+            },
+            editable: true,
+            defaultQuantity: element.countProduct!,
+          ),
         ));
         orderChips.add(Padding(
           padding: const EdgeInsets.only(right: 8.0, left: 8.0),
