@@ -23,5 +23,4 @@ class SvgAsset {
   static const SEARCHING_SVG = ROOT + 'searching.svg';
   static const SUCCESS_SVG = ROOT + 'success.svg';
 
-
 }

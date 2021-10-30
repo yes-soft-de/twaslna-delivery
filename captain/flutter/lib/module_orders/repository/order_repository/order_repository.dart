@@ -3,6 +3,7 @@ import 'package:twaslna_captain/consts/urls.dart';
 import 'package:twaslna_captain/module_auth/service/auth_service/auth_service.dart';
 import 'package:twaslna_captain/module_network/http_client/http_client.dart';
 import 'package:twaslna_captain/module_orders/request/accept_order_request/accept_order_request.dart';
+import 'package:twaslna_captain/module_orders/request/billed_calculated.dart';
 import 'package:twaslna_captain/module_orders/request/order_invoice_request.dart';
 import 'package:twaslna_captain/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:twaslna_captain/module_orders/response/company_info/company_info.dart';
@@ -90,6 +91,17 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
       '${Urls.ORDER_UPDATE_BILL_API}',
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ' + token.toString()},
+    );
+    if (response == null) return null;
+
+    return OrderActionResponse.fromJson(response,Urls.ORDER_UPDATE_BILL_API);
+  }
+  Future<OrderActionResponse?> billedForCompany(BilledCalculatedRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      '${Urls.BILLED_FOR_COMPANY_API}',
       request.toJson(),
       headers: {'Authorization': 'Bearer ' + token.toString()},
     );

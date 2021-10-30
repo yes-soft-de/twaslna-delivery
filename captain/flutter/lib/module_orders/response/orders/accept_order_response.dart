@@ -12,18 +12,21 @@ class AcceptOrderResponse {
       this.data});
 
   AcceptOrderResponse.fromJson(dynamic json) {
-    try {
-      statusCode = json['status_code'];
-      msg = json['msg'];
-      if (json['Data'] != null) {
-        data = [];
-        json['Data'].forEach((v) {
-          data?.add(AcceptedOrder.fromJson(v));
-        });
-      }
-    } catch(e){
-      Logger().error('AcceptOrder Response', e.toString(), StackTrace.current);
-      statusCode = '-1';
+    // try {
+    //
+    // } catch(e){
+    //   Logger().error('AcceptOrder Response', e.toString(), StackTrace.current);
+    //   print(StackTrace.current);
+    //   statusCode = '-1';
+    // }
+
+    statusCode = json['status_code'];
+    msg = json['msg'];
+    if (json['Data'] != null) {
+      data = [];
+      json['Data'].forEach((v) {
+        data?.add(AcceptedOrder.fromJson(v));
+      });
     }
   }
 
@@ -74,6 +77,12 @@ class AcceptedOrder {
   AcceptedOrder.fromJson(dynamic json) {
     id = json['id'];
     storeOwnerName = json['storeOwnerName'];
+    if (json['source'] != null) {
+      var src = json['source'];
+      if (src is Map) {
+        source = GeoJson.fromJson(src);
+      }
+    }
     if (json['source'] != null) {
       var src = json['source'];
       if (src is Map) {
@@ -315,8 +324,15 @@ class Destination {
       this.long});
 
   Destination.fromJson(dynamic json) {
-    lat = json['lat'];
-    long = json['long'];
+    try {
+      lat = json['lat'];
+      long = json['long'];
+    }
+    catch (e){
+      lat = null;
+      long = null;
+    }
+
   }
 
   Map<String, dynamic> toJson() {

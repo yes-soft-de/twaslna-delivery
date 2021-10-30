@@ -256,6 +256,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("هناك مشكلة ما في الخادم"),
         "invalidCredentials": MessageLookupByLibrary.simpleMessage(
             "هناك خطأ في كلمة السر أو اسم المستخدم"),
+        "isBilledForCompany":
+            MessageLookupByLibrary.simpleMessage("الفاتورة على حساب الشركة"),
         "kiloBonus": MessageLookupByLibrary.simpleMessage("اجور التوصيل"),
         "kilometerBonus":
             MessageLookupByLibrary.simpleMessage("تعويض المسافات المقطوعة"),

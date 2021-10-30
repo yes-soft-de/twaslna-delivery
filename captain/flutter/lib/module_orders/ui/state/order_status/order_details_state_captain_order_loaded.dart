@@ -27,6 +27,7 @@ class OrderDetailsStateCaptainOrderLoaded extends OrderDetailsState {
     orderInfo = this.currentOrder.order;
     if (orderInfo.state == OrderStatus.IN_STORE) {
       screenState.makeInvoice = true;
+      screenState.deliverOnMe = orderInfo.orderType == 3;
       screenState.refresh();
     }
     else {
@@ -192,7 +193,7 @@ class OrderDetailsStateCaptainOrderLoaded extends OrderDetailsState {
       screenState.requestOrderProgress(currentOrder,StatusHelper.getOrderStatusIndex(orderInfo.state));
     }
     else {
-      if (screenState.invoiceRequest != null) {
+      if (screenState.invoiceRequest != null || orderInfo.orderType == 3) {
         screenState.requestOrderProgress(currentOrder,StatusHelper.getOrderStatusIndex(orderInfo.state));
       }
       else {

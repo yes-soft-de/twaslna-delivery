@@ -267,6 +267,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Internal server error"),
         "invalidCredentials":
             MessageLookupByLibrary.simpleMessage("Wrong username or password"),
+        "isBilledForCompany":
+            MessageLookupByLibrary.simpleMessage("Is billed on company"),
         "kiloBonus": MessageLookupByLibrary.simpleMessage("Fuel Bonus"),
         "kilometerBonus":
             MessageLookupByLibrary.simpleMessage("Kilometer Bonus"),

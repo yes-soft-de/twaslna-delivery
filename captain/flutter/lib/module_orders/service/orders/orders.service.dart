@@ -11,6 +11,7 @@ import 'package:twaslna_captain/module_orders/model/order/order_details_model.da
 import 'package:twaslna_captain/module_orders/model/order/order_logs.dart';
 import 'package:twaslna_captain/module_orders/model/order/order_model.dart';
 import 'package:twaslna_captain/module_orders/model/update/update_model.dart';
+import 'package:twaslna_captain/module_orders/request/billed_calculated.dart';
 import 'package:twaslna_captain/module_orders/request/order_invoice_request.dart';
 import 'package:twaslna_captain/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:twaslna_captain/module_orders/response/company_info/company_info.dart';
@@ -88,6 +89,13 @@ class OrdersService {
     await insertWatcher();
     return ActionStateModel.empty();
   }
+  Future <ActionStateModel> billedForCompany(BilledCalculatedRequest request) async {
+    OrderActionResponse? actionResponse = await _ordersManager.billedForCompany(request);
+    if (actionResponse == null) return ActionStateModel.error(S.current.networkError);
+    if (actionResponse.statusCode != '204') return ActionStateModel.error(StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    await insertWatcher();
+    return ActionStateModel.empty();
+  }
 
 
   Stream onInsertChangeWatcher(){
@@ -99,13 +107,17 @@ class OrdersService {
   }
 
   Future<void> insertWatcher() async {
+       try{
          await FirebaseFirestore.instance
-              .collection('twaslna_action')
-              .doc('new_action')
-              .collection('action_history')
-              .add({'date': DateTime.now().toUtc().toIso8601String()}).catchError((e){
-                Logger().error('FireStore on action', e.toString(), StackTrace.current);
-         });
+             .collection('twaslna_action')
+             .doc('new_action')
+             .collection('action_history')
+             .add({'date': DateTime.now().toUtc().toIso8601String()});
+       }
+       catch (e){
+         Logger().error('FireStore on action', e.toString(), StackTrace.current);
+         return;
+       }
   }
 
   Future<AcceptOrderModel> getCaptainOrders() async {

@@ -4249,6 +4249,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Is billed on company`
+  String get isBilledForCompany {
+    return Intl.message(
+      'Is billed on company',
+      name: 'isBilledForCompany',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
